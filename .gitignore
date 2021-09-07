@@ -2,6 +2,9 @@
 /.idea/
 /out/
 
+# Maven
+/target/
+
 # Compiled class file
 *.class
 
