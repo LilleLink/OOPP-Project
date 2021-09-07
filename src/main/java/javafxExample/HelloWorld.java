@@ -28,8 +28,4 @@ public class HelloWorld extends Application
 
     }
 
-    public static void main(String[] args) {
-        HelloWorld.run(args);
-    }
-
 }
