@@ -7,7 +7,7 @@ public class Contact {
     private String address = "";
 
     Contact(String name){
-
+        this.name = name;
     }
 
     public void removePhoneNumber(){
