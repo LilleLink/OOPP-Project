@@ -7,7 +7,7 @@ public class Address {
     private final String address;
 
     public Address(String address){
-        this.address = cleanString(address);;
+        this.address = cleanString(address);
     }
 
     public String getAddress(){
@@ -24,6 +24,21 @@ public class Address {
         return s;
     }
 
+
+    //TODO check if this works on linux and mac
+    public boolean openMap(){
+        Desktop desktop = Desktop.getDesktop();
+        if (desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(new URI("https://maps.google.com/maps?q=" +
+                        this.address.replace(' ', '+')));
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
 
 
 }
