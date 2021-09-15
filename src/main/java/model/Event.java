@@ -53,4 +53,24 @@ public class Event {
         return new Event(this.name, this.address, this.date, description, this.registeredContacts);
     }
 
+    public List<Contact> getRegisteredContacts() {
+        return new ArrayList<>(this.registeredContacts);
+    }
+
+    public boolean addContact(Contact contact) {
+        return this.registeredContacts.add(contact);
+    }
+
+    public boolean addContacts(List<Contact> contactList) {
+        return this.registeredContacts.addAll(contactList);
+    }
+
+    public boolean removeContact(Contact contact) {
+        return this.registeredContacts.remove(contact);
+    }
+
+    public boolean removeContacts(List<Contact> contactList) {
+        return this.registeredContacts.removeAll(contactList);
+    }
+
 }

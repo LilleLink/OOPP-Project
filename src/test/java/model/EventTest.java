@@ -39,5 +39,61 @@ public class EventTest {
         assertSame(localDate, event.getDate());
     }
 
+    @Test
+    public void registerContact() {
+        Contact contact = new Contact("Billy");
+        event.addContact(contact);
+        assertTrue(event.getRegisteredContacts().contains(contact));
+    }
+
+    @Test
+    public void unregisterContact() {
+        Contact contact = new Contact("Billy");
+        event.addContact(contact);
+        assertTrue(event.getRegisteredContacts().contains(contact));
+        event.removeContact(contact);
+        assertFalse(event.getRegisteredContacts().contains(contact));
+    }
+
+    @Test
+    public void registerContacts() {
+        List<Contact> contactList = new ArrayList<>();
+        Contact contact1 = new Contact("1");
+        Contact contact2 = new Contact("2");
+        Contact contact3 = new Contact("3");
+        contactList.add(contact1);
+        contactList.add(contact2);
+        contactList.add(contact3);
+
+        event.addContacts(contactList);
+
+        assertTrue(event.getRegisteredContacts().contains(contact1));
+        assertTrue(event.getRegisteredContacts().contains(contact2));
+        assertTrue(event.getRegisteredContacts().contains(contact3));
+    }
+
+    @Test
+    public void unregisterContacts() {
+        List<Contact> contactList = new ArrayList<>();
+        Contact contact1 = new Contact("1");
+        Contact contact2 = new Contact("2");
+        Contact contact3 = new Contact("3");
+        contactList.add(contact1);
+        contactList.add(contact2);
+        contactList.add(contact3);
+
+        event.addContacts(contactList);
+
+        assertTrue(event.getRegisteredContacts().contains(contact1));
+        assertTrue(event.getRegisteredContacts().contains(contact2));
+        assertTrue(event.getRegisteredContacts().contains(contact3));
+
+        event.removeContacts(contactList);
+
+        assertFalse(event.getRegisteredContacts().contains(contact1));
+        assertFalse(event.getRegisteredContacts().contains(contact2));
+        assertFalse(event.getRegisteredContacts().contains(contact3));
+    }
+
 
 }
