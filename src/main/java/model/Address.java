@@ -7,8 +7,7 @@ public class Address {
     private final String address;
 
     public Address(String address){
-        cleanString(address);
-        this.address = address;
+        this.address = cleanString(address);;
     }
 
     public String getAddress(){
@@ -16,7 +15,6 @@ public class Address {
     }
 
     public Address setAddress(String address){
-        cleanString(address);
         return new Address(address);
     }
 
