@@ -1,19 +1,23 @@
 package model;
 
 import java.awt.*;
+import java.util.UUID;
 
 public class Contact {
 
     private String name;
     private String phoneNumber = "";
+    private final UUID id;
 
     Contact(String name){
         this.name = name;
+        this.id = UUID.randomUUID();
     }
 
     private Contact(Contact old){
         name = old.name;
         phoneNumber = old.phoneNumber;
+        id = old.id;
     }
 
     public String getName() {
@@ -22,6 +26,10 @@ public class Contact {
 
     public String getPhoneNumber() {
         return phoneNumber;
+    }
+
+    public UUID getId(){
+        return id;
     }
 
     public Contact setName(String name){
