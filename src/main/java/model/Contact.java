@@ -1,17 +1,19 @@
 package model;
 
+import java.awt.*;
+
 public class Contact {
 
     private String name;
     private String phoneNumber = "";
-    private String address = "";
 
     Contact(String name){
         this.name = name;
     }
 
-    public void removePhoneNumber(){
-        phoneNumber = "";
+    private Contact(Contact old){
+        name = old.name;
+        phoneNumber = old.phoneNumber;
     }
 
     public String getName() {
@@ -22,32 +24,16 @@ public class Contact {
         return phoneNumber;
     }
 
-    public String getAddress() {
-        return address;
+    public Contact setName(String name){
+        Contact newContact = new Contact(this);
+        newContact.name = name;
+        return newContact;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Contact setPhoneNumber(String number){
+        Contact newContact = new Contact(this);
+        newContact.phoneNumber = number;
+        return newContact;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = parsePhoneNumber(phoneNumber);
-    }
-
-
-    private String parsePhoneNumber(String phoneNumber){
-        StringBuilder sb = new StringBuilder();
-        char[] phoneNumberChars = phoneNumber.toCharArray();
-        for (Character c : phoneNumberChars){
-            if (Character.isDigit(c))
-                sb.append(c);
-            else if (c =='+' || c==' ')
-                sb.append(c);
-        }
-        return sb.toString();
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 }
