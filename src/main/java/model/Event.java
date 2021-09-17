@@ -14,15 +14,14 @@ public class Event {
     private String description;
 
     private final ArrayList<UUID> tagIdList = new ArrayList<>();
-    private final ArrayList<UUID> contactIdList = new ArrayList<>();
-    private List<Contact> registeredContacts;
+    private ArrayList<UUID> contactIdList = new ArrayList<>();
 
-    public Event(String name, String address, LocalDateTime dateTime, String description, List<Contact> registeredContacts) {
+    public Event(String name, String address, LocalDateTime dateTime, String description, ArrayList<UUID> contactIdList) {
         this.name = name;
         this.address = new Address(address);
         this.dateTime = dateTime;
         this.description = description;
-        this.registeredContacts = registeredContacts;
+        this.contactIdList = contactIdList;
     }
 
     public Event(String name, LocalDateTime date){
@@ -35,7 +34,7 @@ public class Event {
     }
 
     public Event setName(String name) {
-        return new Event(name, this.address.getAddress(), this.dateTime, this.description, this.registeredContacts);
+        return new Event(name, this.address.getAddress(), this.dateTime, this.description, this.contactIdList);
     }
 
     public String getAddress() {
@@ -43,7 +42,7 @@ public class Event {
     }
 
     public Event setAddress(String address) {
-        return new Event(this.name, address, this.dateTime, this.description, this.registeredContacts);
+        return new Event(this.name, address, this.dateTime, this.description, this.contactIdList);
     }
 
     public LocalDateTime getDate() {
@@ -51,7 +50,7 @@ public class Event {
     }
 
     public Event setDate(LocalDateTime dateTime) {
-        return new Event(this.name, this.address.getAddress(), dateTime, this.description, this.registeredContacts);
+        return new Event(this.name, this.address.getAddress(), dateTime, this.description, this.contactIdList);
     }
 
     public String getDescription() {
@@ -59,28 +58,10 @@ public class Event {
     }
 
     public Event setDescription(String description) {
-        return new Event(this.name, this.address.getAddress(), this.dateTime, description, this.registeredContacts);
+        return new Event(this.name, this.address.getAddress(), this.dateTime, description, this.contactIdList);
     }
 
-    public List<Contact> getRegisteredContacts() {
-        return new ArrayList<>(this.registeredContacts);
-    }
 
-    public boolean addContact(Contact contact) {
-        return this.registeredContacts.add(contact);
-    }
-
-    public boolean addContacts(List<Contact> contactList) {
-        return this.registeredContacts.addAll(contactList);
-    }
-
-    public boolean removeContact(Contact contact) {
-        return this.registeredContacts.remove(contact);
-    }
-
-    public boolean removeContacts(List<Contact> contactList) {
-        return this.registeredContacts.removeAll(contactList);
-    }
 
     public boolean addTag(UUID tag){
         if (tagIdList.contains(tag)) return false;
