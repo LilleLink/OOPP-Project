@@ -85,12 +85,18 @@ public class User {
         return event.getTagsIdList();
     }
 
-    public void addEvent(String name, LocalDateTime dateTime){
-        eventList.add(new Event(name, dateTime));
+    public Event createEvent(String name, LocalDateTime dateTime){
+        Event event = new Event(name, dateTime);
+        eventList.add(event);
+        return event;
     }
 
     public void removeEvent(Event event){
         eventList.remove(event);
+    }
+
+    public void addContactEvent(UUID contact, Event event) {
+        event.addContact(contact);
     }
 
     public ArrayList<Event> getEvents(){
