@@ -14,6 +14,7 @@ public class Event {
     private String description;
 
     private final ArrayList<UUID> tagIdList = new ArrayList<>();
+    private final ArrayList<UUID> contactIdList = new ArrayList<>();
     private List<Contact> registeredContacts;
 
     public Event(String name, String address, LocalDateTime dateTime, String description, List<Contact> registeredContacts) {
@@ -93,5 +94,21 @@ public class Event {
 
     public ArrayList<UUID> getTagsIdList(){
         return new ArrayList<>(tagIdList);
+    }
+
+    public boolean addContact(UUID id){
+        if (contactIdList.contains(id)){
+            return false;
+        }
+        contactIdList.add(id);
+        return true;
+    }
+
+    public boolean removeContact(UUID id){
+        return contactIdList.remove(id);
+    }
+
+    public ArrayList<UUID> getContactIdList(){
+        return new ArrayList<>(contactIdList);
     }
 }
