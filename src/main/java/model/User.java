@@ -1,5 +1,8 @@
 package model;
 
+import javax.lang.model.type.ArrayType;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +12,7 @@ public class User {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
     private final Map<UUID, Contact> contactMap = new HashMap<>();
+    private final ArrayList<Event> eventList = new ArrayList<>();
 
     public User(String name){
         this.name = name;
@@ -56,4 +60,18 @@ public class User {
         Contact contact = contactMap.get(contactId);
         return contact.getTagsIdList();
     }
+
+    public void addEvent(String name, LocalDateTime dateTime){
+        eventList.add(new Event(name, dateTime));
+    }
+
+    public void removeEvent(Event event){
+        eventList.remove(event);
+    }
+
+    public ArrayList<Event> getEvents(){
+        return new ArrayList<>(eventList);
+    }
+
+
 }

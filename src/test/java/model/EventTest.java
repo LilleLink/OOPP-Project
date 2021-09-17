@@ -5,6 +5,7 @@ import org.junit.*;
 
 import java.sql.Array;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,8 @@ import static org.junit.Assert.*;
 public class EventTest {
 
     Event event;
-    LocalDate localDate = LocalDate.of(2021, 10, 15);
+    //TODO changed to localDateTime have not fixed tests fully, might be borked
+    LocalDateTime localDateTime = LocalDateTime.of(2021, 10, 15, 12, 12);
     String description = "Hej detta är ett event lol";
     String name = "Test Event";
     String address = "Exempelgatan 4";
@@ -21,7 +23,7 @@ public class EventTest {
 
     @Before
     public void beforeTest() {
-        event = new Event(name, address, localDate, description, contactList);
+        event = new Event(name, address, localDateTime, description, contactList);
     }
 
     @Test
@@ -35,8 +37,8 @@ public class EventTest {
         event.setDescription("Test Description 1");
         assertSame(description, event.getDescription());
 
-        event.setDate(LocalDate.now());
-        assertSame(localDate, event.getDate());
+        event.setDate(LocalDateTime.now());
+        assertSame(localDateTime, event.getDate());
     }
 
     @Test
