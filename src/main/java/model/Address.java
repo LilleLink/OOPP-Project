@@ -4,6 +4,7 @@ import java.awt.*;
 import java.net.URI;
 
 public class Address {
+    //TODO fix javadoc, rushing to get runnable version W3
     private final String address;
 
     public Address(String address){
