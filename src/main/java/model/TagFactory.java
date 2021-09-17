@@ -38,7 +38,7 @@ public class TagFactory {
         return tags;
     }
 
-    private boolean nameIsAvailable(String text){
+    boolean nameIsAvailable(String text){
         return stringUUIDHashMap.get(text) == null;
     }
 

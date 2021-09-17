@@ -13,6 +13,7 @@ public class User {
     private String name;
     private final Map<UUID, Contact> contactMap = new HashMap<>();
     private final ArrayList<Event> eventList = new ArrayList<>();
+    private final TagFactory tagFactory = new TagFactory();
 
     public User(String name){
         this.name = name;
@@ -43,6 +44,16 @@ public class User {
     public void setContactPhoneNumber(UUID id, String phoneNumber){
         Contact updatedContact = contactMap.get(id).setPhoneNumber(phoneNumber);
         contactMap.replace(id, updatedContact);
+    }
+
+    public boolean createTag(String name){
+        if (!tagFactory.nameIsAvailable(name)) return false;
+        tagFactory.createTag(name);
+        return true;
+    }
+
+    public ArrayList<UUID> getContactTags(UUID contact){
+        return contactMap.get(contact).getTagsIdList();
     }
 
     //todo check if contact actually exists for add and remove tag methods
