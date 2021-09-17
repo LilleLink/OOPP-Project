@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Event {
 
@@ -12,6 +13,7 @@ public class Event {
     private LocalDateTime dateTime;
     private String description;
 
+    private final ArrayList<UUID> tagIdList = new ArrayList<>();
     private List<Contact> registeredContacts;
 
     public Event(String name, String address, LocalDateTime dateTime, String description, List<Contact> registeredContacts) {
@@ -24,7 +26,7 @@ public class Event {
 
     public Event(String name, LocalDateTime date){
         this.name = name;
-        this.dateTime = dateTime;
+        this.dateTime = date;
     }
 
     public String getName() {
@@ -79,4 +81,17 @@ public class Event {
         return this.registeredContacts.removeAll(contactList);
     }
 
+    public boolean addTag(UUID tag){
+        if (tagIdList.contains(tag)) return false;
+        tagIdList.add(tag);
+        return true;
+    }
+
+    public boolean removeTag(UUID id){
+        return tagIdList.remove(id);
+    }
+
+    public ArrayList<UUID> getTagsIdList(){
+        return new ArrayList<>(tagIdList);
+    }
 }

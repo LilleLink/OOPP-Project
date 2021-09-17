@@ -13,6 +13,7 @@ public class User {
     private String name;
     private final Map<UUID, Contact> contactMap = new HashMap<>();
     private final ArrayList<Event> eventList = new ArrayList<>();
+    private final TagFactory tagFactory = new TagFactory();
 
     public User(String name){
         this.name = name;
@@ -45,6 +46,16 @@ public class User {
         contactMap.replace(id, updatedContact);
     }
 
+    public boolean createTag(String name){
+        if (!tagFactory.nameIsAvailable(name)) return false;
+        tagFactory.createTag(name);
+        return true;
+    }
+
+    public ArrayList<UUID> getContactTags(UUID contact){
+        return contactMap.get(contact).getTagsIdList();
+    }
+
     //todo check if contact actually exists for add and remove tag methods
     public boolean addContactTag(UUID contactId, UUID tagId){
         Contact contact = contactMap.get(contactId);
@@ -59,6 +70,19 @@ public class User {
     public ArrayList<UUID> getContactTagIds(UUID contactId){
         Contact contact = contactMap.get(contactId);
         return contact.getTagsIdList();
+    }
+
+    //todo check if contact actually exists for add and remove tag methods
+    public boolean addEventTag(Event event, UUID tagId){
+        return(event.addTag(tagId));
+    }
+
+    public boolean removeEventTag(Event event, UUID tagId){
+        return(event.removeTag(tagId));
+    }
+
+    public ArrayList<UUID> getEventTagIds(Event event){
+        return event.getTagsIdList();
     }
 
     public void addEvent(String name, LocalDateTime dateTime){
