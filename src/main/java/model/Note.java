@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 /**
- * Represents a documented note containing text and the point in time that it was created
+ * Represents a documented note containing text and the point in time that it was created.
  */
 class Note {
 
@@ -13,8 +13,8 @@ class Note {
     private final LocalDateTime pointOfCreation;
 
     /**
-     * Creates an instance of Note containing the given text
-     * Sets the text to an empty String and the point of creation to the current time
+     * Creates an instance of Note containing the given text.
+     * Sets the text to an empty String and the point of creation to the current time.
      * @param text the string to be stored
      */
     public Note(String text) {
@@ -23,15 +23,15 @@ class Note {
     }
 
     /**
-     * Creates an instance of Note containing default values as if it were empty
-     * Sets the text to an empty String and the point of creation to the current time
+     * Creates an instance of Note containing default values as if it were empty.
+     * Sets the text to an empty String and the point of creation to the current time.
      */
     public Note() {
         this("");
     }
 
     /**
-     * Gives the text contained in the note
+     * Gives the text contained in the note.
      * @return a String
      */
     public String viewNote() {
@@ -39,7 +39,7 @@ class Note {
     }
 
     /**
-     * Sets the text contained in the note to the given text
+     * Sets the text contained in the note to the given text.
      * @param newText a new String
      * @return the given String
      */
@@ -49,7 +49,7 @@ class Note {
     }
 
     /**
-     * Gives the date of creation as a String
+     * Gives the date of creation as a String.
       * @return a String
      */
     public String dateToString() {
@@ -78,7 +78,7 @@ class Note {
     }
 
     /**
-     * Returns the number of characters contained in the text
+     * Returns the number of characters contained in the text.
      * @return an integer
      */
     public int size() {
@@ -86,7 +86,7 @@ class Note {
     }
 
     /**
-     * Gives the date of creation
+     * Gives the date of creation.
      * @return a date consisting of year, month and day
      */
     protected LocalDate viewDate() {
@@ -94,7 +94,7 @@ class Note {
     }
 
     /**
-     * Gives the time of creation
+     * Gives the time of creation.
      * @return a time consisting of hours, minutes, seconds and nanoseconds
      */
     protected LocalTime viewTime() {
