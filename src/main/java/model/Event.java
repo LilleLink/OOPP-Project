@@ -9,7 +9,7 @@ import java.util.UUID;
 public class Event {
 
     private String name;
-    private String address;
+    private Address address;
     private LocalDateTime dateTime;
     private String description;
 
@@ -19,7 +19,7 @@ public class Event {
 
     public Event(String name, String address, LocalDateTime dateTime, String description, List<Contact> registeredContacts) {
         this.name = name;
-        this.address = address;
+        this.address = new Address(address);
         this.dateTime = dateTime;
         this.description = description;
         this.registeredContacts = registeredContacts;
@@ -35,11 +35,11 @@ public class Event {
     }
 
     public Event setName(String name) {
-        return new Event(name, this.address, this.dateTime, this.description, this.registeredContacts);
+        return new Event(name, this.address.getAddress(), this.dateTime, this.description, this.registeredContacts);
     }
 
     public String getAddress() {
-        return address;
+        return address.getAddress();
     }
 
     public Event setAddress(String address) {
@@ -51,7 +51,7 @@ public class Event {
     }
 
     public Event setDate(LocalDateTime dateTime) {
-        return new Event(this.name, this.address, dateTime, this.description, this.registeredContacts);
+        return new Event(this.name, this.address.getAddress(), dateTime, this.description, this.registeredContacts);
     }
 
     public String getDescription() {
@@ -59,7 +59,7 @@ public class Event {
     }
 
     public Event setDescription(String description) {
-        return new Event(this.name, this.address, this.dateTime, description, this.registeredContacts);
+        return new Event(this.name, this.address.getAddress(), this.dateTime, description, this.registeredContacts);
     }
 
     public List<Contact> getRegisteredContacts() {
