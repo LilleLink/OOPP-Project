@@ -10,7 +10,6 @@ import java.time.LocalTime;
 public class Note {
 
     private String text;
-
     private final LocalDateTime pointOfCreation;
 
     /**
@@ -50,10 +49,26 @@ public class Note {
     }
 
     /**
+     * Gives the date of creation as a String
+      * @return a String
+     */
+    public String dateToString() {
+        return viewDate().toString();
+    }
+
+    /**
+     * Gives the time of creation as a String
+     * @return a String
+     */
+    public String timeToString() {
+        return viewTime().toString();
+    }
+
+    /**
      * Gives the date of creation
      * @return a date consisting of year, month and day
      */
-    LocalDate viewDate() {
+    protected LocalDate viewDate() {
         return pointOfCreation.toLocalDate();
     }
 
@@ -61,7 +76,7 @@ public class Note {
      * Gives the time of creation
      * @return a time consisting of hours, minutes, seconds and nanoseconds
      */
-    LocalTime viewTime() {
+    protected LocalTime viewTime() {
         return pointOfCreation.toLocalTime();
     }
 
