@@ -30,8 +30,17 @@ public class NoteTest {
         assert(note.viewDate().equals(date));
     }
 
-    public void notes() {
-        Notes notes = new Notes();
-
+    @Test
+    public void compareAgeOlderTest() {
+        Note note = new Note();
+        try {
+            Thread.sleep(1000);
+        }
+        catch(InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        Note newNote = new Note();
+        int diff = note.compareAge(newNote);
+        assert(diff < 0);
     }
 }

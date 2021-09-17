@@ -7,7 +7,7 @@ import java.time.LocalTime;
 /**
  * Represents a documented note containing text and the point in time that it was created
  */
-public class Note {
+class Note {
 
     private String text;
     private final LocalDateTime pointOfCreation;
@@ -65,6 +65,27 @@ public class Note {
     }
 
     /**
+     * Compares the time and date of this note to another note.
+     * The comparison is firstly based on the date. Compares time if dates are considered equal.
+     * @return the comparator value, negative if less, positive if greater
+     */
+    public int compareAge(Note other) {
+        int cmp = viewDate().compareTo(other.viewDate());
+        if(cmp == 0) {
+            cmp = viewTime().compareTo(other.viewTime());
+        }
+        return cmp;
+    }
+
+    /**
+     * Returns the number of characters contained in the text
+     * @return an integer
+     */
+    public int size() {
+        return text.length();
+    }
+
+    /**
      * Gives the date of creation
      * @return a date consisting of year, month and day
      */
@@ -79,6 +100,7 @@ public class Note {
     protected LocalTime viewTime() {
         return pointOfCreation.toLocalTime();
     }
+
 
 
 }
