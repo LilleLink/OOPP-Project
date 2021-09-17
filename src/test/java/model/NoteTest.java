@@ -29,4 +29,9 @@ public class NoteTest {
         LocalDate date = LocalDate.now();
         assert(note.viewDate().equals(date));
     }
+
+    public void notes() {
+        Notes notes = new Notes();
+
+    }
 }
