@@ -72,6 +72,19 @@ public class User {
         return contact.getTagsIdList();
     }
 
+    //todo check if contact actually exists for add and remove tag methods
+    public boolean addEventTag(Event event, UUID tagId){
+        return(event.addTag(tagId));
+    }
+
+    public boolean removeEventTag(Event event, UUID tagId){
+        return(event.removeTag(tagId));
+    }
+
+    public ArrayList<UUID> getEventTagIds(Event event){
+        return event.getTagsIdList();
+    }
+
     public void addEvent(String name, LocalDateTime dateTime){
         eventList.add(new Event(name, dateTime));
     }
