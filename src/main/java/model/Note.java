@@ -12,24 +12,23 @@ public class Note {
     private String text;
 
     private final LocalDateTime pointOfCreation;
-    /**
-     * Creates an instance of Note containing default values as if it were empty
-     *
-     * Sets the text to an empty String and the time of creation to the current time
-     */
-    public Note() {
-        this.text = "";
-        this.pointOfCreation = LocalDateTime.now();
-    }
 
     /**
      * Creates an instance of Note containing the given text
-     * Sets the text to an empty String and the time of creation to the current time
+     * Sets the text to an empty String and the point of creation to the current time
      * @param text the string to be stored
      */
     public Note(String text) {
         this.text = text;
         this.pointOfCreation = LocalDateTime.now();
+    }
+
+    /**
+     * Creates an instance of Note containing default values as if it were empty
+     * Sets the text to an empty String and the point of creation to the current time
+     */
+    public Note() {
+        this("");
     }
 
     /**
@@ -54,7 +53,7 @@ public class Note {
      * Gives the date of creation
      * @return a date consisting of year, month and day
      */
-    public LocalDate viewDate() {
+    LocalDate viewDate() {
         return pointOfCreation.toLocalDate();
     }
 
@@ -62,7 +61,8 @@ public class Note {
      * Gives the time of creation
      * @return a time consisting of hours, minutes, seconds and nanoseconds
      */
-    public LocalTime viewTime() {
+    LocalTime viewTime() {
         return pointOfCreation.toLocalTime();
     }
+
 }
