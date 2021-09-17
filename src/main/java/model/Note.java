@@ -100,7 +100,4 @@ class Note {
     protected LocalTime viewTime() {
         return pointOfCreation.toLocalTime();
     }
-
-
-
 }

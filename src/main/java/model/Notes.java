@@ -41,12 +41,22 @@ public class Notes {
     }
 
     /**
-     * Gives the current amount of notes
-     * @return an integer
+     * Gives the current number of elements in notes
+     * @return the number of elements
      */
     public int size() {
         return elements.size();
     }
+
+    /**
+     * Gives the text for the note at the given index
+     * @param index the index of the note to view
+     * @return the text of the viewed note
+     */
+    public String viewNoteAt(int index) {
+        return elements.get(index).viewNote();
+    }
+
 
 
 }
