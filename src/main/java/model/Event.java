@@ -45,11 +45,11 @@ public class Event {
         return new Event(this.name, address, this.dateTime, this.description, this.contactIdList);
     }
 
-    public LocalDateTime getDate() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public Event setDate(LocalDateTime dateTime) {
+    public Event setDateTime(LocalDateTime dateTime) {
         return new Event(this.name, this.address.getAddress(), dateTime, this.description, this.contactIdList);
     }
 
