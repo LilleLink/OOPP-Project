@@ -1,10 +1,7 @@
 package model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
@@ -12,13 +9,12 @@ import java.util.UUID;
 public class Event {
 
     private String name;
-    private Address address;
+    private Address address = new Address("");
     private LocalDateTime dateTime;
     private String description;
 
-    private final ArrayList<UUID> tagIdList = new ArrayList<>();
-    private ArrayList<UUID> contactIdList = new ArrayList<>();
-
+    private Tag tag;
+    private ArrayList<Contact> contacts = new ArrayList<>();
 
     /***
      * Creates an event with the given parameters.
@@ -26,14 +22,16 @@ public class Event {
      * @param address the physical address of the event
      * @param dateTime the date and time of the event
      * @param description the description of the event
-     * @param contactIdList the list containing the IDs of the contacts tagged in the event
+     * @param contacts the list containing the IDs of the contacts tagged in the event
+     * @param tag the list containing the IDs of the tags tagged on the event
      */
-    public Event(String name, String address, LocalDateTime dateTime, String description, ArrayList<UUID> contactIdList) {
+    Event(String name, String address, LocalDateTime dateTime, String description, ArrayList<Contact> contacts, Tag tag) {
         this.name = name;
         this.address = new Address(address);
         this.dateTime = dateTime;
         this.description = description;
-        this.contactIdList = contactIdList;
+        this.contacts = contacts;
+        this.tag = tag;
     }
 
     /***
@@ -41,7 +39,7 @@ public class Event {
      * @param name the name of the event
      * @param date the date of the event
      */
-    public Event(String name, LocalDateTime date) {
+    Event(String name, LocalDateTime date) {
         this.name = name;
         this.dateTime = date;
     }
@@ -57,10 +55,9 @@ public class Event {
     /***
      * Sets the name of the event
      * @param name the name of the event
-     * @return a copy of the event with the new name
      */
-    public Event setName(String name) {
-        return new Event(name, this.address.getAddress(), this.dateTime, this.description, this.contactIdList);
+    void setName(String name) {
+        this.name = name;
     }
 
     /***
@@ -74,10 +71,9 @@ public class Event {
     /***
      * Sets the address of the event
      * @param address the address of the event
-     * @return a copy of the event with the new address.
      */
-    public Event setAddress(String address) {
-        return new Event(this.name, address, this.dateTime, this.description, this.contactIdList);
+    void setAddress(String address) {
+        this.address = new Address(address);
     }
 
     /***
@@ -91,10 +87,9 @@ public class Event {
     /***
      * Sets the date and time of the event
      * @param dateTime the date and time of the event
-     * @return a copy of the event with the new date/time
      */
-    public Event setDateTime(LocalDateTime dateTime) {
-        return new Event(this.name, this.address.getAddress(), dateTime, this.description, this.contactIdList);
+    void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
     /***
@@ -108,67 +103,61 @@ public class Event {
     /***
      * Sets the description of the event
      * @param description the description of the event
-     * @return a copy of the event with the new description
      */
-    public Event setDescription(String description) {
-        return new Event(this.name, this.address.getAddress(), this.dateTime, description, this.contactIdList);
+    void setDescription(String description) {
+        this.description = description;
     }
 
     /***
      * Adds a tag to the event
-     * @param tag the UUID of the tag
-     * @return true if it succeeds, false if it already exists
+     * @param tag the tag to be added
      */
-    public boolean addTag(UUID tag){
-        if (tagIdList.contains(tag)) return false;
-        tagIdList.add(tag);
-        return true;
+    void addTag(Tag tag){
+        this.tag = tag;
     }
 
     /***
      * Removes a tag from the event
-     * @param id the id of the tag to be removed
-     * @return true if operation successful, false if operation failed
      */
-    public boolean removeTag(UUID id){
-        return tagIdList.remove(id);
+    void removeTag(){
+        tag = null;
     }
 
     /***
-     * Returns a copy of the ArrayList containing the tag UUID's
-     * @return a copy of the ArrayList
+     * Returns tag
+     * @return the tag
      */
-    public ArrayList<UUID> getTagsIdList(){
-        return new ArrayList<>(tagIdList);
+    public Tag getTag(){
+        return this.tag;
     }
 
     /***
      * Adds a contact to the event
-     * @param id the id of the contact to be added
+     * @param contact the contact to be added
      * @return true if operation successful, false if it already exists.
      */
-    public boolean addContact(UUID id){
-        if (contactIdList.contains(id)){
+    public boolean addContact(Contact contact){
+        if (contacts.contains(contact)){
             return false;
         }
-        contactIdList.add(id);
+        contacts.add(contact);
         return true;
     }
 
     /***
      * Removes a contact from the event
-     * @param id the ID of the contact to be removed
+     * @param contact the contact to be removed
      * @return true if operation successful, false if not.
      */
-    public boolean removeContact(UUID id){
-        return contactIdList.remove(id);
+    public boolean removeContact(Contact contact){
+        return contacts.remove(contact);
     }
 
     /***
-     * Returns a copy of the contact UUID arraylist.
-     * @return a copy of the contact UUID arraylist.
+     * Returns the contact arraylist.
+     * @return the contact arraylist.
      */
-    public ArrayList<UUID> getContactIdList(){
-        return new ArrayList<>(contactIdList);
+    public ArrayList<Contact> getContacts(){
+        return this.contacts;
     }
 }
