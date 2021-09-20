@@ -9,6 +9,7 @@ public class Contact {
     private String name;
     private String phoneNumber = "";
     private Address address = new Address("");
+    //TODO notes
 
     /**
      * @param name The contact's name.
