@@ -2,9 +2,7 @@ package model;
 
 import org.junit.Before;
 import org.junit.Test;
-
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 import static org.junit.Assert.*;
 
@@ -34,39 +32,39 @@ public class EventTest {
     // To make sure its visible and things are returned without side-effects
     @Test
     public void editAttributes() {
-        event = event.setAddress("Hubben 2.1");
+        event.setAddress("Hubben 2.1");
         assertEquals("Hubben 2.1", event.getAddress());
 
-        event = event.setDateTime(LocalDateTime.of(2021, 11, 17, 11, 30));
+        event.setDateTime(LocalDateTime.of(2021, 11, 17, 11, 30));
         assertEquals(30, event.getDateTime().getMinute());
 
-        event = event.setDescription("simpens födelsedag");
+        event.setDescription("simpens födelsedag");
         assertEquals("simpens födelsedag", event.getDescription());
 
-        event = event.setName("test");
+        event.setName("test");
         assertEquals("test", event.getName());
     }
 
     @Test
     public void registerAndUnregisterContactID() {
         Contact contact = new Contact("simpen");
-        event.addContact(contact.getId());
-        assertTrue(event.getContactIdList().contains(contact.getId()));
+        event.addContact(contact);
+        assertTrue(event.getContacts().contains(contact));
 
-        event.removeContact(contact.getId());
-        assertFalse(event.getContactIdList().contains(contact.getId()));
+        event.removeContact(contact);
+        assertFalse(event.getContacts().contains(contact));
     }
 
-    @Test
+    /*@Test
     public void tagAndUntagTest() {
         TagFactory tf = new TagFactory();
-        UUID myTag = tf.createTag("Kompisaj");
+        Tag myTag = tf.createTag("Kompisaj");
 
         event.addTag(myTag);
-        assertTrue(event.getTagsIdList().contains(myTag));
+        assertTrue(event.getTags().contains(myTag));
 
         event.removeTag(myTag);
-        assertFalse(event.getTagsIdList().contains(myTag));
-    }
+        assertFalse(event.getTags().contains(myTag));
+    }*/
 
 }
