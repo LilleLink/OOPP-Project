@@ -15,13 +15,6 @@ public class NoteTest {
         assert (diff <= 2);
     }
 
-    @Test
-    public void editTextTest() {
-        String text = "Test";
-        Note note = new Note();
-        String newText = note.editNote(text);
-        assert(newText.equals(note.viewNote()));
-    }
 
     @Test
     public void dateOfCreationTest() {

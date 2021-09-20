@@ -9,7 +9,9 @@ import java.time.LocalTime;
  */
 class Note {
 
-    private String text;
+    // Resembles the content of the note
+    private final String text;
+    // The date and time the note was created
     private final LocalDateTime pointOfCreation;
 
     /**
@@ -22,12 +24,23 @@ class Note {
         this.pointOfCreation = LocalDateTime.now();
     }
 
+
     /**
      * Creates an instance of Note containing default values as if it were empty.
      * Sets the text to an empty String and the point of creation to the current time.
      */
     public Note() {
         this("");
+    }
+
+    /**
+     * Private constructor for instancing a note with the given text, date and time.
+     * @param text a String
+     * @param pointOfCreation a date and time
+     */
+    private Note(String text, LocalDateTime pointOfCreation) {
+        this.text = text;
+        this.pointOfCreation = pointOfCreation;
     }
 
     /**
@@ -39,13 +52,13 @@ class Note {
     }
 
     /**
-     * Sets the text contained in the note to the given text.
+     * Returns a new Note containing the given text and the given date and time.
+     * Uses mutate by copy.
      * @param newText a new String
-     * @return the given String
+     * @return a new Note containing the given text
      */
-    public String editNote(String newText) {
-        this.text = newText;
-        return newText;
+    public Note editNote(String newText) {
+        return new Note(newText,pointOfCreation);
     }
 
     /**
@@ -67,7 +80,7 @@ class Note {
     /**
      * Compares the time and date of this note to another note.
      * The comparison is firstly based on the date. Compares time if dates are considered equal.
-     * @return the comparator value, negative if less, positive if greater
+     * @return the comparator value, negative if this is older, positive if this is newer
      */
     public int compareAge(Note other) {
         int cmp = viewDate().compareTo(other.viewDate());

@@ -1,13 +1,14 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a collection of Note objects with composite operations.
  */
 public class Notes {
 
-    private final ArrayList<Note> elements;
+    private final List<Note> elements;
 
     public Notes() {
         elements = new ArrayList<>();
