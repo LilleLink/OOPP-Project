@@ -7,7 +7,7 @@ import java.time.LocalTime;
 /**
  * Represents a documented note containing text and the point in time that it was created.
  */
-class Note {
+class Note implements Comparable<Note> {
 
     // Resembles the content of the note
     private final String text;
@@ -19,7 +19,7 @@ class Note {
      * Sets the text to an empty String and the point of creation to the current time.
      * @param text the string to be stored
      */
-    public Note(String text) {
+    Note(String text) {
         this.text = text;
         this.pointOfCreation = LocalDateTime.now();
     }
@@ -29,7 +29,7 @@ class Note {
      * Creates an instance of Note containing default values as if it were empty.
      * Sets the text to an empty String and the point of creation to the current time.
      */
-    public Note() {
+    Note() {
         this("");
     }
 
@@ -47,17 +47,17 @@ class Note {
      * Gives the text contained in the note.
      * @return a String
      */
-    public String viewNote() {
+    String viewNote() {
         return this.text;
     }
 
     /**
-     * Returns a new Note containing the given text and the given date and time.
+     * Returns a new Note containing the given text and keeps this point of creation.
      * Uses mutate by copy.
      * @param newText a new String
      * @return a new Note containing the given text
      */
-    public Note editNote(String newText) {
+    Note editNote(String newText) {
         return new Note(newText,pointOfCreation);
     }
 
@@ -65,7 +65,7 @@ class Note {
      * Gives the date of creation as a String.
       * @return a String
      */
-    public String dateToString() {
+    String dateToString() {
         return viewDate().toString();
     }
 
@@ -73,7 +73,7 @@ class Note {
      * Gives the time of creation as a String
      * @return a String
      */
-    public String timeToString() {
+    String timeToString() {
         return viewTime().toString();
     }
 
@@ -82,7 +82,7 @@ class Note {
      * The comparison is firstly based on the date. Compares time if dates are considered equal.
      * @return the comparator value, negative if this is older, positive if this is newer
      */
-    public int compareAge(Note other) {
+    int compareAge(Note other) {
         int cmp = viewDate().compareTo(other.viewDate());
         if(cmp == 0) {
             cmp = viewTime().compareTo(other.viewTime());
@@ -94,7 +94,7 @@ class Note {
      * Returns the number of characters contained in the text.
      * @return an integer
      */
-    public int size() {
+    int size() {
         return text.length();
     }
 
@@ -102,7 +102,7 @@ class Note {
      * Gives the date of creation.
      * @return a date consisting of year, month and day
      */
-    protected LocalDate viewDate() {
+    LocalDate viewDate() {
         return pointOfCreation.toLocalDate();
     }
 
@@ -110,7 +110,25 @@ class Note {
      * Gives the time of creation.
      * @return a time consisting of hours, minutes, seconds and nanoseconds
      */
-    protected LocalTime viewTime() {
+    LocalTime viewTime() {
         return pointOfCreation.toLocalTime();
+    }
+
+    //-----------------------------------------------------------------------
+    /**
+     * Compares this note to another note.
+     * <p>
+     *     The comparison is based on the date and time of creation.
+     *     If this note is considered older, a negative value is returned.
+     *     If this note is considered newer, a positive value is returned.
+     *
+     * </p>
+     * Note: this class has a natural ordering that is inconsistent with equals
+     * @param o the other note to compare to, not null
+     * @return the comparator value, negative if considered less, positive if considered greater
+     */
+    @Override // Override for JavaDoc
+    public int compareTo(Note o) {
+        return compareAge(o);
     }
 }

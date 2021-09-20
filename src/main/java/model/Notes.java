@@ -4,32 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents a collection of Note objects with composite operations.
+ * Represents a list of Note objects with restricted operations.
+ * Note objects contained in the list are sorted after age.
  */
-public class Notes {
+class Notes {
 
+    // Elements represented as a list of note objects
     private final List<Note> elements;
 
-    public Notes() {
+    /**
+     * Default constructor containing an empty list.
+     */
+    Notes() {
         elements = new ArrayList<>();
     }
 
-    public Notes(Notes oldNotes) {
+    /**
+     * Copy constructor.
+     * Instantiates a new sorted list from the list contained in the given notes.
+     * @param oldNotes the notes to be copied
+     */
+    Notes(Notes oldNotes) {
         this.elements = new ArrayList<>(oldNotes.elements);
+        elements.sort(Note::compareTo);
     }
 
     /**
-     * Instantiates an empty note and appends it to the list of elements.
+     * Instantiates an empty note with default constructor and appends it to the list of elements.
+     * New note objects will always be newer than the object last added to the list.
      */
-    public void addNote() {
+    void addNote() {
         elements.add(new Note());
     }
 
     /**
      * Instantiates a note with the given string and appends it to the list of elements.
+     * New note objects will always be newer than the object last added to the list.
      * @param text the String of text to be contained in the note.
      */
-    public void addNote(String text) {
+    void addNote(String text) {
         elements.add(new Note(text));
     }
 
@@ -37,7 +50,7 @@ public class Notes {
      * Removes the Note from the list of elements at the specified position.
      * @param index the index of the note to be removed.
      */
-    public void removeNote(int index) {
+    void removeNote(int index) {
         elements.remove(index);
     }
 
@@ -45,19 +58,37 @@ public class Notes {
      * Gives the current number of elements in notes
      * @return the number of elements
      */
-    public int size() {
+    int size() {
         return elements.size();
     }
 
     /**
-     * Gives the text for the note at the given index
+     * Gives the text for the note at the given index.
      * @param index the index of the note to view
      * @return the text of the viewed note
      */
-    public String viewNoteAt(int index) {
+    String viewNoteAt(int index) {
         return elements.get(index).viewNote();
     }
 
+    /**
+     * Replaces the note at the given index with a new one containing the given text.
+     * The list order is unaffected.
+     * @param index the index of the note being edited
+     * @param text the new text
+     */
+    void editNoteAt(int index, String text) {
+        Note newNote = elements.get(index).editNote(text);
+        elements.set(index,newNote);
+    }
+
+    /**
+     * Returns a copy of the list of note objects
+     * @return the list of notes
+     */
+    List<Note> getElements() {
+        return new ArrayList<>(elements);
+    }
 
 
 }
