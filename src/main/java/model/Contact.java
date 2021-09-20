@@ -16,11 +16,6 @@ public class Contact {
         this.name = name;
     }
 
-    private Contact(Contact old){
-        name = old.name;
-        phoneNumber = old.phoneNumber;
-    }
-
     /**
      *
      * @return The contact's name.
@@ -41,23 +36,17 @@ public class Contact {
     /**
      * Sets the name of the contact.
      * @param name The name to change to.
-     * @return A copy of the contact with the updated name.
      */
-    public Contact setName(String name){
-        Contact newContact = new Contact(this);
-        newContact.name = name;
-        return newContact;
+    void setName(String name){
+        this.name = name;
     }
 
     /**
      * Sets the phone number of the contact.
      * @param number The number to change to.
-     * @return A copy of the contact with the updated phone number.
      */
-    public Contact setPhoneNumber(String number){
-        Contact newContact = new Contact(this);
-        newContact.phoneNumber = number;
-        return newContact;
+    void setPhoneNumber(String number){
+        this.phoneNumber = number;
     }
 
 }
