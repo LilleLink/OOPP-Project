@@ -1,15 +1,17 @@
 package model;
 
-import java.awt.*;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Contact {
 
     private String name;
     private String phoneNumber = "";
     private Address address = new Address("");
-    //TODO notes
+    private final List<Tag> tagList = new ArrayList<>();
+    private Notes notes;
 
     /**
      * @param name The contact's name.
