@@ -10,8 +10,9 @@ public class Contact {
     private String name;
     private String phoneNumber = "";
     private Address address = new Address("");
-    private final List<Tag> tagList = new ArrayList<>();
+    private final List<Tag> tags = new ArrayList<>();
     private Notes notes;
+    private boolean isDeleted;
 
     /**
      * @param name The contact's name.
@@ -75,6 +76,39 @@ public class Contact {
      */
     void setPhoneNumber(String number){
         this.phoneNumber = number;
+    }
+
+    /**
+     * Marks contact as deleted which removes it from the contact list, but it is still viewable in earlier events.
+     */
+    void delete(){
+        isDeleted = true;
+    }
+
+    /**
+     * Adds a tag to the contact.
+     * @param tag The desired tag.
+     */
+    void addTag(Tag tag){
+        tags.add(tag);
+    }
+
+    /**
+     * Removes a tag from the contact.
+     * @param tag The tag to remove.
+     * @throws TagNotFoundException If the contact does not have the given tag.
+     */
+    void removeTag(Tag tag) throws TagNotFoundException {
+        if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
+        tags.remove(tag);
+    }
+
+    /**
+     *
+     * @return A list of the contact's tags.
+     */
+    public List<Tag> getTags(){
+        return new ArrayList<>(tags);
     }
 
 }
