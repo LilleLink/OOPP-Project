@@ -17,53 +17,65 @@ public class TagHandlerTest {
 
     @Test
     public void creationTest(){
-        factory.createTag("First tag");
-        factory.createTag("Second Tag");
+        try {
+            factory.createTag("First tag");
+            factory.createTag("Second Tag");
+        } catch (NameNotAvailableException e){
+            fail();
+        }
         ArrayList<Tag> tags = factory.getTags();
         assertNotEquals(tags.get(0).getName(), tags.get(1).getName());
     }
 
     @Test
     public void noDuplicateTest(){
-        Tag t1 = factory.createTag("First tag");
-        Tag t2 = factory.createTag("First tag");
-        assertEquals(t1, t2);
+        try {
+            Tag t1 = factory.createTag("First tag");
+            Tag t2 = factory.createTag("First tag");
+            assertEquals(t1, t2);
+        } catch (NameNotAvailableException e){
+            fail();
+        }
     }
 
     @Test
     public void renameTest(){
-        Tag t1 = factory.createTag("First tag");
         try {
+            Tag t1 = factory.createTag("First tag");
             t1.renameTo("new name");
+            assertEquals("new name", t1.name);
         } catch (NameNotAvailableException e){
             fail();
         }
-        assertEquals("new name", t1.name);
     }
 
     @Test
     public void renameToDuplicateNameTest(){
-        Tag t1 = factory.createTag("First tag");
-        Tag t2 = factory.createTag("Second tag");
-        assertThrows(NameNotAvailableException.class, () -> t1.renameTo("Second tag"));
-        assertNotEquals(t1.name, t2.name);
+        try {
+            Tag t1 = factory.createTag("First tag");
+            Tag t2 = factory.createTag("Second tag");
+            assertThrows(NameNotAvailableException.class, () -> t1.renameTo("Second tag"));
+            assertNotEquals(t1.name, t2.name);
+        } catch (NameNotAvailableException e){
+            fail();
+        }
     }
 
     @Test
     public void makeNameAvailableTest(){
-        Tag t1 = factory.createTag("First tag");
         try {
+            Tag t1 = factory.createTag("First tag");
             t1.renameTo("Something else");
+            Tag t2 = factory.createTag("First tag");
+            assertNotEquals(t1, t2);
+            t2.delete();
+            Tag t3 = factory.createTag("First tag");
+            assertNotEquals(t1, t2);
+            assertNotEquals(t1, t3);
+            assertNotEquals(t2, t3);
         } catch (NameNotAvailableException e){
             fail();
         }
-        Tag t2 = factory.createTag("First tag");
-        assertNotEquals(t1, t2);
-        t2.delete();
-        Tag t3 = factory.createTag("First tag");
-        assertNotEquals(t1, t2);
-        assertNotEquals(t1, t3);
-        assertNotEquals(t2, t3);
     }
 
 }

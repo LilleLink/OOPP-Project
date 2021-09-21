@@ -12,13 +12,13 @@ public class TagHandler {
      * @param name The name of the new Tag
      * @return The id of the new Tag
      */
-    Tag createTag(String name){
+    Tag createTag(String name) throws NameNotAvailableException{
         Tag tag;
-        if (nameIsAvailable(name)){
+        if (!nameIsAvailable(name)){
+            throw new NameNotAvailableException(name);
+        } else {
             tag = new CommonTag(name);
             stringTagHashMap.put(name, tag);
-        } else {
-            tag = stringTagHashMap.get(name);
         }
         return tag;
     }
