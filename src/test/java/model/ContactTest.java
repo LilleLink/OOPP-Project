@@ -10,7 +10,6 @@ public class ContactTest {
 
     String testName = "Test Name";
 
-
     @Before
     public void setup(){
         c1 = new Contact(testName);

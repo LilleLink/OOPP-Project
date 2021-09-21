@@ -1,14 +1,8 @@
 package model;
 
-import javax.lang.model.type.ArrayType;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
-public class User {
+public class User implements IPRMVisitable{
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
     private final Collection<Event> events = new ArrayList<>();
@@ -23,5 +17,11 @@ public class User {
         this.name = name;
     }
 
+    @Override
+    public <T, E> void accept(IPRMVisitor<T, E> visitor, E env) {
+        events.forEach(e -> e.accept(visitor, env));
+        events.forEach(e -> e.accept(visitor, env));
 
+        visitor.visitUser(this, env);
+    }
 }

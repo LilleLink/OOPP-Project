@@ -9,7 +9,7 @@ import java.util.UUID;
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
  */
-public class Event {
+public class Event implements IPRMVisitable{
 
     private String name;
     private Address address;
@@ -170,5 +170,10 @@ public class Event {
      */
     public ArrayList<UUID> getContactIdList(){
         return new ArrayList<>(contactIdList);
+    }
+
+    @Override
+    public <T, E> void accept(IPRMVisitor<T, E> visitor, E env) {
+        visitor.visitEvent(this, env);
     }
 }
