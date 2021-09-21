@@ -2,15 +2,19 @@ package model;
 
 import model.exceptions.NameNotAvailableException;
 
-public abstract class Tag {
+class Tag {
 
-    protected String name;
+    private String name;
 
-    protected String color ="CDCDCD";
-    private boolean deleted;
+    private String color ="CDCDCD";
 
-    protected Tag(String name){
+    Tag(String name){
         this.name = name;
+    }
+
+    Tag(Tag other) {
+        this.name = other.name;
+        this.color = other.color;
     }
 
     /**
@@ -29,23 +33,6 @@ public abstract class Tag {
         return color;
     }
 
-    /**
-     * Deletes a Tag
-     */
-    void delete(){
-        this.deleted = true;
-        updateHandler();
-    }
-
-    protected abstract void updateHandler();
-
-    public boolean isDeleted(){ return this.deleted; }
-
-    /**
-     * Renames a Tag to the given string. Returns false if the name was not available
-     * @param name the new name
-     */
-    abstract void renameTo(String name) throws NameNotAvailableException;
 
     /**
      * Changes the color of a Tag

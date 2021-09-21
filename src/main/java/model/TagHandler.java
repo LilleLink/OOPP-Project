@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class TagHandler {
 
-    private HashMap<String, Tag> stringTagHashMap = new HashMap<>();
+    private final HashMap<String, Tag> stringTagHashMap = new HashMap<>();
 
     /**
      * Creates a new Tag if the name is available. If a tag of the given name already exists, the UUID for that tag is returned
@@ -22,16 +22,16 @@ public class TagHandler {
         if (!nameIsAvailable(name)){
             throw new NameNotAvailableException(name);
         } else {
-            tag = new CommonTag(name);
+            tag = new Tag(name);
             stringTagHashMap.put(name, tag);
         }
-        return tag;
+        return new Tag(tag);
     }
 
     Tag getTag(String name) throws TagNotFoundException{
         Tag tag = stringTagHashMap.get(name);
         if (tag == null) throw new TagNotFoundException(name);
-        return tag;
+        return new Tag(tag);
     }
 
     ArrayList<Tag> getTags(){
@@ -51,46 +51,21 @@ public class TagHandler {
 
     /**
      * Makes a name available again by "deleting" the tag which holds it. The tag still exists as instances in other classes
-     * @param tag The tag to be deleted
+     * @param tagName The tag to be deleted
      */
-    private void delete(Tag tag){
-        stringTagHashMap.remove(tag.name);
+    void delete(String tagName) {
+        stringTagHashMap.remove(tagName);
     }
 
     /**
      * Renames a Tag to the given string. Returns false if the name was not available
-     * @param name the new name
+     * @param newName the new name
      */
-    private void renameTo(Tag tag, String name) throws NameNotAvailableException{
-        if (stringTagHashMap.get(name) != null)
-            throw new NameNotAvailableException(name);
-        stringTagHashMap.remove(tag.name);
-        stringTagHashMap.put(name, tag);
+    void rename(String oldName, String newName) throws NameNotAvailableException{
+        if (stringTagHashMap.get(newName) != null)
+            throw new NameNotAvailableException(newName);
+        stringTagHashMap.remove(oldName);
+        stringTagHashMap.put(newName, new Tag(newName));
     }
 
-    private class CommonTag extends Tag{
-
-        private final TagHandler parentFactory;
-
-        private CommonTag(String name){
-            super(name);
-            parentFactory = TagHandler.this;
-        }
-
-        @Override
-        void delete() {
-            parentFactory.delete(this);
-        }
-
-        @Override
-        protected void updateHandler() {
-            parentFactory.delete(this);
-        }
-
-        @Override
-        void renameTo(String name) throws NameNotAvailableException {
-            parentFactory.renameTo(this, name);
-            this.name = name;
-        }
-    }
 }
