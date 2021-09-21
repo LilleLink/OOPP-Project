@@ -2,10 +2,12 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TagHandler {
 
-    private HashMap<String, Tag> stringTagHashMap = new HashMap<>();
+    private final Map<String, Tag> tagMap = new HashMap<>();
 
     /**
      * Creates a new Tag if the name is available. If a tag of the given name already exists, the UUID for that tag is returned
@@ -18,20 +20,20 @@ public class TagHandler {
             throw new NameNotAvailableException(name);
         } else {
             tag = new CommonTag(name);
-            stringTagHashMap.put(name, tag);
+            tagMap.put(name, tag);
         }
         return tag;
     }
 
     Tag getTag(String name) throws TagNotFoundException{
-        Tag tag = stringTagHashMap.get(name);
+        Tag tag = tagMap.get(name);
         if (tag == null) throw new TagNotFoundException(name);
         return tag;
     }
 
-    ArrayList<Tag> getTags(){
-        ArrayList<Tag> tags = new ArrayList<>();
-        stringTagHashMap.forEach((k,v) -> tags.add(v));
+    List<Tag> getTags(){
+        List<Tag> tags = new ArrayList<>();
+        tagMap.forEach((k, v) -> tags.add(v));
         return tags;
     }
 
@@ -41,7 +43,7 @@ public class TagHandler {
      * @return If the name was available
      */
     boolean nameIsAvailable(String name){
-        return stringTagHashMap.get(name) == null;
+        return tagMap.get(name) == null;
     }
 
     /**
@@ -49,7 +51,7 @@ public class TagHandler {
      * @param tag The tag to be deleted
      */
     private void delete(Tag tag){
-        stringTagHashMap.remove(tag.name);
+        tagMap.remove(tag.name);
     }
 
     /**
@@ -57,10 +59,10 @@ public class TagHandler {
      * @param name the new name
      */
     private void renameTo(Tag tag, String name) throws NameNotAvailableException{
-        if (stringTagHashMap.get(name) != null)
+        if (tagMap.get(name) != null)
             throw new NameNotAvailableException(name);
-        stringTagHashMap.remove(tag.name);
-        stringTagHashMap.put(name, tag);
+        tagMap.remove(tag.name);
+        tagMap.put(name, tag);
     }
 
     private class CommonTag extends Tag{
