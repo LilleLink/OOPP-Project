@@ -2,6 +2,6 @@ package model;
 
 public interface IPRMVisitable {
 
-    <T, E>void accept(IPRMVisitor<T, E> visitor, E env);
+    <E>void accept(IPRMVisitor<E> visitor, E env);
 
 }

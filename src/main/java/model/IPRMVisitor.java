@@ -1,10 +1,10 @@
 package model;
 
-public interface IPRMVisitor<T, E> {
+public interface IPRMVisitor<E> {
 
-    T visitUser(User user, E env);
-    T visitContact(Contact contact, E env);
-    T visitEvent(Event event, E env);
-    T visitNotes(Notes notes, E env);
+    void visitUser(User user, E env);
+    void visitContact(Contact contact, E env);
+    void visitEvent(Event event, E env);
+    void visitNotes(Notes notes, E env);
 
 }

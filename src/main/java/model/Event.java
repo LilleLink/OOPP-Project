@@ -162,7 +162,7 @@ public class Event implements IPRMVisitable{
     }
 
     @Override
-    public <T, E> void accept(IPRMVisitor<T, E> visitor, E env) {
+    public <E> void accept(IPRMVisitor<E> visitor, E env) {
         visitor.visitEvent(this, env);
     }
 }
