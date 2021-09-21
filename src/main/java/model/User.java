@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class User {
+public class User implements IPRMVisitable{
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
     private final Collection<Event> events = new ArrayList<>();
@@ -42,7 +42,7 @@ public class User {
      * @return true if the operation was successful, false if not
      */
     boolean addEvent(Event event) {
-        return eventList.add(event);
+        return events.add(event);
     }
 
     /***
@@ -51,15 +51,15 @@ public class User {
      * @return true if the operation was successful, false if not
      */
     boolean removeEvent(Event event) {
-        return eventList.remove(event);
+        return events.remove(event);
     }
 
     /***
      * Returns the users list of events
      * @return the list of events
      */
-    public ArrayList<Event> getEventList() {
-        return eventList;
+    public Collection<Event> getEventList() {
+        return events;
     }
 
     /***
@@ -69,7 +69,7 @@ public class User {
      */
     public List<Event> getContactEvents(Contact contact) {
         List<Event> contactEvents= new ArrayList<>();
-        for (Event e: eventList) {
+        for (Event e: events) {
             if (e.getContacts().contains(contact))
                 contactEvents.add(e);
         }
