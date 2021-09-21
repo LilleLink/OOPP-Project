@@ -12,6 +12,14 @@ public class User implements IPRMVisitable{
     private final TagHandler tagHandler = new TagHandler();
     private final Collection<Contact> contacts = new ArrayList<>();
 
+    Collection<Contact> getContacts() {
+        return this.contacts;
+    }
+
+    public void addContact(Contact contact) {
+        this.contacts.add(contact);
+    }
+
     /***
      * Instantiates a user object with the specified name.
      * @param name the name of the user
