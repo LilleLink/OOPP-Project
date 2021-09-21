@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -42,6 +43,10 @@ public class Event {
     Event(String name, LocalDateTime date) {
         this.name = name;
         this.dateTime = date;
+    }
+
+    public boolean isInFuture() {
+        return dateTime.compareTo(LocalDateTime.now()) > 0;
     }
 
     /***
