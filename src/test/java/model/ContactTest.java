@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.NameNotAvailableException;
+import model.exceptions.TagNotFoundException;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -40,7 +42,7 @@ public class ContactTest {
             c1.addTag(t1);
             assertEquals(1, c1.getTags().size());
             assertTrue(c1.getTags().contains(t1));
-        } catch (NameNotAvailableException e) {
+        } catch (model.exceptions.NameNotAvailableException e) {
             fail(e.getMessage());
         }
     }
@@ -52,7 +54,7 @@ public class ContactTest {
             c1.addTag(t1);
             c1.removeTag(t1);
             assertThrows(TagNotFoundException.class, () -> c1.removeTag(t1));
-        } catch (NameNotAvailableException | TagNotFoundException e) {
+        } catch (NameNotAvailableException e) {
             fail(e.getMessage());
         }
     }

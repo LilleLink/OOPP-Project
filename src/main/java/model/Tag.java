@@ -7,7 +7,7 @@ public abstract class Tag {
     protected String name;
 
     protected String color ="CDCDCD";
-    private boolean deleted;
+    private boolean deleted = false;
 
     protected Tag(String name){
         this.name = name;
@@ -61,6 +61,7 @@ public abstract class Tag {
     }
 
     private boolean isHexColor(String color){
+        if (color.length() != 6) return false;
         for (char c: color.toCharArray()){
             if (Character.digit(c, 16) == -1){
                 return false;

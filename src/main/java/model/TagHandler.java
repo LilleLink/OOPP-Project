@@ -5,8 +5,6 @@ import model.exceptions.TagNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TagHandler {
 
@@ -75,11 +73,6 @@ public class TagHandler {
         private CommonTag(String name){
             super(name);
             parentFactory = TagHandler.this;
-        }
-
-        @Override
-        void delete() {
-            parentFactory.delete(this);
         }
 
         @Override
