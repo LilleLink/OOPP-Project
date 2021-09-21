@@ -72,4 +72,13 @@ public class EventTest {
         assertNotEquals(event.getTag(), myTag);
     }
 
+    @Test
+    public void isInFutureTest() {
+        Event past = new Event("Past", LocalDateTime.of(2020, 9, 21, 10, 44));
+        Event future = new Event("Future", LocalDateTime.of(2022, 9, 21, 10,44));
+
+        assertFalse(past.isInFuture());
+        assertTrue(future.isInFuture());
+    }
+
 }
