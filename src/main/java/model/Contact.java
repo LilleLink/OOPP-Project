@@ -85,6 +85,10 @@ public class Contact {
         isDeleted = true;
     }
 
+    public boolean isDeleted(){
+        return isDeleted;
+    }
+
     /**
      * Adds a tag to the contact.
      * @param tag The desired tag.
