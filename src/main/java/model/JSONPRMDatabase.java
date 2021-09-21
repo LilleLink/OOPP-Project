@@ -1,26 +1,21 @@
 package model;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
-import javax.xml.crypto.Data;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class JSONUserDatabase implements IUserDatabase{
+public class JSONPRMDatabase implements IPRMDatabase {
 
     private Path dataDirectory;
 
-    JSONUserDatabase(Path dataDirectory) {
+    JSONPRMDatabase(Path dataDirectory) {
         this.dataDirectory = dataDirectory;
     }
 

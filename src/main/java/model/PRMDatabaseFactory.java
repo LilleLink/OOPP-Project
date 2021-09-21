@@ -3,17 +3,17 @@ package model;
 import java.io.IOException;
 import java.nio.file.Files;
 
-public class UserDatabaseFactory {
+public class PRMDatabaseFactory {
 
-    static IUserDatabase createUserDatabase() {
-        JSONUserDatabase jsonUserDatabase = null;
+    static IPRMDatabase createUserDatabase() {
+        JSONPRMDatabase jsonPrmDatabase = null;
         try {
-            jsonUserDatabase = new JSONUserDatabase(
+            jsonPrmDatabase = new JSONPRMDatabase(
                     Files.createTempDirectory("prm-woo" + System.nanoTime()));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return jsonUserDatabase;
+        return jsonPrmDatabase;
     }
 
 }
