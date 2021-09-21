@@ -1,5 +1,6 @@
 package model;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,7 +15,6 @@ public class NoteTest {
         int diff = note.viewTime().getSecond() - time.getSecond();
         assert (diff <= 2);
     }
-
 
     @Test
     public void dateOfCreationTest() {
@@ -35,5 +35,31 @@ public class NoteTest {
         Note newNote = new Note();
         int diff = note.compareAge(newNote);
         assert(diff < 0);
+
     }
+
+    @Test
+    public void sizeIncreaseTest() {
+        Note note = new Note();
+        int oldSize = note.size();
+        note = note.editNote("Pizza");
+        int newSize = note.size();
+        assert(oldSize < newSize);
+    }
+
+    @Test
+    public void timeStringNotNullTest() {
+        Note note = new Note();
+        String text = note.timeToString();
+        assertNotEquals(null, text);
+    }
+
+    @Test
+    public void dateStringNotNullTest() {
+        Note note = new Note();
+        String text = note.dateToString();
+        assertNotEquals(null,text);
+    }
+
+
 }

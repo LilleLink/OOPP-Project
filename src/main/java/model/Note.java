@@ -70,11 +70,15 @@ class Note implements Comparable<Note> {
     }
 
     /**
-     * Gives the time of creation as a String
+     * Gives the time of creation as a String containing numerical hour and minute.
+     * <p>
+     *     The output will be HH:MM.
+     * </p>
      * @return a String
      */
     String timeToString() {
-        return viewTime().toString();
+        LocalTime time = pointOfCreation.toLocalTime();
+        return time.getHour() + ":" + time.getMinute();
     }
 
     /**
