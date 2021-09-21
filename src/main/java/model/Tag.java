@@ -1,18 +1,14 @@
 package model;
 
-import java.util.UUID;
-
 public abstract class Tag {
 
     protected String name;
 
-    protected String color ="FCFCFC";
-
-    protected UUID id;
+    protected String color ="CDCDCD";
+    private boolean deleted;
 
     protected Tag(String name){
         this.name = name;
-        this.id = UUID.randomUUID();
     }
 
     /**
@@ -34,14 +30,20 @@ public abstract class Tag {
     /**
      * Deletes a Tag
      */
-    abstract void delete();
+    void delete(){
+        this.deleted = true;
+        updateHandler();
+    }
+
+    protected abstract void updateHandler();
+
+    public boolean isDeleted(){ return this.deleted; }
 
     /**
      * Renames a Tag to the given string. Returns false if the name was not available
      * @param name the new name
-     * @return if the renaming succeeded
      */
-    abstract boolean renameTo(String name);
+    abstract void renameTo(String name) throws NameNotAvailableException;
 
     /**
      * Changes the color of a Tag

@@ -2,87 +2,70 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 public class TagFactory {
 
-    private HashMap<String, UUID> stringUUIDHashMap = new HashMap<>();
-    private HashMap<UUID, Tag> UUIDTagHashMap = new HashMap<>();
+    private HashMap<String, Tag> stringTagHashMap = new HashMap<>();
 
     /**
      * Creates a new Tag if the name is available. If a tag of the given name already exists, the UUID for that tag is returned
      * @param name The name of the new Tag
      * @return The id of the new Tag
      */
-    UUID createTag(String name){
-        UUID id;
+    Tag createTag(String name){
+        Tag tag;
         if (nameIsAvailable(name)){
-            Tag tag = new CommonTag(name, this);
-            id = tag.id;
-            stringUUIDHashMap.put(name, id);
-            UUIDTagHashMap.put(id, tag);
+            tag = new CommonTag(name);
+            stringTagHashMap.put(name, tag);
         } else {
-            id = stringUUIDHashMap.get(name);
+            tag = stringTagHashMap.get(name);
         }
-        return id;
+        return tag;
     }
 
-    ArrayList<Tag> getTag(ArrayList<UUID> ids){
-        Tag tag;
+    List<Tag> getTags(){
         ArrayList<Tag> tags = new ArrayList<>();
-        for (UUID id: ids){
-            tag = UUIDTagHashMap.get(id);
-            if (tag != null)
-                tags.add(tag);
-        }
+        stringTagHashMap.forEach((k,v) -> tags.add(v));
         return tags;
     }
 
-    boolean nameIsAvailable(String text){
-        return stringUUIDHashMap.get(text) == null;
+    /**
+     * Checks if a name is already taken by another Tag
+     * @param name The name to be checked
+     * @return If the name was available
+     */
+    boolean nameIsAvailable(String name){
+        return stringTagHashMap.get(name) == null;
     }
 
+    /**
+     * Makes a name available again by "deleting" the tag which holds it. The tag still exists as instances in other classes
+     * @param tag The tag to be deleted
+     */
     private void delete(Tag tag){
-        stringUUIDHashMap.remove(tag.name);
-        UUIDTagHashMap.remove(tag.id);
+        stringTagHashMap.remove(tag.name);
     }
 
     /**
      * Renames a Tag to the given string. Returns false if the name was not available
      * @param name the new name
-     * @return if the renaming succeeded
      */
-    boolean renameTo(UUID id, String name){
-        Tag tag = UUIDTagHashMap.get(id);
-        if (tag == null) return false;
-        return renameTo(tag, name);
+    private void renameTo(Tag tag, String name) throws NameNotAvailableException{
+        if (stringTagHashMap.get(name) != null)
+            throw new NameNotAvailableException(name);
+        stringTagHashMap.remove(tag.name);
+        stringTagHashMap.put(name, tag);
     }
 
-    /**
-     *
-     * @param id UUID of the Tag to be checked
-     * @return The name of the tag
-     */
-    String getName(UUID id){
-        Tag tag = UUIDTagHashMap.get(id);
-        return tag==null? "":  tag.name;
-    }
-
-    private boolean renameTo(Tag tag, String name){
-        if (stringUUIDHashMap.get(name) != null) return false;
-        stringUUIDHashMap.remove(tag.name);
-        stringUUIDHashMap.put(name, tag.id);
-        tag.name = name;
-        return true;
-    }
-
-    private static class CommonTag extends Tag{
+    private class CommonTag extends Tag{
 
         private final TagFactory parentFactory;
 
-        private CommonTag(String name, TagFactory parent){
+        private CommonTag(String name){
             super(name);
-            parentFactory = parent;
+            parentFactory = TagFactory.this;
         }
 
         @Override
@@ -91,8 +74,13 @@ public class TagFactory {
         }
 
         @Override
-        boolean renameTo(String name) {
-            return parentFactory.renameTo(this, name);
+        protected void updateHandler() {
+            parentFactory.delete(this);
+        }
+
+        @Override
+        void renameTo(String name) throws NameNotAvailableException {
+            parentFactory.renameTo(this, name);
         }
     }
 }
