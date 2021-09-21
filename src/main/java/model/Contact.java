@@ -78,7 +78,7 @@ public class Contact implements IPRMVisitable{
     }
 
     @Override
-    public <E> void accept(IPRMVisitor<E> visitor, E env) {
-        visitor.visitContact(this, env);
+    public <E, T> T accept(IPRMVisitor<E, T> visitor, E env) {
+        return visitor.visitContact(this, env);
     }
 }

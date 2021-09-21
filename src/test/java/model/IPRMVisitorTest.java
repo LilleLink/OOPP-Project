@@ -27,20 +27,18 @@ public class IPRMVisitorTest {
     public void testVisitUser() {
         StringBuilder name = new StringBuilder();
         
-        user.accept(new IPRMVisitor<StringBuilder>() {
+        user.accept(new IPRMVisitor<StringBuilder, Void>() {
             @Override
-            public void visitUser(User user, StringBuilder env) {
+            public Void visitUser(User user, StringBuilder env) {
                 env.append(user.getName());
+                return null;
             }
 
             @Override
-            public void visitContact(Contact contact, StringBuilder env) { }
+            public Void visitContact(Contact contact, StringBuilder env) { return null; }
 
             @Override
-            public void visitEvent(Event event, StringBuilder env) { }
-
-            @Override
-            public void visitNotes(Notes notes, StringBuilder env) { }
+            public Void visitEvent(Event event, StringBuilder env) { return null; }
         }, name);
 
         assertEquals(name.toString(), "Bruh");
@@ -50,20 +48,21 @@ public class IPRMVisitorTest {
     public void testVisitEvent() {
         Collection<String> eventNames = new ArrayList<String>();
 
-        user.accept(new IPRMVisitor<Collection<String>>() {
+        user.accept(new IPRMVisitor<Collection<String>, Void>() {
             @Override
-            public void visitUser(User user, Collection<String> env) { }
+            public Void visitUser(User user, Collection<String> env) {
+                user.getEventList().forEach(e -> e.accept(this, env));
+                return null; }
 
             @Override
-            public void visitContact(Contact contact, Collection<String> env) { }
+            public Void visitContact(Contact contact, Collection<String> env) {
+                return null; }
 
             @Override
-            public void visitEvent(Event event, Collection<String> env) {
+            public Void visitEvent(Event event, Collection<String> env) {
                 env.add(event.getName());
+                return null;
             }
-
-            @Override
-            public void visitNotes(Notes notes, Collection<String> env) { }
         }, eventNames);
 
         assertTrue(eventNames.contains("Event1") && eventNames.contains("Event2") && eventNames.contains("Event3"));
