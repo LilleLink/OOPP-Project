@@ -2,10 +2,8 @@ package model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
 
-public class TagFactory {
+public class TagHandler {
 
     private HashMap<String, Tag> stringTagHashMap = new HashMap<>();
 
@@ -61,11 +59,11 @@ public class TagFactory {
 
     private class CommonTag extends Tag{
 
-        private final TagFactory parentFactory;
+        private final TagHandler parentFactory;
 
         private CommonTag(String name){
             super(name);
-            parentFactory = TagFactory.this;
+            parentFactory = TagHandler.this;
         }
 
         @Override

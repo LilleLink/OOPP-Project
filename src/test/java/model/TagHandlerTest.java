@@ -6,13 +6,13 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-public class TagFactoryTest {
+public class TagHandlerTest {
 
-    TagFactory factory;
+    TagHandler factory;
 
     @Before
     public void preTest(){
-        factory = new TagFactory();
+        factory = new TagHandler();
     }
 
     @Test
