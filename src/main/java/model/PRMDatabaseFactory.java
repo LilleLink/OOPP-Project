@@ -9,7 +9,7 @@ public class PRMDatabaseFactory {
         JSONPRMDatabase jsonPrmDatabase = null;
         try {
             jsonPrmDatabase = new JSONPRMDatabase(
-                    Files.createTempDirectory("prm-woo" + System.nanoTime()));
+                    Files.createTempFile("prm-database", ""));
         } catch (IOException e) {
             e.printStackTrace();
         }

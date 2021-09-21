@@ -13,10 +13,10 @@ import java.util.Objects;
 
 public class JSONPRMDatabase implements IPRMDatabase {
 
-    private Path dataDirectory;
+    private Path databaseFile;
 
-    JSONPRMDatabase(Path dataDirectory) {
-        this.dataDirectory = dataDirectory;
+    JSONPRMDatabase(Path databaseFile) {
+        this.databaseFile = databaseFile;
     }
 
     @Override
@@ -27,18 +27,10 @@ public class JSONPRMDatabase implements IPRMDatabase {
     @Override
     public void save(User user) {
         DatabaseState state = new DatabaseState();
-
         state.prm.users.add((UserRecord) Objects.requireNonNull(user.accept(new ContactVisitor(), state)));
-
-        Path dataFile = Paths.get(dataDirectory.toString(), user.getName() + ".json");
-
         try {
-            Files.createFile(dataFile);
-
-            Files.write(dataFile, new Gson().toJson(state.prm).getBytes(), StandardOpenOption.WRITE);
-        }catch(Exception e) {
-
-        }
+            Files.write(databaseFile, new Gson().toJson(state.prm).getBytes(), StandardOpenOption.WRITE);
+        } catch (Exception e) { }
     }
 
     private class DatabaseState {
@@ -47,17 +39,17 @@ public class JSONPRMDatabase implements IPRMDatabase {
     }
 
     private class ContactRecord {
-         String name;
-         String phoneNumber;
-         Address address;
+        String name;
+        String phoneNumber;
+        Address address;
     }
 
     private class EventRecord {
-         String name;
-         Address address = new Address("");
-         String dateTime;
-         String description;
-         ArrayList<Integer> contacts = new ArrayList<>();
+        String name;
+        Address address = new Address("");
+        String dateTime;
+        String description;
+        ArrayList<Integer> contacts = new ArrayList<>();
     }
 
     private class UserRecord {
@@ -74,23 +66,20 @@ public class JSONPRMDatabase implements IPRMDatabase {
     private class ContactVisitor implements IPRMVisitor<DatabaseState, Object> {
         @Override
         public Object visitUser(User user, DatabaseState env) {
-
             UserRecord record = new UserRecord();
-
-            for(Contact contact : user.getContacts()) {
+            for (Contact contact : user.getContacts()) {
                 contact.accept(this, env);
                 record.contacts.add((Integer) Objects.requireNonNull(contact.accept(this, env)));
             }
-            for(Event event : user.getEventList()) {
+            for (Event event : user.getEventList()) {
                 record.events.add((EventRecord) Objects.requireNonNull(event.accept(this, env)));
             }
-
             return record;
         }
 
         @Override
         public Object visitContact(Contact contact, DatabaseState env) {
-            if(!env.contactIndices.containsKey(contact)) {
+            if (!env.contactIndices.containsKey(contact)) {
                 ContactRecord record = new ContactRecord();
                 record.address = new Address(contact.getAddress());
                 record.name = contact.getName();
@@ -104,13 +93,11 @@ public class JSONPRMDatabase implements IPRMDatabase {
         @Override
         public Object visitEvent(Event event, DatabaseState env) {
             EventRecord record = new EventRecord();
-
             record.address = new Address(event.getAddress());
             record.dateTime = event.getDateTime().toString();
             record.name = event.getName();
             record.description = event.getDescription();
-
-            for(Contact contact : event.getContacts()) {
+            for (Contact contact : event.getContacts()) {
                 record.contacts.add((Integer) Objects.requireNonNull(contact.accept(this, env)));
             }
             return record;
