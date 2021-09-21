@@ -12,7 +12,7 @@ public class User {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
     private final ArrayList<Event> eventList = new ArrayList<>();
-    private final TagFactory tagFactory = new TagFactory();
+    private final TagHandler tagHandler = new TagHandler();
 
     public User(String name){
         this.name = name;

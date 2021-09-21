@@ -78,4 +78,19 @@ public class TagHandlerTest {
         }
     }
 
+    @Test
+    public void getTagTest(){
+        try {
+            factory.createTag("Existing tag");
+        } catch (NameNotAvailableException e){
+            fail();
+        }
+        try {
+            factory.getTag("Existing tag");
+        } catch (TagNotFoundException e){
+            fail();
+        }
+        assertThrows(TagNotFoundException.class, () -> factory.getTag("non existing tag"));
+    }
+
 }

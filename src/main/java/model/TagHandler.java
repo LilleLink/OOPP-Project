@@ -23,6 +23,12 @@ public class TagHandler {
         return tag;
     }
 
+    Tag getTag(String name) throws TagNotFoundException{
+        Tag tag = stringTagHashMap.get(name);
+        if (tag == null) throw new TagNotFoundException(name);
+        return tag;
+    }
+
     ArrayList<Tag> getTags(){
         ArrayList<Tag> tags = new ArrayList<>();
         stringTagHashMap.forEach((k,v) -> tags.add(v));
