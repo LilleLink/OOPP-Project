@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Represents a collection of Note objects with composite operations.
  */
-public class Notes implements IPRMVisitable {
+public class Notes {
 
     private final ArrayList<Note> elements;
 
@@ -55,10 +55,5 @@ public class Notes implements IPRMVisitable {
      */
     public String viewNoteAt(int index) {
         return elements.get(index).viewNote();
-    }
-
-    @Override
-    public <E> void accept(IPRMVisitor<E> visitor, E env) {
-        visitor.visitNotes(this, env);
     }
 }
