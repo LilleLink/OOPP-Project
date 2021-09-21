@@ -3,10 +3,7 @@ package model;
 import javax.lang.model.type.ArrayType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class User {
     //TODO fix javadoc, rushing to get runnable version W3
@@ -22,5 +19,25 @@ public class User {
         this.name = name;
     }
 
+    boolean addEvent(Event event) {
+        return eventList.add(event);
+    }
+
+    boolean removeEvent(Event event) {
+        return eventList.remove(event);
+    }
+
+    public ArrayList<Event> getEventList() {
+        return eventList;
+    }
+
+    public List<Event> getContactEvents(Contact contact) {
+        List<Event> contactEvents= new ArrayList<>();
+        for (Event e: eventList) {
+            if (e.getContacts().contains(contact))
+                contactEvents.add(e);
+        }
+        return contactEvents;
+    }
 
 }
