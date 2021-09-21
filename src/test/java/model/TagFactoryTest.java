@@ -49,5 +49,21 @@ public class TagFactoryTest {
         assertNotEquals(t1.name, t2.name);
     }
 
+    @Test
+    public void makeNameAvailableTest(){
+        Tag t1 = factory.createTag("First tag");
+        try {
+            t1.renameTo("Something else");
+        } catch (NameNotAvailableException e){
+            fail();
+        }
+        Tag t2 = factory.createTag("First tag");
+        assertNotEquals(t1, t2);
+        t2.delete();
+        Tag t3 = factory.createTag("First tag");
+        assertNotEquals(t1, t2);
+        assertNotEquals(t1, t3);
+        assertNotEquals(t2, t3);
+    }
 
 }
