@@ -28,6 +28,14 @@ public class User {
     }
 
     /***
+     * Returns the name of the user
+     * @return a string containing the name of the users
+     */
+    public String getName() {
+        return this.name;
+    }
+
+    /***
      * Adds an event to the event list
      * @param event the event to be added
      * @return true if the operation was successful, false if not
