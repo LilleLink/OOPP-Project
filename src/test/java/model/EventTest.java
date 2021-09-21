@@ -55,16 +55,21 @@ public class EventTest {
         assertFalse(event.getContacts().contains(contact));
     }
 
-    /*@Test
+    @Test
     public void tagAndUntagTest() {
-        TagFactory tf = new TagFactory();
-        Tag myTag = tf.createTag("Kompisaj");
+        TagHandler tf = new TagHandler();
+        Tag myTag = null;
+        try {
+            myTag = tf.createTag("Kompisaj");
+        } catch (NameNotAvailableException e) {
+            e.printStackTrace();
+        }
 
         event.addTag(myTag);
-        assertTrue(event.getTags().contains(myTag));
+        assertEquals(event.getTag(), myTag);
 
-        event.removeTag(myTag);
-        assertFalse(event.getTags().contains(myTag));
-    }*/
+        event.removeTag();
+        assertNotEquals(event.getTag(), myTag);
+    }
 
 }
