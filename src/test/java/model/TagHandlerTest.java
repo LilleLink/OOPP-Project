@@ -30,9 +30,8 @@ public class TagHandlerTest {
     @Test
     public void noDuplicateTest(){
         try {
-            Tag t1 = factory.createTag("First tag");
-            Tag t2 = factory.createTag("First tag");
-            assertEquals(t1, t2);
+            factory.createTag("First tag");
+            assertThrows(NameNotAvailableException.class, () -> factory.createTag("First tag"));
         } catch (NameNotAvailableException e){
             fail();
         }
