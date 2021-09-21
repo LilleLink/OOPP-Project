@@ -25,7 +25,7 @@ public class TagFactory {
         return tag;
     }
 
-    List<Tag> getTags(){
+    ArrayList<Tag> getTags(){
         ArrayList<Tag> tags = new ArrayList<>();
         stringTagHashMap.forEach((k,v) -> tags.add(v));
         return tags;
@@ -81,6 +81,7 @@ public class TagFactory {
         @Override
         void renameTo(String name) throws NameNotAvailableException {
             parentFactory.renameTo(this, name);
+            this.name = name;
         }
     }
 }
