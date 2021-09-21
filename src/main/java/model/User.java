@@ -79,7 +79,7 @@ public class User implements IPRMVisitable{
     @Override
     public <E> void accept(IPRMVisitor<E> visitor, E env) {
         events.forEach(e -> e.accept(visitor, env));
-        events.forEach(e -> e.accept(visitor, env));
+        contacts.forEach(c -> c.accept(visitor, env));
 
         visitor.visitUser(this, env);
     }

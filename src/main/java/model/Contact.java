@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Contact {
+public class Contact implements IPRMVisitable{
 
     private String name;
     private String phoneNumber = "";
@@ -77,4 +77,8 @@ public class Contact {
         this.phoneNumber = number;
     }
 
+    @Override
+    public <E> void accept(IPRMVisitor<E> visitor, E env) {
+        visitor.visitContact(this, env);
+    }
 }
