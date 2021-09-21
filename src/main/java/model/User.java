@@ -11,8 +11,9 @@ import java.util.UUID;
 public class User {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
-    private final ArrayList<Event> eventList = new ArrayList<>();
+    private final Collection<Event> events = new ArrayList<>();
     private final TagFactory tagFactory = new TagFactory();
+    private final Collection<Contact> contacts = new ArrayList<>();
 
     public User(String name){
         this.name = name;
