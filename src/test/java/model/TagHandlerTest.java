@@ -7,6 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TagHandlerTest {
 
@@ -25,7 +26,7 @@ public class TagHandlerTest {
         } catch (NameNotAvailableException e){
             fail();
         }
-        ArrayList<Tag> tags = factory.getTags();
+        List<Tag> tags = factory.getTags();
         assertNotEquals(tags.get(0).getName(), tags.get(1).getName());
     }
 
