@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.NameNotAvailableException;
 import org.junit.Before;
 import org.junit.Test;
 import java.time.LocalDateTime;

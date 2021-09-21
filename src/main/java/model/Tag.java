@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.NameNotAvailableException;
+
 public abstract class Tag {
 
     protected String name;

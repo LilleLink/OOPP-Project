@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.NameNotAvailableException;
+import model.exceptions.TagNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;

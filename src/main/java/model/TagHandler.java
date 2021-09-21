@@ -1,5 +1,8 @@
 package model;
 
+import model.exceptions.NameNotAvailableException;
+import model.exceptions.TagNotFoundException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +15,7 @@ public class TagHandler {
      * @param name The name of the new Tag
      * @return The id of the new Tag
      */
-    Tag createTag(String name) throws NameNotAvailableException{
+    Tag createTag(String name) throws NameNotAvailableException {
         Tag tag;
         if (!nameIsAvailable(name)){
             throw new NameNotAvailableException(name);
@@ -23,7 +26,7 @@ public class TagHandler {
         return tag;
     }
 
-    Tag getTag(String name) throws TagNotFoundException{
+    Tag getTag(String name) throws TagNotFoundException {
         Tag tag = stringTagHashMap.get(name);
         if (tag == null) throw new TagNotFoundException(name);
         return tag;
