@@ -2,7 +2,9 @@ package model;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import model.exceptions.*;
 import java.util.Optional;
 
 public class Contact implements ICacheVisitable {
@@ -10,8 +12,9 @@ public class Contact implements ICacheVisitable {
     private String name;
     private String phoneNumber = "";
     private Address address = new Address("");
-    private final List<Tag> tagList = new ArrayList<>();
+    private final List<Tag> tags = new ArrayList<>();
     private Notes notes;
+    private boolean isDeleted;
 
     /**
      * @param name The contact's name.
@@ -77,6 +80,43 @@ public class Contact implements ICacheVisitable {
         this.phoneNumber = number;
     }
 
+    /**
+     * Marks contact as deleted which removes it from the contact list, but it is still viewable in earlier events.
+     */
+    void delete(){
+        isDeleted = true;
+    }
+
+    public boolean isDeleted(){
+        return isDeleted;
+    }
+
+    /**
+     * Adds a tag to the contact.
+     * @param tag The desired tag.
+     */
+    void addTag(Tag tag){
+        tags.add(tag);
+    }
+
+    /**
+     * Removes a tag from the contact.
+     * @param tag The tag to remove.
+     * @throws TagNotFoundException If the contact does not have the given tag.
+     */
+    void removeTag(Tag tag) throws TagNotFoundException {
+        if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
+        tags.remove(tag);
+    }
+
+    /**
+     *
+     * @return A list of the contact's tags.
+     */
+    public List<Tag> getTags(){
+        return new ArrayList<>(tags);
+    }
+
     /***
      * The contact cache class contains fields which should be saved/loaded to persistent storage.
      */
@@ -91,7 +131,7 @@ public class Contact implements ICacheVisitable {
             this.name = contact.name;
             this.phoneNumber = contact.phoneNumber;
             this.address = contact.address;
-            this.tags = new ArrayList<>(contact.tagList);
+            this.tags = new ArrayList<>(contact.tags);
             this.notes = contact.notes;
         }
     }

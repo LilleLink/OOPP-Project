@@ -1,7 +1,7 @@
-package model;
+package model.exceptions;
 
 public class TagNotFoundException extends Exception{
-    TagNotFoundException(String name){
+    public TagNotFoundException(String name){
         super("No tag with the name" + name + "was found");
     }
 }

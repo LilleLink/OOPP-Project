@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.NameNotAvailableException;
 import org.junit.Before;
 import org.junit.Test;
 import java.time.LocalDateTime;
@@ -55,16 +56,30 @@ public class EventTest {
         assertFalse(event.getContacts().contains(contact));
     }
 
-    /*@Test
+    @Test
     public void tagAndUntagTest() {
-        TagFactory tf = new TagFactory();
-        Tag myTag = tf.createTag("Kompisaj");
+        TagHandler tf = new TagHandler();
+        Tag myTag = null;
+        try {
+            myTag = tf.createTag("Kompisaj");
+        } catch (NameNotAvailableException e) {
+            e.printStackTrace();
+        }
 
         event.addTag(myTag);
-        assertTrue(event.getTags().contains(myTag));
+        assertEquals(event.getTag(), myTag);
 
-        event.removeTag(myTag);
-        assertFalse(event.getTags().contains(myTag));
-    }*/
+        event.removeTag();
+        assertNotEquals(event.getTag(), myTag);
+    }
+
+    @Test
+    public void isInFutureTest() {
+        Event past = new Event("Past", LocalDateTime.of(2020, 9, 21, 10, 44));
+        Event future = new Event("Future", LocalDateTime.of(2022, 9, 21, 10,44));
+
+        assertFalse(past.isInFuture());
+        assertTrue(future.isInFuture());
+    }
 
 }

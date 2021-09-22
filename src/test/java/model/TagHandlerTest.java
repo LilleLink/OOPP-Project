@@ -1,10 +1,13 @@
 package model;
 
+import model.exceptions.NameNotAvailableException;
+import model.exceptions.TagNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class TagHandlerTest {
 
@@ -23,7 +26,7 @@ public class TagHandlerTest {
         } catch (NameNotAvailableException e){
             fail();
         }
-        ArrayList<Tag> tags = factory.getTags();
+        List<Tag> tags = factory.getTags();
         assertNotEquals(tags.get(0).getName(), tags.get(1).getName());
     }
 
@@ -90,6 +93,34 @@ public class TagHandlerTest {
             fail();
         }
         assertThrows(TagNotFoundException.class, () -> factory.getTag("non existing tag"));
+    }
+
+    @Test
+    public void changeColorTest(){
+        try{
+            Tag t1 = factory.createTag("First Tag");
+            t1.setColor("09CDda");
+            assertEquals("09CDda", t1.getColor());
+            t1.setColor("0099ccddddaa");
+            assertNotEquals("0099ccddddaa", t1.getColor());
+            t1.setColor("illgal");
+            assertNotEquals("illgal", t1.getColor());
+            assertEquals("09CDda", t1.getColor());
+        } catch (NameNotAvailableException e){
+            fail();
+        }
+    }
+
+    @Test
+    public void deleteTest(){
+        try {
+            Tag t1 = factory.createTag("Tag");
+            assertFalse(t1.isDeleted());
+            t1.delete();
+            assertTrue(t1.isDeleted());
+        } catch (NameNotAvailableException e) {
+            e.printStackTrace();
+        }
     }
 
 }

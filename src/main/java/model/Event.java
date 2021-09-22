@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -44,6 +45,10 @@ public class Event implements ICacheVisitable {
     Event(String name, LocalDateTime date) {
         this.name = name;
         this.dateTime = date;
+    }
+
+    public boolean isInFuture() {
+        return dateTime.compareTo(LocalDateTime.now()) > 0;
     }
 
     /***
