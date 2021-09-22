@@ -5,7 +5,7 @@ package model;
  * @param <E> The type of the visitor environment.
  * @param <T> The return type of the visitor cases.
  */
-public interface IPRMVisitor<E, T> {
+public interface ICacheVisitor<E, T> {
 
     /***
      * Visit a user.
@@ -13,7 +13,7 @@ public interface IPRMVisitor<E, T> {
      * @param env The visitor environment.
      * @return The result of the visitor case.
      */
-    T visitUser(User user, E env);
+    T visitUserCache(User.UserCache user, E env);
 
     /***
      * Visit a contact.
@@ -21,7 +21,7 @@ public interface IPRMVisitor<E, T> {
      * @param env The visitor environment.
      * @return The result of the visitor case.
      */
-    T visitContact(Contact contact, E env);
+    T visitContactCache(Contact.ContactCache contact, E env);
 
     /***
      * Visit an event.
@@ -29,6 +29,6 @@ public interface IPRMVisitor<E, T> {
      * @param env The visitor environment.
      * @return The result of the visitor case.
      */
-    T visitEvent(Event event, E env);
+    T visitEventCache(Event.EventCache event, E env);
 
 }

@@ -2,11 +2,12 @@ package model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
  */
-public class Event implements IPRMVisitable{
+public class Event implements ICacheVisitable {
 
     private String name;
     private Address address = new Address("");
@@ -112,14 +113,14 @@ public class Event implements IPRMVisitable{
      * Adds a tag to the event
      * @param tag the tag to be added
      */
-    void addTag(Tag tag){
+    void addTag(Tag tag) {
         this.tag = tag;
     }
 
     /***
      * Removes a tag from the event
      */
-    void removeTag(){
+    void removeTag() {
         tag = null;
     }
 
@@ -127,7 +128,7 @@ public class Event implements IPRMVisitable{
      * Returns tag
      * @return the tag
      */
-    public Tag getTag(){
+    public Tag getTag() {
         return this.tag;
     }
 
@@ -136,8 +137,8 @@ public class Event implements IPRMVisitable{
      * @param contact the contact to be added
      * @return true if operation successful, false if it already exists.
      */
-    public boolean addContact(Contact contact){
-        if (contacts.contains(contact)){
+    public boolean addContact(Contact contact) {
+        if (contacts.contains(contact)) {
             return false;
         }
         contacts.add(contact);
@@ -149,7 +150,7 @@ public class Event implements IPRMVisitable{
      * @param contact the contact to be removed
      * @return true if operation successful, false if not.
      */
-    public boolean removeContact(Contact contact){
+    public boolean removeContact(Contact contact) {
         return contacts.remove(contact);
     }
 
@@ -157,12 +158,30 @@ public class Event implements IPRMVisitable{
      * Returns the contact arraylist.
      * @return the contact arraylist.
      */
-    public ArrayList<Contact> getContacts(){
+    public ArrayList<Contact> getContacts() {
         return this.contacts;
     }
 
+    class EventCache {
+        final String name;
+        final Address address;
+        final LocalDateTime dateTime;
+        final String description;
+        final Tag tag;
+        final Collection<Contact> contacts;
+
+        EventCache(Event event) {
+            this.name = event.name;
+            this.address = event.address;
+            this.dateTime = event.dateTime;
+            this.description = event.description;
+            this.tag = event.tag;
+            this.contacts = new ArrayList<>(event.contacts);
+        }
+    }
+
     @Override
-    public <E, T> T accept(IPRMVisitor<E, T> visitor, E env) {
-        return visitor.visitEvent(this, env);
+    public <E, T> T accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visitEventCache(new EventCache(this), env);
     }
 }

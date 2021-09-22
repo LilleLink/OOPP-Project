@@ -2,10 +2,9 @@ package model;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-public class Contact implements IPRMVisitable{
+public class Contact implements ICacheVisitable {
 
     private String name;
     private String phoneNumber = "";
@@ -77,8 +76,24 @@ public class Contact implements IPRMVisitable{
         this.phoneNumber = number;
     }
 
+    class ContactCache {
+        final String name;
+        final String phoneNumber;
+        final Address address;
+        final List<Tag> tags;
+        final Notes notes;
+
+        ContactCache(Contact contact) {
+            this.name = contact.name;
+            this.phoneNumber = contact.phoneNumber;
+            this.address = contact.address;
+            this.tags = new ArrayList<>(contact.tagList);
+            this.notes = contact.notes;
+        }
+    }
+
     @Override
-    public <E, T> T accept(IPRMVisitor<E, T> visitor, E env) {
-        return visitor.visitContact(this, env);
+    public <E, T> T accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visitContactCache(new ContactCache(this), env);
     }
 }

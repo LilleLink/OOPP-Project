@@ -1,11 +1,8 @@
 package model;
 
-import javax.lang.model.type.ArrayType;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
-public class User implements IPRMVisitable{
+public class User implements ICacheVisitable {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
     private final Collection<Event> events = new ArrayList<>();
@@ -76,10 +73,24 @@ public class User implements IPRMVisitable{
         return contactEvents;
     }
 
+    public void addContact(Contact contact) {
+        this.contacts.add(contact);
+    }
 
+    class UserCache {
+        final String name;
+        final Collection<Event> events;
+        final Collection<Contact> contacts;
+
+        private UserCache(User user) {
+            this.events = new ArrayList<>(user.events);
+            this.contacts = new ArrayList<>(user.contacts);
+            this.name = user.name;
+        }
+    }
 
     @Override
-    public <E, T> T accept(IPRMVisitor<E, T> visitor, E env) {
-        return visitor.visitUser(this, env);
+    public <E, T> T accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visitUserCache(new UserCache(this), env);
     }
 }

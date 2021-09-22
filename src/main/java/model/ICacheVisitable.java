@@ -3,7 +3,7 @@ package model;
 /***
  * The interface for a visitable part of the PRM model.
  */
-public interface IPRMVisitable {
+public interface ICacheVisitable {
 
     /**
      * Accept a visitor and invoke the correct visitor case.
@@ -13,6 +13,6 @@ public interface IPRMVisitable {
      * @param <T> The type of the visitor return value.
      * @return The result of the visitor case.
      */
-    <E, T>T accept(IPRMVisitor<E, T> visitor, E env);
+    <E, T>T accept(ICacheVisitor<E, T> visitor, E env);
 
 }
