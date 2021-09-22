@@ -68,4 +68,30 @@ public class TagHandler {
         stringTagHashMap.put(newName, new Tag(newName));
     }
 
+
+    /**
+     * Changes the color of a Tag
+     * @param color The new color as HEX-code
+     * @param tag the tag to change color of
+     * @return If the change succeeded
+     */
+    boolean setColor(String tag, String color){
+        if (isHexColor(color)){
+             stringTagHashMap.remove(tag);
+             stringTagHashMap.put(tag,new Tag(tag,color));
+            return true;
+        }
+        return false;
+    }
+
+
+    private boolean isHexColor(String color){
+        for (char c: color.toCharArray()){
+            if (Character.digit(c, 16) == -1){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
