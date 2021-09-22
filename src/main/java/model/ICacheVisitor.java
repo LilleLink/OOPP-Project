@@ -5,7 +5,7 @@ package model;
  * @param <E> The type of the visitor environment.
  * @param <T> The return type of the visitor cases.
  */
-public interface ICacheVisitor<E, T> {
+interface ICacheVisitor<E, T> {
 
     /***
      * Visit a user.
