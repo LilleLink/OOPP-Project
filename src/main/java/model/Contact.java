@@ -3,6 +3,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Contact implements ICacheVisitable {
 
@@ -76,6 +77,9 @@ public class Contact implements ICacheVisitable {
         this.phoneNumber = number;
     }
 
+    /***
+     * The contact cache class contains fields which should be saved/loaded to persistent storage.
+     */
     class ContactCache {
         final String name;
         final String phoneNumber;
@@ -92,8 +96,11 @@ public class Contact implements ICacheVisitable {
         }
     }
 
+    /***
+     * Invoke the contact cache visitor case.
+     */
     @Override
-    public <E, T> T accept(ICacheVisitor<E, T> visitor, E env) {
-        return visitor.visitContactCache(new ContactCache(this), env);
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(new ContactCache(this), env);
     }
 }

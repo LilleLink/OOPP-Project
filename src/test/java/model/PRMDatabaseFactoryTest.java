@@ -3,6 +3,7 @@ package model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class PRMDatabaseFactoryTest {
@@ -22,8 +23,8 @@ public class PRMDatabaseFactoryTest {
     }
 
     @Test
-    public void testSave() {
-        PRMDatabaseFactory.createUserDatabase().save(user);
+    public void testSave() throws IOException {
+        PRMDatabaseFactory.createPRMDatabase().save(user);
     }
 
 }

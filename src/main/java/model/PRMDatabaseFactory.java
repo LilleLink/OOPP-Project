@@ -3,22 +3,20 @@ package model;
 import java.io.IOException;
 import java.nio.file.Files;
 
+/***
+ * The PRMDatabaseFactory contains a static method for creating an abstract PRM database.
+ */
 public class PRMDatabaseFactory {
 
-    /**
-     * Create a new PRM database.
+    /***
+     * Create a new abstract PRM database.
+     * @throws IOException If the factory failed to initialize the database disk storage.
      * @return The new PRM database.
      */
-    static IPRMDatabase createUserDatabase() {
-        JSONPRMDatabase jsonPrmDatabase = null;
-        //TODO Remove try-catch
-        try {
-            jsonPrmDatabase = new JSONPRMDatabase(
-                    Files.createTempFile("prm-test", ""));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return jsonPrmDatabase;
+    static IPRMDatabase createPRMDatabase() throws IOException {
+        /// TODO Don't use a temporary file dummy!
+        return new JSONPRMDatabase(
+                Files.createTempFile("prm-database", ""));
     }
 
 }

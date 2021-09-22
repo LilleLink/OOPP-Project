@@ -1,9 +1,12 @@
 package model;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 /***
- * The PRM visitor can visit the entire PRM model.
- * @param <E> The type of the visitor environment.
- * @param <T> The return type of the visitor cases.
+ * The interface for a visitor which visits all the cache of the model.
+ * @param <E> The type of the cache visitor environment.
+ * @param <T> The return type of the cache visitor cases.
  */
 interface ICacheVisitor<E, T> {
 
@@ -13,7 +16,9 @@ interface ICacheVisitor<E, T> {
      * @param env The visitor environment.
      * @return The result of the visitor case.
      */
-    T visitUserCache(User.UserCache user, E env);
+    default Optional<T> visit(User.UserCache user, E env) {
+        return Optional.empty();
+    }
 
     /***
      * Visit a contact.
@@ -21,7 +26,9 @@ interface ICacheVisitor<E, T> {
      * @param env The visitor environment.
      * @return The result of the visitor case.
      */
-    T visitContactCache(Contact.ContactCache contact, E env);
+    default Optional<T> visit(Contact.ContactCache contact, E env) {
+        return Optional.empty();
+    }
 
     /***
      * Visit an event.
@@ -29,6 +36,8 @@ interface ICacheVisitor<E, T> {
      * @param env The visitor environment.
      * @return The result of the visitor case.
      */
-    T visitEventCache(Event.EventCache event, E env);
+    default Optional<T> visit(Event.EventCache event, E env) {
+        return Optional.empty();
+    }
 
 }

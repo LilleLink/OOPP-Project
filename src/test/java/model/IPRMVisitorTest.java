@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -27,16 +28,16 @@ public class IPRMVisitorTest {
         
         user.accept(new ICacheVisitor<StringBuilder, Void>() {
             @Override
-            public Void visitUserCache(User.UserCache user, StringBuilder env) {
+            public Optional<Void> visit(User.UserCache user, StringBuilder env) {
                 env.append(user.name);
-                return null;
+                return Optional.empty();
             }
 
             @Override
-            public Void visitContactCache(Contact.ContactCache contact, StringBuilder env) { return null; }
+            public Optional<Void> visit(Contact.ContactCache contact, StringBuilder env) { return Optional.empty(); }
 
             @Override
-            public Void visitEventCache(Event.EventCache event, StringBuilder env) { return null; }
+            public Optional<Void> visit(Event.EventCache event, StringBuilder env) { return Optional.empty(); }
         }, name);
 
         assertEquals(name.toString(), "Bruh");
@@ -44,22 +45,22 @@ public class IPRMVisitorTest {
 
     @Test
     public void testVisitEvent() {
-        Collection<String> eventNames = new ArrayList<String>();
+        Collection<String> eventNames = new ArrayList<>();
 
         user.accept(new ICacheVisitor<Collection<String>, Void>() {
             @Override
-            public Void visitUserCache(User.UserCache user, Collection<String> env) {
+            public Optional<Void> visit(User.UserCache user, Collection<String> env) {
                 user.events.forEach(e -> e.accept(this, env));
-                return null; }
+                return Optional.empty(); }
 
             @Override
-            public Void visitContactCache(Contact.ContactCache contact, Collection<String> env) {
-                return null; }
+            public Optional<Void> visit(Contact.ContactCache contact, Collection<String> env) {
+                return Optional.empty(); }
 
             @Override
-            public Void visitEventCache(Event.EventCache event, Collection<String> env) {
+            public Optional<Void> visit(Event.EventCache event, Collection<String> env) {
                 env.add(event.name);
-                return null;
+                return Optional.empty();
             }
         }, eventNames);
 

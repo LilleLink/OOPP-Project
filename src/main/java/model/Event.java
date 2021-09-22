@@ -3,6 +3,7 @@ package model;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
@@ -162,6 +163,9 @@ public class Event implements ICacheVisitable {
         return this.contacts;
     }
 
+    /***
+     * The event cache class contains fields which should be saved/loaded to persistent storage.
+     */
     class EventCache {
         final String name;
         final Address address;
@@ -180,8 +184,11 @@ public class Event implements ICacheVisitable {
         }
     }
 
+    /***
+     * Invoke the event cache visitor case.
+     */
     @Override
-    public <E, T> T accept(ICacheVisitor<E, T> visitor, E env) {
-        return visitor.visitEventCache(new EventCache(this), env);
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(new EventCache(this), env);
     }
 }

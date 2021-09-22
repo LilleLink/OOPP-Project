@@ -77,6 +77,9 @@ public class User implements ICacheVisitable {
         this.contacts.add(contact);
     }
 
+    /***
+     * The user cache class contains fields which should be saved/loaded to persistent storage.
+     */
     class UserCache {
         final String name;
         final Collection<Event> events;
@@ -89,8 +92,11 @@ public class User implements ICacheVisitable {
         }
     }
 
+    /***
+     * Invoke the user cache visitor case.
+     */
     @Override
-    public <E, T> T accept(ICacheVisitor<E, T> visitor, E env) {
-        return visitor.visitUserCache(new UserCache(this), env);
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(new UserCache(this), env);
     }
 }
