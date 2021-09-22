@@ -5,23 +5,25 @@ import java.util.*;
 public class User implements ICacheVisitable {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
-    private final Collection<Event> events = new ArrayList<>();
+    private final Collection<Event> events;
     private final TagHandler tagHandler = new TagHandler();
-    private final Collection<Contact> contacts = new ArrayList<>();
+    private final Collection<Contact> contacts;
 
     /***
      * Instantiates a user object with the specified name.
      * @param name the name of the user
      */
-    public User(String name){
+    public User(String name) {
         this.name = name;
+        this.events = new ArrayList<>();
+        this.contacts = new ArrayList<>();
     }
 
     /***
      * Sets the name of the user
      * @param name new name of the user
      */
-    void setName(String name){
+    void setName(String name) {
         this.name = name;
     }
 
@@ -65,8 +67,8 @@ public class User implements ICacheVisitable {
      * @return an arraylist of the events the contact is a part of
      */
     public List<Event> getContactEvents(Contact contact) {
-        List<Event> contactEvents= new ArrayList<>();
-        for (Event e: events) {
+        List<Event> contactEvents = new ArrayList<>();
+        for (Event e : events) {
             if (e.getContacts().contains(contact))
                 contactEvents.add(e);
         }
@@ -80,16 +82,24 @@ public class User implements ICacheVisitable {
     /***
      * The user cache class contains fields which should be saved/loaded to persistent storage.
      */
-    public class UserCache {
-        final public String name;
-        final public Collection<Event> events;
-        final public Collection<Contact> contacts;
+    public static class UserCache {
+        public String name;
+        public Collection<Event> events;
+        public Collection<Contact> contacts;
 
         private UserCache(User user) {
             this.events = new ArrayList<>(user.events);
             this.contacts = new ArrayList<>(user.contacts);
             this.name = user.name;
         }
+
+        public UserCache() {}
+    }
+
+    public User(UserCache cache) {
+        this.events = cache.events;
+        this.contacts = cache.contacts;
+        this.name = cache.name;
     }
 
     /***

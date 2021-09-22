@@ -1,6 +1,5 @@
 package model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +16,7 @@ public class Event implements ICacheVisitable {
     private String description;
 
     private Tag tag;
-    private ArrayList<Contact> contacts = new ArrayList<>();
+    private Collection<Contact> contacts = new ArrayList<>();
 
     /***
      * Creates an event with the given parameters.
@@ -164,20 +163,20 @@ public class Event implements ICacheVisitable {
      * Returns the contact arraylist.
      * @return the contact arraylist.
      */
-    public ArrayList<Contact> getContacts() {
+    public Collection<Contact> getContacts() {
         return this.contacts;
     }
 
     /***
      * The event cache class contains fields which should be saved/loaded to persistent storage.
      */
-    public class EventCache {
-        final public String name;
-        final public Address address;
-        final public LocalDateTime dateTime;
-        final public String description;
-        final public Tag tag;
-        final public Collection<Contact> contacts;
+    public static class EventCache {
+        public String name;
+        public Address address;
+        public LocalDateTime dateTime;
+        public String description;
+        public Tag tag;
+        public Collection<Contact> contacts;
 
         EventCache(Event event) {
             this.name = event.name;
@@ -187,6 +186,17 @@ public class Event implements ICacheVisitable {
             this.tag = event.tag;
             this.contacts = new ArrayList<>(event.contacts);
         }
+
+        public EventCache() {}
+    }
+
+    public Event(Event.EventCache cache) {
+        this.name = cache.name;
+        this.address = cache.address;
+        this.dateTime = cache.dateTime;
+        this.description = cache.description;
+        this.tag = cache.tag;
+        this.contacts = cache.contacts;
     }
 
     /***

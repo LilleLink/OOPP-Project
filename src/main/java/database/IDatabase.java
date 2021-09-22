@@ -15,7 +15,7 @@ public interface IDatabase {
      * @return The loaded user.
      */
     //TODO: This should probably load the entire PRM model instead.
-    User load(String name);
+    User load(String name) throws IOException;
 
     /***
      * Save a user to the PRM model database.
