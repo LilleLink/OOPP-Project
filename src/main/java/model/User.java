@@ -80,10 +80,10 @@ public class User implements ICacheVisitable {
     /***
      * The user cache class contains fields which should be saved/loaded to persistent storage.
      */
-    class UserCache {
-        final String name;
-        final Collection<Event> events;
-        final Collection<Contact> contacts;
+    public class UserCache {
+        final public String name;
+        final public Collection<Event> events;
+        final public Collection<Contact> contacts;
 
         private UserCache(User user) {
             this.events = new ArrayList<>(user.events);

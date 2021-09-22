@@ -1,6 +1,7 @@
-package model;
+package database;
 
 import com.google.gson.Gson;
+import model.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -11,7 +12,7 @@ import java.util.*;
 /***
  * The JSON database of the prm model.
  */
-public class JSONPRMDatabase implements IPRMDatabase {
+public class JSONDatabase implements IDatabase {
 
     // The file to save/load the model to.
     final private Path databaseFile;
@@ -20,7 +21,7 @@ public class JSONPRMDatabase implements IPRMDatabase {
      * Create a new JSONPRMDatabase to save/load the model to a json file.
      * @param databaseFile The json file to save/load the model to.
      */
-    JSONPRMDatabase(Path databaseFile) {
+    JSONDatabase(Path databaseFile) {
         this.databaseFile = databaseFile;
     }
 

@@ -1,11 +1,13 @@
-package model;
+package database;
+
+import model.User;
 
 import java.io.IOException;
 
 /***
  * The database of the PRM model, facilitates persistent storage.
  */
-public interface IPRMDatabase {
+public interface IDatabase {
 
     /***
      * Load a user from the PRM model database.

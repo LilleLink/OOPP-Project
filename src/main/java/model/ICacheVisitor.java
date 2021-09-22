@@ -8,7 +8,7 @@ import java.util.Optional;
  * @param <E> The type of the cache visitor environment.
  * @param <T> The return type of the cache visitor cases.
  */
-interface ICacheVisitor<E, T> {
+public interface ICacheVisitor<E, T> {
 
     /***
      * Visit a user.

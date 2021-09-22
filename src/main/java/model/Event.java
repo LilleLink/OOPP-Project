@@ -171,13 +171,13 @@ public class Event implements ICacheVisitable {
     /***
      * The event cache class contains fields which should be saved/loaded to persistent storage.
      */
-    class EventCache {
-        final String name;
-        final Address address;
-        final LocalDateTime dateTime;
-        final String description;
-        final Tag tag;
-        final Collection<Contact> contacts;
+    public class EventCache {
+        final public String name;
+        final public Address address;
+        final public LocalDateTime dateTime;
+        final public String description;
+        final public Tag tag;
+        final public Collection<Contact> contacts;
 
         EventCache(Event event) {
             this.name = event.name;

@@ -120,12 +120,12 @@ public class Contact implements ICacheVisitable {
     /***
      * The contact cache class contains fields which should be saved/loaded to persistent storage.
      */
-    class ContactCache {
-        final String name;
-        final String phoneNumber;
-        final Address address;
-        final List<Tag> tags;
-        final Notes notes;
+    public class ContactCache {
+        final public String name;
+        final public String phoneNumber;
+        final public Address address;
+        final public List<Tag> tags;
+        final public Notes notes;
 
         ContactCache(Contact contact) {
             this.name = contact.name;

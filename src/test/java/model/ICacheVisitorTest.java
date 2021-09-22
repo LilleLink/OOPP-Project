@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-public class IPRMVisitorTest {
+public class ICacheVisitorTest {
 
     private User user;
 
