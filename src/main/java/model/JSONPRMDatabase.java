@@ -4,13 +4,15 @@ import com.google.gson.Gson;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
+/***
+ * The JSON database of the prm model.
+ */
 public class JSONPRMDatabase implements IPRMDatabase {
 
     private Path databaseFile;
@@ -67,10 +69,10 @@ public class JSONPRMDatabase implements IPRMDatabase {
         @Override
         public Object visitUser(User user, DatabaseState env) {
             UserRecord record = new UserRecord();
-            for (Contact contact : user.getContacts()) {
+            /*for (Contact contact : user.getContacts()) {
                 contact.accept(this, env);
                 record.contacts.add((Integer) Objects.requireNonNull(contact.accept(this, env)));
-            }
+            }*/
             for (Event event : user.getEventList()) {
                 record.events.add((EventRecord) Objects.requireNonNull(event.accept(this, env)));
             }
