@@ -1,7 +1,7 @@
 package model;
 
 import database.DatabaseFactory;
-import database.IDatabase;
+import database.Database;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,7 +29,7 @@ public class DatabaseFactoryTest {
 
     @Test
     public void testSave() throws IOException {
-        IDatabase db = DatabaseFactory.getDatabase();
+        Database db = DatabaseFactory.getDatabase();
         db.save(user);
         User user = db.load("");
 

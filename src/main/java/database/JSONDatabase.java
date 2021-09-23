@@ -16,18 +16,7 @@ import java.util.stream.Collectors;
 /***
  * The JSON database of the prm model.
  */
-public class JSONDatabase implements IDatabase {
-
-    // The file to save/load the model to.
-    final private Path databaseFile;
-
-    /***
-     * Create a new JSONPRMDatabase to save/load the model to a json file.
-     * @param databaseFile The json file to save/load the model to.
-     */
-    JSONDatabase(Path databaseFile) {
-        this.databaseFile = databaseFile;
-    }
+public class JSONDatabase implements IDatabaseLoader, IDatabaseSaver {
 
     /////////////////////////////////////////// Loading ///////////////////////////////////////////
 
@@ -37,7 +26,7 @@ public class JSONDatabase implements IDatabase {
      * @return The loaded user.
      */
     @Override
-    public User load(String name) throws IOException {
+    public User load(String name, Path databaseFile) throws IOException {
         PRMRecord record = new Gson().fromJson(String.join(",", Files.readAllLines(databaseFile)), PRMRecord.class);
         RecordVisitorState env = new RecordVisitorState();
         return (User) record.accept(new RecordVisitor(), env).orElseThrow(IllegalStateException::new);
@@ -121,7 +110,7 @@ public class JSONDatabase implements IDatabase {
      * @throws IOException If there was a problem writing to the database file.
      */
     @Override
-    public void save(User user) throws IOException {
+    public void save(User user, Path databaseFile) throws IOException {
         CacheVisitorState state = new CacheVisitorState();
         state.prm.users.add((UserRecord) user.accept(new CacheVisitor(), state).orElseThrow(IllegalStateException::new));
         Files.write(databaseFile, new Gson().toJson(state.prm).getBytes(), StandardOpenOption.WRITE);
