@@ -24,7 +24,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
      */
     @Override
     public User load(String name, Path databaseFile) throws IOException {
-        JSONRecords.PRMRecord record = new Gson().fromJson(String.join(",", Files.readAllLines(databaseFile)), JSONRecords.PRMRecord.class);
+        JSONRecords.PRMRecord record = new Gson().fromJson(String.join("\n", Files.readAllLines(databaseFile)), JSONRecords.PRMRecord.class);
         RecordVisitorState env = new RecordVisitorState();
         return (User) record.accept(new RecordVisitor(), env).orElseThrow(IllegalStateException::new);
     }
