@@ -178,16 +178,18 @@ public class Event implements ICacheVisitable {
         public Tag tag;
         public Collection<Contact> contacts;
 
-        EventCache(Event event) {
-            this.name = event.name;
-            this.address = event.address;
-            this.dateTime = event.dateTime;
-            this.description = event.description;
-            this.tag = event.tag;
-            this.contacts = new ArrayList<>(event.contacts);
-        }
-
         public EventCache() {}
+    }
+
+    private EventCache getCache() {
+        EventCache cache = new EventCache();
+        cache.name = this.name;
+        cache.address = this.address;
+        cache.dateTime = this.dateTime;
+        cache.description = this.description;
+        cache.tag = this.tag;
+        cache.contacts = new ArrayList<>(this.contacts);
+        return cache;
     }
 
     public Event(Event.EventCache cache) {
@@ -204,6 +206,6 @@ public class Event implements ICacheVisitable {
      */
     @Override
     public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
-        return visitor.visit(new EventCache(this), env);
+        return visitor.visit(this.getCache(), env);
     }
 }

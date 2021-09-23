@@ -131,22 +131,24 @@ public class Contact implements ICacheVisitable {
         public List<Tag> tags;
         public Notes notes;
 
-        ContactCache(Contact contact) {
-            this.name = contact.name;
-            this.phoneNumber = contact.phoneNumber;
-            this.address = contact.address;
-            this.tags = new ArrayList<>(contact.tags);
-            this.notes = contact.notes;
-        }
-
         public ContactCache() {}
+    }
+
+    private ContactCache getCache() {
+        ContactCache cache = new ContactCache();
+        cache.name = this.name;
+        cache.phoneNumber = this.phoneNumber;
+        cache.address = this.address;
+        cache.tags = new ArrayList<>(this.tags);
+        cache.notes = this.notes;
+        return cache;
     }
 
     public Contact(ContactCache cache) {
         this.name = cache.name;
         this.phoneNumber = cache.phoneNumber;
         this.address = cache.address;
-        this.tags = cache.tags;
+        this.tags = new ArrayList<>(cache.tags);
         this.notes = cache.notes;
     }
 
@@ -155,6 +157,6 @@ public class Contact implements ICacheVisitable {
      */
     @Override
     public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
-        return visitor.visit(new ContactCache(this), env);
+        return visitor.visit(this.getCache(), env);
     }
 }

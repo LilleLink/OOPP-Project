@@ -87,18 +87,20 @@ public class User implements ICacheVisitable {
         public Collection<Event> events;
         public Collection<Contact> contacts;
 
-        private UserCache(User user) {
-            this.events = new ArrayList<>(user.events);
-            this.contacts = new ArrayList<>(user.contacts);
-            this.name = user.name;
-        }
-
         public UserCache() {}
     }
 
+    private UserCache getCache() {
+        UserCache cache = new UserCache();
+        cache.name = this.name;
+        cache.events = new ArrayList<>(this.events);
+        cache.contacts = new ArrayList<>(this.contacts);
+        return cache;
+    }
+
     public User(UserCache cache) {
-        this.events = cache.events;
-        this.contacts = cache.contacts;
+        this.events = new ArrayList<>(cache.events);
+        this.contacts = new ArrayList<>(cache.contacts);
         this.name = cache.name;
     }
 
@@ -107,6 +109,6 @@ public class User implements ICacheVisitable {
      */
     @Override
     public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
-        return visitor.visit(new UserCache(this), env);
+        return visitor.visit(this.getCache(), env);
     }
 }
