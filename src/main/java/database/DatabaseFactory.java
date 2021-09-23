@@ -1,12 +1,15 @@
 package database;
 
+import database.json.JSONDatabaseLoader;
+import database.json.JSONDatabaseSaver;
+
 import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.Optional;
 
 /***
- * The PRMDatabaseFactory contains a static method for creating an abstract PRM database.
+ * The DatabaseFactory contains a static method for creating an abstract PRM database.
  */
 public class DatabaseFactory {
 
@@ -20,7 +23,7 @@ public class DatabaseFactory {
     static public Database getDatabase() throws IOException {
         if (database == null) {
             /// TODO Don't use a temporary file dummy!
-            database = new Database(Files.createTempFile("prm-database", ""), new JSONDatabase(), new JSONDatabase());
+            database = new Database(Files.createTempFile("prm-database", ""), new JSONDatabaseLoader(), new JSONDatabaseSaver());
         }
         return database;
     }
