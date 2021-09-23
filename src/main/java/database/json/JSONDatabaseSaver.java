@@ -37,7 +37,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
     }
 
     // The cache visitor visits the entire cache hierarchy of the model and returns a serializable JSON record.
-    static private class CacheVisitor implements ICacheVisitor<CacheVisitorState, JSONRecords.IRecord> {
+    static private class CacheVisitor implements ICacheVisitor<CacheVisitorState, JSONRecords.IRecordVisitable> {
         // Create a contact JSON record and return its index. If the record already exists, just return its index.
         private int createContact(Contact contact, CacheVisitorState env) {
             if (!env.contactIndices.containsKey(contact)) {
@@ -51,7 +51,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
 
         // Visit user cache and return a JSON record of it.
         @Override
-        public Optional<JSONRecords.IRecord> visit(User.UserCache user, CacheVisitorState env) {
+        public Optional<JSONRecords.IRecordVisitable> visit(User.UserCache user, CacheVisitorState env) {
             JSONRecords.UserRecord record = new JSONRecords.UserRecord();
             record.name = user.name;
             // Add contact indices to user record.
@@ -67,7 +67,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
 
         // Visit contact cache and return a JSON record of it.
         @Override
-        public Optional<JSONRecords.IRecord> visit(Contact.ContactCache contact, CacheVisitorState env) {
+        public Optional<JSONRecords.IRecordVisitable> visit(Contact.ContactCache contact, CacheVisitorState env) {
             JSONRecords.ContactRecord record = new JSONRecords.ContactRecord();
             record.address = contact.address;
             record.name = contact.name;
@@ -77,7 +77,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
 
         // Visit event cache and return a JSON record of it.
         @Override
-        public Optional<JSONRecords.IRecord> visit(Event.EventCache event, CacheVisitorState env) {
+        public Optional<JSONRecords.IRecordVisitable> visit(Event.EventCache event, CacheVisitorState env) {
             JSONRecords.EventRecord record = new JSONRecords.EventRecord();
             record.address = event.address;
             record.dateTime = event.dateTime.toString();

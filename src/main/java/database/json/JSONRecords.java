@@ -33,12 +33,9 @@ public class JSONRecords {
     }
 
     // JSON records.
-    // JSON record interface.
-     interface IRecord {
-    }
 
     // Contact JSON record.
-    static class ContactRecord implements IRecord, JSONRecords.IRecordVisitable {
+    static class ContactRecord implements JSONRecords.IRecordVisitable {
         String name;
         String phoneNumber;
         Address address;
@@ -51,7 +48,7 @@ public class JSONRecords {
 
     // Event JSON record.
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-    static class EventRecord implements IRecord, JSONRecords.IRecordVisitable {
+    static class EventRecord implements JSONRecords.IRecordVisitable {
         String name;
         Address address = new Address("");
         String dateTime;
@@ -66,7 +63,7 @@ public class JSONRecords {
 
     // User JSON record.
     @SuppressWarnings({"MismatchedQueryAndUpdateOfCollection", "unused"})
-    static class UserRecord implements IRecord, JSONRecords.IRecordVisitable {
+    static class UserRecord implements JSONRecords.IRecordVisitable {
         String name;
         List<Integer> contacts = new ArrayList<>();
         List<EventRecord> events = new ArrayList<>();
@@ -79,7 +76,7 @@ public class JSONRecords {
 
     // PRM JSON record.
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-    static class PRMRecord implements IRecord, JSONRecords.IRecordVisitable {
+    static class PRMRecord implements JSONRecords.IRecordVisitable {
         List<ContactRecord> contacts = new ArrayList<>();
         List<UserRecord> users = new ArrayList<>();
 
