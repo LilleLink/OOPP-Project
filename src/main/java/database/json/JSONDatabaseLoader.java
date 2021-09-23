@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import database.IDatabaseLoader;
 import model.Contact;
 import model.Event;
+import model.ICacheVisitable;
 import model.User;
 
 import java.io.IOException;
@@ -35,9 +36,9 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
     }
 
     // The record visitor visists all the JSON records and returns the reinstated prm model.
-    static private class RecordVisitor implements JSONRecords.IRecordVisitor<RecordVisitorState, Object> {
+    static private class RecordVisitor implements JSONRecords.IRecordVisitor<RecordVisitorState, ICacheVisitable> {
         @Override
-        public Optional<Object> visit(JSONRecords.UserRecord user, RecordVisitorState env) {
+        public Optional<ICacheVisitable> visit(JSONRecords.UserRecord user, RecordVisitorState env) {
             User.UserCache cache = new User.UserCache();
             cache.name = user.name;
             cache.contacts = user.contacts.stream().map(i -> env.contacts.get(i)).collect(Collectors.toList());
@@ -46,7 +47,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
         }
 
         @Override
-        public Optional<Object> visit(JSONRecords.ContactRecord contact, RecordVisitorState env) {
+        public Optional<ICacheVisitable> visit(JSONRecords.ContactRecord contact, RecordVisitorState env) {
             Contact.ContactCache cache = new Contact.ContactCache();
             cache.name = contact.name;
             cache.phoneNumber = contact.phoneNumber;
@@ -57,7 +58,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
         }
 
         @Override
-        public Optional<Object> visit(JSONRecords.EventRecord event, RecordVisitorState env) {
+        public Optional<ICacheVisitable> visit(JSONRecords.EventRecord event, RecordVisitorState env) {
             Event.EventCache cache = new Event.EventCache();
             cache.name = event.name;
             cache.address = event.address;
@@ -69,7 +70,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
         }
 
         @Override
-        public Optional<Object> visit(JSONRecords.PRMRecord prm, RecordVisitorState env) {
+        public Optional<ICacheVisitable> visit(JSONRecords.PRMRecord prm, RecordVisitorState env) {
             prm.contacts.forEach(c -> env.contacts.add((Contact) this.visit(c, env).orElseThrow(IllegalStateException::new)));
             return prm.users.get(0).accept(this, env);
         }

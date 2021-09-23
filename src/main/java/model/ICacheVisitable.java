@@ -5,7 +5,7 @@ import java.util.Optional;
 /***
  * The interface for a part of the model with visitable cache.
  */
-interface ICacheVisitable {
+public interface ICacheVisitable {
 
     /***
      * Accept a cache visitor and pass the model cache to the correct case in the visitor.
