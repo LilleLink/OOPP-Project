@@ -14,7 +14,7 @@ public class Event {
     private LocalDateTime dateTime;
     private String description;
 
-    private Tag tag;
+    private ITag tag;
     private ArrayList<Contact> contacts = new ArrayList<>();
 
     /***
@@ -117,7 +117,7 @@ public class Event {
      * Adds a tag to the event
      * @param tag the tag to be added
      */
-    void addTag(Tag tag){
+    void addTag(ITag tag){
         this.tag = tag;
     }
 
@@ -132,7 +132,7 @@ public class Event {
      * Returns tag
      * @return the tag
      */
-    public Tag getTag(){
+    public ITag getTag(){
         return this.tag;
     }
 

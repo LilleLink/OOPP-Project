@@ -1,23 +1,31 @@
 package model;
 
-import model.exceptions.NameNotAvailableException;
+class Tag implements ITag {
 
-public abstract class Tag {
+    private String name;
 
-    protected String name;
+    private String color;
 
-    protected String color ="CDCDCD";
-    private boolean deleted = false;
-
-    protected Tag(String name){
+    Tag(String name){
         this.name = name;
+        color = "CDCDCD";
+    }
+
+    Tag(Tag other) {
+        this.name = other.name;
+        this.color = other.color;
+    }
+
+    Tag(String name, String color) {
+        this.name = name;
+        this.color = color;
     }
 
     /**
      *
      * @return the name of a Tag
      */
-    String getName(){
+    public String getName(){
         return name;
     }
 
@@ -25,48 +33,18 @@ public abstract class Tag {
      *
      * @return the color code of a Tag
      */
-    String getColor(){
+    public String getColor(){
         return color;
     }
 
-    /**
-     * Deletes a Tag
-     */
-    void delete(){
-        this.deleted = true;
-        updateHandler();
+    void setName(String name) {
+        this.name = name;
     }
 
-    protected abstract void updateHandler();
-
-    public boolean isDeleted(){ return this.deleted; }
-
-    /**
-     * Renames a Tag to the given string. Returns false if the name was not available
-     * @param name the new name
-     */
-    abstract void renameTo(String name) throws NameNotAvailableException;
-
-    /**
-     * Changes the color of a Tag
-     * @param color The new color as HEX-code
-     * @return If the change succeeded
-     */
-    boolean setColor(String color){
-        if (isHexColor(color)){
-            this.color = color;
-            return true;
-        }
-        return false;
+    void setColor(String color) {
+        this.color = color;
     }
 
-    private boolean isHexColor(String color){
-        if (color.length() != 6) return false;
-        for (char c: color.toCharArray()){
-            if (Character.digit(c, 16) == -1){
-                return false;
-            }
-        }
-        return true;
-    }
+
+
 }
