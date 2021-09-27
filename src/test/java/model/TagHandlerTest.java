@@ -25,7 +25,7 @@ public class TagHandlerTest {
         } catch (NameNotAvailableException e){
             fail();
         }
-        List<Tag> tags = handler.getTags();
+        List<ITag> tags = handler.getTags();
         assertNotEquals(tags.get(0).getName(), tags.get(1).getName());
     }
 
@@ -68,11 +68,11 @@ public class TagHandlerTest {
             handler.createTag("First tag");
             handler.rename("First tag","Something else");
 
-            Tag t1 = handler.getTag("Something else");
-            Tag t2 = handler.createTag("First tag");
+            ITag t1 = handler.getTag("Something else");
+            ITag t2 = handler.createTag("First tag");
             assertNotEquals(t1, t2);
             handler.delete(t2.getName());
-            Tag t3 = handler.createTag("First tag");
+            ITag t3 = handler.createTag("First tag");
             assertNotEquals(t1, t2);
             assertNotEquals(t1, t3);
             assertNotEquals(t2, t3);

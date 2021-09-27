@@ -11,7 +11,7 @@ public class Contact {
     private String name;
     private String phoneNumber = "";
     private Address address = new Address("");
-    private final List<Tag> tags = new ArrayList<>();
+    private final List<ITag> tags = new ArrayList<>();
     private Notes notes;
     private boolean isDeleted;
 
@@ -94,7 +94,7 @@ public class Contact {
      * Adds a tag to the contact.
      * @param tag The desired tag.
      */
-    void addTag(Tag tag){
+    void addTag(ITag tag){
         tags.add(tag);
     }
 
@@ -103,7 +103,7 @@ public class Contact {
      * @param tag The tag to remove.
      * @throws TagNotFoundException If the contact does not have the given tag.
      */
-    void removeTag(Tag tag) throws TagNotFoundException {
+    void removeTag(ITag tag) throws TagNotFoundException {
         if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
         tags.remove(tag);
     }
@@ -112,7 +112,7 @@ public class Contact {
      *
      * @return A list of the contact's tags.
      */
-    public List<Tag> getTags(){
+    public List<ITag> getTags(){
         return new ArrayList<>(tags);
     }
 

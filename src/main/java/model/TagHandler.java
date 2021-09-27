@@ -5,19 +5,17 @@ import model.exceptions.TagNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TagHandler {
 
-    private final HashMap<String, Tag> stringTagHashMap = new HashMap<>();
+    private final HashMap<String, ITag> stringTagHashMap = new HashMap<>();
 
     /**
      * Creates a new Tag if the name is available. If a tag of the given name already exists, the UUID for that tag is returned
      * @param name The name of the new Tag
      * @return The id of the new Tag
      */
-    Tag createTag(String name) throws NameNotAvailableException{
+    ITag createTag(String name) throws NameNotAvailableException{
         Tag tag;
         if (!nameIsAvailable(name)){
             throw new NameNotAvailableException(name);
@@ -25,17 +23,17 @@ public class TagHandler {
             tag = new Tag(name);
             stringTagHashMap.put(name, tag);
         }
-        return new Tag(tag);
+        return tag;
     }
 
-    Tag getTag(String name) throws TagNotFoundException{
-        Tag tag = stringTagHashMap.get(name);
+    ITag getTag(String name) throws TagNotFoundException{
+        ITag tag = stringTagHashMap.get(name);
         if (tag == null) throw new TagNotFoundException(name);
-        return new Tag(tag);
+        return tag;
     }
 
-    ArrayList<Tag> getTags(){
-        ArrayList<Tag> tags = new ArrayList<>();
+    ArrayList<ITag> getTags(){
+        ArrayList<ITag> tags = new ArrayList<>();
         stringTagHashMap.forEach((k,v) -> tags.add(v));
         return tags;
     }

@@ -1,12 +1,10 @@
 package model;
 
-import model.exceptions.NameNotAvailableException;
+class Tag implements ITag {
 
-class Tag {
+    private String name;
 
-    private final String name;
-
-    private final String color;
+    private String color;
 
     Tag(String name){
         this.name = name;
@@ -27,7 +25,7 @@ class Tag {
      *
      * @return the name of a Tag
      */
-    String getName(){
+    public String getName(){
         return name;
     }
 
@@ -35,8 +33,16 @@ class Tag {
      *
      * @return the color code of a Tag
      */
-    String getColor(){
+    public String getColor(){
         return color;
+    }
+
+    void setName(String name) {
+        this.name = name;
+    }
+
+    void setColor(String color) {
+        this.color = color;
     }
 
 
