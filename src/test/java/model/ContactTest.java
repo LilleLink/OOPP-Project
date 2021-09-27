@@ -55,7 +55,7 @@ public class ContactTest {
             c1.addTag(t1);
             c1.removeTag(t1);
             assertThrows(TagNotFoundException.class, () -> c1.removeTag(t1));
-        } catch (NameNotAvailableException e) {
+        } catch (NameNotAvailableException | TagNotFoundException e) {
             fail(e.getMessage());
         }
     }
