@@ -3,13 +3,14 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * Represents a list of Note objects with restricted operations.
  * Note objects contained in the list are sorted after age using the LocalDateTime class.
  * @see java.time.LocalDateTime
  */
-class Notes {
+public class Notes implements ICacheVisitable{
 
     // Elements represented as a list of note objects
     private final List<Note> elements;
@@ -130,5 +131,20 @@ class Notes {
     @Override
     public int hashCode() {
         return Objects.hash(elements);
+    }
+
+    public static class NotesCache {
+        public List<Note> elements;
+    }
+
+    private NotesCache getCache() {
+        NotesCache cache = new NotesCache();
+        cache.elements = new ArrayList<>(this.elements);
+        return cache;
+    }
+
+    @Override
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(this.getCache(), env);
     }
 }

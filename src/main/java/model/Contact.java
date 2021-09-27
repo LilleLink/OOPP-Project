@@ -23,6 +23,7 @@ public class Contact implements ICacheVisitable {
     Contact(String name){
         this.name = name;
         this.tags = new ArrayList<>();
+        this.notes = new Notes();
     }
 
     /**

@@ -9,6 +9,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class DatabaseFactoryTest {
 
@@ -24,7 +25,19 @@ public class DatabaseFactoryTest {
 
         user.addEvent(event);
 
-        user.addContact(new Contact("Other bruh"));
+
+        // Shouldnt use cache like this but its the only way to test notes atm.
+        Contact.ContactCache cache = new Contact.ContactCache();
+        cache.address = new Address("Address");
+        cache.phoneNumber = "phone";
+        cache.name = "Other bruh";
+        cache.notes = new Notes().addNote("Hello this is a note!!").addNote("AND ANOTHER!");
+        cache.tags = new ArrayList<>();
+
+        Contact c = new Contact(cache);
+
+
+        user.addContact(c);
     }
 
     @Test

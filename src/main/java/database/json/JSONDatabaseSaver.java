@@ -2,10 +2,7 @@ package database.json;
 
 import com.google.gson.Gson;
 import database.IDatabaseSaver;
-import model.Contact;
-import model.Event;
-import model.ICacheVisitor;
-import model.User;
+import model.*;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -13,6 +10,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class JSONDatabaseSaver implements IDatabaseSaver {
 
@@ -72,6 +70,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             record.address = contact.address;
             record.name = contact.name;
             record.phoneNumber = contact.phoneNumber;
+            record.notes = (JSONRecords.NotesRecord) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
             return Optional.of(record);
         }
 
@@ -87,6 +86,23 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             for (Contact contact : event.contacts) {
                 record.contacts.add(createContact(contact, env));
             }
+            return Optional.of(record);
+        }
+
+        @Override
+        public Optional<JSONRecords.IRecordVisitable> visit(Notes.NotesCache cache, CacheVisitorState env) {
+            JSONRecords.NotesRecord record = new JSONRecords.NotesRecord();
+            record.elements = cache.elements.stream().map(
+                            n -> (JSONRecords.NoteRecord) n.accept(this, env).orElseThrow(IllegalStateException::new))
+                    .collect(Collectors.toList());
+            return Optional.of(record);
+        }
+
+        @Override
+        public Optional<JSONRecords.IRecordVisitable> visit(Note.NoteCache cache, CacheVisitorState env) {
+            JSONRecords.NoteRecord record = new JSONRecords.NoteRecord();
+            record.text = cache.text;
+            record.pointOfCreation = cache.pointOfCreation.toString();
             return Optional.of(record);
         }
     }

@@ -9,7 +9,7 @@ import java.util.Optional;
 public class JSONRecords {
 
     // The record visitor interface.
-     interface IRecordVisitor<E, T> {
+    interface IRecordVisitor<E, T> {
         default Optional<T> visit(UserRecord user, E env) {
             return Optional.empty();
         }
@@ -28,7 +28,7 @@ public class JSONRecords {
     }
 
     // The visitable record interface.
-     interface IRecordVisitable {
+    interface IRecordVisitable {
         <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env);
     }
 
@@ -39,10 +39,30 @@ public class JSONRecords {
         String name;
         String phoneNumber;
         Address address;
+        NotesRecord notes;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
             return visitor.visit(this, env);
+        }
+    }
+
+    static class NotesRecord implements JSONRecords.IRecordVisitable {
+        List<NoteRecord> elements;
+
+        @Override
+        public <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env) {
+            return Optional.empty();
+        }
+    }
+
+    static class NoteRecord implements JSONRecords.IRecordVisitable {
+        String text;
+        String pointOfCreation;
+
+        @Override
+        public <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env) {
+            return Optional.empty();
         }
     }
 

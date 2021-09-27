@@ -40,4 +40,11 @@ public interface ICacheVisitor<E, T> {
         return Optional.empty();
     }
 
+    default Optional<T> visit(Notes.NotesCache event, E env) {
+        return Optional.empty();
+    }
+    default Optional<T> visit(Note.NoteCache event, E env) {
+        return Optional.empty();
+    }
+
 }
