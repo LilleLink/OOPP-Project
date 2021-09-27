@@ -6,35 +6,34 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TagHandlerTest {
 
-    TagHandler factory;
+    TagHandler handler;
 
     @Before
     public void preTest(){
-        factory = new TagHandler();
+        handler = new TagHandler();
     }
 
     @Test
     public void creationTest(){
         try {
-            factory.createTag("First tag");
-            factory.createTag("Second Tag");
+            handler.createTag("First tag");
+            handler.createTag("Second Tag");
         } catch (NameNotAvailableException e){
             fail();
         }
-        List<Tag> tags = factory.getTags();
+        List<ITag> tags = handler.getTags();
         assertNotEquals(tags.get(0).getName(), tags.get(1).getName());
     }
 
     @Test
     public void noDuplicateTest(){
         try {
-            factory.createTag("First tag");
-            assertThrows(NameNotAvailableException.class, () -> factory.createTag("First tag"));
+            handler.createTag("First tag");
+            assertThrows(NameNotAvailableException.class, () -> handler.createTag("First tag"));
         } catch (NameNotAvailableException e){
             fail();
         }
@@ -43,10 +42,10 @@ public class TagHandlerTest {
     @Test
     public void renameTest(){
         try {
-            Tag t1 = factory.createTag("First tag");
-            t1.renameTo("new name");
-            assertEquals("new name", t1.name);
-        } catch (NameNotAvailableException e){
+            handler.createTag("First tag");
+            handler.rename("First tag","new name");
+            assertEquals("new name", handler.getTag("new name").getName());
+        } catch (NameNotAvailableException | TagNotFoundException e){
             fail();
         }
     }
@@ -54,11 +53,11 @@ public class TagHandlerTest {
     @Test
     public void renameToDuplicateNameTest(){
         try {
-            Tag t1 = factory.createTag("First tag");
-            Tag t2 = factory.createTag("Second tag");
-            assertThrows(NameNotAvailableException.class, () -> t1.renameTo("Second tag"));
-            assertNotEquals(t1.name, t2.name);
-        } catch (NameNotAvailableException e){
+            handler.createTag("First tag");
+            handler.createTag("Second tag");
+            assertThrows(NameNotAvailableException.class, () -> handler.rename("First tag", "Second tag"));
+            assertNotEquals(handler.getTag("First tag").getName(), handler.getTag("Second tag").getName());
+        } catch (NameNotAvailableException | TagNotFoundException e){
             fail();
         }
     }
@@ -66,16 +65,18 @@ public class TagHandlerTest {
     @Test
     public void makeNameAvailableTest(){
         try {
-            Tag t1 = factory.createTag("First tag");
-            t1.renameTo("Something else");
-            Tag t2 = factory.createTag("First tag");
+            handler.createTag("First tag");
+            handler.rename("First tag","Something else");
+
+            ITag t1 = handler.getTag("Something else");
+            ITag t2 = handler.createTag("First tag");
             assertNotEquals(t1, t2);
-            t2.delete();
-            Tag t3 = factory.createTag("First tag");
+            handler.delete(t2.getName());
+            ITag t3 = handler.createTag("First tag");
             assertNotEquals(t1, t2);
             assertNotEquals(t1, t3);
             assertNotEquals(t2, t3);
-        } catch (NameNotAvailableException e){
+        } catch (NameNotAvailableException | TagNotFoundException e){
             fail();
         }
     }
@@ -83,16 +84,16 @@ public class TagHandlerTest {
     @Test
     public void getTagTest(){
         try {
-            factory.createTag("Existing tag");
+            handler.createTag("Existing tag");
         } catch (NameNotAvailableException e){
             fail();
         }
         try {
-            factory.getTag("Existing tag");
+            handler.getTag("Existing tag");
         } catch (TagNotFoundException e){
             fail();
         }
-        assertThrows(TagNotFoundException.class, () -> factory.getTag("non existing tag"));
+        assertThrows(TagNotFoundException.class, () -> handler.getTag("non existing tag"));
     }
 
     @Test

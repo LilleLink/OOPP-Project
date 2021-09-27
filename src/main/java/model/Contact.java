@@ -2,8 +2,8 @@ package model;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-
 import model.exceptions.*;
 
 import java.util.Optional;
@@ -13,19 +13,20 @@ public class Contact implements ICacheVisitable {
     private String name;
     private String phoneNumber = "";
     private Address address = new Address("");
-    private final List<Tag> tags;
+    private final List<ITag> tags;
     private Notes notes;
     private boolean isDeleted;
 
     /**
      * @param name The contact's name.
      */
-    Contact(String name) {
+    Contact(String name){
         this.name = name;
         this.tags = new ArrayList<>();
     }
 
     /**
+     *
      * @return The contact's name.
      */
     public String getName() {
@@ -33,6 +34,7 @@ public class Contact implements ICacheVisitable {
     }
 
     /**
+     *
      * @return The contact's phone number.
      */
     public String getPhoneNumber() {
@@ -40,9 +42,10 @@ public class Contact implements ICacheVisitable {
     }
 
     /**
+     *
      * @return Contact's address as string.
      */
-    public String getAddress() {
+    public String getAddress(){
         return this.address.getAddress();
     }
 
@@ -96,28 +99,27 @@ public class Contact implements ICacheVisitable {
 
     /**
      * Adds a tag to the contact.
-     *
      * @param tag The desired tag.
      */
-    void addTag(Tag tag) {
+    void addTag(ITag tag){
         tags.add(tag);
     }
 
     /**
      * Removes a tag from the contact.
-     *
      * @param tag The tag to remove.
      * @throws TagNotFoundException If the contact does not have the given tag.
      */
-    void removeTag(Tag tag) throws TagNotFoundException {
+    void removeTag(ITag tag) throws TagNotFoundException {
         if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
         tags.remove(tag);
     }
 
     /**
+     *
      * @return A list of the contact's tags.
      */
-    public List<Tag> getTags() {
+    public List<ITag> getTags(){
         return new ArrayList<>(tags);
     }
 
@@ -128,7 +130,7 @@ public class Contact implements ICacheVisitable {
         public String name;
         public String phoneNumber;
         public Address address;
-        public List<Tag> tags;
+        public List<ITag> tags;
         public Notes notes;
 
         public ContactCache() {}

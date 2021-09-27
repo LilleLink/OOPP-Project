@@ -1,5 +1,6 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -15,7 +16,7 @@ public class Event implements ICacheVisitable {
     private LocalDateTime dateTime;
     private String description;
 
-    private Tag tag;
+    private ITag tag;
     private Collection<Contact> contacts = new ArrayList<>();
 
     /***
@@ -118,14 +119,14 @@ public class Event implements ICacheVisitable {
      * Adds a tag to the event
      * @param tag the tag to be added
      */
-    void addTag(Tag tag) {
+    void addTag(ITag tag){
         this.tag = tag;
     }
 
     /***
      * Removes a tag from the event
      */
-    void removeTag() {
+    void removeTag(){
         tag = null;
     }
 
@@ -133,7 +134,7 @@ public class Event implements ICacheVisitable {
      * Returns tag
      * @return the tag
      */
-    public Tag getTag() {
+    public ITag getTag(){
         return this.tag;
     }
 
@@ -175,7 +176,7 @@ public class Event implements ICacheVisitable {
         public Address address;
         public LocalDateTime dateTime;
         public String description;
-        public Tag tag;
+        public ITag tag;
         public Collection<Contact> contacts;
 
         public EventCache() {}

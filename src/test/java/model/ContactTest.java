@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import model.exceptions.*;
 
 
 public class ContactTest {
@@ -37,7 +38,7 @@ public class ContactTest {
     @Test
     public void addAndGetTagTest(){
         try{
-            Tag t1 = tagHandler.createTag("friends");
+            ITag t1 = tagHandler.createTag("friends");
             assertEquals(0, c1.getTags().size());
             c1.addTag(t1);
             assertEquals(1, c1.getTags().size());
@@ -50,7 +51,7 @@ public class ContactTest {
     @Test
     public void removeTagTwiceTest(){
         try {
-            Tag t1 = tagHandler.createTag("work");
+            ITag t1 = tagHandler.createTag("work");
             c1.addTag(t1);
             c1.removeTag(t1);
             assertThrows(TagNotFoundException.class, () -> c1.removeTag(t1));
