@@ -96,32 +96,5 @@ public class TagHandlerTest {
         assertThrows(TagNotFoundException.class, () -> handler.getTag("non existing tag"));
     }
 
-    @Test
-    public void changeColorTest(){
-        try{
-            Tag t1 = factory.createTag("First Tag");
-            t1.setColor("09CDda");
-            assertEquals("09CDda", t1.getColor());
-            t1.setColor("0099ccddddaa");
-            assertNotEquals("0099ccddddaa", t1.getColor());
-            t1.setColor("illgal");
-            assertNotEquals("illgal", t1.getColor());
-            assertEquals("09CDda", t1.getColor());
-        } catch (NameNotAvailableException e){
-            fail();
-        }
-    }
-
-    @Test
-    public void deleteTest(){
-        try {
-            Tag t1 = factory.createTag("Tag");
-            assertFalse(t1.isDeleted());
-            t1.delete();
-            assertTrue(t1.isDeleted());
-        } catch (NameNotAvailableException e) {
-            e.printStackTrace();
-        }
-    }
 
 }

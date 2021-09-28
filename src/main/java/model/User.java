@@ -8,7 +8,7 @@ import java.util.*;
 public class User {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
-    private final ArrayList<Event> eventList = new ArrayList<>();
+    private final Collection<Event> eventList = new ArrayList<>();
     private final TagHandler tagHandler = new TagHandler();
 
     /***
@@ -57,7 +57,7 @@ public class User {
      * Returns the users list of events
      * @return the list of events
      */
-    public ArrayList<Event> getEventList() {
+    public Collection<Event> getEventList() {
         return eventList;
     }
 

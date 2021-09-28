@@ -1,8 +1,8 @@
 package model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
@@ -15,7 +15,7 @@ public class Event {
     private String description;
 
     private ITag tag;
-    private ArrayList<Contact> contacts = new ArrayList<>();
+    private Collection<Contact> contacts = new ArrayList<>();
 
     /***
      * Creates an event with the given parameters.
@@ -162,7 +162,7 @@ public class Event {
      * Returns the contact arraylist.
      * @return the contact arraylist.
      */
-    public ArrayList<Contact> getContacts(){
+    public Collection<Contact> getContacts(){
         return this.contacts;
     }
 }
