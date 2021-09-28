@@ -9,6 +9,7 @@ public class User {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
     private final ArrayList<Event> eventList = new ArrayList<>();
+    private final Collection<Contact> contactList = new ArrayList<>();
     private final TagHandler tagHandler = new TagHandler();
 
     /***
@@ -23,7 +24,7 @@ public class User {
      * Sets the name of the user
      * @param name new name of the user
      */
-    void setName(String name){
+    public void setName(String name){
         this.name = name;
     }
 
@@ -75,4 +76,15 @@ public class User {
         return contactEvents;
     }
 
+    public void addContact(String name){
+        contactList.add(new Contact(name));
+    }
+
+    public void removeContact(Contact contact){
+        contactList.remove(contact);
+    }
+
+    public Collection<Contact> getContacts(){
+        return contactList;
+    }
 }
