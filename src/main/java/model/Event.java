@@ -40,7 +40,7 @@ public class Event {
      * @param name the name of the event
      * @param date the date of the event
      */
-    public Event(String name, LocalDateTime date) {
+    Event(String name, LocalDateTime date) {
         this.name = name;
         this.dateTime = date;
     }
