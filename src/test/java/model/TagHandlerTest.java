@@ -65,18 +65,11 @@ public class TagHandlerTest {
     @Test
     public void makeNameAvailableTest(){
         try {
-            handler.createTag("First tag");
+            ITag t1 = handler.createTag("First tag");
             handler.rename("First tag","Something else");
-
-            ITag t1 = handler.getTag("Something else");
             ITag t2 = handler.createTag("First tag");
             assertNotEquals(t1, t2);
-            handler.delete(t2.getName());
-            ITag t3 = handler.createTag("First tag");
-            assertNotEquals(t1, t2);
-            assertNotEquals(t1, t3);
-            assertNotEquals(t2, t3);
-        } catch (NameNotAvailableException | TagNotFoundException e){
+        } catch (NameNotAvailableException e){
             fail();
         }
     }
@@ -94,6 +87,24 @@ public class TagHandlerTest {
             fail();
         }
         assertThrows(TagNotFoundException.class, () -> handler.getTag("non existing tag"));
+    }
+
+    @Test
+    public void changeColorTest(){
+        try{
+            ITag t1 = handler.createTag("First Tag");
+            assertTrue(handler.setColor(t1.getName(), "09CDda"));
+            assertEquals("09CDda", t1.getColor());
+            assertFalse(handler.setColor(t1.getName(), "0099ccddddaa"));
+            assertNotEquals("0099ccddddaa", t1.getColor());
+            assertFalse(handler.setColor(t1.getName(), "illgal"));
+            assertNotEquals("illgal", t1.getColor());
+            assertEquals("09CDda", t1.getColor());
+            assertTrue(handler.setColor(t1.getName(), "fa6607"));
+            assertEquals("fa6607", t1.getColor());
+        } catch (NameNotAvailableException | TagNotFoundException e){
+            fail();
+        }
     }
 
 
