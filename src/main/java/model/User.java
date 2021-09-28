@@ -9,7 +9,7 @@ public class User {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
     private final Collection<Event> eventList = new ArrayList<>();
-    private final Collection<Contact> contactList = new ArrayList<>();
+    private final List<Contact> contactList = new ArrayList<>();
     private final TagHandler tagHandler = new TagHandler();
 
     /***
@@ -84,7 +84,7 @@ public class User {
         contactList.remove(contact);
     }
 
-    public Collection<Contact> getContacts(){
+    public List<Contact> getContacts(){
         return contactList;
     }
 }

@@ -48,4 +48,18 @@ public class UserTest {
         assertTrue(user.getContactEvents(contact).contains(e));
     }
 
+    @Test
+    public void addContact(){
+        user.addContact("Test Testson");
+        user.addContact("Simon E");
+        assertEquals(2, user.getContacts().size());
+    }
+
+    @Test
+    public void removeContact(){
+        user.addContact("Test Testson");
+        user.addContact("Simon E");
+        user.removeContact(user.getContacts().get(0));
+        assertEquals(1, user.getContacts().size());
+    }
 }
