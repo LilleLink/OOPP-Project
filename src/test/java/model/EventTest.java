@@ -59,7 +59,7 @@ public class EventTest {
     @Test
     public void tagAndUntagTest() {
         TagHandler tf = new TagHandler();
-        Tag myTag = null;
+        ITag myTag = null;
         try {
             myTag = tf.createTag("Kompisaj");
         } catch (NameNotAvailableException e) {

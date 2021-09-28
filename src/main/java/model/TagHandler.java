@@ -8,32 +8,32 @@ import java.util.HashMap;
 
 public class TagHandler {
 
-    private HashMap<String, Tag> stringTagHashMap = new HashMap<>();
+    private final HashMap<String, ITag> stringTagHashMap = new HashMap<>();
 
     /**
      * Creates a new Tag if the name is available. If a tag of the given name already exists, the UUID for that tag is returned
      * @param name The name of the new Tag
      * @return The id of the new Tag
      */
-    Tag createTag(String name) throws NameNotAvailableException{
+    ITag createTag(String name) throws NameNotAvailableException{
         Tag tag;
         if (!nameIsAvailable(name)){
             throw new NameNotAvailableException(name);
         } else {
-            tag = new CommonTag(name);
+            tag = new Tag(name);
             stringTagHashMap.put(name, tag);
         }
         return tag;
     }
 
-    Tag getTag(String name) throws TagNotFoundException{
-        Tag tag = stringTagHashMap.get(name);
+    ITag getTag(String name) throws TagNotFoundException{
+        ITag tag = stringTagHashMap.get(name);
         if (tag == null) throw new TagNotFoundException(name);
         return tag;
     }
 
-    ArrayList<Tag> getTags(){
-        ArrayList<Tag> tags = new ArrayList<>();
+    ArrayList<ITag> getTags(){
+        ArrayList<ITag> tags = new ArrayList<>();
         stringTagHashMap.forEach((k,v) -> tags.add(v));
         return tags;
     }
@@ -49,41 +49,47 @@ public class TagHandler {
 
     /**
      * Makes a name available again by "deleting" the tag which holds it. The tag still exists as instances in other classes
-     * @param tag The tag to be deleted
+     * @param tagName The tag to be deleted
      */
-    private void delete(Tag tag){
-        stringTagHashMap.remove(tag.name);
+    void delete(String tagName) {
+        stringTagHashMap.remove(tagName);
     }
 
     /**
      * Renames a Tag to the given string. Returns false if the name was not available
-     * @param name the new name
+     * @param newName the new name
      */
-    private void renameTo(Tag tag, String name) throws NameNotAvailableException{
-        if (stringTagHashMap.get(name) != null)
-            throw new NameNotAvailableException(name);
-        stringTagHashMap.remove(tag.name);
-        stringTagHashMap.put(name, tag);
+    void rename(String oldName, String newName) throws NameNotAvailableException{
+        if (stringTagHashMap.get(newName) != null)
+            throw new NameNotAvailableException(newName);
+        stringTagHashMap.remove(oldName);
+        stringTagHashMap.put(newName, new Tag(newName));
     }
 
-    private class CommonTag extends Tag{
 
-        private final TagHandler parentFactory;
-
-        private CommonTag(String name){
-            super(name);
-            parentFactory = TagHandler.this;
+    /**
+     * Changes the color of a Tag
+     * @param color The new color as HEX-code
+     * @param tag the tag to change color of
+     * @return If the change succeeded
+     */
+    boolean setColor(String tag, String color){
+        if (isHexColor(color)){
+             stringTagHashMap.remove(tag);
+             stringTagHashMap.put(tag,new Tag(tag,color));
+            return true;
         }
-
-        @Override
-        protected void updateHandler() {
-            parentFactory.delete(this);
-        }
-
-        @Override
-        void renameTo(String name) throws NameNotAvailableException {
-            parentFactory.renameTo(this, name);
-            this.name = name;
-        }
+        return false;
     }
+
+
+    private boolean isHexColor(String color){
+        for (char c: color.toCharArray()){
+            if (Character.digit(c, 16) == -1){
+                return false;
+            }
+        }
+        return true;
+    }
+
 }
