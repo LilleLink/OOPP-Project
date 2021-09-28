@@ -2,7 +2,6 @@ package model;
 
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import model.exceptions.TagNotFoundException;
 
@@ -13,7 +12,6 @@ public class Contact {
     private Address address = new Address("");
     private final List<ITag> tags = new ArrayList<>();
     private Notes notes;
-    private boolean isDeleted;
 
     /**
      * @param name The contact's name.
@@ -79,16 +77,7 @@ public class Contact {
         this.phoneNumber = number;
     }
 
-    /**
-     * Marks contact as deleted which removes it from the contact list, but it is still viewable in earlier events.
-     */
-    void delete(){
-        isDeleted = true;
-    }
 
-    public boolean isDeleted(){
-        return isDeleted;
-    }
 
     /**
      * Adds a tag to the contact.
@@ -115,5 +104,39 @@ public class Contact {
     public List<ITag> getTags(){
         return new ArrayList<>(tags);
     }
+
+    /**
+     * Adds a note with the specified text to Notes.
+     * @param text the information to be added
+     */
+    void addNote(String text) {
+        notes = notes.addNote(text);
+    }
+
+    /**
+     * Removes the note at the specified index
+      * @param index the index of the note to be removed
+     */
+    void removeNote(int index) {
+        notes = notes.removeNote(index);
+    }
+
+    /**
+     * Edits the note at the specified index with the given text.
+     * @param index the index of the note to be edited
+     * @param text the new text
+     */
+    void editNote(int index, String text) {
+        notes = notes.editNoteAt(index,text);
+    }
+
+    /**
+     * Retrieves the notes in this contact.
+     * @return a list of notes
+     */
+    List<Note> getNotes() {
+        return notes.getSortedElem();
+    }
+
 
 }
