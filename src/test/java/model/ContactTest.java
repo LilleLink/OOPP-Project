@@ -8,6 +8,8 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import model.exceptions.*;
 
+import java.util.List;
+
 
 public class ContactTest {
 
@@ -61,9 +63,20 @@ public class ContactTest {
     }
 
     @Test
-    public void deleteTest(){
-        assertFalse(c1.isDeleted());
-        c1.delete();
-        assertTrue(c1.isDeleted());
+    public void andAndRemoveNote() {
+        c1.addNote("Pizza");
+        List<Note> notes = c1.getNotes();
+        assert(notes.size() == 1);
+        c1.removeNote(0);
+        List<Note> newNotes = c1.getNotes();
+        assert(newNotes.size() == 0);
+    }
+
+    @Test
+    public void editAndViewNote() {
+        String text = "Pizza is good";
+        c1.addNote();
+        c1.editNote(0,text);
+        assert(c1.viewNoteAt(0).equals(text));
     }
 }

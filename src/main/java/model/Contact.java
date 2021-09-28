@@ -11,7 +11,7 @@ public class Contact {
     private String phoneNumber = "";
     private Address address = new Address("");
     private final List<ITag> tags = new ArrayList<>();
-    private Notes notes;
+    private Notes notes = new Notes();
 
     /**
      * @param name The contact's name.
@@ -114,6 +114,13 @@ public class Contact {
     }
 
     /**
+     * Adds a note with empty text to Notes.
+     */
+    void addNote() {
+        notes = notes.addNote();
+    }
+
+    /**
      * Removes the note at the specified index
       * @param index the index of the note to be removed
      */
@@ -128,6 +135,15 @@ public class Contact {
      */
     void editNote(int index, String text) {
         notes = notes.editNoteAt(index,text);
+    }
+
+    /**
+     * Retrieves the text at the given index
+     * @param index the index of the note to view
+     * @return a string
+     */
+    String viewNoteAt(int index) {
+        return notes.viewNoteAt(index);
     }
 
     /**
