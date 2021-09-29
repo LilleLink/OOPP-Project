@@ -1,4 +1,4 @@
-package javafxcontroller;
+package javafx;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -11,7 +11,7 @@ public class JavaFXComponent extends AnchorPane {
         // Loads the fxml file and sets this file as the controller
         String fxmlFileName = getClass().getSimpleName()+".fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFileName));
-        fxmlLoader.setRoot(this);
+        //fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
         try {

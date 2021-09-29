@@ -1,4 +1,4 @@
-package javafxcontroller;
+package javafx;
 
 public interface INavigator {
 

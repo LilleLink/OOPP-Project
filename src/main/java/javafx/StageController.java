@@ -1,4 +1,4 @@
-package javafxcontroller;
+package javafx;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,6 +17,7 @@ public class StageController implements INavigator {
         initiateScenes();
 
         stage.setScene(new Scene(new MainScene()));
+        stage.show();
     }
 
     private void initiateScenes() {

@@ -1,7 +1,7 @@
 package application;
 
 import javafx.stage.Stage;
-import javafxcontroller.StageController;
+import javafx.StageController;
 
 public class Application extends javafx.application.Application {
 

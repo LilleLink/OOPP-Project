@@ -1,4 +1,4 @@
-package javafxcontroller;
+package javafx;
 
 public class SecondaryScene extends JavaFXComponent{
 
