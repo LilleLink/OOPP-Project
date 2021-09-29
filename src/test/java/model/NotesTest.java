@@ -29,7 +29,6 @@ public class NotesTest {
     public void noteIsEditedTest() {
         Notes notes = new Notes();
         notes.addNote("Pizza");
-
         String oText = notes.viewNoteAt(0);
         notes.editNoteAt(0,"Taco");
         String nText = notes.viewNoteAt(0);
