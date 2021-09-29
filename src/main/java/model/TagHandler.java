@@ -54,7 +54,10 @@ public class TagHandler {
     void rename(String oldName, String newName) throws NameNotAvailableException{
         if (stringTagHashMap.get(newName) != null)
             throw new NameNotAvailableException(newName);
-        stringTagHashMap.get(oldName).setName(newName);
+        Tag tag = stringTagHashMap.get(oldName);
+        tag.setName(newName);
+        stringTagHashMap.remove(oldName);
+        stringTagHashMap.put(newName,tag);
     }
 
 

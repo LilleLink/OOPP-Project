@@ -45,8 +45,7 @@ class Notes {
      * New note objects will always be newer than the object last added to the list.
      */
     void addNote() {
-        List<Note> list = getSortedElem();
-        list.add(new Note());
+        elements.add(new Note());
     }
 
     /**
@@ -55,8 +54,7 @@ class Notes {
      * @param text the String of text to be contained in the note.
      */
     void addNote(String text) {
-        List<Note> list = getSortedElem();
-        list.add(new Note(text));
+        elements.add(new Note(text));
     }
 
     /**
@@ -64,8 +62,7 @@ class Notes {
      * @param index the index of the note to be removed.
      */
     void removeNote(int index) {
-        List<Note> list = getSortedElem();
-        list.remove(index);
+        elements.remove(index);
     }
 
     /**
@@ -93,8 +90,7 @@ class Notes {
      */
     void editNoteAt(int index, String text) {
         Note note = elements.get(index).editNote(text);
-        List<Note> list = getSortedElem();
-        list.set(index, note);
+        elements.set(index, note);
     }
 
     /**
