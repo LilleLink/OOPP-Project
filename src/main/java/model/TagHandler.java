@@ -48,14 +48,6 @@ public class TagHandler {
     }
 
     /**
-     * Makes a name available again by "deleting" the tag which holds it. The tag still exists as instances in other classes
-     * @param tagName The tag to be deleted
-     */
-    void delete(String tagName) {
-        stringTagHashMap.remove(tagName);
-    }
-
-    /**
      * Renames a Tag to the given string. Returns false if the name was not available
      * @param newName the new name
      */
