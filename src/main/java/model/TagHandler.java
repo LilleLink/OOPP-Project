@@ -51,10 +51,11 @@ public class TagHandler {
      * Renames a Tag to the given string. Returns false if the name was not available
      * @param newName the new name
      */
-    void rename(String oldName, String newName) throws NameNotAvailableException{
+    void rename(String oldName, String newName) throws NameNotAvailableException, TagNotFoundException {
         if (stringTagHashMap.get(newName) != null)
             throw new NameNotAvailableException(newName);
         Tag tag = stringTagHashMap.get(oldName);
+        if (tag == null) throw new TagNotFoundException(oldName);
         tag.setName(newName);
         stringTagHashMap.remove(oldName);
         stringTagHashMap.put(newName,tag);

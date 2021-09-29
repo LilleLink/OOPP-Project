@@ -1,5 +1,8 @@
 package model;
 
+import model.exceptions.NameNotAvailableException;
+import model.exceptions.TagNotFoundException;
+
 import javax.lang.model.type.ArrayType;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -86,5 +89,30 @@ public class User {
 
     public List<Contact> getContacts(){
         return contactList;
+    }
+
+    public ITag createTag(String name) throws NameNotAvailableException{
+        return tagHandler.createTag(name);
+    }
+
+    public List<ITag> getTags(){
+        return tagHandler.getTags();
+    }
+
+    public ITag getTag(String name) throws TagNotFoundException{
+        return tagHandler.getTag(name);
+    }
+
+    public boolean setColor(ITag tag, String color) throws TagNotFoundException {
+        return tagHandler.setColor(tag.getName(), color);
+    }
+
+    public void renameTag(ITag tag, String newName) throws NameNotAvailableException {
+        try {
+            tagHandler.rename(tag.getName(), newName);
+        } catch (TagNotFoundException e){
+            throw new RuntimeException(e);
+        }
+
     }
 }
