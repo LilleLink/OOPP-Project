@@ -67,15 +67,10 @@ public class TagHandlerTest {
         try {
             handler.createTag("First tag");
             handler.rename("First tag","Something else");
-
             ITag t1 = handler.getTag("Something else");
+            assertThrows(TagNotFoundException.class, () -> handler.getTag("First tag"));
             ITag t2 = handler.createTag("First tag");
             assertNotEquals(t1, t2);
-            handler.delete(t2.getName());
-            ITag t3 = handler.createTag("First tag");
-            assertNotEquals(t1, t2);
-            assertNotEquals(t1, t3);
-            assertNotEquals(t2, t3);
         } catch (NameNotAvailableException | TagNotFoundException e){
             fail();
         }
