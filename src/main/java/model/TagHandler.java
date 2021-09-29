@@ -47,6 +47,13 @@ public class TagHandler {
         return stringTagHashMap.get(name) == null;
     }
 
+    /**
+     * Makes a name available again by "deleting" the tag which holds it. The tag still exists as instances in other classes
+     * @param tagName The tag to be deleted
+     */
+    void delete(String tagName) {
+        stringTagHashMap.remove(tagName);
+    }
 
     /**
      * Renames a Tag to the given string. Returns false if the name was not available
@@ -55,8 +62,7 @@ public class TagHandler {
     void rename(String oldName, String newName) throws NameNotAvailableException{
         if (stringTagHashMap.get(newName) != null)
             throw new NameNotAvailableException(newName);
-        stringTagHashMap.remove(oldName);
-        stringTagHashMap.put(newName, new Tag(newName));
+        stringTagHashMap.get(oldName).setName(newName);
     }
 
 
