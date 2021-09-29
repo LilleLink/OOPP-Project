@@ -62,6 +62,7 @@ public class TagHandlerTest {
         }
     }
 
+    /*
     @Test
     public void makeNameAvailableTest(){
         try {
@@ -80,6 +81,7 @@ public class TagHandlerTest {
             fail();
         }
     }
+    */
 
     @Test
     public void getTagTest(){
