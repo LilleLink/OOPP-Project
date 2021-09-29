@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class TagHandler {
 
-    private final HashMap<String, ITag> stringTagHashMap = new HashMap<>();
+    private final HashMap<String, Tag> stringTagHashMap = new HashMap<>();
 
     /**
      * Creates a new Tag if the name is available. If a tag of the given name already exists, the UUID for that tag is returned
@@ -62,8 +62,7 @@ public class TagHandler {
     void rename(String oldName, String newName) throws NameNotAvailableException{
         if (stringTagHashMap.get(newName) != null)
             throw new NameNotAvailableException(newName);
-        stringTagHashMap.remove(oldName);
-        stringTagHashMap.put(newName, new Tag(newName));
+        stringTagHashMap.get(oldName).setName(newName);
     }
 
 
@@ -75,8 +74,7 @@ public class TagHandler {
      */
     boolean setColor(String tag, String color){
         if (isHexColor(color)){
-             stringTagHashMap.remove(tag);
-             stringTagHashMap.put(tag,new Tag(tag,color));
+            stringTagHashMap.get(tag).setColor(color);
             return true;
         }
         return false;
