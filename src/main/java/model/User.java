@@ -104,7 +104,7 @@ public class User {
     }
 
     public boolean setColor(ITag tag, String color) throws TagNotFoundException {
-        return tagHandler.setColor(tag.getName(), color);
+        return tagHandler.setColor(tag, color);
     }
 
     public void renameTag(ITag tag, String newName) throws NameNotAvailableException {

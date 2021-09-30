@@ -96,13 +96,13 @@ public class TagHandlerTest {
     public void setColorTest(){
         try {
             ITag tag = handler.createTag("First Tag");
-            handler.setColor(tag.getName(), "09cDDa");
+            handler.setColor(tag, "09cDDa");
             assertEquals("09cDDa", tag.getColor());
-            handler.setColor(tag.getName(), "009999ccDDaA");
+            handler.setColor(tag, "009999ccDDaA");
             assertNotEquals("009999ccDDaA", tag.getName());
-            handler.setColor(tag.getName(), "ilegal");
+            handler.setColor(tag, "ilegal");
             assertNotEquals("ilegal", tag.getColor());
-            handler.setColor(tag.getName(), "FA6607");
+            handler.setColor(tag, "FA6607");
             assertEquals("FA6607", tag.getColor());
         } catch (NameNotAvailableException | TagNotFoundException e){
             fail();
