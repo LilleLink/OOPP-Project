@@ -2,6 +2,7 @@ package application;
 
 import javafx.stage.Stage;
 import javafx.StageController;
+import model.User;
 
 public class Application extends javafx.application.Application {
 
@@ -10,8 +11,9 @@ public class Application extends javafx.application.Application {
     }
 
     @Override
-    public void start(Stage stage) throws Exception {
+    public void start(Stage stage) {
         //TODO Initiate model and send as parameter to StageController
-        StageController stageController = new StageController(stage);
+        User user = new User("Pelle");
+        StageController stageController = new StageController(stage, user);
     }
 }

@@ -1,6 +1,6 @@
 package javafx;
 
-public class MainScene extends JavaFXComponent{
+public class MainScene extends Page {
 
     public MainScene() {
         super();

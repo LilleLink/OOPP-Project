@@ -1,6 +1,6 @@
 package javafx;
 
-public class SecondaryScene extends JavaFXComponent{
+public class SecondaryScene extends Page {
 
     public SecondaryScene() {
         super();

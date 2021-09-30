@@ -5,9 +5,9 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class JavaFXComponent extends AnchorPane {
+public class Page extends AnchorPane {
 
-    protected JavaFXComponent() {
+    protected Page() {
         // Loads the fxml file and sets this file as the controller
         String fxmlFileName = getClass().getSimpleName()+".fxml";
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlFileName));
