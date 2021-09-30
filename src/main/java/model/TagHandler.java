@@ -98,7 +98,7 @@ public class TagHandler implements ICacheVisitable{
     }
 
     public static class TagHandlerCache {
-        public HashMap<String, ITag> stringTagHashMap;
+        public HashMap<String, Tag> stringTagHashMap;
     }
 
     private TagHandlerCache getCache() {

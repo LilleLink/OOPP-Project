@@ -11,9 +11,9 @@ import java.util.*;
 public class User implements ICacheVisitable {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
-    private final Collection<Event> eventList = new ArrayList<>();
-    private final List<Contact> contactList = new ArrayList<>();
-    private final TagHandler tagHandler = new TagHandler();
+    private Collection<Event> eventList = new ArrayList<>();
+    private List<Contact> contactList = new ArrayList<>();
+    private TagHandler tagHandler = new TagHandler();
 
     /***
      * Instantiates a user object with the specified name.

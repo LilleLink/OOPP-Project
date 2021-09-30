@@ -108,6 +108,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
 
         @Override
         public Optional<JSONRecords.IRecordVisitable> visit(TagHandler.TagHandlerCache tagHandlerCache, CacheVisitorState env) {
+            tagHandlerCache.stringTagHashMap.values().forEach(t -> t.accept(this, env));
             return Optional.empty();
         }
 

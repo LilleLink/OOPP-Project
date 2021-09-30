@@ -12,8 +12,8 @@ public class Contact implements ICacheVisitable {
     private String name;
     private String phoneNumber = "";
     private Address address = new Address("");
-    private final List<ITag> tags = new ArrayList<>();
-    private final Notes notes = new Notes();
+    private List<ITag> tags;
+    private Notes notes;
 
     /**
      * @param name The contact's name.
