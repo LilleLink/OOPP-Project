@@ -103,7 +103,7 @@ public class User {
         return tagHandler.getTag(name);
     }
 
-    public boolean setColor(ITag tag, String color) throws TagNotFoundException {
+    public boolean setColor(ITag tag, String color) {
         return tagHandler.setColor(tag, color);
     }
 
