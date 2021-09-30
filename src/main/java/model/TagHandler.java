@@ -68,9 +68,9 @@ public class TagHandler {
      * @param color The new color as HEX-code
      * @return If the change succeeded
      */
-    boolean setColor(ITag iTag, String color) throws TagNotFoundException{
+    boolean setColor(ITag iTag, String color){
         Tag tag = stringTagHashMap.get(iTag.getName());
-        if (tag==null) throw new TagNotFoundException(iTag.getName());
+        if (tag==null) throw new RuntimeException(iTag.getName());
         if (isValidColor(color)){
             tag.setColor(color);
             return true;

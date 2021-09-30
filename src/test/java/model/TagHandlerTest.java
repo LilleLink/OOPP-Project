@@ -104,7 +104,7 @@ public class TagHandlerTest {
             assertNotEquals("ilegal", tag.getColor());
             handler.setColor(tag, "FA6607");
             assertEquals("FA6607", tag.getColor());
-        } catch (NameNotAvailableException | TagNotFoundException e){
+        } catch (NameNotAvailableException e){
             fail();
         }
     }
