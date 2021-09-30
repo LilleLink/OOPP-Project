@@ -9,7 +9,7 @@ import java.util.Objects;
  * Note objects contained in the list are sorted after age using the LocalDateTime class.
  * @see java.time.LocalDateTime
  */
-class Notes {
+public class Notes {
 
     // Elements represented as a list of note objects
     private final List<Note> elements;
@@ -17,7 +17,7 @@ class Notes {
     /**
      * Default constructor containing an empty list.
      */
-    Notes() {
+    public Notes() {
         elements = new ArrayList<>();
     }
 
@@ -26,7 +26,7 @@ class Notes {
      * Instantiates a new sorted list from the list contained in the given notes.
      * @param oldNotes the notes to be copied
      */
-    Notes(Notes oldNotes) {
+    public Notes(Notes oldNotes) {
         this.elements = new ArrayList<>(oldNotes.elements);
         elements.sort(Note::compareTo);
     }
@@ -44,7 +44,7 @@ class Notes {
      * Instantiates an empty note with default constructor and appends it to the list of elements.
      * New note objects will always be newer than the object last added to the list.
      */
-    void addNote() {
+   public void addNote() {
         elements.add(new Note());
     }
 
@@ -53,7 +53,7 @@ class Notes {
      * New note objects will always be newer than the object last added to the list.
      * @param text the String of text to be contained in the note.
      */
-    void addNote(String text) {
+   public void addNote(String text) {
         elements.add(new Note(text));
     }
 
@@ -61,7 +61,7 @@ class Notes {
      * Removes the Note from the list of elements at the specified position.
      * @param index the index of the note to be removed.
      */
-    void removeNote(int index) {
+   public void removeNote(int index) {
         elements.remove(index);
     }
 
@@ -69,7 +69,7 @@ class Notes {
      * Gives the current number of elements in notes
      * @return the number of elements
      */
-    int size() {
+   public int size() {
         return elements.size();
     }
 
@@ -78,7 +78,7 @@ class Notes {
      * @param index the index of the note to view
      * @return the text of the viewed note
      */
-    String viewNoteAt(int index) {
+   public String viewNoteAt(int index) {
         return elements.get(index).viewNote();
     }
 
@@ -88,7 +88,7 @@ class Notes {
      * @param index the index of the note being edited
      * @param text the new text
      */
-    void editNoteAt(int index, String text) {
+   public void editNoteAt(int index, String text) {
         Note note = elements.get(index).editNote(text);
         elements.set(index, note);
     }
@@ -97,7 +97,7 @@ class Notes {
      * Returns a copy of the list of note objects.
      * @return the list of notes
      */
-    List<Note> getSortedElem() {
+   public List<Note> getSortedElem() {
         List<Note> list = new ArrayList<>(elements);
         list.sort(Note::compareTo);
         return list;

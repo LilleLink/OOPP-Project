@@ -7,7 +7,7 @@ import java.time.LocalTime;
 /**
  * Represents a documented note containing text and the point in time that it was created.
  */
-class Note implements Comparable<Note> {
+public class Note implements Comparable<Note> {
 
     // Resembles the content of the note
     private final String text;
@@ -47,7 +47,7 @@ class Note implements Comparable<Note> {
      * Gives the text contained in the note.
      * @return a String
      */
-    String viewNote() {
+    public String viewNote() {
         return this.text;
     }
 
@@ -65,7 +65,7 @@ class Note implements Comparable<Note> {
      * Gives the date of creation as a String.
       * @return a String
      */
-    String dateToString() {
+    public String dateToString() {
         return viewDate().toString();
     }
 
@@ -76,7 +76,7 @@ class Note implements Comparable<Note> {
      * </p>
      * @return a String
      */
-    String timeToString() {
+    public String timeToString() {
         LocalTime time = pointOfCreation.toLocalTime();
         return time.getHour() + ":" + time.getMinute();
     }
