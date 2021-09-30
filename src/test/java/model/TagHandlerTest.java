@@ -91,5 +91,21 @@ public class TagHandlerTest {
         assertThrows(TagNotFoundException.class, () -> handler.getTag("non existing tag"));
     }
 
+    @Test
+    public void setColorTest(){
+        try {
+            ITag tag = handler.createTag("First Tag");
+            handler.setColor(tag.getName(), "09cDDa");
+            assertEquals("09cDDa", tag.getColor());
+            handler.setColor(tag.getName(), "009999ccDDaA");
+            assertNotEquals("009999ccDDaA", tag.getName());
+            handler.setColor(tag.getName(), "ilegal");
+            assertNotEquals("ilegal", tag.getColor());
+            handler.setColor(tag.getName(), "FA6607");
+            assertEquals("FA6607", tag.getColor());
+        } catch (NameNotAvailableException | TagNotFoundException e){
+            fail();
+        }
+    }
 
 }
