@@ -1,13 +1,14 @@
-package javafx;
+package controller.javafx.components;
 
+import controller.javafx.IPageNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-public class TestTopBar extends Page {
+public class TestTopBar extends ViewComponent {
 
-    @FXML private Button toMainButton = new Button();
-    @FXML private Button toSecondButton = new Button();
+    @FXML private Button toMainButton;
+    @FXML private Button toSecondButton;
 
     IPageNavigator nav;
 
@@ -17,8 +18,6 @@ public class TestTopBar extends Page {
 
         toMainButton.setOnMouseClicked(this::mainButtonClicked);
         toSecondButton.setOnMouseClicked(this::secondButtonClicked);
-        System.out.println(this.getHeight()+" | "+this.getWidth());
-        System.out.println(this.getLayoutX()+" | "+this.getLayoutY());
     }
 
     private void secondButtonClicked(MouseEvent mouseEvent) {

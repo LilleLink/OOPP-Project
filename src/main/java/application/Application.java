@@ -1,8 +1,10 @@
 package application;
 
+import controller.javafx.JavaFXViewInitializer;
 import javafx.stage.Stage;
-import javafx.StageController;
 import model.User;
+
+import java.io.IOException;
 
 public class Application extends javafx.application.Application {
 
@@ -11,9 +13,8 @@ public class Application extends javafx.application.Application {
     }
 
     @Override
-    public void start(Stage stage) {
-        //TODO Initiate model and send as parameter to StageController
+    public void start(Stage stage) throws IOException {
         User user = new User("Pelle");
-        StageController stageController = new StageController(stage, user);
+        JavaFXViewInitializer javaFXViewInitializer = new JavaFXViewInitializer(stage, user);
     }
 }

@@ -3,9 +3,9 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane minHeight="60.0" minWidth="1280.0" prefHeight="60.0" prefWidth="1280.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="60.0" minWidth="1280.0" prefHeight="60.0" prefWidth="1280.0" style="-fx-background-color: #000000;" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" type="javafx.scene.layout.AnchorPane">
    <children>
       <Button fx:id="toMainButton" layoutX="14.0" layoutY="15.0" mnemonicParsing="false" text="To mainpage" />
       <Button fx:id="toSecondButton" layoutX="125.0" layoutY="15.0" mnemonicParsing="false" text="To secondpage" />
    </children>
-</AnchorPane>
+</fx:root>
