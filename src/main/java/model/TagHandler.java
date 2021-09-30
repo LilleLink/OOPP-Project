@@ -11,9 +11,9 @@ public class TagHandler {
     private final HashMap<String, Tag> stringTagHashMap = new HashMap<>();
 
     /**
-     * Creates a new Tag if the name is available. If a tag of the given name already exists, the UUID for that tag is returned
-     * @param name The name of the new Tag
-     * @return The id of the new Tag
+     * Creates a new ITag if the name is available. If a tag of the given name already exists, that tag is returned
+     * @param name The name of the new ITag
+     * @return the new ITag
      */
     ITag createTag(String name) throws NameNotAvailableException{
         Tag tag;
@@ -26,12 +26,22 @@ public class TagHandler {
         return tag;
     }
 
+    /**
+     * Returns the tag with a certain name
+     * @param name name of the
+     * @return the tag with the wanted name
+     * @throws TagNotFoundException if no tag with the name {@code name} exists
+     */
     ITag getTag(String name) throws TagNotFoundException{
         ITag tag = stringTagHashMap.get(name);
         if (tag == null) throw new TagNotFoundException(name);
         return tag;
     }
 
+    /**
+     * Get all tags created by the handler
+     * @return an ArrayList of ITags
+     */
     ArrayList<ITag> getTags(){
         ArrayList<ITag> tags = new ArrayList<>();
         stringTagHashMap.forEach((k,v) -> tags.add(v));
@@ -78,6 +88,11 @@ public class TagHandler {
         return false;
     }
 
+    /**
+     * checks if the color is a valid HEX-color
+     * @param color the color to be checked
+     * @return if the color is a valid HEX-color
+     */
     private boolean isValidColor(String color) {
         return isValidLength(color) && isHexColor(color);
     }
