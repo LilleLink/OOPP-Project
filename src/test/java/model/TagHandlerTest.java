@@ -42,10 +42,10 @@ public class TagHandlerTest {
     @Test
     public void renameTest(){
         try {
-            handler.createTag("First tag");
-            handler.rename("First tag","new name");
-            assertEquals("new name", handler.getTag("new name").getName());
-        } catch (NameNotAvailableException | TagNotFoundException e){
+            ITag tag = handler.createTag("First tag");
+            handler.rename(tag,"new name");
+            assertEquals("new name", tag.getName());
+        } catch (NameNotAvailableException e){
             fail();
         }
     }
@@ -53,11 +53,11 @@ public class TagHandlerTest {
     @Test
     public void renameToDuplicateNameTest(){
         try {
-            handler.createTag("First tag");
-            handler.createTag("Second tag");
-            assertThrows(NameNotAvailableException.class, () -> handler.rename("First tag", "Second tag"));
-            assertNotEquals(handler.getTag("First tag").getName(), handler.getTag("Second tag").getName());
-        } catch (NameNotAvailableException | TagNotFoundException e){
+            ITag first = handler.createTag("First tag");
+            ITag second = handler.createTag("Second tag");
+            assertThrows(NameNotAvailableException.class, () -> handler.rename(first, "Second tag"));
+            assertNotEquals(first.getName(), second.getName());
+        } catch (NameNotAvailableException e){
             fail();
         }
     }
@@ -65,9 +65,10 @@ public class TagHandlerTest {
     @Test
     public void makeNameAvailableTest(){
         try {
-            handler.createTag("First tag");
-            handler.rename("First tag","Something else");
+            ITag tag = handler.createTag("First tag");
+            handler.rename(tag,"Something else");
             ITag t1 = handler.getTag("Something else");
+            assertEquals(tag, t1);
             assertThrows(TagNotFoundException.class, () -> handler.getTag("First tag"));
             ITag t2 = handler.createTag("First tag");
             assertNotEquals(t1, t2);

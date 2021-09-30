@@ -108,11 +108,7 @@ public class User {
     }
 
     public void renameTag(ITag tag, String newName) throws NameNotAvailableException {
-        try {
-            tagHandler.rename(tag.getName(), newName);
-        } catch (TagNotFoundException e){
-            throw new RuntimeException(e);
-        }
+        tagHandler.rename(tag, newName);
 
     }
 }
