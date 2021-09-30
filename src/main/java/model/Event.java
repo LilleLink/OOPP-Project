@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Collection;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
@@ -63,7 +64,7 @@ public class Event implements ICacheVisitable {
      * Sets the name of the event
      * @param name the name of the event
      */
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -79,7 +80,7 @@ public class Event implements ICacheVisitable {
      * Sets the address of the event
      * @param address the address of the event
      */
-    void setAddress(String address) {
+    public void setAddress(String address) {
         this.address = new Address(address);
     }
 
@@ -95,7 +96,7 @@ public class Event implements ICacheVisitable {
      * Sets the date and time of the event
      * @param dateTime the date and time of the event
      */
-    void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -111,7 +112,7 @@ public class Event implements ICacheVisitable {
      * Sets the description of the event
      * @param description the description of the event
      */
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -119,14 +120,14 @@ public class Event implements ICacheVisitable {
      * Adds a tag to the event
      * @param tag the tag to be added
      */
-    void addTag(ITag tag){
+    public void addTag(ITag tag){
         this.tag = tag;
     }
 
     /***
      * Removes a tag from the event
      */
-    void removeTag(){
+    public void removeTag(){
         tag = null;
     }
 
@@ -143,12 +144,10 @@ public class Event implements ICacheVisitable {
      * @param contact the contact to be added
      * @return true if operation successful, false if it already exists.
      */
-    public boolean addContact(Contact contact) {
-        if (contacts.contains(contact)) {
-            return false;
+    public void addContact(Contact contact){
+        if (!contacts.contains(contact)){
+            contacts.add(contact);
         }
-        contacts.add(contact);
-        return true;
     }
 
     /***
@@ -156,15 +155,15 @@ public class Event implements ICacheVisitable {
      * @param contact the contact to be removed
      * @return true if operation successful, false if not.
      */
-    public boolean removeContact(Contact contact) {
-        return contacts.remove(contact);
+    public void removeContact(Contact contact){
+        contacts.remove(contact);
     }
 
     /***
      * Returns the contact arraylist.
      * @return the contact arraylist.
      */
-    public Collection<Contact> getContacts() {
+    public Collection<Contact> getContacts(){
         return this.contacts;
     }
 

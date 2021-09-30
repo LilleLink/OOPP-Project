@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class TagHandler implements ICacheVisitable{
 
-    private final HashMap<String, ITag> stringTagHashMap = new HashMap<>();
+    private final HashMap<String, Tag> stringTagHashMap = new HashMap<>();
 
     /**
      * Creates a new Tag if the name is available. If a tag of the given name already exists, the UUID for that tag is returned
@@ -50,40 +50,43 @@ public class TagHandler implements ICacheVisitable{
     }
 
     /**
-     * Makes a name available again by "deleting" the tag which holds it. The tag still exists as instances in other classes
-     * @param tagName The tag to be deleted
-     */
-    void delete(String tagName) {
-        stringTagHashMap.remove(tagName);
-    }
-
-    /**
      * Renames a Tag to the given string. Returns false if the name was not available
      * @param newName the new name
      */
-    void rename(String oldName, String newName) throws NameNotAvailableException{
+    void rename(String oldName, String newName) throws NameNotAvailableException, TagNotFoundException {
         if (stringTagHashMap.get(newName) != null)
             throw new NameNotAvailableException(newName);
+        Tag tag = stringTagHashMap.get(oldName);
+        if (tag == null) throw new TagNotFoundException(oldName);
+        tag.setName(newName);
         stringTagHashMap.remove(oldName);
-        stringTagHashMap.put(newName, new Tag(newName));
+        stringTagHashMap.put(newName,tag);
     }
 
 
     /**
      * Changes the color of a Tag
+     * @param iTag the tag to change color of
      * @param color The new color as HEX-code
-     * @param tag the tag to change color of
      * @return If the change succeeded
      */
-    boolean setColor(String tag, String color){
-        if (isHexColor(color)){
-             stringTagHashMap.remove(tag);
-             stringTagHashMap.put(tag,new Tag(tag,color));
+    boolean setColor(String iTag, String color) throws TagNotFoundException{
+        Tag tag = stringTagHashMap.get(iTag);
+        if (tag==null) throw new TagNotFoundException(iTag);
+        if (isValidColor(color)){
+            tag.setColor(color);
             return true;
         }
         return false;
     }
 
+    private boolean isValidColor(String color) {
+        return isValidLength(color) && isHexColor(color);
+    }
+
+    private boolean isValidLength(String color){
+        return color.length()==6;
+    }
 
     private boolean isHexColor(String color){
         for (char c: color.toCharArray()){

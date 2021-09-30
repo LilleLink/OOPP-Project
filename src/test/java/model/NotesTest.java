@@ -12,26 +12,25 @@ public class NotesTest {
     public void sizeIncreasedTest() {
         Notes notes = new Notes();
         int oSize = notes.size();
-        notes = notes.addNote();
+        notes.addNote();
         assert(oSize == notes.size() - 1);
     }
 
     @Test
     public void sizeDecreasedTest() {
         Notes notes = new Notes();
-        notes = notes.addNote();
+        notes.addNote();
         int oSize = notes.size();
-        notes = notes.removeNote(0);
+        notes.removeNote(0);
         assert(oSize == notes.size() + 1);
     }
 
     @Test
     public void noteIsEditedTest() {
         Notes notes = new Notes();
-        notes = notes.addNote("Pizza");
-
+        notes.addNote("Pizza");
         String oText = notes.viewNoteAt(0);
-        notes = notes.editNoteAt(0,"Taco");
+        notes.editNoteAt(0,"Taco");
         String nText = notes.viewNoteAt(0);
         assertNotEquals(oText, nText);
     }
@@ -39,7 +38,7 @@ public class NotesTest {
     @Test
     public void transferNotesTest() {
         Notes notes = new Notes();
-        notes = notes.addNote("Pizza");
+        notes.addNote("Pizza");
         Notes tNotes = new Notes(notes);
         assertEquals(notes,tNotes);
     }
@@ -47,11 +46,11 @@ public class NotesTest {
     @Test
     public void notesSortedTest() {
         Notes notes = new Notes();
-        notes = notes.addNote();
+        notes.addNote();
         for(int i = 0; i < 100; i++) {
             try {
                 Thread.sleep(1); // must wait a very small amount of time to be considered different times
-                notes = notes.addNote();
+                notes.addNote();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

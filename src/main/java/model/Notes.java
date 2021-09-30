@@ -44,38 +44,26 @@ public class Notes implements ICacheVisitable{
     /**
      * Instantiates an empty note with default constructor and appends it to the list of elements.
      * New note objects will always be newer than the object last added to the list.
-     * The list of elements contained in the old Notes object is unaffected.
-     * @return a notes object where an empty note is added last
      */
-    Notes addNote() {
-        List<Note> list = getSortedElem();
-        list.add(new Note());
-        return new Notes(list);
+    void addNote() {
+        elements.add(new Note());
     }
 
     /**
      * Instantiates a note with the given string and appends it to the list of elements.
      * New note objects will always be newer than the object last added to the list.
-     * The list of elements contained in the old Notes object is unaffected.
      * @param text the String of text to be contained in the note.
-     * @return a notes object where a note of the specified text is added last
      */
-    Notes addNote(String text) {
-        List<Note> list = getSortedElem();
-        list.add(new Note(text));
-        return new Notes(list);
+    void addNote(String text) {
+        elements.add(new Note(text));
     }
 
     /**
      * Removes the Note from the list of elements at the specified position.
-     * The list of elements contained in the old Notes object is unaffected.
      * @param index the index of the note to be removed.
-     * @return a notes object where the note of the specified index is removed
      */
-    Notes removeNote(int index) {
-        List<Note> list = getSortedElem();
-        list.remove(index);
-        return new Notes(list);
+    void removeNote(int index) {
+        elements.remove(index);
     }
 
     /**
@@ -98,16 +86,12 @@ public class Notes implements ICacheVisitable{
     /**
      * Replaces the note at the given index with a new one containing the given text.
      * The list order is unaffected.
-     * The list of elements contained in the old Notes object is unaffected.
      * @param index the index of the note being edited
      * @param text the new text
-     * @return a notes object where the note of the specified index is edited
      */
-    Notes editNoteAt(int index, String text) {
+    void editNoteAt(int index, String text) {
         Note note = elements.get(index).editNote(text);
-        List<Note> list = getSortedElem();
-        list.set(index, note);
-        return new Notes(list);
+        elements.set(index, note);
     }
 
     /**
