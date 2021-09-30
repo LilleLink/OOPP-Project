@@ -105,6 +105,16 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             record.pointOfCreation = cache.pointOfCreation.toString();
             return Optional.of(record);
         }
+
+        @Override
+        public Optional<JSONRecords.IRecordVisitable> visit(TagHandler.TagHandlerCache tagHandlerCache, CacheVisitorState env) {
+            return Optional.empty();
+        }
+
+        @Override
+        public Optional<JSONRecords.IRecordVisitable> visit(Tag.TagCache tagCache, CacheVisitorState env) {
+            return Optional.empty();
+        }
     }
 
 }

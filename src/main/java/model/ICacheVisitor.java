@@ -46,5 +46,7 @@ public interface ICacheVisitor<E, T> {
     default Optional<T> visit(Note.NoteCache event, E env) {
         return Optional.empty();
     }
+    default Optional<T> visit(TagHandler.TagHandlerCache tagHandlerCache, E env) { return Optional.empty(); }
+    default Optional<T> visit(Tag.TagCache tagCache, E env) { return Optional.empty(); }
 
 }

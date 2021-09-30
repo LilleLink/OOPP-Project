@@ -3,10 +3,12 @@ package model;
 import model.exceptions.NameNotAvailableException;
 import model.exceptions.TagNotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 
-public class TagHandler {
+public class TagHandler implements ICacheVisitable{
 
     private final HashMap<String, ITag> stringTagHashMap = new HashMap<>();
 
@@ -92,4 +94,18 @@ public class TagHandler {
         return true;
     }
 
+    public static class TagHandlerCache {
+        public HashMap<String, ITag> stringTagHashMap;
+    }
+
+    private TagHandlerCache getCache() {
+        TagHandlerCache cache = new TagHandlerCache();
+        cache.stringTagHashMap = new HashMap<>(this.stringTagHashMap);
+        return cache;
+    }
+
+    @Override
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(this.getCache(), env);
+    }
 }

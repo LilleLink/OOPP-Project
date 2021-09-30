@@ -1,6 +1,9 @@
 package model;
 
-class Tag implements ITag {
+import java.util.HashMap;
+import java.util.Optional;
+
+public class Tag implements ITag, ICacheVisitable {
 
     private String name;
 
@@ -45,6 +48,18 @@ class Tag implements ITag {
         this.color = color;
     }
 
+    public static class TagCache {
+        public HashMap<String, ITag> stringTagHashMap;
+    }
 
+    private TagCache getCache() {
+        TagCache cache = new TagCache();
+        return cache;
+    }
+
+    @Override
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(this.getCache(), env);
+    }
 
 }
