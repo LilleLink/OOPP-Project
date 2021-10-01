@@ -12,9 +12,17 @@ public class Application extends javafx.application.Application {
         launch(args);
     }
 
+    /***
+     * Starts the JavaFX application
+     * @param stage the stage of the GUI
+     * @throws IOException if the necessary files cannot be loaded
+     */
     @Override
     public void start(Stage stage) throws IOException {
+        // Instantiates model
         User user = new User("Pelle");
+
+        //Instantiates javafx controller/view
         JavaFXViewInitializer javaFXViewInitializer = new JavaFXViewInitializer(stage, user);
     }
 }
