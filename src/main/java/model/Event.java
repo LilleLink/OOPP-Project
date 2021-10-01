@@ -78,7 +78,7 @@ public class Event {
      * @param address the address of the event
      */
     public void setAddress(String address) {
-        this.address = new Address(address);
+        this.address = this.address.setAddress(address);
     }
 
     /***

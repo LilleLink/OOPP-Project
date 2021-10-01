@@ -103,16 +103,12 @@ public class User {
         return tagHandler.getTag(name);
     }
 
-    public boolean setColor(ITag tag, String color) throws TagNotFoundException {
-        return tagHandler.setColor(tag.getName(), color);
+    public boolean setColor(ITag tag, String color) {
+        return tagHandler.setColor(tag, color);
     }
 
     public void renameTag(ITag tag, String newName) throws NameNotAvailableException {
-        try {
-            tagHandler.rename(tag.getName(), newName);
-        } catch (TagNotFoundException e){
-            throw new RuntimeException(e);
-        }
+        tagHandler.rename(tag, newName);
 
     }
 }

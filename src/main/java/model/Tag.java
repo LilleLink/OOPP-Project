@@ -11,16 +11,6 @@ class Tag implements ITag {
         color = "CDCDCD";
     }
 
-    Tag(Tag other) {
-        this.name = other.name;
-        this.color = other.color;
-    }
-
-    Tag(String name, String color) {
-        this.name = name;
-        this.color = color;
-    }
-
     /**
      *
      * @return the name of a Tag
