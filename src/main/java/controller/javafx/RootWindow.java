@@ -1,8 +1,8 @@
 package controller.javafx;
 
+import controller.javafx.components.ViewComponent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import controller.javafx.components.ViewComponent;
 import javafx.scene.layout.AnchorPane;
 import model.User;
 import java.net.URL;
@@ -19,15 +19,23 @@ public class RootWindow implements IPageNavigator, Initializable {
     private ViewComponent secondaryPage;
     private ViewComponent testTopBar;
 
-    // Class that controls the stage, what scenes are displayed etc.
+    /***
+     * The controller class for the root-window of the javafx view.
+     * @param user the instantiated user object
+     */
     public RootWindow(User user) {
         this.user = user;
     }
 
+    /***
+     * Initiates the components on the root window
+     * @param url argument given from javafx
+     * @param resourceBundle argument given from javafx
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initiatePages();
-        topBarAnchorPane.getChildren().add(testTopBar);
+        topBarAnchorPane.getChildren().add(testTopBar.getPane());
         openMainPage();
     }
 
@@ -40,13 +48,13 @@ public class RootWindow implements IPageNavigator, Initializable {
     @Override
     public void openMainPage() {
         clearRootPage();
-        pageAnchorPane.getChildren().add(mainPage);
+        pageAnchorPane.getChildren().add(mainPage.getPane());
     }
 
     @Override
     public void openSecondaryPage() {
         clearRootPage();
-        pageAnchorPane.getChildren().add(secondaryPage);
+        pageAnchorPane.getChildren().add(secondaryPage.getPane());
     }
 
     @Override
