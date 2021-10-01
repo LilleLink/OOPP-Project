@@ -83,6 +83,15 @@ public class Notes {
     }
 
     /**
+     * Gives the note at the given index.
+     * @param index the index of the note to receive
+     * @return a note
+     */
+    public Note getNoteAt(int index) {
+       return elements.get(index);
+    }
+
+    /**
      * Replaces the note at the given index with a new one containing the given text.
      * The list order is unaffected.
      * @param index the index of the note being edited
@@ -90,7 +99,7 @@ public class Notes {
      */
    public void editNoteAt(int index, String text) {
         Note note = elements.get(index).editNote(text);
-        elements.set(index, note);
+        elements.add(index, note);
     }
 
     /**
