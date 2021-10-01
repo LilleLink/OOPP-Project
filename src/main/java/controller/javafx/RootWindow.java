@@ -18,6 +18,7 @@ public class RootWindow implements IPageNavigator, Initializable {
     private ViewComponent mainPage;
     private ViewComponent secondaryPage;
     private ViewComponent testTopBar;
+    private ViewComponent calendarPage;
 
     /***
      * The controller class for the root-window of the javafx view.
@@ -43,6 +44,7 @@ public class RootWindow implements IPageNavigator, Initializable {
         testTopBar = ViewComponentFactory.CreateTestTopBar(this);
         mainPage = ViewComponentFactory.CreateMainPage();
         secondaryPage = ViewComponentFactory.CreateSecondaryPage();
+        calendarPage = ViewComponentFactory.CreateCalendarPage(user.getEventList());
     }
 
     @Override
@@ -55,6 +57,12 @@ public class RootWindow implements IPageNavigator, Initializable {
     public void openSecondaryPage() {
         clearRootPage();
         pageAnchorPane.getChildren().add(secondaryPage.getPane());
+    }
+
+    @Override
+    public void openCalendarPage() {
+        clearRootPage();
+        pageAnchorPane.getChildren().add(calendarPage.getPane());
     }
 
     @Override

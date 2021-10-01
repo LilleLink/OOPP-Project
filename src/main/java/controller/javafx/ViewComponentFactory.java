@@ -1,10 +1,11 @@
 package controller.javafx;
 
-import controller.javafx.components.MainPage;
-import controller.javafx.components.SecondaryPage;
-import controller.javafx.components.TestTopBar;
-import controller.javafx.components.ViewComponent;
+import controller.javafx.components.*;
 import javafx.scene.layout.AnchorPane;
+import model.Event;
+
+import javax.swing.text.View;
+import java.util.Collection;
 
 /***
  * Factory that creates JavaFX components and returns them as ViewComponents to the caller.
@@ -34,6 +35,15 @@ public class ViewComponentFactory {
      */
     public static ViewComponent CreateSecondaryPage () {
         return new SecondaryPage();
+    }
+
+    /***
+     * Creates a CalendarPage component
+     * @param eventList the list of event to be displayed in the calendar
+     * @return the CalendarPage in the form of a CalendarPage
+     */
+    public static ViewComponent CreateCalendarPage(Collection<Event> eventList) {
+        return new CalendarPage(eventList);
     }
 
 }

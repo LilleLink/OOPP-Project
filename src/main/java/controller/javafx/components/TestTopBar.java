@@ -25,7 +25,7 @@ public class TestTopBar extends ViewComponent {
     }
 
     private void mainButtonClicked(MouseEvent mouseEvent) {
-        nav.openMainPage();
+        nav.openCalendarPage();
     }
 
 }
