@@ -26,7 +26,7 @@ public class Event {
      * @param contacts the list containing the IDs of the contacts tagged in the event
      * @param tag the list containing the IDs of the tags tagged on the event
      */
-    Event(String name, String address, LocalDateTime dateTime, String description, ArrayList<Contact> contacts, Tag tag) {
+    public Event(String name, String address, LocalDateTime dateTime, String description, ArrayList<Contact> contacts, ITag tag) {
         this.name = name;
         this.address = new Address(address);
         this.dateTime = dateTime;
@@ -40,7 +40,7 @@ public class Event {
      * @param name the name of the event
      * @param date the date of the event
      */
-    Event(String name, LocalDateTime date) {
+    public Event(String name, LocalDateTime date) {
         this.name = name;
         this.dateTime = date;
     }
