@@ -135,4 +135,17 @@ class Note implements Comparable<Note> {
     public int compareTo(Note o) {
         return compareAge(o);
     }
+
+    /**
+     * Determines whether an object is equal to this note
+     * @param other the object to be checked
+     * @return if the object equals this
+     */
+    @Override
+    public boolean equals(Object other){
+        if (this == other) return true;
+        if (other == null || this.getClass() != other.getClass()) return false;
+        Note otherNote = (Note) other;
+        return otherNote.viewNote().equals(text);
+    }
 }
