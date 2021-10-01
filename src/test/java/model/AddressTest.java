@@ -10,4 +10,10 @@ public class AddressTest {
         Address address = new Address("   Hubben     2.1  ");
         assertEquals("Hubben 2.1", address.getAddress());
     }
+
+    @Test
+    public void mapOpensTest() {
+        Address address = new Address("Foostreet");
+        assert(address.openMap());
+    }
 }
