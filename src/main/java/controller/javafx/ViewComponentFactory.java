@@ -1,10 +1,11 @@
 package controller.javafx;
 
-import controller.javafx.components.MainPage;
-import controller.javafx.components.SecondaryPage;
-import controller.javafx.components.TestTopBar;
-import controller.javafx.components.ViewComponent;
+import controller.javafx.components.*;
 import javafx.scene.layout.AnchorPane;
+import model.Contact;
+import model.ITag;
+
+import java.util.List;
 
 /***
  * Factory that creates JavaFX components and returns them as ViewComponents to the caller.
@@ -29,11 +30,33 @@ public class ViewComponentFactory {
     }
 
     /***
-     * Creates a SecondaryPage component
+     * Creates a SecondaryPage component.
      * @return the SecondaryPage in the form of a ViewComponent
      */
     public static ViewComponent CreateSecondaryPage () {
         return new SecondaryPage();
+    }
+
+    /**
+     * Creates a ContactPage component.
+     * @param contacts A list of the contacts to display
+     * @return ContactPage as a ViewComponent
+     */
+    public static ViewComponent CreateContactPage (List<Contact> contacts) {
+        return new ContactPage(contacts);
+    }
+
+    /**
+     * Creates a ContactCard component.
+     * @param contact to create card from
+     * @return ContactCard as a ViewComponent
+     */
+    public static ViewComponent CreateContactCard (Contact contact) {
+        return new ContactCard(contact);
+    }
+
+    public static ViewComponent CreateTagCard (ITag tag) {
+        return new TagCard(tag);
     }
 
 }
