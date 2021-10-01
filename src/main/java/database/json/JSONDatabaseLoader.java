@@ -72,7 +72,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.PRMRecord prm, RecordVisitorState env) {
             prm.contacts.forEach(c -> env.contacts.add((Contact) this.visit(c, env).orElseThrow(IllegalStateException::new)));
-            return prm.users.get(0).accept(this, env);
+            return prm.user.accept(this, env);
         }
     }
 

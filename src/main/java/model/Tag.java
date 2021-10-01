@@ -49,11 +49,14 @@ public class Tag implements ITag, ICacheVisitable {
     }
 
     public static class TagCache {
-        public HashMap<String, ITag> stringTagHashMap;
+        public String name;
+        public String color;
     }
 
     private TagCache getCache() {
         TagCache cache = new TagCache();
+        cache.name = this.name;
+        cache.color = this.color;
         return cache;
     }
 

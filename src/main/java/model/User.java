@@ -124,6 +124,7 @@ public class User implements ICacheVisitable {
         public String name;
         public Collection<Event> events;
         public Collection<Contact> contacts;
+        public TagHandler tagHandler;
 
         public UserCache() {}
     }
@@ -133,12 +134,14 @@ public class User implements ICacheVisitable {
         cache.name = this.name;
         cache.events = new ArrayList<>(this.eventList);
         cache.contacts = new ArrayList<>(this.contactList);
+        cache.tagHandler = this.tagHandler;
         return cache;
     }
 
     public User(UserCache cache) {
         this.eventList = new ArrayList<>(cache.events);
         this.contactList = new ArrayList<>(cache.contacts);
+        this.tagHandler = cache.tagHandler;
         this.name = cache.name;
     }
 

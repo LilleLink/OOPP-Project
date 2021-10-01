@@ -23,7 +23,7 @@ public class DatabaseFactory {
     static public Database getDatabase() throws IOException {
         if (database == null) {
             /// TODO Don't use a temporary file dummy!
-            database = new Database(Files.createTempFile("prm-database", ""), new JSONDatabaseLoader(), new JSONDatabaseSaver());
+                database = new Database(Files.createTempFile("prm-database", ""), new JSONDatabaseLoader(), new JSONDatabaseSaver());
         }
         return database;
     }

@@ -1,8 +1,9 @@
 package database.json;
 
-import model.Address;
+import model.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,18 +14,21 @@ public class JSONRecords {
         default Optional<T> visit(UserRecord user, E env) {
             return Optional.empty();
         }
-
         default Optional<T> visit(ContactRecord contact, E env) {
             return Optional.empty();
         }
-
         default Optional<T> visit(EventRecord event, E env) {
             return Optional.empty();
         }
-
-        default Optional<T> visit(PRMRecord prm, E env) {
+        default Optional<T> visit(PRMRecord prm, E env) { return Optional.empty(); }
+        default Optional<T> visit(NoteRecord note, E env) {
             return Optional.empty();
         }
+        default Optional<T> visit(NotesRecord notes, E env) {
+            return Optional.empty();
+        }
+        default Optional<T> visit(TagHandlerRecord tagHandler, E env) { return Optional.empty(); }
+        default Optional<T> visit(TagRecord tag, E env) { return Optional.empty(); }
     }
 
     // The visitable record interface.
@@ -35,11 +39,31 @@ public class JSONRecords {
     // JSON records.
 
     // Contact JSON record.
+    static class TagRecord implements JSONRecords.IRecordVisitable {
+        String name;
+        String color;
+
+        @Override
+        public <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env) {
+            return visitor.visit(this, env);
+        }
+    }
+
+    static class TagHandlerRecord implements JSONRecords.IRecordVisitable {
+        HashMap<String, TagRecord> tags;
+
+        @Override
+        public <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env) {
+            return visitor.visit(this, env);
+        }
+    }
+
     static class ContactRecord implements JSONRecords.IRecordVisitable {
         String name;
         String phoneNumber;
         Address address;
         NotesRecord notes;
+        List<String> tags;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
@@ -52,7 +76,7 @@ public class JSONRecords {
 
         @Override
         public <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env) {
-            return Optional.empty();
+            return visitor.visit(this, env);
         }
     }
 
@@ -62,7 +86,7 @@ public class JSONRecords {
 
         @Override
         public <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env) {
-            return Optional.empty();
+            return visitor.visit(this, env);
         }
     }
 
@@ -74,6 +98,7 @@ public class JSONRecords {
         String dateTime;
         String description;
         ArrayList<Integer> contacts = new ArrayList<>();
+        String tag;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
@@ -87,6 +112,7 @@ public class JSONRecords {
         String name;
         List<Integer> contacts = new ArrayList<>();
         List<EventRecord> events = new ArrayList<>();
+        TagHandlerRecord tags;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
@@ -98,7 +124,7 @@ public class JSONRecords {
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     static class PRMRecord implements JSONRecords.IRecordVisitable {
         List<ContactRecord> contacts = new ArrayList<>();
-        List<UserRecord> users = new ArrayList<>();
+        UserRecord user;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
