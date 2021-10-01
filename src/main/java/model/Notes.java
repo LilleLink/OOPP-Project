@@ -32,10 +32,10 @@ public class Notes {
     }
 
     /**
-     * Private copy constructor for setting a selected list of note in this.
+     * Copy constructor for setting a selected list of note in this.
      * @param notes the new list of elements
      */
-    private Notes(List<Note> notes) {
+    public Notes(List<Note> notes) {
         this.elements = notes;
         elements.sort(Note::compareTo);
     }
@@ -111,6 +111,7 @@ public class Notes {
         list.sort(Note::compareTo);
         return list;
     }
+
 
     @Override
     public boolean equals(Object o) {

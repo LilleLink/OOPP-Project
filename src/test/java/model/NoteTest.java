@@ -61,5 +61,12 @@ public class NoteTest {
         assertNotEquals(null,text);
     }
 
+    @Test
+    public void noteTextEqualsTest() {
+        Note firstNote = new Note("Text");
+        Note secondNote = new Note("Text");
+        assert(firstNote.equals(secondNote));
+    }
+
 
 }

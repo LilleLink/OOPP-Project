@@ -1,6 +1,7 @@
 package model;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -64,4 +65,30 @@ public class NotesTest {
             assert(sorted);
         }
     }
+    @Test
+    public void consistentHashTest() {
+        Notes notes = new Notes();
+        notes.addNote();
+        int firstHash = notes.hashCode();
+        int secondHash = notes.hashCode();
+        assertEquals(firstHash,secondHash);
+    }
+
+    @Test
+    public void copiedListEqualsTest() {
+        Notes notes = new Notes();
+        notes.addNote("Bamse");
+        Notes copiedNotes = new Notes(notes.getSortedElem());
+        assert(notes.equals(copiedNotes));
+    }
+
+    @Test
+    public void changedCopyNotEqualsTest() {
+        Notes notes = new Notes();
+        notes.addNote("Bamse");
+        Notes copiedNotes = new Notes(notes);
+        copiedNotes.addNote("Lille-Skutt");
+        assert(!notes.equals(copiedNotes));
+    }
+
 }
