@@ -12,7 +12,7 @@ public class User implements ICacheVisitable {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
     private Collection<Event> eventList = new ArrayList<>();
-    private List<Contact> contactList = new ArrayList<>();
+    private ContactList contactList = new ContactList();
     private TagHandler tagHandler = new TagHandler();
 
     /***
@@ -79,15 +79,7 @@ public class User implements ICacheVisitable {
         return contactEvents;
     }
 
-    public void addContact(String name){
-        contactList.add(new Contact(name));
-    }
-
-    public void removeContact(Contact contact){
-        contactList.remove(contact);
-    }
-
-    public List<Contact> getContacts(){
+    public ContactList getContacts(){
         return contactList;
     }
 
@@ -118,8 +110,8 @@ public class User implements ICacheVisitable {
      */
     public static class UserCache {
         public String name;
-        public Collection<Event> events;
-        public Collection<Contact> contacts;
+        public List<Event> events;
+        public List<Contact> contacts;
         public TagHandler tagHandler;
 
         public UserCache() {}
@@ -129,14 +121,14 @@ public class User implements ICacheVisitable {
         UserCache cache = new UserCache();
         cache.name = this.name;
         cache.events = new ArrayList<>(this.eventList);
-        cache.contacts = new ArrayList<>(this.contactList);
+        cache.contacts = new ArrayList<>(this.contactList.getList());
         cache.tagHandler = this.tagHandler;
         return cache;
     }
 
     public User(UserCache cache) {
         this.eventList = new ArrayList<>(cache.events);
-        this.contactList = new ArrayList<>(cache.contacts);
+        this.contactList = new ContactList(cache.contacts);
         this.tagHandler = cache.tagHandler;
         this.name = cache.name;
     }

@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.Contact;
+import model.ContactList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +19,9 @@ public class ContactPage extends ViewComponent {
     @FXML private FlowPane cardFlowPane;
     @FXML private TextField newContactNameTextField;
     @FXML private Button newContactButton;
-    List<Contact> contacts = new ArrayList<>();
+    ContactList contacts;
 
-    public ContactPage(List<Contact> contacts){
+    public ContactPage(ContactList contacts){
         super();
         this.contacts = contacts;
         this.newContactButton.setOnMouseClicked(this::newContact);
@@ -29,14 +30,14 @@ public class ContactPage extends ViewComponent {
 
     private void update(){
         cardFlowPane.getChildren().clear();
-        for (Contact contact : contacts){
+        for (Contact contact : contacts.getList()){
             cardFlowPane.getChildren().add(ViewComponentFactory.CreateContactCard(contact).getPane());
         }
     }
 
     private void newContact(MouseEvent mouseEvent){
         //todo implement this
-        System.out.println(newContactNameTextField.getCharacters());
+        contacts.addContact(newContactNameTextField.getCharacters().toString());
         newContactNameTextField.clear();
         update();
     }

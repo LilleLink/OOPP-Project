@@ -2,6 +2,7 @@ package controller.javafx;
 
 import controller.javafx.components.*;
 import javafx.scene.layout.AnchorPane;
+import model.ContactList;
 import model.Event;
 
 import javax.swing.text.View;
@@ -43,11 +44,11 @@ public class ViewComponentFactory {
 
     /**
      * Creates a ContactPage component.
-     * @param contacts A list of the contacts to display
+     * @param contactList A list of the contacts to display
      * @return ContactPage as a ViewComponent
      */
-    public static ViewComponent CreateContactPage (List<Contact> contacts) {
-        return new ContactPage(contacts);
+    public static ViewComponent CreateContactPage (ContactList contactList) {
+        return new ContactPage(contactList);
     }
 
     /**
