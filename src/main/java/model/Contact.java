@@ -71,6 +71,8 @@ public class Contact implements ICacheVisitable {
      */
     void setName(String name){
         this.name = name;
+        this.tags = new ArrayList<>();
+        this.notes = new Notes();
     }
 
     /**
