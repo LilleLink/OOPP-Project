@@ -2,10 +2,12 @@ package controller.javafx;
 
 import controller.javafx.components.*;
 import javafx.scene.layout.AnchorPane;
-import model.Event;
+import model.*;
 
 import javax.swing.text.View;
 import java.util.Collection;
+
+import java.util.List;
 
 /***
  * Factory that creates JavaFX components and returns them as ViewComponents to the caller.
@@ -37,12 +39,34 @@ public class ViewComponentFactory {
         return new SecondaryPage();
     }
 
+    /**
+     * Creates a ContactPage component.
+     * @param contactList A list of the contacts to display
+     * @return ContactPage as a ViewComponent
+     */
+    public static ViewComponent CreateContactPage (ContactList contactList) {
+        return new ContactPage(contactList);
+    }
+
+    /**
+     * Creates a ContactCard component.
+     * @param contact to create card from
+     * @return ContactCard as a ViewComponent
+     */
+    public static ViewComponent CreateContactCard (Contact contact) {
+        return new ContactCard(contact);
+    }
+
+    public static ViewComponent CreateTagCard (ITag tag) {
+        return new TagCard(tag);
+    }
+
     /***
      * Creates a CalendarPage component
      * @param eventList the list of event to be displayed in the calendar
      * @return the CalendarPage in the form of a CalendarPage
      */
-    public static ViewComponent CreateCalendarPage(Collection<Event> eventList) {
+    public static ViewComponent CreateCalendarPage(EventList eventList) {
         return new CalendarPage(eventList);
     }
 
