@@ -20,7 +20,6 @@ public class ContactCard extends ViewComponent{
         super();
         nameLabel.setText(contact.getName());
         this.contact = contact;
-        System.out.println(contact.getTags().size());
         update();
     }
 
