@@ -8,12 +8,12 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
-public class User {
+public class User implements ICacheVisitable {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
-    private final Collection<Event> eventList = new ArrayList<>();
-    private final List<Contact> contactList = new ArrayList<>();
-    private final TagHandler tagHandler = new TagHandler();
+    private Collection<Event> eventList = new ArrayList<>();
+    private List<Contact> contactList = new ArrayList<>();
+    private TagHandler tagHandler = new TagHandler();
 
     /***
      * Instantiates a user object with the specified name.
@@ -110,5 +110,42 @@ public class User {
     public void renameTag(ITag tag, String newName) throws NameNotAvailableException {
         tagHandler.rename(tag, newName);
 
+    }
+
+
+    /***
+     * The user cache class contains fields which should be saved/loaded to persistent storage.
+     */
+    public static class UserCache {
+        public String name;
+        public Collection<Event> events;
+        public Collection<Contact> contacts;
+        public TagHandler tagHandler;
+
+        public UserCache() {}
+    }
+
+    private UserCache getCache() {
+        UserCache cache = new UserCache();
+        cache.name = this.name;
+        cache.events = new ArrayList<>(this.eventList);
+        cache.contacts = new ArrayList<>(this.contactList);
+        cache.tagHandler = this.tagHandler;
+        return cache;
+    }
+
+    public User(UserCache cache) {
+        this.eventList = new ArrayList<>(cache.events);
+        this.contactList = new ArrayList<>(cache.contacts);
+        this.tagHandler = cache.tagHandler;
+        this.name = cache.name;
+    }
+
+    /***
+     * Invoke the user cache visitor case.
+     */
+    @Override
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(this.getCache(), env);
     }
 }

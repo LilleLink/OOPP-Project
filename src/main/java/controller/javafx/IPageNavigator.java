@@ -14,6 +14,11 @@ public interface IPageNavigator {
      */
     void openSecondaryPage();
 
+    /**
+     * Opens the ContactPage
+     */
+    void openContactPage();
+
     /***
      * Opens the CalendarPage
      */

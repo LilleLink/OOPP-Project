@@ -5,19 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import model.exceptions.TagNotFoundException;
 
-public class Contact {
+import java.util.Optional;
+
+public class Contact implements ICacheVisitable {
 
     private String name;
     private String phoneNumber = "";
     private Address address = new Address("");
-    private final List<ITag> tags = new ArrayList<>();
-    private final Notes notes = new Notes();
+    private List<ITag> tags;
+    private Notes notes;
 
     /**
      * @param name The contact's name.
      */
-    Contact(String name){
+    public Contact(String name){
         this.name = name;
+        this.tags = new ArrayList<>();
+        this.notes = new Notes();
     }
 
     /**
@@ -155,4 +159,42 @@ public class Contact {
     }
 
 
+    /***
+     * The contact cache class contains fields which should be saved/loaded to persistent storage.
+     */
+    public static class ContactCache {
+        public String name;
+        public String phoneNumber;
+        public Address address;
+        public List<ITag> tags;
+        public Notes notes;
+
+        public ContactCache() {}
+    }
+
+    private ContactCache getCache() {
+        ContactCache cache = new ContactCache();
+        cache.name = this.name;
+        cache.phoneNumber = this.phoneNumber;
+        cache.address = this.address;
+        cache.tags = new ArrayList<>(this.tags);
+        cache.notes = this.notes;
+        return cache;
+    }
+
+    public Contact(ContactCache cache) {
+        this.name = cache.name;
+        this.phoneNumber = cache.phoneNumber;
+        this.address = cache.address;
+        this.tags = new ArrayList<>(cache.tags);
+        this.notes = cache.notes;
+    }
+
+    /***
+     * Invoke the contact cache visitor case.
+     */
+    @Override
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(this.getCache(), env);
+    }
 }
