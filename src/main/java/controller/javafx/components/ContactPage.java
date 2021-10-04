@@ -37,9 +37,11 @@ public class ContactPage extends ViewComponent {
     }
 
     private void newContact(MouseEvent mouseEvent){
-        //todo implement this
-        contacts.addContact(newContactNameTextField.getCharacters().toString());
-        newContactNameTextField.clear();
+        String name = newContactNameTextField.getText();
+        if (name.length() > 0) {
+            contacts.addContact(name);
+            newContactNameTextField.clear();
+        }
         update();
     }
 
