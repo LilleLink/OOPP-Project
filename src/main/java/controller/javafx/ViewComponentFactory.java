@@ -2,13 +2,10 @@ package controller.javafx;
 
 import controller.javafx.components.*;
 import javafx.scene.layout.AnchorPane;
-import model.ContactList;
-import model.Event;
+import model.*;
 
 import javax.swing.text.View;
 import java.util.Collection;
-import model.Contact;
-import model.ITag;
 
 import java.util.List;
 
@@ -69,7 +66,7 @@ public class ViewComponentFactory {
      * @param eventList the list of event to be displayed in the calendar
      * @return the CalendarPage in the form of a CalendarPage
      */
-    public static ViewComponent CreateCalendarPage(Collection<Event> eventList) {
+    public static ViewComponent CreateCalendarPage(EventList eventList) {
         return new CalendarPage(eventList);
     }
 

@@ -17,9 +17,9 @@ public class ICacheVisitorTest {
     @Before
     public void setUpUser() {
         user = new User("Bruh");
-        user.addEvent(new Event("Event1", LocalDateTime.now()));
-        user.addEvent(new Event("Event2", LocalDateTime.now()));
-        user.addEvent(new Event("Event3", LocalDateTime.now()));
+        user.getEvents().addEvent(new Event("Event1", LocalDateTime.now()));
+        user.getEvents().addEvent(new Event("Event2", LocalDateTime.now()));
+        user.getEvents().addEvent(new Event("Event3", LocalDateTime.now()));
     }
     
     @Test

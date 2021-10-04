@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import model.Event;
+import model.EventList;
 
 import java.net.URL;
 import java.util.Collection;
@@ -33,9 +34,9 @@ public class CalendarPage extends ViewComponent implements Initializable {
     @FXML private FlowPane saturdayFlowPane;
     @FXML private FlowPane sundayFlowPane;
 
-    private Collection<Event> eventList;
+    private EventList eventList;
 
-    public CalendarPage(Collection<Event> eventList) {
+    public CalendarPage(EventList eventList) {
         this.eventList = eventList;
     }
 

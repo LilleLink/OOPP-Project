@@ -27,24 +27,24 @@ public class UserTest {
     @Test
     public void addEvent() {
         Event e = new Event("Hej", LocalDateTime.now());
-        user.addEvent(e);
-        assertTrue(user.getEventList().contains(e));
+        user.getEvents().addEvent(e);
+        assertTrue(user.getEvents().getList().contains(e));
     }
 
     @Test
     public void removeEvent() {
         Event e = new Event("Hej", LocalDateTime.now());
-        user.addEvent(e);
-        assertTrue(user.getEventList().contains(e));
-        user.removeEvent(e);
-        assertFalse(user.getEventList().contains(e));
+        user.getEvents().addEvent(e);
+        assertTrue(user.getEvents().getList().contains(e));
+        user.getEvents().removeEvent(e);
+        assertFalse(user.getEvents().getList().contains(e));
     }
 
     @Test
     public void testContactEvents() {
         Event e = new Event("Hej", LocalDateTime.now());
         Contact contact = new Contact("Test");
-        user.addEvent(e);
+        user.getEvents().addEvent(e);
         e.addContact(contact);
 
         assertTrue(user.getContactEvents(contact).contains(e));

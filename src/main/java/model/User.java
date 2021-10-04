@@ -11,7 +11,7 @@ import java.util.*;
 public class User implements ICacheVisitable {
     //TODO fix javadoc, rushing to get runnable version W3
     private String name;
-    private Collection<Event> eventList = new ArrayList<>();
+    private EventList eventList = new EventList();
     private ContactList contactList = new ContactList();
     private TagHandler tagHandler = new TagHandler();
 
@@ -40,28 +40,10 @@ public class User implements ICacheVisitable {
     }
 
     /***
-     * Adds an event to the event list
-     * @param event the event to be added
-     * @return true if the operation was successful, false if not
-     */
-    boolean addEvent(Event event) {
-        return eventList.add(event);
-    }
-
-    /***
-     * Removes an event from the eventlist
-     * @param event the event to be removed
-     * @return true if the operation was successful, false if not
-     */
-    boolean removeEvent(Event event) {
-        return eventList.remove(event);
-    }
-
-    /***
      * Returns the users list of events
      * @return the list of events
      */
-    public Collection<Event> getEventList() {
+    public EventList getEvents() {
         return eventList;
     }
 
@@ -72,12 +54,13 @@ public class User implements ICacheVisitable {
      */
     public List<Event> getContactEvents(Contact contact) {
         List<Event> contactEvents= new ArrayList<>();
-        for (Event e: eventList) {
+        for (Event e: eventList.getList()) {
             if (e.getContacts().contains(contact))
                 contactEvents.add(e);
         }
         return contactEvents;
     }
+
 
     public ContactList getContacts(){
         return contactList;
@@ -120,14 +103,14 @@ public class User implements ICacheVisitable {
     private UserCache getCache() {
         UserCache cache = new UserCache();
         cache.name = this.name;
-        cache.events = new ArrayList<>(this.eventList);
+        cache.events = new ArrayList<>(this.eventList.getList());
         cache.contacts = new ArrayList<>(this.contactList.getList());
         cache.tagHandler = this.tagHandler;
         return cache;
     }
 
     public User(UserCache cache) {
-        this.eventList = new ArrayList<>(cache.events);
+        this.eventList = new EventList(cache.events);
         this.contactList = new ContactList(cache.contacts);
         this.tagHandler = cache.tagHandler;
         this.name = cache.name;
