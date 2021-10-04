@@ -24,19 +24,20 @@ public class ContactPage extends ViewComponent {
         super();
         this.contacts = contacts;
         this.newContactButton.setOnMouseClicked(this::newContact);
-        drawAllCards();
+        update();
     }
 
-    private void drawAllCards(){
+    private void update(){
+        cardFlowPane.getChildren().clear();
         for (Contact contact : contacts){
             cardFlowPane.getChildren().add(ViewComponentFactory.CreateContactCard(contact).getPane());
         }
     }
 
     private void newContact(MouseEvent mouseEvent){
-        System.out.println(newContactNameTextField.getCharacters());
+        contacts.add(new Contact(newContactNameTextField.getCharacters().toString()));
         newContactNameTextField.clear();
-        //todo contact user
+        update();
     }
 
 }

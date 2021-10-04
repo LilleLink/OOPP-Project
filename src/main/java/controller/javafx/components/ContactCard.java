@@ -21,10 +21,10 @@ public class ContactCard extends ViewComponent{
         nameLabel.setText(contact.getName());
         this.contact = contact;
         System.out.println(contact.getTags().size());
-        drawAllTags();
+        update();
     }
 
-    public void drawAllTags(){
+    private void update(){
         for (ITag tag : contact.getTags()){
             tagHBox.getChildren().add(ViewComponentFactory.CreateTagCard(tag).getPane());
         }
