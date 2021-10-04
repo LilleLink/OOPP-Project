@@ -6,9 +6,10 @@ import java.util.List;
 /***
  * Wrapper for a list of contacts.
  */
-public class ContactList {
+public class ContactList implements IObservable {
 
     private List<Contact> contactList = new ArrayList<>();
+    private List<IObserver> observers = new ArrayList<>();
 
     /***
      * Creates a new contactlist wrapper object
@@ -29,6 +30,7 @@ public class ContactList {
      */
     public void addContact(String name) {
         contactList.add(new Contact(name));
+        notifyObservers();
     }
 
     /***
@@ -37,6 +39,7 @@ public class ContactList {
      */
     public void addContact(Contact contact) {
         contactList.add(contact);
+        notifyObservers();
     }
 
     /***
@@ -45,6 +48,7 @@ public class ContactList {
      */
     public void removeContact(Contact contact) {
         contactList.remove(contact);
+        notifyObservers();
     }
 
     /***
@@ -53,6 +57,23 @@ public class ContactList {
      */
     public List<Contact> getList() {
         return this.contactList;
+    }
+
+    @Override
+    public void subscribe(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unSubscribe(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers){
+            observer.onEvent();
+        }
     }
 
 }

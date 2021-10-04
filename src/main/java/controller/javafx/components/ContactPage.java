@@ -29,6 +29,7 @@ public class ContactPage extends ViewComponent {
     }
 
     private void update(){
+        //todo unsub cards
         cardFlowPane.getChildren().clear();
         for (Contact contact : contacts.getList()){
             cardFlowPane.getChildren().add(ViewComponentFactory.CreateContactCard(contact).getPane());

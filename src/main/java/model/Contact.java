@@ -1,19 +1,21 @@
 package model;
 
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import model.exceptions.TagNotFoundException;
 
 import java.util.Optional;
 
-public class Contact implements ICacheVisitable {
+public class Contact implements ICacheVisitable, IObservable {
 
     private String name;
     private String phoneNumber = "";
     private Address address = new Address("");
     private List<ITag> tags;
     private Notes notes;
+    private List<IObserver> observers = new ArrayList<>();
 
     /**
      * @param name The contact's name.
@@ -62,6 +64,7 @@ public class Contact implements ICacheVisitable {
      */
     void setAddress(String address){
         this.address = this.address.setAddress(address);
+        notifyObservers();
     }
 
 
@@ -73,6 +76,7 @@ public class Contact implements ICacheVisitable {
         this.name = name;
         this.tags = new ArrayList<>();
         this.notes = new Notes();
+        notifyObservers();
     }
 
     /**
@@ -81,6 +85,7 @@ public class Contact implements ICacheVisitable {
      */
     void setPhoneNumber(String number){
         this.phoneNumber = number;
+        notifyObservers();
     }
 
 
@@ -101,6 +106,7 @@ public class Contact implements ICacheVisitable {
     void removeTag(ITag tag) throws TagNotFoundException {
         if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
         tags.remove(tag);
+        notifyObservers();
     }
 
     /**
@@ -132,6 +138,7 @@ public class Contact implements ICacheVisitable {
      */
     void removeNote(int index) {
         notes.removeNote(index);
+        notifyObservers();
     }
 
     /**
@@ -158,6 +165,23 @@ public class Contact implements ICacheVisitable {
      */
     List<Note> getNotes() {
         return notes.getSortedElem();
+    }
+
+    @Override
+    public void subscribe(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unSubscribe(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers){
+            observer.onEvent();
+        }
     }
 
 

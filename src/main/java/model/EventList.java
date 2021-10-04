@@ -4,9 +4,10 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EventList {
+public class EventList implements IObservable {
 
     private List<Event> eventList = new ArrayList<>();
+    private List<IObserver> observers = new ArrayList<>();
 
     /***
      * Creates a new eventlist wrapper object
@@ -51,6 +52,23 @@ public class EventList {
      */
     public List<Event> getList() {
         return this.eventList;
+    }
+
+    @Override
+    public void subscribe(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unSubscribe(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers){
+            observer.onEvent();
+        }
     }
 
 }

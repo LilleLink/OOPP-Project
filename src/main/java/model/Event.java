@@ -2,15 +2,13 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 import java.util.Collection;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
  */
-public class Event implements ICacheVisitable {
+public class Event implements ICacheVisitable, IObservable {
 
     private String name;
     private Address address = new Address("");
@@ -19,6 +17,7 @@ public class Event implements ICacheVisitable {
 
     private ITag tag;
     private Collection<Contact> contacts = new ArrayList<>();
+    private List<IObserver> observers = new ArrayList<>();
 
     /***
      * Creates an event with the given parameters.
@@ -66,6 +65,7 @@ public class Event implements ICacheVisitable {
      */
     public void setName(String name) {
         this.name = name;
+        notifyObservers();
     }
 
     /***
@@ -82,6 +82,7 @@ public class Event implements ICacheVisitable {
      */
     public void setAddress(String address) {
         this.address = this.address.setAddress(address);
+        notifyObservers();
     }
 
     /***
@@ -98,6 +99,7 @@ public class Event implements ICacheVisitable {
      */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+        notifyObservers();
     }
 
     /***
@@ -114,6 +116,7 @@ public class Event implements ICacheVisitable {
      */
     public void setDescription(String description) {
         this.description = description;
+        notifyObservers();
     }
 
     /***
@@ -122,6 +125,7 @@ public class Event implements ICacheVisitable {
      */
     public void addTag(ITag tag){
         this.tag = tag;
+        notifyObservers();
     }
 
     /***
@@ -129,6 +133,7 @@ public class Event implements ICacheVisitable {
      */
     public void removeTag(){
         tag = null;
+        notifyObservers();
     }
 
     /***
@@ -148,6 +153,7 @@ public class Event implements ICacheVisitable {
         if (!contacts.contains(contact)){
             contacts.add(contact);
         }
+        notifyObservers();
     }
 
     /***
@@ -157,6 +163,7 @@ public class Event implements ICacheVisitable {
      */
     public void removeContact(Contact contact){
         contacts.remove(contact);
+        notifyObservers();
     }
 
     /***
@@ -207,5 +214,22 @@ public class Event implements ICacheVisitable {
     @Override
     public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
         return visitor.visit(this.getCache(), env);
+    }
+
+    @Override
+    public void subscribe(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unSubscribe(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers){
+            observer.onEvent();
+        }
     }
 }
