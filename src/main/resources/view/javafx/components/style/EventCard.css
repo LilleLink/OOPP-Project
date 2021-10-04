@@ -1,0 +1,5 @@
+
+.RootPane {
+    -fx-border-width: 3px;
+    -fx-border-color: black; /*Just a default color, will be set to the correct tag color when instantiated*/
+}

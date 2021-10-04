@@ -2,6 +2,6 @@ package javafxexample;
 
 public class Main {
     public static void main(String[] args) {
-        HelloWorld.run(args);
+        javafxexample.HelloWorld.run(args);
     }
 }

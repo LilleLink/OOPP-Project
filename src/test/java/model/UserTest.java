@@ -1,9 +1,13 @@
 package model;
 
+import model.exceptions.NameNotAvailableException;
+import model.exceptions.TagNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -61,5 +65,41 @@ public class UserTest {
         user.addContact("Simon E");
         user.removeContact(user.getContacts().get(0));
         assertEquals(1, user.getContacts().size());
+    }
+
+    @Test
+    public void createTagsTest(){
+        try {
+            ITag t1 = user.createTag("First");
+            ITag t2 = user.createTag("second");
+            List<ITag> tags = user.getTags();
+            assertEquals(t1, tags.get(0));
+            assertEquals(t2, tags.get(1));
+            assertEquals(t1, user.getTag(t1.getName()));
+        } catch (NameNotAvailableException | TagNotFoundException e){
+            fail();
+        }
+    }
+
+    @Test
+    public void renameTagTest(){
+        try{
+            ITag t1 = user.createTag("First");
+            user.renameTag(t1, "second");
+            assertEquals(t1.getName(), "second");
+        } catch (NameNotAvailableException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void setColorTest(){
+        try{
+            ITag t1 = user.createTag("Tag name");
+            user.setColor(t1, "09cdda");
+            assertEquals("09cdda", t1.getColor());
+        } catch (NameNotAvailableException e) {
+            fail();
+        }
     }
 }

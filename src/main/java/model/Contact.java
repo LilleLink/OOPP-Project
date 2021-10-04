@@ -61,7 +61,7 @@ public class Contact implements ICacheVisitable {
      * @param address The address to be updated to.
      */
     void setAddress(String address){
-        this.address = new Address(address);
+        this.address = this.address.setAddress(address);
     }
 
 
