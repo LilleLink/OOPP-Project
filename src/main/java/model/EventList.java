@@ -30,6 +30,10 @@ public class EventList implements IObservable {
         eventList.add(new Event(name, dateTime));
     }
 
+    public void addEvent(String name, LocalDateTime dateTime, String address, String description, List<Contact> contacts, Tag tag) {
+        eventList.add(new Event(name, address, dateTime, description, contacts, tag));
+    }
+
     /***
      * Adds a event to the eventList
      * @param event the event object

@@ -59,5 +59,6 @@
       <Label fx:id="fridayLabel" layoutX="777.0" layoutY="57.0" text="FridayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="777.0" AnchorPane.rightAnchor="416.0" AnchorPane.topAnchor="57.0" />
       <Label fx:id="saturdayLabel" layoutX="954.0" layoutY="57.0" text="SaturdayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="954.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="57.0" />
       <Label fx:id="sundayLabel" layoutX="1141.0" layoutY="57.0" text="SundayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="1141.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="57.0" />
+      <Button fx:id="newEventButton" layoutX="1236.0" layoutY="9.0" mnemonicParsing="false" text="+" />
    </children>
 </fx:root>

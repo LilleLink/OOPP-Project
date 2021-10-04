@@ -1,6 +1,5 @@
 package model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Collection;
@@ -16,7 +15,7 @@ public class Event implements ICacheVisitable, IObservable {
     private String description;
 
     private ITag tag;
-    private Collection<Contact> contacts = new ArrayList<>();
+    private List<Contact> contacts = new ArrayList<>();
     private List<IObserver> observers = new ArrayList<>();
 
     /***
@@ -28,7 +27,7 @@ public class Event implements ICacheVisitable, IObservable {
      * @param contacts the list containing the IDs of the contacts tagged in the event
      * @param tag the list containing the IDs of the tags tagged on the event
      */
-    Event(String name, String address, LocalDateTime dateTime, String description, ArrayList<Contact> contacts, Tag tag) {
+    Event(String name, String address, LocalDateTime dateTime, String description, List<Contact> contacts, Tag tag) {
         this.name = name;
         this.address = new Address(address);
         this.dateTime = dateTime;
@@ -183,7 +182,7 @@ public class Event implements ICacheVisitable, IObservable {
         public LocalDateTime dateTime;
         public String description;
         public ITag tag;
-        public Collection<Contact> contacts;
+        public List<Contact> contacts;
 
         public EventCache() {}
     }
