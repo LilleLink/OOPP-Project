@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class EventCard extends ViewComponent implements Initializable {
+public class EventCard extends ViewComponent {
 
     @FXML private AnchorPane lightboxAnchorPane;
     @FXML private AnchorPane cardAnchorPane;
@@ -45,27 +45,15 @@ public class EventCard extends ViewComponent implements Initializable {
         this.contactList = contactList;
         saveButton.setOnMouseClicked(this::createEvent);
         lightboxAnchorPane.setOnMouseClicked(this::close);
-        cardAnchorPane.setOnMouseClicked(this::blockClose);
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeSpinners();
     }
 
-    private void close(MouseEvent mouseEvent) {
-        this.getPane().toBack();
-    }
-
-    /***
-     * Only exists to block the close mouse event from running when clicking on the actual card
-     * @param mouseEvent the mouse event
-     */
-    private void blockClose(MouseEvent mouseEvent) {}
 
     private void initializeSpinners() {
-        SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,0);
-        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,60,0, 5);
+        SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,
+                LocalDateTime.now().getHour(), 1);
+        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,60,
+                0, 5);
         hourSpinner.setValueFactory(hourValueFactory);
         minuteSpinner.setValueFactory(minuteValueFactory);
     }
@@ -79,6 +67,8 @@ public class EventCard extends ViewComponent implements Initializable {
         //List<Contact> participants = ContactList.search(participantsTextField.getText())?
         //ITag tag = tagHandler.getTag(categoryTextField.getText())?
         eventList.addEvent(name, localDateTime, address, description, new ArrayList<>(), null);
+        //System.out.println("Added new event! #Events: "+eventList.getList().size());
+        close(null);
     }
 
     private LocalDateTime getLocalDateTime() {
@@ -86,12 +76,15 @@ public class EventCard extends ViewComponent implements Initializable {
         return localDate.atTime(hourSpinner.getValue(), minuteSpinner.getValue());
     }
 
+    private void close(MouseEvent mouseEvent) {
+        this.getPane().toBack();
+    }
+
     public void clearFields() {
         nameTextField.clear();
         addressTextField.clear();
         eventDatePicker.setValue(null);
-        hourSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,0));
-        minuteSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 60, 0,5));
+        initializeSpinners();
         descriptionTextArea.clear();
         categoryTextField.clear();
         participantsTextField.clear();

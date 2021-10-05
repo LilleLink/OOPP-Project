@@ -14,9 +14,10 @@ import model.EventList;
 
 import java.net.URL;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class CalendarPage extends ViewComponent implements Initializable {
+public class CalendarPage extends ViewComponent {
 
     @FXML private Label weekLabel;
     @FXML private Button nextWeekButton;
@@ -50,14 +51,12 @@ public class CalendarPage extends ViewComponent implements Initializable {
     public CalendarPage(EventList eventList, ContactList contactList) {
         this.eventList = eventList;
         this.contactList = contactList;
-        newEventButton.setOnMouseClicked(this::newEvent);
-    }
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
         eventCard = new EventCard(eventList, contactList);
         calendarPageStackPane.getChildren().add(eventCard.getPane());
         calendarPageAnchorPane.toFront();
+
+        newEventButton.setOnMouseClicked(this::newEvent);
     }
 
     private void newEvent(MouseEvent mouseEvent) {
