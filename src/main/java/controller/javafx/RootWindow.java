@@ -49,7 +49,7 @@ public class RootWindow implements IPageNavigator, Initializable {
         testTopBar = ViewComponentFactory.CreateTestTopBar(this);
         mainPage = ViewComponentFactory.CreateMainPage();
         secondaryPage = ViewComponentFactory.CreateSecondaryPage();
-        calendarPage = ViewComponentFactory.CreateCalendarPage(user.getEvents());
+        calendarPage = ViewComponentFactory.CreateCalendarPage(user.getEvents(), user.getContacts());
         contactPage = ViewComponentFactory.CreateContactPage(user.getContacts());
     }
 

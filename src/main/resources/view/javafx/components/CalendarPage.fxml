@@ -5,60 +5,70 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 
-<fx:root prefHeight="660.0" prefWidth="1280.0" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="weekLabel" layoutX="609.0" layoutY="14.0" text="Weeklabel" AnchorPane.bottomAnchor="626.0" AnchorPane.leftAnchor="609.0" AnchorPane.rightAnchor="606.0" AnchorPane.topAnchor="14.0" />
-      <Button fx:id="nextWeekButton" layoutX="682.0" layoutY="9.0" mnemonicParsing="false" text="&gt;" AnchorPane.bottomAnchor="621.0" AnchorPane.leftAnchor="682.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="9.0" />
-      <Button fx:id="previousWeekButton" layoutX="539.0" layoutY="9.0" mnemonicParsing="false" text="&lt;" AnchorPane.bottomAnchor="621.0" AnchorPane.leftAnchor="539.0" AnchorPane.rightAnchor="679.0" AnchorPane.topAnchor="9.0" />
-      <Line endX="629.0" layoutX="640.0" layoutY="47.0" startX="-629.0" AnchorPane.bottomAnchor="612.5" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="46.5" />
-      <AnchorPane layoutX="14.0" layoutY="86.0" prefHeight="568.0" prefWidth="1260.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="86.0">
+      <StackPane fx:id="calendarPageStackPane">
          <children>
-            <ScrollPane hbarPolicy="NEVER" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1085.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <FlowPane fx:id="mondayFlowPane" prefHeight="566.0" prefWidth="173.0" />
-               </content>
-            </ScrollPane>
-            <ScrollPane hbarPolicy="NEVER" layoutX="180.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="905.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <FlowPane fx:id="tuesdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
-               </content>
-            </ScrollPane>
-            <ScrollPane hbarPolicy="NEVER" layoutX="361.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="361.0" AnchorPane.rightAnchor="724.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <FlowPane fx:id="wednesdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
-               </content>
-            </ScrollPane>
-            <ScrollPane hbarPolicy="NEVER" layoutX="542.0" layoutY="33.0" prefHeight="568.0" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="541.0" AnchorPane.rightAnchor="543.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <FlowPane fx:id="thursdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
-               </content>
-            </ScrollPane>
-            <ScrollPane hbarPolicy="NEVER" layoutX="723.0" layoutY="33.0" prefHeight="567.0" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="723.0" AnchorPane.rightAnchor="361.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <FlowPane fx:id="fridayFlowPane" prefHeight="566.0" prefWidth="173.0" />
-               </content>
-            </ScrollPane>
-            <ScrollPane hbarPolicy="NEVER" layoutX="904.0" layoutY="33.0" prefHeight="567.0" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="904.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <FlowPane fx:id="saturdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
-               </content>
-            </ScrollPane>
-            <ScrollPane hbarPolicy="NEVER" layoutX="1085.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1085.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <content>
-                  <FlowPane fx:id="sundayFlowPane" prefHeight="566.0" prefWidth="173.0" />
-               </content>
-            </ScrollPane>
+            <AnchorPane fx:id="calendarPageAnchorPane" prefHeight="660.0" prefWidth="1280.0" style="-fx-background-color: white;">
+               <children>
+                  <Label fx:id="weekLabel" layoutX="609.0" layoutY="14.0" text="Weeklabel" AnchorPane.bottomAnchor="626.0" AnchorPane.leftAnchor="609.0" AnchorPane.rightAnchor="606.0" AnchorPane.topAnchor="14.0" />
+                  <Button fx:id="nextWeekButton" layoutX="682.0" layoutY="9.0" mnemonicParsing="false" text="&gt;" AnchorPane.bottomAnchor="621.0" AnchorPane.leftAnchor="682.0" AnchorPane.rightAnchor="536.0" AnchorPane.topAnchor="9.0" />
+                  <Button fx:id="previousWeekButton" layoutX="539.0" layoutY="9.0" mnemonicParsing="false" text="&lt;" AnchorPane.bottomAnchor="621.0" AnchorPane.leftAnchor="539.0" AnchorPane.rightAnchor="679.0" AnchorPane.topAnchor="9.0" />
+                  <Line endX="629.0" layoutX="640.0" layoutY="47.0" startX="-629.0" AnchorPane.bottomAnchor="612.5" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="46.5" />
+                  <AnchorPane layoutX="14.0" layoutY="86.0" prefHeight="568.0" prefWidth="1260.0" AnchorPane.bottomAnchor="6.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="86.0">
+                     <children>
+                        <ScrollPane hbarPolicy="NEVER" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1085.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <FlowPane fx:id="mondayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="180.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="905.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <FlowPane fx:id="tuesdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="361.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="361.0" AnchorPane.rightAnchor="724.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <FlowPane fx:id="wednesdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="542.0" layoutY="33.0" prefHeight="568.0" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="541.0" AnchorPane.rightAnchor="543.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <FlowPane fx:id="thursdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="723.0" layoutY="33.0" prefHeight="567.0" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="723.0" AnchorPane.rightAnchor="361.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <FlowPane fx:id="fridayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="904.0" layoutY="33.0" prefHeight="567.0" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="904.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <FlowPane fx:id="saturdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                           </content>
+                        </ScrollPane>
+                        <ScrollPane hbarPolicy="NEVER" layoutX="1085.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1085.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <content>
+                              <FlowPane fx:id="sundayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                           </content>
+                        </ScrollPane>
+                     </children>
+                  </AnchorPane>
+                  <Label fx:id="mondayLabel" layoutX="47.0" layoutY="57.0" text="MondayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="1146.0" AnchorPane.topAnchor="57.0" />
+                  <Label fx:id="tuesdayLabel" layoutX="231.0" layoutY="57.0" text="TuesdayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="962.0" AnchorPane.topAnchor="57.0" />
+                  <Label fx:id="wednesdayLabel" layoutX="402.0" layoutY="57.0" prefHeight="20.0" prefWidth="108.0" text="Wednesdaylabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="402.0" AnchorPane.rightAnchor="770.0" AnchorPane.topAnchor="57.0" />
+                  <Label fx:id="thursdayLabel" layoutX="590.0" layoutY="57.0" prefHeight="20.0" prefWidth="100.0" text="ThursdayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="590.0" AnchorPane.rightAnchor="590.0" AnchorPane.topAnchor="57.0" />
+                  <Label fx:id="fridayLabel" layoutX="777.0" layoutY="57.0" text="FridayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="777.0" AnchorPane.rightAnchor="416.0" AnchorPane.topAnchor="57.0" />
+                  <Label fx:id="saturdayLabel" layoutX="954.0" layoutY="57.0" text="SaturdayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="954.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="57.0" />
+                  <Label fx:id="sundayLabel" layoutX="1141.0" layoutY="57.0" text="SundayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="1141.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="57.0" />
+                  <Button fx:id="newEventButton" layoutX="1236.0" layoutY="9.0" mnemonicParsing="false" text="+" />
+               </children>
+            </AnchorPane>
          </children>
-      </AnchorPane>
-      <Label fx:id="mondayLabel" layoutX="47.0" layoutY="57.0" text="MondayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="47.0" AnchorPane.rightAnchor="1146.0" AnchorPane.topAnchor="57.0" />
-      <Label fx:id="tuesdayLabel" layoutX="231.0" layoutY="57.0" text="TuesdayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="231.0" AnchorPane.rightAnchor="962.0" AnchorPane.topAnchor="57.0" />
-      <Label fx:id="wednesdayLabel" layoutX="402.0" layoutY="57.0" prefHeight="20.0" prefWidth="108.0" text="Wednesdaylabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="402.0" AnchorPane.rightAnchor="770.0" AnchorPane.topAnchor="57.0" />
-      <Label fx:id="thursdayLabel" layoutX="590.0" layoutY="57.0" prefHeight="20.0" prefWidth="100.0" text="ThursdayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="590.0" AnchorPane.rightAnchor="590.0" AnchorPane.topAnchor="57.0" />
-      <Label fx:id="fridayLabel" layoutX="777.0" layoutY="57.0" text="FridayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="777.0" AnchorPane.rightAnchor="416.0" AnchorPane.topAnchor="57.0" />
-      <Label fx:id="saturdayLabel" layoutX="954.0" layoutY="57.0" text="SaturdayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="954.0" AnchorPane.rightAnchor="239.0" AnchorPane.topAnchor="57.0" />
-      <Label fx:id="sundayLabel" layoutX="1141.0" layoutY="57.0" text="SundayLabel" AnchorPane.bottomAnchor="583.0" AnchorPane.leftAnchor="1141.0" AnchorPane.rightAnchor="52.0" AnchorPane.topAnchor="57.0" />
-      <Button fx:id="newEventButton" layoutX="1236.0" layoutY="9.0" mnemonicParsing="false" text="+" />
+      </StackPane>
    </children>
 </fx:root>
