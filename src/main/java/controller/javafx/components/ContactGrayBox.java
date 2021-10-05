@@ -33,9 +33,13 @@ class ContactGrayBox extends ViewComponent{
 
     @FXML private Text contactChangedText;
 
-    private EventHandler<? super Event> closeWindowHandler;
+    @FXML private AnchorPane addressPane;
 
-    private EventHandler<? super Event> deleteContactHandler;
+    private AddressCard addressCard;
+
+    private EventHandler<Event> closeWindowHandler;
+
+    private EventHandler<Event> deleteContactHandler;
 
     ContactGrayBox(){
         super();
@@ -44,6 +48,18 @@ class ContactGrayBox extends ViewComponent{
         deleteButton.setOnAction(this::delete);
         contactName.textProperty().addListener(((observableValue, s, t1) -> fieldsChanged()));
         saveButton.setOnAction(this::save);
+        initAddressField();
+    }
+
+    private void initAddressField(){
+        this.addressCard = new AddressCard();
+        addressCard.setNewAddressHandler(MouseEvent -> fieldsChanged());
+        AnchorPane addressCardPane = addressCard.getPane();
+        this.addressPane.getChildren().add(addressCardPane);
+        AnchorPane.setTopAnchor(addressCardPane, 0d);
+        AnchorPane.setLeftAnchor(addressCardPane, 0d);
+        AnchorPane.setRightAnchor(addressCardPane, 0d);
+        AnchorPane.setBottomAnchor(addressCardPane, 0d);
     }
 
     private void fieldsChanged(){
@@ -64,9 +80,8 @@ class ContactGrayBox extends ViewComponent{
         closeWindowHandler.handle(event);
     }
 
-    void setOnDelete(EventHandler<? super Event> handler){
+    void setOnDelete(EventHandler<Event> handler){
         deleteContactHandler = handler;
-
     }
 
     private void delete(Event event){

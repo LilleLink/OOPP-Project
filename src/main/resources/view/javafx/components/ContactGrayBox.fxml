@@ -11,7 +11,7 @@
 
 <fx:root fx:id="baseAnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #AAAAAA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #AAAAAA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor>
@@ -42,6 +42,7 @@
                </font>
             </Button>
             <Text fx:id="contactChangedText" fill="#ff0f0f" layoutX="1094.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unsaved changes!" textAlignment="CENTER" wrappingWidth="75.20002441406245" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="10.799975585937545" />
+            <AnchorPane fx:id="addressPane" layoutX="14.0" layoutY="180.0" prefHeight="86.0" prefWidth="1125.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
          </children>
       </AnchorPane>
    </children>
