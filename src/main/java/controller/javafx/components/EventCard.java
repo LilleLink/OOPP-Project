@@ -82,7 +82,8 @@ public class EventCard extends ViewComponent implements Initializable {
     }
 
     private LocalDateTime getLocalDateTime() {
-        return eventDatePicker.getValue().atTime(hourSpinner.getValue(), minuteSpinner.getValue());
+        LocalDate localDate = eventDatePicker.getValue();
+        return localDate.atTime(hourSpinner.getValue(), minuteSpinner.getValue());
     }
 
     public void clearFields() {
