@@ -14,7 +14,7 @@ import java.time.LocalDate;
 import java.time.temporal.*;
 import java.util.*;
 
-class CalendarPage extends ViewComponent implements Initializable {
+class CalendarPage extends ViewComponent {
 
     @FXML private Label weekLabel;
     @FXML private Button nextWeekButton;

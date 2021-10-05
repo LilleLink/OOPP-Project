@@ -65,8 +65,8 @@ public class ViewComponentFactory {
      * @param eventList the list of event to be displayed in the calendar
      * @return the CalendarPage in the form of a CalendarPage
      */
-    public static CalendarPage CreateCalendarPage(EventList eventList) {
-        return new CalendarPage(eventList);
+    public static CalendarPage CreateCalendarPage(EventList eventList, ContactList contactList) {
+        return new CalendarPage(eventList, contactList);
     }
 
     public static ContactGrayBox CreateContactGrayBox(){ return new ContactGrayBox();}
