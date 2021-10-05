@@ -1,4 +1,4 @@
-package attachmentHandler;
+package fileHandler;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -6,11 +6,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The facade for the entire AttachmentHandler service that can save attachments to specific IDs under user.home/.prm/{id}.
+ * The facade for the entire FileHandler service that can save attachments and the main picture to specific IDs under
+ * user.home/.prm/{id}.
  * Contains all functionality needed to save attachments, optionally under different categories, as well as retrieve and
- * delete those attachments.
+ * delete those attachments. Also contains the functionality for a main picture.
  */
-public interface IAttachmentHandlerFacade {
+public interface IFileHandlerFacade {
     /**
      * Saves a file in the base directory for the given id.
      * @param id ID of the entity you want to store the file under.
@@ -36,7 +37,7 @@ public interface IAttachmentHandlerFacade {
      * @return A list of Path objects pointing to all the files saved under the given ID.
      * @throws IOException If an I/O error occurs.
      */
-    List<Path> getAttachmentNames(UUID id) throws IOException;
+    List<Path> getAttachmentsPaths(UUID id) throws IOException;
 
     /**
      * Returns a list of Path objects containing all the files in the given category saved under the given ID.
@@ -46,14 +47,14 @@ public interface IAttachmentHandlerFacade {
      * @throws IOException If an I/O error occurs.
      * @throws IllegalArgumentException If the category contains non-letters.
      */
-    List<Path> getAttachmentNames(UUID id, String category) throws IOException, IllegalArgumentException;
+    List<Path> getAttachmentsPaths(UUID id, String category) throws IOException, IllegalArgumentException;
 
     /**
      * Removes the given ID's directory and all it's subdirectories and files.
      * @param id The ID to remove.
      * @throws IOException If an I/O error occurs.
      */
-    void removeId(UUID id) throws IOException;
+    void removeAllAttachments(UUID id) throws IOException;
 
     /**
      * Removes the given ID's files under a certain category.
@@ -62,4 +63,17 @@ public interface IAttachmentHandlerFacade {
      * @throws IOException If an I/O error occurs.
      */
     void removeAttachmentCategory(UUID id, String category) throws IOException;
+
+    /**
+     * Removes all files and the entire directory for an ID.
+     * @param id The ID you want to delete all files from.
+     * @throws IOException If an I/O error occurs.
+     */
+    void removeAllFiles(UUID id) throws IOException;
+
+    void saveMainImage(UUID id, Path picture) throws IllegalArgumentException, IOException;
+
+    void removeMainImage(UUID id) throws IOException;
+
+    Path getMainImagePath(UUID id);
 }
