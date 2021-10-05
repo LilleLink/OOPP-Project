@@ -1,6 +1,5 @@
 package controller.javafx.components;
 
-import controller.javafx.ViewComponentFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -9,31 +8,47 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.Contact;
 import model.ContactList;
+import model.IObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ContactPage extends ViewComponent {
+class ContactPage extends ViewComponent implements IObserver {
     @FXML private AnchorPane baseAnchorPane;
     @FXML private FlowPane cardFlowPane;
     @FXML private TextField newContactNameTextField;
     @FXML private Button newContactButton;
-    ContactList contacts;
+    private ContactList contacts;
+    private List<ContactCard> contactCards = new ArrayList<>();
 
     public ContactPage(ContactList contacts){
         super();
         this.contacts = contacts;
+        contacts.subscribe(this);
         this.newContactButton.setOnMouseClicked(this::newContact);
-        update();
+        onEvent();
     }
 
-    private void update(){
-        //todo unsub cards
-        cardFlowPane.getChildren().clear();
-        for (Contact contact : contacts.getList()){
-            cardFlowPane.getChildren().add(ViewComponentFactory.CreateContactCard(contact).getPane());
+    public void onEvent(){
+        for (ContactCard contactCard : contactCards){
+            contactCard.getContact().unSubscribe(contactCard);
         }
+        cardFlowPane.getChildren().clear();
+        contactCards.clear();
+        for (Contact contact : contacts.getList()){
+            ContactCard card = new ContactCard(contact);
+            contact.subscribe(card);
+            AnchorPane pane = card.getPane();
+            cardFlowPane.getChildren().add(pane);
+            pane.setOnMouseClicked( (MouseEvent event) -> {
+                contacts.removeContact(contact);
+            });
+        }
+    }
+
+    private void openFullscreen(Contact contact){
+        System.out.println(contact.getName());
     }
 
     private void newContact(MouseEvent mouseEvent){
@@ -42,7 +57,6 @@ public class ContactPage extends ViewComponent {
             contacts.addContact(name);
             newContactNameTextField.clear();
         }
-        update();
     }
 
 }

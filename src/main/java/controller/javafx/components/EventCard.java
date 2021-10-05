@@ -12,7 +12,7 @@ import model.Event;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EventCard extends ViewComponent implements Initializable {
+class EventCard extends ViewComponent implements Initializable {
 
     private Event event;
 

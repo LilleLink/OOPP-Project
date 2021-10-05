@@ -7,9 +7,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.Contact;
 
-public class ContactGrayBox extends ViewComponent{
+class ContactGrayBox extends ViewComponent{
 
-    private final Contact contact;
+    private Contact contact;
 
     @FXML private ImageView profileImage;
 
@@ -17,7 +17,11 @@ public class ContactGrayBox extends ViewComponent{
 
     @FXML private AnchorPane baseAnchorPane;
 
-    ContactGrayBox(Contact contact){
+    ContactGrayBox(){
+
+    }
+
+    public void setContact(Contact contact){
         this.contact = contact;
         contactName.setText(contact.getName());
     }

@@ -12,7 +12,7 @@ import java.net.URL;
 import java.util.Collection;
 import java.util.ResourceBundle;
 
-public class CalendarPage extends ViewComponent implements Initializable {
+class CalendarPage extends ViewComponent implements Initializable {
 
     @FXML private Label weekLabel;
     @FXML private Button nextWeekButton;

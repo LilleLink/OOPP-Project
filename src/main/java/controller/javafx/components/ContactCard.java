@@ -1,15 +1,15 @@
 package controller.javafx.components;
 
-import controller.javafx.ViewComponentFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import model.Contact;
+import model.IObserver;
 import model.ITag;
 
-public class ContactCard extends ViewComponent{
+class ContactCard extends ViewComponent implements IObserver {
     @FXML private AnchorPane baseAnchorPane;
     @FXML private ImageView contactImage;
     @FXML private Label nameLabel;
@@ -20,10 +20,14 @@ public class ContactCard extends ViewComponent{
         super();
         nameLabel.setText(contact.getName());
         this.contact = contact;
-        update();
+        onEvent();
     }
 
-    private void update(){
+    public Contact getContact(){
+        return contact;
+    }
+
+    public void onEvent(){
         for (ITag tag : contact.getTags()){
             tagHBox.getChildren().add(ViewComponentFactory.CreateTagCard(tag).getPane());
         }
