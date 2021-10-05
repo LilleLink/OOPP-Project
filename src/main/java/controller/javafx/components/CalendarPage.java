@@ -1,21 +1,18 @@
 package controller.javafx.components;
 
-import controller.javafx.ViewComponentFactory;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import model.ContactList;
-import model.Event;
 import model.EventList;
 
-import java.net.URL;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.temporal.*;
+import java.util.*;
 
 public class CalendarPage extends ViewComponent {
 
@@ -43,6 +40,8 @@ public class CalendarPage extends ViewComponent {
     @FXML private StackPane calendarPageStackPane;
     @FXML private AnchorPane calendarPageAnchorPane;
 
+    private LocalDate weekToDisplay;
+
     private EventCard eventCard;
 
     private EventList eventList;
@@ -57,6 +56,43 @@ public class CalendarPage extends ViewComponent {
         calendarPageAnchorPane.toFront();
 
         newEventButton.setOnMouseClicked(this::newEvent);
+        nextWeekButton.setOnMouseClicked(this::incrementWeek);
+        previousWeekButton.setOnMouseClicked(this::decrementWeek);
+
+        weekToDisplay = LocalDate.now();
+        setLabels(weekToDisplay);
+    }
+
+    private void incrementWeek(MouseEvent mouseEvent) {
+        weekToDisplay = weekToDisplay.plusWeeks(1);
+        setLabels(weekToDisplay);
+    }
+
+    private void decrementWeek(MouseEvent mouseEvent) {
+        weekToDisplay = weekToDisplay.minusWeeks(1);
+        setLabels(weekToDisplay);
+    }
+
+    private void setLabels(LocalDate date) {
+        // Sets date to monday of this week.
+        date = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        TemporalField weekGetter = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
+
+        weekLabel.setText("Week "+date.get(weekGetter)+" "+date.getYear());
+
+        mondayLabel.setText("Monday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        date = date.plusDays(1);
+        tuesdayLabel.setText("Tuesday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        date = date.plusDays(1);
+        wednesdayLabel.setText("Wednesday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        date = date.plusDays(1);
+        thursdayLabel.setText("Thursday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        date = date.plusDays(1);
+        fridayLabel.setText("Friday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        date = date.plusDays(1);
+        saturdayLabel.setText("Saturday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        date = date.plusDays(1);
+        sundayLabel.setText("Sunday "+date.getDayOfMonth()+"/"+date.getMonthValue());
     }
 
     private void newEvent(MouseEvent mouseEvent) {
