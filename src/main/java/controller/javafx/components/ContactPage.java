@@ -19,6 +19,7 @@ class ContactPage extends ViewComponent implements IObserver {
     @FXML private FlowPane cardFlowPane;
     @FXML private TextField newContactNameTextField;
     @FXML private Button newContactButton;
+    private ContactGrayBox contactGrayBox;
     private ContactList contacts;
     private List<ContactCard> contactCards = new ArrayList<>();
 
@@ -27,6 +28,11 @@ class ContactPage extends ViewComponent implements IObserver {
         this.contacts = contacts;
         contacts.subscribe(this);
         this.newContactButton.setOnMouseClicked(this::newContact);
+        contactGrayBox = new ContactGrayBox();
+        contactGrayBox.setOnClose( mouseEvent -> closeGrayPane());
+        AnchorPane contactGrayBoxPane = contactGrayBox.getPane();
+        baseAnchorPane.getChildren().add(contactGrayBoxPane);
+        contactGrayBoxPane.setVisible(false);
         onEvent();
     }
 
@@ -41,14 +47,18 @@ class ContactPage extends ViewComponent implements IObserver {
             contact.subscribe(card);
             AnchorPane pane = card.getPane();
             cardFlowPane.getChildren().add(pane);
-            pane.setOnMouseClicked( (MouseEvent event) -> {
-                contacts.removeContact(contact);
-            });
+            pane.setOnMouseClicked( (MouseEvent event) -> openGrayPane(contact) );
         }
     }
 
-    private void openFullscreen(Contact contact){
-        System.out.println(contact.getName());
+    private void openGrayPane(Contact contact){
+        contactGrayBox.setContact(contact);
+        contactGrayBox.setOnDelete(mouseEvent -> removeContact(contact));
+        contactGrayBox.getPane().setVisible(true);
+    }
+
+    public void closeGrayPane(){
+        contactGrayBox.getPane().setVisible(false);
     }
 
     private void newContact(MouseEvent mouseEvent){
@@ -57,6 +67,10 @@ class ContactPage extends ViewComponent implements IObserver {
             contacts.addContact(name);
             newContactNameTextField.clear();
         }
+    }
+
+    private void removeContact(Contact contact){
+        contacts.removeContact(contact);
     }
 
 }
