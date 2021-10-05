@@ -1,13 +1,11 @@
 package controller.javafx;
 
 import controller.javafx.components.ViewComponent;
+import controller.javafx.components.ViewComponentFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import model.Contact;
-import model.TagHandler;
 import model.User;
-import model.exceptions.NameNotAvailableException;
 
 import java.net.URL;
 import java.util.ResourceBundle;

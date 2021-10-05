@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 /***
- * A ViewComponent element is a component that wraps an anchorpane. Classes that inherit this class will load their
+ * A ViewComponent element is a component that wraps an anchorPane. Classes that inherit this class will load their
  * FXML files automatically onto the pane object given that the name of the FXML file is the same as the controller class name.
  */
 public abstract class ViewComponent {

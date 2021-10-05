@@ -1,13 +1,7 @@
-package controller.javafx;
+package controller.javafx.components;
 
-import controller.javafx.components.*;
-import javafx.scene.layout.AnchorPane;
+import controller.javafx.IPageNavigator;
 import model.*;
-
-import javax.swing.text.View;
-import java.util.Collection;
-
-import java.util.List;
 
 /***
  * Factory that creates JavaFX components and returns them as ViewComponents to the caller.
@@ -19,15 +13,15 @@ public class ViewComponentFactory {
      * @param nav the navigator object
      * @return the top bar in the form of a ViewComponent
      */
-    public static ViewComponent CreateTestTopBar(IPageNavigator nav) {
-        return new TestTopBar(nav);
+    public static TopBar CreateTestTopBar(IPageNavigator nav) {
+        return new TopBar(nav);
     }
 
     /***
      * Creates a MainPage component.
      * @return the MainPage in the form of a ViewComponent
      */
-    public static ViewComponent CreateMainPage() {
+    public static MainPage CreateMainPage() {
         return new MainPage();
     }
 
@@ -35,7 +29,7 @@ public class ViewComponentFactory {
      * Creates a SecondaryPage component
      * @return the SecondaryPage in the form of a ViewComponent
      */
-    public static ViewComponent CreateSecondaryPage () {
+    public static SecondaryPage CreateSecondaryPage () {
         return new SecondaryPage();
     }
 
@@ -44,7 +38,7 @@ public class ViewComponentFactory {
      * @param contactList A list of the contacts to display
      * @return ContactPage as a ViewComponent
      */
-    public static ViewComponent CreateContactPage (ContactList contactList) {
+    public static ContactPage CreateContactPage (ContactList contactList) {
         return new ContactPage(contactList);
     }
 
@@ -53,11 +47,11 @@ public class ViewComponentFactory {
      * @param contact to create card from
      * @return ContactCard as a ViewComponent
      */
-    public static ViewComponent CreateContactCard (Contact contact) {
+    public static ContactCard CreateContactCard (Contact contact) {
         return new ContactCard(contact);
     }
 
-    public static ViewComponent CreateTagCard (ITag tag) {
+    public static TagCard CreateTagCard (ITag tag) {
         return new TagCard(tag);
     }
 
@@ -66,8 +60,10 @@ public class ViewComponentFactory {
      * @param eventList the list of event to be displayed in the calendar
      * @return the CalendarPage in the form of a CalendarPage
      */
-    public static ViewComponent CreateCalendarPage(EventList eventList) {
+    public static CalendarPage CreateCalendarPage(EventList eventList) {
         return new CalendarPage(eventList);
     }
+
+    public static ContactGrayBox CreateContactGrayBox(){ return new ContactGrayBox();}
 
 }

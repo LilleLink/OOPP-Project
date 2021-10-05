@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import model.ITag;
 
-public class TagCard extends ViewComponent {
+class TagCard extends ViewComponent {
     @FXML private AnchorPane baseAnchorPane;
     @FXML private Label tagLabel;
 
