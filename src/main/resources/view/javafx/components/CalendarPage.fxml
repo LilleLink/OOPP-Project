@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Line?>
 
-
-<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <StackPane fx:id="calendarPageStackPane">
+      <StackPane fx:id="calendarPageStackPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane fx:id="calendarPageAnchorPane" prefHeight="660.0" prefWidth="1280.0" style="-fx-background-color: white;">
                <children>
@@ -36,17 +35,17 @@
                               <FlowPane fx:id="wednesdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
                            </content>
                         </ScrollPane>
-                        <ScrollPane hbarPolicy="NEVER" layoutX="542.0" layoutY="33.0" prefHeight="568.0" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="541.0" AnchorPane.rightAnchor="543.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="542.0" layoutY="33.0" prefHeight="568.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="541.0" AnchorPane.rightAnchor="543.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <FlowPane fx:id="thursdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
                            </content>
                         </ScrollPane>
-                        <ScrollPane hbarPolicy="NEVER" layoutX="723.0" layoutY="33.0" prefHeight="567.0" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="723.0" AnchorPane.rightAnchor="361.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="723.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="723.0" AnchorPane.rightAnchor="361.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <FlowPane fx:id="fridayFlowPane" prefHeight="566.0" prefWidth="173.0" />
                            </content>
                         </ScrollPane>
-                        <ScrollPane hbarPolicy="NEVER" layoutX="904.0" layoutY="33.0" prefHeight="567.0" prefWidth="176.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="904.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="0.0">
+                        <ScrollPane hbarPolicy="NEVER" layoutX="904.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="904.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="0.0">
                            <content>
                               <FlowPane fx:id="saturdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
                            </content>
