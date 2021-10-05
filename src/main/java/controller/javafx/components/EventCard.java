@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class EventCard extends ViewComponent {
+class EventCard extends ViewComponent {
 
     @FXML private AnchorPane lightboxAnchorPane;
     @FXML private AnchorPane cardAnchorPane;

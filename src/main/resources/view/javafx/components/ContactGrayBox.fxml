@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<fx:root fx:id="baseAnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1280.0" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane pickOnBounds="false" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #AAAAAA;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </AnchorPane>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <ImageView fx:id="profileImage" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+               <image>
+                  <Image url="@../../../Images/defaultIcon.png" />
+               </image></ImageView>
+            <TextField fx:id="contactName" layoutX="264.0" layoutY="42.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="40.0">
+               <font>
+                  <Font size="24.0" />
+               </font></TextField>
+            <Button fx:id="closeButton" layoutX="1136.0" layoutY="19.0" mnemonicParsing="false" text="X" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="saveButton" layoutX="1106.0" layoutY="499.0" mnemonicParsing="false" text="Save" AnchorPane.bottomAnchor="10.600000000000023" AnchorPane.rightAnchor="25.200000000000045">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="deleteButton" layoutX="944.0" layoutY="499.0" mnemonicParsing="false" text="Remove Contact" AnchorPane.bottomAnchor="10.600000000000023" AnchorPane.rightAnchor="114.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Text fx:id="contactChangedText" fill="#ff0f0f" layoutX="1094.0" layoutY="471.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Unsaved changes!" textAlignment="CENTER" wrappingWidth="75.20002441406245" AnchorPane.bottomAnchor="48.0" AnchorPane.rightAnchor="10.799975585937545" />
+            <AnchorPane fx:id="addressPane" layoutX="14.0" layoutY="180.0" prefHeight="86.0" prefWidth="1125.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</fx:root>

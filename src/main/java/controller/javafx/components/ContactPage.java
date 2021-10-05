@@ -1,6 +1,5 @@
 package controller.javafx.components;
 
-import controller.javafx.ViewComponentFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -9,38 +8,69 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.Contact;
 import model.ContactList;
+import model.IObserver;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ContactPage extends ViewComponent {
+class ContactPage extends ViewComponent implements IObserver {
     @FXML private AnchorPane baseAnchorPane;
     @FXML private FlowPane cardFlowPane;
     @FXML private TextField newContactNameTextField;
     @FXML private Button newContactButton;
-    ContactList contacts;
+    private ContactGrayBox contactGrayBox;
+    private ContactList contacts;
+    private List<ContactCard> contactCards = new ArrayList<>();
 
     public ContactPage(ContactList contacts){
         super();
         this.contacts = contacts;
+        contacts.subscribe(this);
         this.newContactButton.setOnMouseClicked(this::newContact);
-        update();
+        contactGrayBox = new ContactGrayBox();
+        contactGrayBox.setOnClose( mouseEvent -> closeGrayPane());
+        AnchorPane contactGrayBoxPane = contactGrayBox.getPane();
+        baseAnchorPane.getChildren().add(contactGrayBoxPane);
+        contactGrayBoxPane.setVisible(false);
+        onEvent();
     }
 
-    private void update(){
-        //todo unsub cards
+    public void onEvent(){
+        for (ContactCard contactCard : contactCards){
+            contactCard.getContact().unSubscribe(contactCard);
+        }
         cardFlowPane.getChildren().clear();
+        contactCards.clear();
         for (Contact contact : contacts.getList()){
-            cardFlowPane.getChildren().add(ViewComponentFactory.CreateContactCard(contact).getPane());
+            ContactCard card = new ContactCard(contact);
+            contact.subscribe(card);
+            AnchorPane pane = card.getPane();
+            cardFlowPane.getChildren().add(pane);
+            pane.setOnMouseClicked( (MouseEvent event) -> openGrayPane(contact) );
         }
     }
 
+    private void openGrayPane(Contact contact){
+        contactGrayBox.setContact(contact);
+        contactGrayBox.setOnDelete(mouseEvent -> removeContact(contact));
+        contactGrayBox.getPane().setVisible(true);
+    }
+
+    public void closeGrayPane(){
+        contactGrayBox.getPane().setVisible(false);
+    }
+
     private void newContact(MouseEvent mouseEvent){
-        //todo implement this
-        contacts.addContact(newContactNameTextField.getCharacters().toString());
-        newContactNameTextField.clear();
-        update();
+        String name = newContactNameTextField.getText();
+        if (name.length() > 0) {
+            contacts.addContact(name);
+            newContactNameTextField.clear();
+        }
+    }
+
+    private void removeContact(Contact contact){
+        contacts.removeContact(contact);
     }
 
 }
