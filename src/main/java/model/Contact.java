@@ -6,6 +6,7 @@ import java.util.List;
 import model.exceptions.TagNotFoundException;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class Contact implements ICacheVisitable, IObservable {
 
@@ -15,6 +16,7 @@ public class Contact implements ICacheVisitable, IObservable {
     private List<ITag> tags;
     private Notes notes;
     private List<IObserver> observers = new ArrayList<>();
+    private final UUID directory = UUID.randomUUID();
 
     /**
      * @param name The contact's name.
