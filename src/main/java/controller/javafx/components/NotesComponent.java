@@ -1,10 +1,17 @@
 package controller.javafx.components;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.Note;
 import model.Notes;
+
+import javax.swing.*;
+import java.util.Objects;
 
 /**
  * A component representing the interface that interacts with and views notes.
@@ -19,7 +26,14 @@ public class NotesComponent extends ViewComponent{
     private TextArea inputTextArea;
     @FXML
     private VBox noteVBox;
+    @FXML
+    private Button addButton;
+    @FXML
+    private Button removeButton;
+    @FXML
+    private Button editButton;
 
+    private Node selected;
     /**
      * Instantiates a component representing the given Notes object.
      * @param notes the notes to represent.
@@ -28,6 +42,8 @@ public class NotesComponent extends ViewComponent{
         super();
         this.notes = notes;
         initializeNotes();
+        addButton.setOnAction(this::addNote);
+        removeButton.setOnAction(this::removeNote);
     }
 
     /**
@@ -41,17 +57,58 @@ public class NotesComponent extends ViewComponent{
     }
 
     private void addToVBox(Note note) {
+        NoteCard noteCard = new NoteCard(note);
+        noteCard.getPane().setOnMouseClicked(this::updateSelected);
         noteVBox.getChildren().add(new NoteCard(note).getPane());
     }
 
     /**
-     * Adds a note containing the current text in the text area.
+     * Sets the selected node to the one being clicked on.
+     * @param mouseEvent the currently given mouse input
      */
     @FXML
-    public void addNote() {
+    private void updateSelected(MouseEvent mouseEvent) {
+        selected = (Node) mouseEvent.getSource();
+    }
+
+    /**
+     * Removes a note from the notes object and
+     * @param actionEvent the input event
+     */
+    @FXML
+    private void removeNote(ActionEvent actionEvent) {
+        if(!Objects.isNull(selected)) {
+            int noteIndex = noteVBox.getChildren().indexOf(selected);
+            notes.removeNote(noteIndex);
+            noteVBox.getChildren().remove(selected);
+        }
+    }
+
+    /**
+     * Adds a note containing the current text in the text area.
+     * A new {@link NoteCard} is instanced with the string contained in the text area.
+     * @param actionEvent the user input
+     */
+    @FXML
+    private void addNote(ActionEvent actionEvent) {
         notes.addNote(inputTextArea.toString());
         addToVBox(notes.getNoteAt(notes.size() - 1));
     }
+
+    /**
+     * Edits a note with the current text in the text area.
+     * A new {@link NoteCard} is instanced with the edited note and replaces the current card.
+     * @param actionEvent the user input
+     */
+    private void editNote(ActionEvent actionEvent) {
+        if(!Objects.isNull(selected)) {
+            int noteIndex = noteVBox.getChildren().indexOf(selected);
+            notes.editNoteAt(noteIndex,inputTextArea.toString());
+            noteVBox.getChildren().set(noteIndex,new NoteCard(notes.getNoteAt(noteIndex)).getPane());
+        }
+    }
+
+
 
 
 }

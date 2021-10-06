@@ -17,13 +17,13 @@
          </ToolBar>
          <ToolBar maxHeight="30.0" minHeight="30.0" prefHeight="30.0">
             <Button fx:id="addButton" mnemonicParsing="false" text="Add" />
+            <Button fx:id="removeButton" mnemonicParsing="false" text="Remove" />
          </ToolBar>
       </HBox>
       <ScrollPane fitToWidth="true" vbarPolicy="NEVER">
-         <content>
-            <VBox />
-         </content>
+         <VBox/>
       </ScrollPane>
       <TextArea fx:id="textArea" promptText="Write a note here..." wrapText="true" />
+      <Button fx:id="editButton" mnemonicParsing="false" text="Edit" />
    </VBox>
 </AnchorPane>
