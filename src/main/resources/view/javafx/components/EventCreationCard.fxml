@@ -26,7 +26,7 @@
             <DatePicker fx:id="eventDatePicker" layoutX="112.0" layoutY="128.0" prefHeight="30.0" prefWidth="138.0" promptText="YYYY-MM-DD" />
             <TextArea fx:id="descriptionTextArea" layoutX="112.0" layoutY="164.0" prefHeight="199.0" prefWidth="269.0" />
             <Label layoutX="14.0" layoutY="164.0" text="Description:" />
-            <Label layoutX="14.0" layoutY="374.0" text="Category:" />
+            <Label layoutX="14.0" layoutY="374.0" text="Tag:" />
             <Label layoutX="14.0" layoutY="410.0" text="Participants:" />
             <TextField fx:id="categoryTextField" layoutX="112.0" layoutY="369.0" prefHeight="30.0" prefWidth="269.0" promptText="Search" />
             <TextField fx:id="participantsTextField" layoutX="112.0" layoutY="405.0" prefHeight="30.0" prefWidth="269.0" promptText="Search" />

@@ -45,7 +45,6 @@ class EventCreationCard extends ViewComponent {
         initializeSpinners();
     }
 
-
     private void initializeSpinners() {
         SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,
                 LocalDateTime.now().getHour(), 1);

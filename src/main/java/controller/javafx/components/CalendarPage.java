@@ -48,6 +48,7 @@ class CalendarPage extends ViewComponent implements IObserver {
     private EventCreationCard eventCreationCard;
     private List<CalendarEventCard> calendarEventCards = new ArrayList<>();
 
+
     private EventList eventList;
     private ContactList contactList;
 
@@ -116,9 +117,14 @@ class CalendarPage extends ViewComponent implements IObserver {
 
         for (Event event : eventsThisWeek) {
             CalendarEventCard calendarEventCard = ViewComponentFactory.CreateCalendarEventCard(event);
+            calendarEventCard.getPane().setOnMouseClicked(mouseEvent -> editEvent(event));
             determineFlowPane(event, calendarEventCard);
         }
 
+    }
+
+    private void editEvent(Event event) {
+        System.out.println("Event: "+event.getName());
     }
 
     private void clearCalendar() {
