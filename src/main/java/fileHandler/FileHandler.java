@@ -2,6 +2,7 @@ package fileHandler;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
@@ -16,7 +17,7 @@ class FileHandler implements IFileHandlerFacade {
     }
 
     @Override
-    public void saveAttachment(UUID id, Path sourceFile) throws IOException {
+    public void addAttachment(UUID id, Path sourceFile) throws IOException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         Files.createDirectories(attachmentDirectory);
         Files.copy(sourceFile, attachmentDirectory
@@ -25,7 +26,7 @@ class FileHandler implements IFileHandlerFacade {
     }
 
     @Override
-    public void saveAttachment(UUID id, Path sourceFile, String category) throws IOException, IllegalArgumentException {
+    public void addAttachment(UUID id, Path sourceFile, String category) throws IOException, IllegalArgumentException {
         category = category.toLowerCase();
         if (!category.chars().allMatch(Character::isLetter)){
             throw new IllegalArgumentException("A category should only contain letters");
@@ -38,7 +39,7 @@ class FileHandler implements IFileHandlerFacade {
     }
 
     @Override
-    public List<Path> getAttachmentsPaths(UUID id) throws IOException {
+    public List<Path> getAttachments(UUID id) throws IOException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         List<Path> files = new ArrayList<>();
         if (!Files.exists(attachmentDirectory)) return files;
@@ -48,7 +49,7 @@ class FileHandler implements IFileHandlerFacade {
     }
 
     @Override
-    public List<Path> getAttachmentsPaths(UUID id, String category) throws IOException, IllegalArgumentException {
+    public List<Path> getAttachments(UUID id, String category) throws IOException, IllegalArgumentException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         category = category.toLowerCase();
         if (!category.chars().allMatch(Character::isLetter)){
@@ -61,42 +62,69 @@ class FileHandler implements IFileHandlerFacade {
     }
 
     @Override
+    public List<String> getAttachmentCategories(UUID id) throws IOException {
+        List<String> attachmentCategories = new ArrayList<>();
+        Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
+        Files.walk(attachmentDirectory, 1)
+                .filter(Files::isDirectory)
+                .forEach((directory) -> {
+                    if (directory != attachmentDirectory){
+                        attachmentCategories.add(directory.getFileName().toString());
+                    }
+                });
+        return attachmentCategories;
+    }
+
+    @Override
     public void removeAttachmentCategory(UUID id, String category) throws IOException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
-        deleteDirectoryRecursively(attachmentDirectory.resolve(category));
+        if (Files.exists(attachmentDirectory.resolve(category)))
+            deleteDirectoryRecursively(attachmentDirectory.resolve(category));
     }
 
     @Override
     public void removeAllAttachments(UUID id) throws IOException {
-        deleteDirectoryRecursively(baseDirectory.resolve(id.toString() + "/attachments"));
+        if (Files.exists(baseDirectory.resolve(id.toString() + "/attachments")))
+            deleteDirectoryRecursively(baseDirectory.resolve(id.toString() + "/attachments"));
     }
 
     @Override
     public void removeAllFiles(UUID id) throws IOException {
-        deleteDirectoryRecursively(baseDirectory.resolve(id.toString()));
+        if (Files.exists(baseDirectory.resolve(id.toString())))
+            deleteDirectoryRecursively(baseDirectory.resolve(id.toString()));
     }
 
     @Override
     public void saveMainImage(UUID id, Path picture) throws IllegalArgumentException, IOException {
         List<String> imageFileExtensions = Arrays.asList("bmp", "gif", "jpeg", "jpg", "png");
+        Path mainImageDirectory = baseDirectory.resolve(id.toString()).resolve("mainImage/");
         if (!imageFileExtensions.contains(getFileExtension(picture).toLowerCase())) {
             throw new IllegalArgumentException("The specified file needs to be a image.");
-        } else {
-            Files.copy(picture, baseDirectory.resolve(id.toString()).resolve("mainPicture"), REPLACE_EXISTING);
         }
+        removeMainImage(id);
+        Files.createDirectories(mainImageDirectory);
+        Files.copy(picture, mainImageDirectory.resolve(picture.getFileName()), REPLACE_EXISTING);
     }
 
     @Override
     public void removeMainImage(UUID id) throws IOException {
-        Path mainPicture = baseDirectory.resolve(id.toString()).resolve("mainPicture");
-        if (Files.exists(mainPicture)){
-            Files.delete(mainPicture);
+        Path mainImage = baseDirectory.resolve(id.toString()).resolve("mainImage");
+        if (Files.exists(mainImage)){
+            deleteDirectoryRecursively(mainImage);
         }
     }
 
     @Override
-    public Path getMainImagePath(UUID id) {
-        return baseDirectory.resolve(id.toString()).resolve("mainPicture");
+    public Path getMainImage(UUID id) throws IOException, NoSuchFileException {
+        Path mainImageDirectory = baseDirectory.resolve(id.toString()).resolve("mainImage/");
+        List<Path> mainImageDirectoryFiles = new ArrayList<>();
+        Files.walk(mainImageDirectory, 1).filter(Files::isRegularFile).forEach(mainImageDirectoryFiles::add);
+
+        if (mainImageDirectoryFiles.isEmpty()) {
+            throw new NoSuchFileException("There is no mainImage for this ID");
+        } else {
+            return mainImageDirectoryFiles.get(0);
+        }
     }
 
 
@@ -116,9 +144,9 @@ class FileHandler implements IFileHandlerFacade {
         String name = file.getFileName().toString();
         int lastDot = name.lastIndexOf(".");
         if (lastDot == -1) {
-            return ""; // empty extension
+            return ""; //no extension
         }
-        return name.substring(lastDot);
+        return name.substring(lastDot + 1); // returns extension without dot
     }
 
 }
