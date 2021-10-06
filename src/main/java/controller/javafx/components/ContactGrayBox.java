@@ -13,7 +13,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import model.Contact;
 
+import java.awt.*;
 import java.lang.invoke.LambdaConversionException;
+import java.net.URI;
 
 class ContactGrayBox extends ViewComponent{
 
@@ -33,9 +35,9 @@ class ContactGrayBox extends ViewComponent{
 
     @FXML private Text contactChangedText;
 
-    @FXML private AnchorPane addressPane;
+    @FXML private TextField addressText;
 
-    private AddressCard addressCard;
+    @FXML private Button openMapButton;
 
     private EventHandler<Event> closeWindowHandler;
 
@@ -48,18 +50,8 @@ class ContactGrayBox extends ViewComponent{
         deleteButton.setOnAction(this::delete);
         contactName.textProperty().addListener(((observableValue, s, t1) -> fieldsChanged()));
         saveButton.setOnAction(this::save);
-        initAddressField();
-    }
-
-    private void initAddressField(){
-        this.addressCard = new AddressCard();
-        addressCard.setNewAddressHandler(MouseEvent -> fieldsChanged());
-        AnchorPane addressCardPane = addressCard.getPane();
-        this.addressPane.getChildren().add(addressCardPane);
-        AnchorPane.setTopAnchor(addressCardPane, 0d);
-        AnchorPane.setLeftAnchor(addressCardPane, 0d);
-        AnchorPane.setRightAnchor(addressCardPane, 0d);
-        AnchorPane.setBottomAnchor(addressCardPane, 0d);
+        openMapButton.setOnAction(this::openMap);
+        addressText.textProperty().addListener((observable -> fieldsChanged()));
     }
 
     private void fieldsChanged(){
@@ -70,6 +62,7 @@ class ContactGrayBox extends ViewComponent{
         this.contact = contact;
         contactName.setText(contact.getName());
         contactChangedText.setVisible(false);
+        addressText.setText(contact.getAddress());
     }
 
     void setOnClose(EventHandler<Event> handler){
@@ -89,8 +82,30 @@ class ContactGrayBox extends ViewComponent{
         close(event);
     }
 
+    private boolean openMap(ActionEvent event){
+        //TODO use return value of openMap
+        Desktop desktop = Desktop.getDesktop();
+        if (desktop.isSupported(Desktop.Action.BROWSE)) {
+            try {
+                desktop.browse(new URI("https://maps.google.com/maps?q=" +
+                        addressText.getText().replace(' ', '+')));
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return false;
+    }
+
     private void save(Event e){
         System.out.println("This should set the name of the contact to "+contactName.getText());
-        close(e);
+        System.out.println("This should set the address of the contact to "+addressText.getText());
+        if (isAllowed()) {
+            close(e);
+        }
+    }
+
+    private boolean isAllowed(){
+        return contactName.getText().length() >= 1;
     }
 }
