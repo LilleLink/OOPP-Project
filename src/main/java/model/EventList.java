@@ -16,13 +16,13 @@ public class EventList implements IObservable {
     /***
      * Creates a new eventlist wrapper object
      */
-    public EventList() {}
+    EventList() {}
 
     /***
      * Wraps a given list of events.
      * @param events the list to be wrapped
      */
-    public EventList(List<Event> events) {
+    EventList(List<Event> events) {
         this.eventList = events;
     }
 
