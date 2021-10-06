@@ -1,16 +1,11 @@
 package fileHandler;
 
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 
-import java.awt.*;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,7 +14,7 @@ import java.util.UUID;
 import static org.junit.Assert.assertEquals;
 
 public class FileHandlerTest {
-    private static final IFileHandlerFacade fileHandler = FileHandlerFactory.getService();
+    private static final IFileHandler fileHandler = FileHandlerFactory.getService();
 
     private static final UUID id = UUID.randomUUID();
     private static final Path testFileDirectory = Paths.get("src/test/java/fileHandler/testFiles/");

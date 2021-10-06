@@ -9,7 +9,7 @@ import java.util.*;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-class FileHandler implements IFileHandlerFacade {
+class FileHandler implements IFileHandler {
     private final Path baseDirectory = Paths.get(System.getProperty("user.home") + "/.prm/");
 
     FileHandler(){

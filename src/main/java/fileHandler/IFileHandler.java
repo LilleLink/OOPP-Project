@@ -12,7 +12,7 @@ import java.util.UUID;
  * Contains all functionality needed to save attachments, optionally under different categories, as well as retrieve and
  * delete those attachments. Also contains the functionality for a main picture.
  */
-public interface IFileHandlerFacade {
+public interface IFileHandler {
     /**
      * Saves a file in the base directory for the given id.
      * @param id ID of the entity you want to store the file under.

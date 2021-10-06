@@ -4,9 +4,9 @@ package fileHandler;
  * A static class to provide the instance of the service.
  */
 public class FileHandlerFactory {
-    static private IFileHandlerFacade instance = null;
+    static private IFileHandler instance = null;
 
-    public static IFileHandlerFacade getService(){
+    public static IFileHandler getService(){
         if (instance == null){
             instance = new FileHandler();
         }
