@@ -25,17 +25,14 @@ class EventCreationCard extends ViewComponent {
     @FXML private DatePicker eventDatePicker;
     @FXML private Spinner<Integer> hourSpinner;
     @FXML private Spinner<Integer> minuteSpinner;
+    @FXML private ComboBox<String> tagComboBox;
     @FXML private TextArea descriptionTextArea;
-    @FXML private TextField categoryTextField;
-    @FXML private TextField participantsTextField;
+    @FXML private TextField contactSearchField;
 
     @FXML private Button saveButton;
 
     private EventList eventList;
     private ContactList contactList;
-
-    // Not used yet because I dont know how it works yet.
-    private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
 
     public EventCreationCard(EventList eventList, ContactList contactList) {
         this.eventList = eventList;
@@ -43,6 +40,11 @@ class EventCreationCard extends ViewComponent {
         saveButton.setOnMouseClicked(this::createEvent);
         lightboxAnchorPane.setOnMouseClicked(this::close);
         initializeSpinners();
+        initializeComboBox();
+    }
+
+    private void initializeComboBox() {
+        //Set tag as options
     }
 
     private void initializeSpinners() {
@@ -61,9 +63,7 @@ class EventCreationCard extends ViewComponent {
         String description = descriptionTextArea.getText();
         //Cannot search yet, just use comma separated values?
         //List<Contact> participants = ContactList.search(participantsTextField.getText())?
-        //ITag tag = tagHandler.getTag(categoryTextField.getText())?
         eventList.addEvent(name, localDateTime, address, description, new ArrayList<>(), null);
-        //System.out.println("Added new event! #Events: "+eventList.getList().size());
         close(null);
     }
 
@@ -82,8 +82,8 @@ class EventCreationCard extends ViewComponent {
         eventDatePicker.setValue(null);
         initializeSpinners();
         descriptionTextArea.clear();
-        categoryTextField.clear();
-        participantsTextField.clear();
+        tagComboBox.getEditor().clear();
+        contactSearchField.clear();
     }
 
 }

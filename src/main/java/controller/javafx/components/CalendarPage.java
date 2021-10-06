@@ -7,10 +7,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
-import model.ContactList;
-import model.Event;
-import model.EventList;
-import model.IObserver;
+import model.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -46,8 +43,8 @@ class CalendarPage extends ViewComponent implements IObserver {
     private LocalDate weekToDisplay;
 
     private EventCreationCard eventCreationCard;
+    private EditEventCard editEventCard;
     private List<CalendarEventCard> calendarEventCards = new ArrayList<>();
-
 
     private EventList eventList;
     private ContactList contactList;
@@ -118,16 +115,24 @@ class CalendarPage extends ViewComponent implements IObserver {
         for (Event event : eventsThisWeek) {
             CalendarEventCard calendarEventCard = ViewComponentFactory.CreateCalendarEventCard(event);
             calendarEventCard.getPane().setOnMouseClicked(mouseEvent -> editEvent(event));
+            calendarEventCards.add(calendarEventCard);
+            event.subscribe(calendarEventCard);
             determineFlowPane(event, calendarEventCard);
         }
 
     }
 
     private void editEvent(Event event) {
-        System.out.println("Event: "+event.getName());
+        editEventCard = ViewComponentFactory.CreateEditEventCard(event, contactList);
+        calendarPageStackPane.getChildren().add(editEventCard.getPane());
+        editEventCard.getPane().toFront();
     }
 
     private void clearCalendar() {
+        for(CalendarEventCard calendarEventCard : calendarEventCards) {
+            calendarEventCard.unsubscribe();
+        }
+
         mondayFlowPane.getChildren().clear();
         tuesdayFlowPane.getChildren().clear();
         wednesdayFlowPane.getChildren().clear();

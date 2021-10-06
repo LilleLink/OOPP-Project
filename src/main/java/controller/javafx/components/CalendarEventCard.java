@@ -5,10 +5,11 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.Event;
+import model.IObserver;
 
 import java.util.Objects;
 
-public class CalendarEventCard extends ViewComponent {
+public class CalendarEventCard extends ViewComponent implements IObserver {
 
     @FXML private AnchorPane calendarEventAnchorPane;
     @FXML private Label eventNameLabel;
@@ -35,5 +36,12 @@ public class CalendarEventCard extends ViewComponent {
         }
     }
 
+    public void unsubscribe() {
+        event.unSubscribe(this);
+    }
 
+    @Override
+    public void onEvent() {
+        setLabels();
+    }
 }

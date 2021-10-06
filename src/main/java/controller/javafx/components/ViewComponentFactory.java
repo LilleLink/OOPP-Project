@@ -85,6 +85,16 @@ public class ViewComponentFactory {
         return new CalendarEventCard(event);
     }
 
+    /***
+     * Creates an EditEventCard
+     * @param event the event to bind to the card
+     * @param contactList a list of contacts to choose from
+     * @return the EditEventCard
+     */
+    public static EditEventCard CreateEditEventCard(Event event, ContactList contactList) {
+        return new EditEventCard(event, contactList);
+    }
+
     public static ContactGrayBox CreateContactGrayBox(){ return new ContactGrayBox();}
 
 }
