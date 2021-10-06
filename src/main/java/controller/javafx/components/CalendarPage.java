@@ -51,7 +51,7 @@ class CalendarPage extends ViewComponent {
         this.eventList = eventList;
         this.contactList = contactList;
 
-        eventCard = new EventCard(eventList, contactList);
+        eventCard = ViewComponentFactory.CreateEventCard(eventList, contactList);
         calendarPageStackPane.getChildren().add(eventCard.getPane());
         calendarPageAnchorPane.toFront();
 

@@ -69,6 +69,16 @@ public class ViewComponentFactory {
         return new CalendarPage(eventList, contactList);
     }
 
+    /***
+     * Creates an EventCard component
+     * @param eventList list of events, used to send new event to model
+     * @param contactList list of contacts, used to browse and add participants
+     * @return the EventCard component.
+     */
+    public static EventCard CreateEventCard(EventList eventList, ContactList contactList) {
+        return new EventCard(eventList, contactList);
+    }
+
     public static ContactGrayBox CreateContactGrayBox(){ return new ContactGrayBox();}
 
 }
