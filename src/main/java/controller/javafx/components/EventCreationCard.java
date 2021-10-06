@@ -5,10 +5,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import model.Contact;
-import model.ContactList;
-import model.Event;
-import model.EventList;
+import model.*;
 
 import java.net.URL;
 import java.time.LocalDate;

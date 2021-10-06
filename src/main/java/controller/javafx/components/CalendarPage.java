@@ -1,5 +1,6 @@
 package controller.javafx.components;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -55,26 +56,29 @@ class CalendarPage extends ViewComponent implements IObserver {
         this.contactList = contactList;
         eventList.subscribe(this);
 
-        eventCreationCard = ViewComponentFactory.CreateEventCard(eventList, contactList);
+        eventCreationCard = ViewComponentFactory.CreateEventCreationCard(eventList, contactList);
         calendarPageStackPane.getChildren().add(eventCreationCard.getPane());
         calendarPageAnchorPane.toFront();
 
-        newEventButton.setOnMouseClicked(this::newEvent);
-        nextWeekButton.setOnMouseClicked(this::incrementWeek);
-        previousWeekButton.setOnMouseClicked(this::decrementWeek);
+        newEventButton.setOnAction(this::newEvent);
+        nextWeekButton.setOnAction(this::incrementWeek);
+        previousWeekButton.setOnAction(this::decrementWeek);
 
         weekToDisplay = LocalDate.now();
         setLabels(weekToDisplay);
+        onEvent();
     }
 
-    private void incrementWeek(MouseEvent mouseEvent) {
+    private void incrementWeek(ActionEvent actionEvent) {
         weekToDisplay = weekToDisplay.plusWeeks(1);
         setLabels(weekToDisplay);
+        onEvent();
     }
 
-    private void decrementWeek(MouseEvent mouseEvent) {
+    private void decrementWeek(ActionEvent actionEvent) {
         weekToDisplay = weekToDisplay.minusWeeks(1);
         setLabels(weekToDisplay);
+        onEvent();
     }
 
     private void setLabels(LocalDate date) {
@@ -99,17 +103,32 @@ class CalendarPage extends ViewComponent implements IObserver {
         sundayLabel.setText("Sunday "+date.getDayOfMonth()+"/"+date.getMonthValue());
     }
 
-    private void newEvent(MouseEvent mouseEvent) {
+    private void newEvent(ActionEvent actionEvent) {
         eventCreationCard.clearFields();
         eventCreationCard.getPane().toFront();
     }
 
     @Override
     public void onEvent() {
-        for(Event event : eventList.getList()) {
-            CalendarEventCard calendarEventCard = new CalendarEventCard(event);
+        clearCalendar();
+
+        List<Event> eventsThisWeek = eventList.getEventsOfWeek(weekToDisplay);
+
+        for (Event event : eventsThisWeek) {
+            CalendarEventCard calendarEventCard = ViewComponentFactory.CreateCalendarEventCard(event);
             determineFlowPane(event, calendarEventCard);
         }
+
+    }
+
+    private void clearCalendar() {
+        mondayFlowPane.getChildren().clear();
+        tuesdayFlowPane.getChildren().clear();
+        wednesdayFlowPane.getChildren().clear();
+        thursdayFlowPane.getChildren().clear();
+        fridayFlowPane.getChildren().clear();
+        saturdayFlowPane.getChildren().clear();
+        sundayFlowPane.getChildren().clear();
     }
 
     private void determineFlowPane(Event event, CalendarEventCard calendarEventCard) {

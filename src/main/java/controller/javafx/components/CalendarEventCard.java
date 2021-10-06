@@ -6,6 +6,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.Event;
 
+import java.util.Objects;
+
 public class CalendarEventCard extends ViewComponent {
 
     @FXML private AnchorPane calendarEventAnchorPane;
@@ -18,12 +20,19 @@ public class CalendarEventCard extends ViewComponent {
     public CalendarEventCard(Event event) {
         this.event = event;
         setLabels();
+        setBorder();
     }
 
     private void setLabels() {
         eventNameLabel.setText(event.getName());
         eventTimeLabel.setText(event.getDateTime().toLocalTime().toString());
         eventAddressLabel.setText(event.getAddress());
+    }
+
+    private void setBorder() {
+        if (!Objects.isNull(event.getTag())) {
+            getPane().getStylesheets().add("-fx-border-color: "+event.getTag().getColor()+";");
+        }
     }
 
 

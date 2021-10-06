@@ -11,7 +11,7 @@
 
 <fx:root fx:id="lightboxAnchorPane" prefHeight="660.0" prefWidth="1280.0" style="-fx-background-color: rgba(0,0,0,0.8);" type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane fx:id="cardAnchorPane" layoutX="446.0" layoutY="80.0" maxHeight="500.0" maxWidth="396.0" prefHeight="500.0" prefWidth="396.0" style="-fx-background-color: white;" stylesheets="@style/EventCard.css">
+      <AnchorPane fx:id="cardAnchorPane" layoutX="446.0" layoutY="80.0" maxHeight="500.0" maxWidth="396.0" prefHeight="500.0" prefWidth="396.0" style="-fx-background-color: white;" stylesheets="@style/CalendarEventCard.css">
          <children>
             <Label layoutX="142.0" layoutY="14.0" text="New event" textAlignment="CENTER">
                <font>

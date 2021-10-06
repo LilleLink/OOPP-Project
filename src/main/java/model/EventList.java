@@ -1,8 +1,12 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class EventList implements IObservable {
 
@@ -23,15 +27,46 @@ public class EventList implements IObservable {
     }
 
     /***
-     * Adds a event to the eventList.
+     * Adds an event to the eventList.
      * @param name the name of the event
      */
     public void addEvent(String name, LocalDateTime dateTime) {
         eventList.add(new Event(name, dateTime));
+        notifyObservers();
     }
 
+    /***
+     * Adds an event with the given parameters to the list
+     * @param name name of event
+     * @param dateTime time of event
+     * @param address address of event
+     * @param description of event
+     * @param contacts participants
+     * @param tag category
+     */
     public void addEvent(String name, LocalDateTime dateTime, String address, String description, List<Contact> contacts, Tag tag) {
         eventList.add(new Event(name, address, dateTime, description, contacts, tag));
+        notifyObservers();
+    }
+
+    /***
+     * Returns a list of events in the same week as the given localDate object.
+     * @param localDate the date object
+     * @return a list of events
+     */
+    public List<Event> getEventsOfWeek(LocalDate localDate) {
+        TemporalField weekGetter = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
+        int week = localDate.get(weekGetter);
+
+        List<Event> eventsOfWeek = new ArrayList<>();
+
+        for (Event event : this.eventList) {
+            if (event.getDateTime().get(weekGetter) == week) {
+                eventsOfWeek.add(event);
+            }
+        }
+
+        return eventsOfWeek;
     }
 
     /***
@@ -40,6 +75,7 @@ public class EventList implements IObservable {
      */
     public void addEvent(Event event) {
         eventList.add(event);
+        notifyObservers();
     }
 
     /***
@@ -48,6 +84,7 @@ public class EventList implements IObservable {
      */
     public void removeEvent(Event event) {
         eventList.remove(event);
+        notifyObservers();
     }
 
     /***

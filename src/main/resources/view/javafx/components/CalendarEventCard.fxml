@@ -4,8 +4,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<fx:root fx:id="calendarEventAnchorPane" prefHeight="119.0" prefWidth="173.0" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root fx:id="calendarEventAnchorPane" prefHeight="119.0" prefWidth="173.0" styleClass="DefaultStyle" stylesheets="@style/CalendarEventCard.css" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label fx:id="eventNameLabel" alignment="CENTER" layoutX="2.0" layoutY="29.0" prefHeight="20.0" prefWidth="168.0" text="Event name">
          <font>
