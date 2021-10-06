@@ -9,6 +9,8 @@ import model.Note;
 /**
  * A card representing a note.
  * Contains the point of creation and the text contained in the note.
+ * {@author Simon Johnsson}
+ * Used by {@link NotesComponent}
  */
 public class NoteCard extends ViewComponent {
 

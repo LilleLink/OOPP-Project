@@ -8,6 +8,8 @@ import model.Notes;
 
 /**
  * A component representing the interface that interacts with and views notes.
+ * {@author Simon Johnsson}
+ * Uses {@link NoteCard}
  */
 public class NotesComponent extends ViewComponent{
 
