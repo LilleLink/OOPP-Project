@@ -11,7 +11,7 @@ public class Contact implements ICacheVisitable, IObservable {
 
     private String name;
     private String phoneNumber = "";
-    private Address address = new Address("");
+    private String address = "";
     private List<ITag> tags;
     private Notes notes;
     private List<IObserver> observers = new ArrayList<>();
@@ -46,15 +46,7 @@ public class Contact implements ICacheVisitable, IObservable {
      * @return Contact's address as string.
      */
     public String getAddress(){
-        return this.address.getAddress();
-    }
-
-    /**
-     * Opens the contact's address on google maps in browser.
-     * @return If it worked or not.
-     */
-    public boolean openMap(){
-        return this.address.openMap();
+        return this.address;
     }
 
     /**
@@ -62,7 +54,7 @@ public class Contact implements ICacheVisitable, IObservable {
      * @param address The address to be updated to.
      */
     void setAddress(String address){
-        this.address = this.address.setAddress(address);
+        this.address = address;
         notifyObservers();
     }
 
@@ -190,7 +182,7 @@ public class Contact implements ICacheVisitable, IObservable {
     public static class ContactCache {
         public String name;
         public String phoneNumber;
-        public Address address;
+        public String address;
         public List<ITag> tags;
         public Notes notes;
 

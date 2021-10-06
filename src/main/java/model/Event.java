@@ -10,7 +10,7 @@ import java.util.Collection;
 public class Event implements ICacheVisitable, IObservable {
 
     private String name;
-    private Address address = new Address("");
+    private String address = "";
     private LocalDateTime dateTime;
     private String description;
 
@@ -29,7 +29,7 @@ public class Event implements ICacheVisitable, IObservable {
      */
     Event(String name, String address, LocalDateTime dateTime, String description, List<Contact> contacts, Tag tag) {
         this.name = name;
-        this.address = new Address(address);
+        this.address = address;
         this.dateTime = dateTime;
         this.description = description;
         this.contacts = contacts;
@@ -72,7 +72,7 @@ public class Event implements ICacheVisitable, IObservable {
      * @return address of the event
      */
     public String getAddress() {
-        return address.getAddress();
+        return address;
     }
 
     /***
@@ -80,7 +80,7 @@ public class Event implements ICacheVisitable, IObservable {
      * @param address the address of the event
      */
     public void setAddress(String address) {
-        this.address = this.address.setAddress(address);
+        this.address = address;
         notifyObservers();
     }
 
@@ -178,7 +178,7 @@ public class Event implements ICacheVisitable, IObservable {
      */
     public static class EventCache {
         public String name;
-        public Address address;
+        public String address;
         public LocalDateTime dateTime;
         public String description;
         public ITag tag;

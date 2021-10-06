@@ -64,7 +64,7 @@ public class User implements ICacheVisitable {
     }
 
     /***
-     * Returns a the wrapper object for the contact list
+     * Returns the wrapper object for the contact list
      * @return ContactList wrapper object
      */
     public ContactList getContacts(){

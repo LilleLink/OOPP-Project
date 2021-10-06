@@ -61,7 +61,7 @@ public class JSONRecords {
     static class ContactRecord implements JSONRecords.IRecordVisitable {
         String name;
         String phoneNumber;
-        Address address;
+        String address;
         NotesRecord notes;
         List<String> tags;
 
@@ -94,7 +94,7 @@ public class JSONRecords {
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     static class EventRecord implements JSONRecords.IRecordVisitable {
         String name;
-        Address address = new Address("");
+        String address = "";
         String dateTime;
         String description;
         ArrayList<Integer> contacts = new ArrayList<>();
