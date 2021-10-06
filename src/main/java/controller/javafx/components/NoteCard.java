@@ -14,8 +14,6 @@ import model.Note;
  */
 public class NoteCard extends ViewComponent {
 
-    private final Note note;
-
     @FXML
     private TextArea noteTextArea;
     @FXML
@@ -23,7 +21,6 @@ public class NoteCard extends ViewComponent {
 
     public NoteCard(Note note) {
         super();
-        this.note = note;
         noteTextArea.setText(note.viewNote());
         dateLabel.setText("Created: " + note.dateToString() + " " + note.timeToString());
     }

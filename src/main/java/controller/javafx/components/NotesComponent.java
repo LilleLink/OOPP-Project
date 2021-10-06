@@ -9,8 +9,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.Note;
 import model.Notes;
-
-import javax.swing.*;
 import java.util.Objects;
 
 /**
@@ -44,10 +42,11 @@ public class NotesComponent extends ViewComponent{
         initializeNotes();
         addButton.setOnAction(this::addNote);
         removeButton.setOnAction(this::removeNote);
+        editButton.setOnAction(this::editNote);
     }
 
     /**
-     * Creates cards for every note initially contained in Notes and adds them
+     * Creates {@link NoteCard} objects for every note initially contained in Notes and adds them
      * to the VBox.
      */
     private void initializeNotes() {
@@ -64,7 +63,7 @@ public class NotesComponent extends ViewComponent{
 
     /**
      * Sets the selected node to the one being clicked on.
-     * @param mouseEvent the currently given mouse input
+     * @param mouseEvent the currently given mouse input.
      */
     @FXML
     private void updateSelected(MouseEvent mouseEvent) {
@@ -72,8 +71,8 @@ public class NotesComponent extends ViewComponent{
     }
 
     /**
-     * Removes a note from the notes object and
-     * @param actionEvent the input event
+     * Removes a note from the notes object and the related card from the vbox.
+     * @param actionEvent the input event.
      */
     @FXML
     private void removeNote(ActionEvent actionEvent) {
