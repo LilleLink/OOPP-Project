@@ -39,8 +39,13 @@ class EventCreationCard extends ViewComponent {
         this.contactList = contactList;
         saveButton.setOnMouseClicked(this::createEvent);
         lightboxAnchorPane.setOnMouseClicked(this::close);
+        cardAnchorPane.setOnMouseClicked(this::consumeClick);
         initializeSpinners();
         initializeComboBox();
+    }
+
+    private void consumeClick(MouseEvent mouseEvent) {
+        mouseEvent.consume();
     }
 
     private void initializeComboBox() {

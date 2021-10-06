@@ -14,13 +14,13 @@ public class ContactList implements IObservable {
     /***
      * Creates a new contactlist wrapper object
      */
-    public ContactList() {}
+    ContactList() {}
 
     /***
      * Wraps a given list of contacts.
      * @param contacts the list to be wrapped
      */
-    public ContactList(List<Contact> contacts) {
+    ContactList(List<Contact> contacts) {
         this.contactList = contacts;
     }
 

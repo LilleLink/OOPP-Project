@@ -3,6 +3,8 @@ package controller.javafx.components;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import model.ContactList;
 import model.Event;
 
@@ -10,6 +12,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class EditEventCard extends ViewComponent {
+
+    @FXML private AnchorPane lightboxAnchorPane;
+    @FXML private AnchorPane cardAnchorPane;
 
     @FXML private TextField nameTextField;
     @FXML private TextField addressTextField;
@@ -31,8 +36,16 @@ public class EditEventCard extends ViewComponent {
         this.contactList = contactList;
 
         saveButton.setOnAction(this::saveEvent);
-        closeButton.setOnAction(this::close);
+        closeButton.setOnMouseClicked(this::close);
+
+        lightboxAnchorPane.setOnMouseClicked(this::close);
+        cardAnchorPane.setOnMouseClicked(this::consumeClick);
+
         setFields();
+    }
+
+    private void consumeClick(MouseEvent mouseEvent) {
+        mouseEvent.consume();
     }
 
     private void saveEvent(ActionEvent actionEvent) {
@@ -49,7 +62,7 @@ public class EditEventCard extends ViewComponent {
         return localDate.atTime(hourSpinner.getValue(), minuteSpinner.getValue());
     }
 
-    private void close(ActionEvent actionEvent) {
+    private void close(MouseEvent mouseEvent) {
         this.getPane().toBack();
     }
 
