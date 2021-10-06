@@ -3,11 +3,6 @@ package controller.javafx.components;
 import controller.javafx.IPageNavigator;
 import model.*;
 
-import javax.swing.text.View;
-import java.util.Collection;
-
-import java.util.List;
-
 /***
  * Factory that creates JavaFX components and returns them as ViewComponents to the caller.
  */
@@ -75,8 +70,8 @@ public class ViewComponentFactory {
      * @param contactList list of contacts, used to browse and add participants
      * @return the EventCard component.
      */
-    public static EventCard CreateEventCard(EventList eventList, ContactList contactList) {
-        return new EventCard(eventList, contactList);
+    public static EventCreationCard CreateEventCard(EventList eventList, ContactList contactList) {
+        return new EventCreationCard(eventList, contactList);
     }
 
     public static ContactGrayBox CreateContactGrayBox(){ return new ContactGrayBox();}

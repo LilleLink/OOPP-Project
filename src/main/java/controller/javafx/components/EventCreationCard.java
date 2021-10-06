@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-class EventCard extends ViewComponent {
+class EventCreationCard extends ViewComponent {
 
     @FXML private AnchorPane lightboxAnchorPane;
     @FXML private AnchorPane cardAnchorPane;
@@ -40,7 +40,7 @@ class EventCard extends ViewComponent {
     // Not used yet because I dont know how it works yet.
     private DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("YYYY-MM-DD");
 
-    public EventCard(EventList eventList, ContactList contactList) {
+    public EventCreationCard(EventList eventList, ContactList contactList) {
         this.eventList = eventList;
         this.contactList = contactList;
         saveButton.setOnMouseClicked(this::createEvent);

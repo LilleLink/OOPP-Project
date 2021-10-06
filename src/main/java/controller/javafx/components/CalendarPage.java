@@ -7,14 +7,16 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import model.ContactList;
+import model.Event;
 import model.EventList;
+import model.IObserver;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.*;
 import java.util.*;
 
-class CalendarPage extends ViewComponent {
+class CalendarPage extends ViewComponent implements IObserver {
 
     @FXML private Label weekLabel;
     @FXML private Button nextWeekButton;
@@ -42,7 +44,8 @@ class CalendarPage extends ViewComponent {
 
     private LocalDate weekToDisplay;
 
-    private EventCard eventCard;
+    private EventCreationCard eventCreationCard;
+    private List<CalendarEventCard> calendarEventCards = new ArrayList<>();
 
     private EventList eventList;
     private ContactList contactList;
@@ -50,9 +53,10 @@ class CalendarPage extends ViewComponent {
     public CalendarPage(EventList eventList, ContactList contactList) {
         this.eventList = eventList;
         this.contactList = contactList;
+        eventList.subscribe(this);
 
-        eventCard = ViewComponentFactory.CreateEventCard(eventList, contactList);
-        calendarPageStackPane.getChildren().add(eventCard.getPane());
+        eventCreationCard = ViewComponentFactory.CreateEventCard(eventList, contactList);
+        calendarPageStackPane.getChildren().add(eventCreationCard.getPane());
         calendarPageAnchorPane.toFront();
 
         newEventButton.setOnMouseClicked(this::newEvent);
@@ -96,8 +100,43 @@ class CalendarPage extends ViewComponent {
     }
 
     private void newEvent(MouseEvent mouseEvent) {
-        eventCard.clearFields();
-        eventCard.getPane().toFront();
+        eventCreationCard.clearFields();
+        eventCreationCard.getPane().toFront();
     }
 
+    @Override
+    public void onEvent() {
+        for(Event event : eventList.getList()) {
+            CalendarEventCard calendarEventCard = new CalendarEventCard(event);
+            determineFlowPane(event, calendarEventCard);
+        }
+    }
+
+    private void determineFlowPane(Event event, CalendarEventCard calendarEventCard) {
+        switch (event.getDateTime().getDayOfWeek().getValue()) {
+            case 1:
+                mondayFlowPane.getChildren().add(calendarEventCard.getPane());
+                break;
+            case 2:
+                tuesdayFlowPane.getChildren().add(calendarEventCard.getPane());
+                break;
+            case 3:
+                wednesdayFlowPane.getChildren().add(calendarEventCard.getPane());
+                break;
+            case 4:
+                thursdayFlowPane.getChildren().add(calendarEventCard.getPane());
+                break;
+            case 5:
+                fridayFlowPane.getChildren().add(calendarEventCard.getPane());
+                break;
+            case 6:
+                saturdayFlowPane.getChildren().add(calendarEventCard.getPane());
+                break;
+            case 7:
+                sundayFlowPane.getChildren().add(calendarEventCard.getPane());
+                break;
+            default:
+                throw new IllegalArgumentException("Date of event could not be parsed");
+        }
+    }
 }

@@ -24,7 +24,6 @@ public class CalendarEventCard extends ViewComponent {
         eventNameLabel.setText(event.getName());
         eventTimeLabel.setText(event.getDateTime().toLocalTime().toString());
         eventAddressLabel.setText(event.getAddress());
-
     }
 
 
