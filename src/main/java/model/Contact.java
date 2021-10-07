@@ -121,6 +121,7 @@ public class Contact implements ICacheVisitable, IObservable {
     /**
      * Adds a note with empty text to Notes.
      */
+
     void addNote() {
         notes.addNote();
     }

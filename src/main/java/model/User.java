@@ -65,6 +65,10 @@ public class User implements ICacheVisitable {
         return contactList;
     }
 
+    /**
+     * Returns the tag handler used by the user
+     * @return the tag handler
+     */
     public TagHandler getTagHandler(){
         return tagHandler;
     }
