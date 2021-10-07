@@ -17,6 +17,7 @@ public class Event implements ICacheVisitable, IObservable {
     private ITag tag;
     private List<Contact> contacts = new ArrayList<>();
     private List<IObserver> observers = new ArrayList<>();
+    private final UUID id = UUID.randomUUID();
 
     /***
      * Creates an event with the given parameters.

@@ -16,7 +16,7 @@ public class Contact implements ICacheVisitable, IObservable {
     private List<ITag> tags;
     private Notes notes;
     private List<IObserver> observers = new ArrayList<>();
-    private final UUID directory = UUID.randomUUID();
+    private final UUID id = UUID.randomUUID();
 
     /**
      * @param name The contact's name.
