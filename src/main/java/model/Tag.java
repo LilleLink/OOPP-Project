@@ -55,4 +55,8 @@ public class Tag implements ITag, ICacheVisitable {
         return visitor.visit(this.getCache(), env);
     }
 
+    @Override
+    public String toString(){
+        return name;
+    }
 }

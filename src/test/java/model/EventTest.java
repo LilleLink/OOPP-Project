@@ -56,7 +56,7 @@ public class EventTest {
             e.printStackTrace();
         }
 
-        event.addTag(myTag);
+        event.setTag(myTag);
         assertEquals(event.getTag(), myTag);
 
         event.removeTag();

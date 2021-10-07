@@ -3,6 +3,8 @@ package controller.javafx.components;
 import controller.javafx.IPageNavigator;
 import model.*;
 
+import java.util.Calendar;
+
 /***
  * Factory that creates JavaFX components and returns them as ViewComponents to the caller.
  */
@@ -60,8 +62,37 @@ public class ViewComponentFactory {
      * @param eventList the list of event to be displayed in the calendar
      * @return the CalendarPage in the form of a CalendarPage
      */
-    public static CalendarPage CreateCalendarPage(EventList eventList) {
-        return new CalendarPage(eventList);
+    public static CalendarPage CreateCalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
+        return new CalendarPage(eventList, contactList, tagHandler);
+    }
+
+    /***
+     * Creates an EventCreationCard component
+     * @param eventList list of events, used to send new event to model
+     * @param contactList list of contacts, used to browse and add participants
+     * @return the EventCreationCard component.
+     */
+    public static EventCreationCard CreateEventCreationCard(EventList eventList, ContactList contactList, TagHandler tagHandler) {
+        return new EventCreationCard(eventList, contactList, tagHandler);
+    }
+
+    /***
+     * Creates a CalendarEventCard
+     * @param event the event to be displayed
+     * @return a CalendarEventCard
+     */
+    public static CalendarEventCard CreateCalendarEventCard(Event event) {
+        return new CalendarEventCard(event);
+    }
+
+    /***
+     * Creates an EditEventCard
+     * @param event the event to bind to the card
+     * @param contactList a list of contacts to choose from
+     * @return the EditEventCard
+     */
+    public static EditEventCard CreateEditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
+        return new EditEventCard(event, contactList, tagHandler);
     }
 
     public static ContactGrayBox CreateContactGrayBox(){ return new ContactGrayBox();}

@@ -6,6 +6,7 @@ import java.util.List;
 import model.exceptions.TagNotFoundException;
 
 import java.util.Optional;
+import java.util.UUID;
 
 public class Contact implements ICacheVisitable, IObservable {
 
@@ -15,6 +16,7 @@ public class Contact implements ICacheVisitable, IObservable {
     private List<ITag> tags;
     private Notes notes;
     private List<IObserver> observers = new ArrayList<>();
+    private final UUID directory = UUID.randomUUID();
 
     /**
      * @param name The contact's name.
@@ -53,7 +55,7 @@ public class Contact implements ICacheVisitable, IObservable {
      * Updates the contact's address.
      * @param address The address to be updated to.
      */
-    void setAddress(String address){
+    public void setAddress(String address){
         this.address = address;
         notifyObservers();
     }
@@ -63,7 +65,7 @@ public class Contact implements ICacheVisitable, IObservable {
      * Sets the name of the contact.
      * @param name The name to change to.
      */
-    void setName(String name){
+    public void setName(String name){
         this.name = name;
         this.tags = new ArrayList<>();
         this.notes = new Notes();
@@ -119,6 +121,7 @@ public class Contact implements ICacheVisitable, IObservable {
     /**
      * Adds a note with empty text to Notes.
      */
+
     void addNote() {
         notes.addNote();
     }

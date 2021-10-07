@@ -25,7 +25,7 @@ public class TagHandlerTest {
         } catch (NameNotAvailableException e){
             fail();
         }
-        List<ITag> tags = handler.getTags();
+        List<ITag> tags = handler.getAllTags();
         assertNotEquals(tags.get(0).getName(), tags.get(1).getName());
     }
 
