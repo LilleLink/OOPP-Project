@@ -20,16 +20,6 @@ public class EventTest {
         assertEquals("Test event", event.getName());
     }
 
-    @Test
-    public void timeTest() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(event.getDateTime().getSecond() < LocalDateTime.now().getSecond());
-    }
-
     // To make sure its visible and things are returned without side-effects
     @Test
     public void editAttributes() {

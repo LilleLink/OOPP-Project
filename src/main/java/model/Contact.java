@@ -5,19 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 import model.exceptions.TagNotFoundException;
 
-public class Contact {
+import java.util.Optional;
+
+public class Contact implements ICacheVisitable, IObservable {
 
     private String name;
     private String phoneNumber = "";
-    private Address address = new Address("");
-    private final List<ITag> tags = new ArrayList<>();
-    private final Notes notes = new Notes();
+    private String address = "";
+    private List<ITag> tags;
+    private Notes notes;
+    private List<IObserver> observers = new ArrayList<>();
 
     /**
      * @param name The contact's name.
      */
     Contact(String name){
         this.name = name;
+        this.tags = new ArrayList<>();
+        this.notes = new Notes();
     }
 
     /**
@@ -41,15 +46,7 @@ public class Contact {
      * @return Contact's address as string.
      */
     public String getAddress(){
-        return this.address.getAddress();
-    }
-
-    /**
-     * Opens the contact's address on google maps in browser.
-     * @return If it worked or not.
-     */
-    public boolean openMap(){
-        return this.address.openMap();
+        return this.address;
     }
 
     /**
@@ -57,7 +54,8 @@ public class Contact {
      * @param address The address to be updated to.
      */
     void setAddress(String address){
-        this.address = this.address.setAddress(address);
+        this.address = address;
+        notifyObservers();
     }
 
 
@@ -67,6 +65,9 @@ public class Contact {
      */
     void setName(String name){
         this.name = name;
+        this.tags = new ArrayList<>();
+        this.notes = new Notes();
+        notifyObservers();
     }
 
     /**
@@ -75,6 +76,7 @@ public class Contact {
      */
     void setPhoneNumber(String number){
         this.phoneNumber = number;
+        notifyObservers();
     }
 
 
@@ -95,6 +97,7 @@ public class Contact {
     void removeTag(ITag tag) throws TagNotFoundException {
         if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
         tags.remove(tag);
+        notifyObservers();
     }
 
     /**
@@ -126,6 +129,7 @@ public class Contact {
      */
     void removeNote(int index) {
         notes.removeNote(index);
+        notifyObservers();
     }
 
     /**
@@ -154,5 +158,60 @@ public class Contact {
         return notes.getSortedElem();
     }
 
+    @Override
+    public void subscribe(IObserver observer) {
+        observers.add(observer);
+    }
 
+    @Override
+    public void unSubscribe(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers){
+            observer.onEvent();
+        }
+    }
+
+
+    /***
+     * The contact cache class contains fields which should be saved/loaded to persistent storage.
+     */
+    public static class ContactCache {
+        public String name;
+        public String phoneNumber;
+        public String address;
+        public List<ITag> tags;
+        public Notes notes;
+
+        public ContactCache() {}
+    }
+
+    private ContactCache getCache() {
+        ContactCache cache = new ContactCache();
+        cache.name = this.name;
+        cache.phoneNumber = this.phoneNumber;
+        cache.address = this.address;
+        cache.tags = new ArrayList<>(this.tags);
+        cache.notes = this.notes;
+        return cache;
+    }
+
+    public Contact(ContactCache cache) {
+        this.name = cache.name;
+        this.phoneNumber = cache.phoneNumber;
+        this.address = cache.address;
+        this.tags = new ArrayList<>(cache.tags);
+        this.notes = cache.notes;
+    }
+
+    /***
+     * Invoke the contact cache visitor case.
+     */
+    @Override
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(this.getCache(), env);
+    }
 }

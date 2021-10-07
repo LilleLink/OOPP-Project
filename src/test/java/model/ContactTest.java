@@ -32,7 +32,7 @@ public class ContactTest {
         c1.setAddress("   baller street 4 ");
         c1.setName("Sir Hamilton");
         c1.setPhoneNumber("070-369-5555454266");
-        assertEquals("baller street 4", c1.getAddress());
+        assertEquals("   baller street 4 ", c1.getAddress());
         assertEquals("Sir Hamilton", c1.getName());
         assertEquals("070-369-5555454266", c1.getPhoneNumber());
     }

@@ -3,11 +3,12 @@ package model;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Optional;
 
 /**
  * Represents a documented note containing text and the point in time that it was created.
  */
-public class Note implements Comparable<Note> {
+public class Note implements Comparable<Note>, ICacheVisitable {
 
     // Resembles the content of the note
     private final String text;
@@ -147,5 +148,22 @@ public class Note implements Comparable<Note> {
         if (other == null || this.getClass() != other.getClass()) return false;
         Note otherNote = (Note) other;
         return otherNote.viewNote().equals(text);
+    }
+
+    public static class NoteCache {
+        public String text;
+        public LocalDateTime pointOfCreation;
+    }
+
+    private NoteCache getCache() {
+        NoteCache cache = new NoteCache();
+        cache.text = text;
+        cache.pointOfCreation = pointOfCreation;
+        return cache;
+    }
+
+    @Override
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(this.getCache(), env);
     }
 }

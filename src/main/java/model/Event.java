@@ -1,21 +1,23 @@
 package model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Collection;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
  */
-public class Event {
+public class Event implements ICacheVisitable, IObservable {
 
     private String name;
-    private Address address = new Address("");
+    private String address = "";
     private LocalDateTime dateTime;
     private String description;
 
     private ITag tag;
     private Collection<Contact> contacts = new ArrayList<>();
+    private List<IObserver> observers = new ArrayList<>();
 
     /***
      * Creates an event with the given parameters.
@@ -28,7 +30,7 @@ public class Event {
      */
     Event(String name, String address, LocalDateTime dateTime, String description, ArrayList<Contact> contacts, Tag tag) {
         this.name = name;
-        this.address = new Address(address);
+        this.address = address;
         this.dateTime = dateTime;
         this.description = description;
         this.contacts = contacts;
@@ -63,6 +65,7 @@ public class Event {
      */
     public void setName(String name) {
         this.name = name;
+        notifyObservers();
     }
 
     /***
@@ -70,7 +73,7 @@ public class Event {
      * @return address of the event
      */
     public String getAddress() {
-        return address.getAddress();
+        return address;
     }
 
     /***
@@ -78,7 +81,8 @@ public class Event {
      * @param address the address of the event
      */
     public void setAddress(String address) {
-        this.address = this.address.setAddress(address);
+        this.address = address;
+        notifyObservers();
     }
 
     /***
@@ -95,6 +99,7 @@ public class Event {
      */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+        notifyObservers();
     }
 
     /***
@@ -111,6 +116,7 @@ public class Event {
      */
     public void setDescription(String description) {
         this.description = description;
+        notifyObservers();
     }
 
     /***
@@ -119,6 +125,7 @@ public class Event {
      */
     public void addTag(ITag tag){
         this.tag = tag;
+        notifyObservers();
     }
 
     /***
@@ -126,6 +133,7 @@ public class Event {
      */
     public void removeTag(){
         tag = null;
+        notifyObservers();
     }
 
     /***
@@ -139,19 +147,23 @@ public class Event {
     /***
      * Adds a contact to the event
      * @param contact the contact to be added
+     * @return true if operation successful, false if it already exists.
      */
     public void addContact(Contact contact){
         if (!contacts.contains(contact)){
             contacts.add(contact);
         }
+        notifyObservers();
     }
 
     /***
      * Removes a contact from the event
      * @param contact the contact to be removed
+     * @return true if operation successful, false if not.
      */
     public void removeContact(Contact contact){
         contacts.remove(contact);
+        notifyObservers();
     }
 
     /***
@@ -160,5 +172,64 @@ public class Event {
      */
     public Collection<Contact> getContacts(){
         return this.contacts;
+    }
+
+    /***
+     * The event cache class contains fields which should be saved/loaded to persistent storage.
+     */
+    public static class EventCache {
+        public String name;
+        public String address;
+        public LocalDateTime dateTime;
+        public String description;
+        public ITag tag;
+        public Collection<Contact> contacts;
+
+        public EventCache() {}
+    }
+
+    private EventCache getCache() {
+        EventCache cache = new EventCache();
+        cache.name = this.name;
+        cache.address = this.address;
+        cache.dateTime = this.dateTime;
+        cache.description = this.description;
+        cache.tag = this.tag;
+        cache.contacts = new ArrayList<>(this.contacts);
+        return cache;
+    }
+
+    public Event(Event.EventCache cache) {
+        this.name = cache.name;
+        this.address = cache.address;
+        this.dateTime = cache.dateTime;
+        this.description = cache.description;
+        this.tag = cache.tag;
+        this.contacts = cache.contacts;
+    }
+
+    /***
+     * Invoke the event cache visitor case.
+     */
+    @Override
+    public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
+        return visitor.visit(this.getCache(), env);
+    }
+
+    @Override
+    public void subscribe(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unSubscribe(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers){
+            observer.onEvent();
+        }
     }
 }
