@@ -83,7 +83,7 @@ class ContactGrayBox extends ViewComponent{
     }
 
     private boolean openMap(ActionEvent event){
-        //TODO use return value of openMap
+        //TODO use return value of openMap to display fail/success
         Desktop desktop = Desktop.getDesktop();
         if (desktop.isSupported(Desktop.Action.BROWSE)) {
             try {
@@ -98,9 +98,9 @@ class ContactGrayBox extends ViewComponent{
     }
 
     private void save(Event e){
-        System.out.println("This should set the name of the contact to "+contactName.getText());
-        System.out.println("This should set the address of the contact to "+addressText.getText());
         if (isAllowed()) {
+            contact.setName(contactName.getText());
+            contact.setAddress(addressText.getText());
             close(e);
         }
     }

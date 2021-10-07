@@ -55,7 +55,7 @@ public class Contact implements ICacheVisitable, IObservable {
      * Updates the contact's address.
      * @param address The address to be updated to.
      */
-    void setAddress(String address){
+    public void setAddress(String address){
         this.address = address;
         notifyObservers();
     }
@@ -65,7 +65,7 @@ public class Contact implements ICacheVisitable, IObservable {
      * Sets the name of the contact.
      * @param name The name to change to.
      */
-    void setName(String name){
+    public void setName(String name){
         this.name = name;
         this.tags = new ArrayList<>();
         this.notes = new Notes();
