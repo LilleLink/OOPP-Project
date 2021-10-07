@@ -57,7 +57,7 @@ class EventCreationCard extends ViewComponent {
         SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,
                 LocalDateTime.now().getHour(), 1);
         SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,60,
-                0, 5);
+                LocalDateTime.now().getMinute(), 5);
         hourSpinner.setValueFactory(hourValueFactory);
         minuteSpinner.setValueFactory(minuteValueFactory);
     }
@@ -96,7 +96,7 @@ class EventCreationCard extends ViewComponent {
     public void clearFields() {
         nameTextField.clear();
         addressTextField.clear();
-        eventDatePicker.setValue(null);
+        eventDatePicker.setValue(LocalDate.now());
         initializeSpinners();
         descriptionTextArea.clear();
         resetTagComboBox();
