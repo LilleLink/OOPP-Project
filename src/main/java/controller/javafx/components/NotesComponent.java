@@ -90,7 +90,7 @@ public class NotesComponent extends ViewComponent{
      */
     @FXML
     private void addNote(ActionEvent actionEvent) {
-        notes.addNote(inputTextArea.toString());
+        notes.addNote(inputTextArea.getText());
         addToVBox(notes.getNoteAt(notes.size() - 1));
     }
 

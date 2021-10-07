@@ -6,8 +6,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import model.Contact;
 import model.ContactList;
+import model.Contact;
 import model.IObserver;
 
 import java.util.ArrayList;

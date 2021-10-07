@@ -23,6 +23,8 @@ class ContactGrayBox extends ViewComponent{
 
     @FXML private AnchorPane baseAnchorPane;
 
+    @FXML private AnchorPane notesAnchorPane;
+
     @FXML private ImageView profileImage;
 
     @FXML private TextField contactName;
@@ -38,6 +40,8 @@ class ContactGrayBox extends ViewComponent{
     @FXML private TextField addressText;
 
     @FXML private Button openMapButton;
+
+    private NotesComponent notesComponent;
 
     private EventHandler<Event> closeWindowHandler;
 
@@ -63,6 +67,8 @@ class ContactGrayBox extends ViewComponent{
         contactName.setText(contact.getName());
         contactChangedText.setVisible(false);
         addressText.setText(contact.getAddress());
+        this.notesComponent = new NotesComponent(contact.getNotes());
+        notesAnchorPane.getChildren().add(notesComponent.getPane());
     }
 
     void setOnClose(EventHandler<Event> handler){

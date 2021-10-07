@@ -65,10 +65,10 @@ public class ContactTest {
     @Test
     public void andAndRemoveNote() {
         c1.addNote("Pizza");
-        List<Note> notes = c1.getNotes();
+        List<Note> notes = c1.getListOfNotes();
         assert(notes.size() == 1);
         c1.removeNote(0);
-        List<Note> newNotes = c1.getNotes();
+        List<Note> newNotes = c1.getListOfNotes();
         assert(newNotes.size() == 0);
     }
 

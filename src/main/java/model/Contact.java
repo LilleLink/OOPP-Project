@@ -151,11 +151,19 @@ public class Contact implements ICacheVisitable, IObservable {
     }
 
     /**
-     * Retrieves the notes in this contact.
-     * @return a list of notes
+     * Retrieves the notes list of notes in this contact.
+     * @return a notes list object
      */
-    List<Note> getNotes() {
+    public List<Note> getListOfNotes() {
         return notes.getSortedElem();
+    }
+
+    /**
+     * Retrieves the notes of this contact
+     * @return a notes object
+     */
+    public Notes getNotes() {
+        return this.notes;
     }
 
     @Override
@@ -164,6 +172,7 @@ public class Contact implements ICacheVisitable, IObservable {
     }
 
     @Override
+
     public void unSubscribe(IObserver observer) {
         observers.remove(observer);
     }

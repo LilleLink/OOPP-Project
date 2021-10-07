@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="180.0" prefWidth="420.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <VBox prefHeight="173.0" prefWidth="416.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
       <HBox>
          <ToolBar maxHeight="30.0" minHeight="30.0" prefHeight="30.0" HBox.hgrow="ALWAYS">
@@ -21,9 +21,9 @@
          </ToolBar>
       </HBox>
       <ScrollPane fitToWidth="true" vbarPolicy="NEVER">
-         <VBox/>
+         <VBox fx:id="noteVBox" />
       </ScrollPane>
-      <TextArea fx:id="textArea" promptText="Write a note here..." wrapText="true" />
+      <TextArea fx:id="inputTextArea" promptText="Write a note here..." wrapText="true" />
       <Button fx:id="editButton" mnemonicParsing="false" text="Edit" />
    </VBox>
-</AnchorPane>
+</fx:root>
