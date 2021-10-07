@@ -5,6 +5,7 @@ import model.exceptions.TagNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -17,7 +18,7 @@ public class TagHandler implements ICacheVisitable{
      * @param name The name of the new ITag
      * @return the new ITag
      */
-    ITag createTag(String name) throws NameNotAvailableException{
+    public ITag createTag(String name) throws NameNotAvailableException{
         Tag tag;
         if (!nameIsAvailable(name)){
             throw new NameNotAvailableException(name);
@@ -44,9 +45,10 @@ public class TagHandler implements ICacheVisitable{
      * Get all tags created by the handler
      * @return an ArrayList of ITags
      */
-    ArrayList<ITag> getTags(){
+    public ArrayList<ITag> getAllTags(){
         ArrayList<ITag> tags = new ArrayList<>();
         stringTagHashMap.forEach((k,v) -> tags.add(v));
+        tags.sort(Comparator.comparing(ITag::getName));
         return tags;
     }
 

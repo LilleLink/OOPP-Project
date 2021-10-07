@@ -44,7 +44,7 @@ public class EventList implements IObservable {
      * @param contacts participants
      * @param tag category
      */
-    public void addEvent(String name, LocalDateTime dateTime, String address, String description, List<Contact> contacts, Tag tag) {
+    public void addEvent(String name, LocalDateTime dateTime, String address, String description, List<Contact> contacts, ITag tag) {
         eventList.add(new Event(name, address, dateTime, description, contacts, tag));
         notifyObservers();
     }

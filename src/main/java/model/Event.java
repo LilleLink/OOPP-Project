@@ -27,7 +27,7 @@ public class Event implements ICacheVisitable, IObservable {
      * @param contacts the list containing the IDs of the contacts tagged in the event
      * @param tag the list containing the IDs of the tags tagged on the event
      */
-    Event(String name, String address, LocalDateTime dateTime, String description, List<Contact> contacts, Tag tag) {
+    Event(String name, String address, LocalDateTime dateTime, String description, List<Contact> contacts, ITag tag) {
         this.name = name;
         this.address = address;
         this.dateTime = dateTime;
@@ -146,7 +146,6 @@ public class Event implements ICacheVisitable, IObservable {
     /***
      * Adds a contact to the event
      * @param contact the contact to be added
-     * @return true if operation successful, false if it already exists.
      */
     public void addContact(Contact contact){
         if (!contacts.contains(contact)){
@@ -160,9 +159,10 @@ public class Event implements ICacheVisitable, IObservable {
      * @param contact the contact to be removed
      * @return true if operation successful, false if not.
      */
-    public void removeContact(Contact contact){
-        contacts.remove(contact);
+    public boolean removeContact(Contact contact){
+        boolean success = contacts.remove(contact);
         notifyObservers();
+        return success;
     }
 
     /***

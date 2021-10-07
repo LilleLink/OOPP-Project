@@ -62,8 +62,8 @@ public class ViewComponentFactory {
      * @param eventList the list of event to be displayed in the calendar
      * @return the CalendarPage in the form of a CalendarPage
      */
-    public static CalendarPage CreateCalendarPage(EventList eventList, ContactList contactList) {
-        return new CalendarPage(eventList, contactList);
+    public static CalendarPage CreateCalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
+        return new CalendarPage(eventList, contactList, tagHandler);
     }
 
     /***
@@ -72,8 +72,8 @@ public class ViewComponentFactory {
      * @param contactList list of contacts, used to browse and add participants
      * @return the EventCreationCard component.
      */
-    public static EventCreationCard CreateEventCreationCard(EventList eventList, ContactList contactList) {
-        return new EventCreationCard(eventList, contactList);
+    public static EventCreationCard CreateEventCreationCard(EventList eventList, ContactList contactList, TagHandler tagHandler) {
+        return new EventCreationCard(eventList, contactList, tagHandler);
     }
 
     /***

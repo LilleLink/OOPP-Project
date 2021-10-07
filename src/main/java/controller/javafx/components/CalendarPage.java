@@ -16,6 +16,7 @@ import java.util.*;
 
 class CalendarPage extends ViewComponent implements IObserver {
 
+    private final TagHandler tagHandler;
     @FXML private Label weekLabel;
     @FXML private Button nextWeekButton;
     @FXML private Button previousWeekButton;
@@ -49,12 +50,13 @@ class CalendarPage extends ViewComponent implements IObserver {
     private EventList eventList;
     private ContactList contactList;
 
-    public CalendarPage(EventList eventList, ContactList contactList) {
+    public CalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
         this.eventList = eventList;
         this.contactList = contactList;
+        this.tagHandler = tagHandler;
         eventList.subscribe(this);
 
-        eventCreationCard = ViewComponentFactory.CreateEventCreationCard(eventList, contactList);
+        eventCreationCard = ViewComponentFactory.CreateEventCreationCard(eventList, contactList, tagHandler);
         calendarPageStackPane.getChildren().add(eventCreationCard.getPane());
         calendarPageAnchorPane.toFront();
 

@@ -77,7 +77,7 @@ public class UserTest {
         try {
             ITag t1 = user.createTag("First");
             ITag t2 = user.createTag("second");
-            List<ITag> tags = user.getTags();
+            List<ITag> tags = user.getTagHandler().getAllTags();
             assertEquals(t1, tags.get(0));
             assertEquals(t2, tags.get(1));
             assertEquals(t1, user.getTag(t1.getName()));

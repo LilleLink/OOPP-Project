@@ -81,17 +81,13 @@ public class User implements ICacheVisitable {
         return tagHandler.createTag(name);
     }
 
-    /***
-     * Returns a list of all tags
-     * @return a list of all tags
-     */
-    public List<ITag> getTags(){
-        return tagHandler.getTags();
+    public TagHandler getTagHandler(){
+        return tagHandler;
     }
 
     /***
      * Gets a tag given the specified name
-     * @param name name of the tag saught after
+     * @param name name of the tag sought after
      * @return the tag with the given name
      * @throws TagNotFoundException if the tag with the given name cannot be found
      */

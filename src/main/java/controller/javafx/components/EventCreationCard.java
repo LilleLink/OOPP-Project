@@ -1,22 +1,20 @@
 package controller.javafx.components;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.*;
+import model.exceptions.NameNotAvailableException;
 
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Objects;
-import java.util.ResourceBundle;
 
 class EventCreationCard extends ViewComponent {
 
+    private final TagHandler tagHandler;
     @FXML private AnchorPane lightboxAnchorPane;
     @FXML private AnchorPane cardAnchorPane;
 
@@ -25,21 +23,24 @@ class EventCreationCard extends ViewComponent {
     @FXML private DatePicker eventDatePicker;
     @FXML private Spinner<Integer> hourSpinner;
     @FXML private Spinner<Integer> minuteSpinner;
-    @FXML private ComboBox<String> tagComboBox;
+    @FXML private ComboBox<ITag> tagComboBox;
     @FXML private TextArea descriptionTextArea;
     @FXML private TextField contactSearchField;
+    @FXML private Button addTagButton;
 
     @FXML private Button saveButton;
 
     private EventList eventList;
     private ContactList contactList;
 
-    public EventCreationCard(EventList eventList, ContactList contactList) {
+    public EventCreationCard(EventList eventList, ContactList contactList, TagHandler tagHandler) {
         this.eventList = eventList;
         this.contactList = contactList;
+        this.tagHandler = tagHandler;
         saveButton.setOnMouseClicked(this::createEvent);
         lightboxAnchorPane.setOnMouseClicked(this::close);
         cardAnchorPane.setOnMouseClicked(this::consumeClick);
+        addTagButton.setOnAction(this::addTag);
         initializeSpinners();
         initializeComboBox();
     }
@@ -68,7 +69,7 @@ class EventCreationCard extends ViewComponent {
         String description = descriptionTextArea.getText();
         //Cannot search yet, just use comma separated values?
         //List<Contact> participants = ContactList.search(participantsTextField.getText())?
-        eventList.addEvent(name, localDateTime, address, description, new ArrayList<>(), null);
+        eventList.addEvent(name, localDateTime, address, description, new ArrayList<>(), tagComboBox.getValue());
         close(null);
     }
 
@@ -81,14 +82,30 @@ class EventCreationCard extends ViewComponent {
         this.getPane().toBack();
     }
 
+    private void addTag(ActionEvent event){
+        TextInputDialog td = new TextInputDialog();
+        td.showAndWait();
+        try {
+            tagHandler.createTag(td.getEditor().getText());
+        } catch (NameNotAvailableException e) {
+            throw new RuntimeException(e);
+        }
+        resetTagComboBox();
+    }
+
     public void clearFields() {
         nameTextField.clear();
         addressTextField.clear();
         eventDatePicker.setValue(null);
         initializeSpinners();
         descriptionTextArea.clear();
-        tagComboBox.getEditor().clear();
+        resetTagComboBox();
         contactSearchField.clear();
+    }
+
+    private void resetTagComboBox(){
+        tagComboBox.getItems().clear();
+        tagComboBox.getItems().addAll(tagHandler.getAllTags());
     }
 
 }
