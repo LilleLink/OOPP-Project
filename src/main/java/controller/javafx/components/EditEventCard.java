@@ -7,12 +7,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.ContactList;
 import model.Event;
+import model.ITag;
+import model.TagHandler;
+import model.exceptions.NameNotAvailableException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class EditEventCard extends ViewComponent {
 
+    private final TagHandler tagHandler;
     @FXML private AnchorPane lightboxAnchorPane;
     @FXML private AnchorPane cardAnchorPane;
 
@@ -21,9 +25,10 @@ public class EditEventCard extends ViewComponent {
     @FXML private DatePicker eventDatePicker;
     @FXML private Spinner<Integer> hourSpinner;
     @FXML private Spinner<Integer> minuteSpinner;
-    @FXML private ComboBox<String> tagComboBox;
+    @FXML private ComboBox<ITag> tagComboBox;
     @FXML private TextArea descriptionTextArea;
     @FXML private TextField contactSearchField;
+    @FXML private Button addTagButton;
 
     @FXML private Button saveButton;
     @FXML private Button closeButton;
@@ -31,15 +36,17 @@ public class EditEventCard extends ViewComponent {
     private Event event;
     private ContactList contactList;
 
-    public EditEventCard(Event event, ContactList contactList) {
+    public EditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
         this.event = event;
         this.contactList = contactList;
+        this.tagHandler = tagHandler;
 
         saveButton.setOnAction(this::saveEvent);
         closeButton.setOnMouseClicked(this::close);
 
         lightboxAnchorPane.setOnMouseClicked(this::close);
         cardAnchorPane.setOnMouseClicked(this::consumeClick);
+        addTagButton.setOnAction(this::addTag);
 
         setFields();
     }
@@ -53,7 +60,8 @@ public class EditEventCard extends ViewComponent {
         event.setAddress(addressTextField.getText());
         event.setDateTime(getLocalDateTime());
         event.setDescription(descriptionTextArea.getText());
-        //Tags and contacts
+        event.setTag(tagComboBox.getValue());
+        //Contacts
         close(null);
     }
 
@@ -77,7 +85,24 @@ public class EditEventCard extends ViewComponent {
     }
 
     private void initializeComboBox() {
-        //Set tag as options
+        resetTagComboBox();
+    }
+
+    private void addTag(ActionEvent event){
+        TextInputDialog td = new TextInputDialog();
+        td.showAndWait();
+        try {
+            tagHandler.createTag(td.getEditor().getText());
+        } catch (NameNotAvailableException e) {
+            throw new RuntimeException(e);
+        }
+        resetTagComboBox();
+    }
+
+    private void resetTagComboBox() {
+        tagComboBox.getItems().clear();
+        tagComboBox.getItems().addAll(tagHandler.getAllTags());
+        tagComboBox.setValue(event.getTag());
     }
 
     private void initializeSpinners() {

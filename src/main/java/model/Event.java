@@ -122,7 +122,7 @@ public class Event implements ICacheVisitable, IObservable {
      * Adds a tag to the event
      * @param tag the tag to be added
      */
-    public void addTag(ITag tag){
+    public void setTag(ITag tag){
         this.tag = tag;
         notifyObservers();
     }

@@ -50,7 +50,7 @@ class EventCreationCard extends ViewComponent {
     }
 
     private void initializeComboBox() {
-        //Set tag as options
+        resetTagComboBox();
     }
 
     private void initializeSpinners() {

@@ -91,8 +91,8 @@ public class ViewComponentFactory {
      * @param contactList a list of contacts to choose from
      * @return the EditEventCard
      */
-    public static EditEventCard CreateEditEventCard(Event event, ContactList contactList) {
-        return new EditEventCard(event, contactList);
+    public static EditEventCard CreateEditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
+        return new EditEventCard(event, contactList, tagHandler);
     }
 
     public static ContactGrayBox CreateContactGrayBox(){ return new ContactGrayBox();}
