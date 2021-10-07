@@ -32,7 +32,7 @@ public class CalendarEventCard extends ViewComponent implements IObserver {
 
     private void setBorder() {
         if (!Objects.isNull(event.getTag())) {
-            getPane().getStylesheets().add("-fx-border-color: "+event.getTag().getColor()+";");
+            getPane().setStyle("-fx-border-color: #"+event.getTag().getColor()+";");
         }
     }
 
