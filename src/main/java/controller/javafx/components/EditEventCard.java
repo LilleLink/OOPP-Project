@@ -109,7 +109,9 @@ public class EditEventCard extends ViewComponent {
         SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,
                 event.getDateTime().getHour(), 1);
         SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,
-                event.getDateTime().getMinute(), 5);
+                event.getDateTime().getMinute()-event.getDateTime().getMinute()%15, 5);
+        hourValueFactory.setWrapAround(true);
+        minuteValueFactory.setWrapAround(true);
         hourSpinner.setValueFactory(hourValueFactory);
         minuteSpinner.setValueFactory(minuteValueFactory);
     }
