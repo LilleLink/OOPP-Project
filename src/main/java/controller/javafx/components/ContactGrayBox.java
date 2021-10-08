@@ -1,5 +1,7 @@
 package controller.javafx.components;
 
+import attachmentHandler.AttachmentHandlerFactory;
+import attachmentHandler.IAttachmentHandler;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -7,15 +9,20 @@ import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import model.Contact;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.lang.invoke.LambdaConversionException;
 import java.net.URI;
+import java.nio.file.NoSuchFileException;
 
 class ContactGrayBox extends ViewComponent{
 
@@ -25,7 +32,7 @@ class ContactGrayBox extends ViewComponent{
 
     @FXML private AnchorPane notesAnchorPane;
 
-    @FXML private ImageView profileImage;
+    @FXML private ImageView contactImage;
 
     @FXML private TextField contactName;
 
@@ -46,6 +53,8 @@ class ContactGrayBox extends ViewComponent{
     private EventHandler<Event> closeWindowHandler;
 
     private EventHandler<Event> deleteContactHandler;
+
+    private final IAttachmentHandler attachmentHandler = AttachmentHandlerFactory.getService();
 
     ContactGrayBox(){
         super();
@@ -69,6 +78,8 @@ class ContactGrayBox extends ViewComponent{
         addressText.setText(contact.getAddress());
         this.notesComponent = new NotesComponent(contact.getNotes());
         notesAnchorPane.getChildren().add(notesComponent.getPane());
+        contactImage.setOnMouseClicked(this::setNewContactImage);
+        updateContactImage();
     }
 
     void setOnClose(EventHandler<Event> handler){
@@ -111,7 +122,33 @@ class ContactGrayBox extends ViewComponent{
         }
     }
 
+    private void setNewContactImage(MouseEvent event){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select new picture for contact");
+        fileChooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Image Files", "*.bmp", "*.gif", "*.jpeg", "*.jpg", "*.png"));
+        File selectedFile = fileChooser.showOpenDialog(this.getPane().getScene().getWindow());
+        if (selectedFile != null){
+            try {
+                attachmentHandler.saveMainImage(contact.getDirectoryId(), selectedFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        contact.notifyObservers();
+    }
+
     private boolean isAllowed(){
         return contactName.getText().length() >= 1;
+    }
+
+    private void updateContactImage(){
+        try {
+            contactImage.setImage(new Image(attachmentHandler.getMainImage(contact.getDirectoryId()).toUri().toString()));
+        } catch (NoSuchFileException e) {
+            contactImage.setImage(new Image("Images/defaultIcon.png"));
+        } catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
