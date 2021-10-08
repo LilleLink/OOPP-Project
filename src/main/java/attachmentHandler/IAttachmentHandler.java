@@ -1,4 +1,4 @@
-package fileHandler;
+package attachmentHandler;
 
 import java.nio.file.NoSuchFileException;
 import java.io.IOException;
@@ -7,12 +7,12 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The facade for the entire FileHandler service that can save attachments and the main picture to specific IDs under
+ * The facade for the entire AttachmentHandler service that can save attachments and the main picture to specific IDs under
  * user.home/.prm/{id}.
  * Contains all functionality needed to save attachments, optionally under different categories, as well as retrieve and
  * delete those attachments. Also contains the functionality for a main picture.
  */
-public interface IFileHandler {
+public interface IAttachmentHandler {
     /**
      * Saves a file in the base directory for the given id.
      * @param id ID of the entity you want to store the file under.

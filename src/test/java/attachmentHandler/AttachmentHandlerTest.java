@@ -1,4 +1,4 @@
-package fileHandler;
+package attachmentHandler;
 
 import org.junit.After;
 import org.junit.Test;
@@ -13,8 +13,8 @@ import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
-public class FileHandlerTest {
-    private static final IFileHandler fileHandler = FileHandlerFactory.getService();
+public class AttachmentHandlerTest {
+    private static final IAttachmentHandler fileHandler = AttachmentHandlerFactory.getService();
 
     private static final UUID id = UUID.randomUUID();
     private static final Path testFileDirectory = Paths.get("src/test/java/fileHandler/testFiles/");
