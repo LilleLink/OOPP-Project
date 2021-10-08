@@ -15,7 +15,7 @@
          <Cursor fx:constant="HAND" />
       </cursor>
    </AnchorPane>
-   <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="40.0">
+   <AnchorPane fx:id="cardAnchorPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #FFFFFF;" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="40.0">
       <ImageView fx:id="contactImage" fitHeight="160.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
          <Image url="@../../../Images/defaultIcon.png" />
       </ImageView>

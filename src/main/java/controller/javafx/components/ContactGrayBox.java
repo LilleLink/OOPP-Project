@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.Contact;
+import model.IObserver;
 
 import java.awt.*;
 import java.io.File;
@@ -24,11 +25,13 @@ import java.lang.invoke.LambdaConversionException;
 import java.net.URI;
 import java.nio.file.NoSuchFileException;
 
-class ContactGrayBox extends ViewComponent{
+class ContactGrayBox extends ViewComponent implements IObserver {
 
     private Contact contact;
 
     @FXML private AnchorPane baseAnchorPane;
+
+    @FXML private AnchorPane cardAnchorPane;
 
     @FXML private AnchorPane notesAnchorPane;
 
@@ -65,13 +68,14 @@ class ContactGrayBox extends ViewComponent{
         saveButton.setOnAction(this::save);
         openMapButton.setOnAction(this::openMap);
         addressText.textProperty().addListener((observable -> fieldsChanged()));
+        cardAnchorPane.setOnMouseClicked(MouseEvent::consume);
     }
 
     private void fieldsChanged(){
         contactChangedText.setVisible(true);
     }
 
-    public void setContact(Contact contact){
+    void setContact(Contact contact){
         this.contact = contact;
         contactName.setText(contact.getName());
         contactChangedText.setVisible(false);
@@ -80,6 +84,10 @@ class ContactGrayBox extends ViewComponent{
         notesAnchorPane.getChildren().add(notesComponent.getPane());
         contactImage.setOnMouseClicked(this::setNewContactImage);
         updateContactImage();
+    }
+
+    Contact getContact(){
+        return contact;
     }
 
     void setOnClose(EventHandler<Event> handler){
@@ -150,5 +158,10 @@ class ContactGrayBox extends ViewComponent{
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void onEvent() {
+        updateContactImage();
     }
 }

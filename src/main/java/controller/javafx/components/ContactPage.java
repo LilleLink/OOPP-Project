@@ -55,10 +55,12 @@ class ContactPage extends ViewComponent implements IObserver {
         contactGrayBox.setContact(contact);
         contactGrayBox.setOnDelete(mouseEvent -> removeContact(contact));
         contactGrayBox.getPane().setVisible(true);
+        contact.subscribe(contactGrayBox);
     }
 
     public void closeGrayPane(){
         contactGrayBox.getPane().setVisible(false);
+        contactGrayBox.getContact().unSubscribe(contactGrayBox);
     }
 
     private void newContact(MouseEvent mouseEvent){
