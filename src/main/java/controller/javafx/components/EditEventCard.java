@@ -108,7 +108,7 @@ public class EditEventCard extends ViewComponent {
     private void initializeSpinners() {
         SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,
                 event.getDateTime().getHour(), 1);
-        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,60,
+        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,
                 event.getDateTime().getMinute(), 5);
         hourSpinner.setValueFactory(hourValueFactory);
         minuteSpinner.setValueFactory(minuteValueFactory);

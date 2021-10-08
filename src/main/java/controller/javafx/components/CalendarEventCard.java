@@ -43,5 +43,6 @@ public class CalendarEventCard extends ViewComponent implements IObserver {
     @Override
     public void onEvent() {
         setLabels();
+        setBorder();
     }
 }
