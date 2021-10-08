@@ -123,7 +123,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     }
 
     private void save(Event e){
-        if (isAllowed()) {
+        if (isValidName(contactName.getText())) {
             contact.setName(contactName.getText());
             contact.setAddress(addressText.getText());
             close(e);
@@ -146,8 +146,8 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         contact.notifyObservers();
     }
 
-    private boolean isAllowed(){
-        return contactName.getText().length() >= 1;
+    private boolean isValidName(String name){
+        return name.length() >= 1;
     }
 
     private void updateContactImage(){
