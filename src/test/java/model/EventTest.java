@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.NameNotAllowedException;
 import model.exceptions.NameNotAvailableException;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,7 +53,7 @@ public class EventTest {
         ITag myTag = null;
         try {
             myTag = tf.createTag("Kompisaj");
-        } catch (NameNotAvailableException e) {
+        } catch (NameNotAllowedException e) {
             e.printStackTrace();
         }
 
