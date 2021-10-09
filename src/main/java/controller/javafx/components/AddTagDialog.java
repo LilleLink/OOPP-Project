@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -17,6 +18,7 @@ public class AddTagDialog extends ViewComponent {
     @FXML private TextField tagName;
     @FXML private Button addTagButton;
     @FXML private Button cancelButton;
+    @FXML private ColorPicker colorPicker;
 
 
     AddTagDialog(TagHandler tagHandler){
@@ -29,7 +31,7 @@ public class AddTagDialog extends ViewComponent {
     @FXML
     void btnAddPersonClicked(ActionEvent event) {
         try{
-            tagHandler.createTag(tagName.getText());
+            tagHandler.createTag(tagName.getText(), Integer.toHexString(colorPicker.getValue().hashCode()));
             closeStage(event);
         } catch (NameNotAllowedException e) {
             System.out.println(e.getMessage());
