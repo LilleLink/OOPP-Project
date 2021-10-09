@@ -1,5 +1,6 @@
 package controller.javafx.components;
 
+import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -7,6 +8,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.TagHandler;
@@ -19,13 +22,21 @@ public class AddTagDialog extends ViewComponent {
     @FXML private Button addTagButton;
     @FXML private Button cancelButton;
     @FXML private ColorPicker colorPicker;
+    @FXML private Text errorMessageText;
 
 
     AddTagDialog(TagHandler tagHandler){
         super();
         this.tagHandler = tagHandler;
+        errorMessageText.setVisible(false);
+        errorMessageText.setFill(Color.RED);
         addTagButton.setOnAction(this::btnAddPersonClicked);
         cancelButton.setOnAction(this::closeStage);
+        tagName.textProperty().addListener(this::textFieldChanged);
+    }
+
+    private void textFieldChanged(Observable observable) {
+        errorMessageText.setVisible(false);
     }
 
     @FXML
@@ -34,7 +45,8 @@ public class AddTagDialog extends ViewComponent {
             tagHandler.createTag(tagName.getText(), Integer.toHexString(colorPicker.getValue().hashCode()));
             closeStage(event);
         } catch (NameNotAllowedException e) {
-            System.out.println(e.getMessage());
+            errorMessageText.setText(e.getMessage());
+            errorMessageText.setVisible(true);
         }
     }
 
@@ -48,7 +60,7 @@ public class AddTagDialog extends ViewComponent {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 
-        Scene scene = new Scene(this.getPane(), 200, 100);
+        Scene scene = new Scene(this.getPane(), 300, 200);
 
         stage.setTitle("Dialog");
         stage.setScene(scene);
