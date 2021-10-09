@@ -126,6 +126,7 @@ class CalendarPage extends ViewComponent implements IObserver {
 
     private void editEvent(Event event) {
         editEventCard = ViewComponentFactory.CreateEditEventCard(event, contactList, eventList, tagHandler);
+        editEventCard.setOnClose(mouseEvent -> onEvent());
         calendarPageStackPane.getChildren().add(editEventCard.getPane());
         editEventCard.getPane().toFront();
     }

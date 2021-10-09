@@ -1,6 +1,7 @@
 package controller.javafx.components;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -30,6 +31,8 @@ public class EditEventCard extends ViewComponent {
     @FXML private Button saveButton;
     @FXML private Button closeButton;
     @FXML private Button removeButton;
+
+    private EventHandler<javafx.event.Event> closeWindowHandler;
 
     private Event event;
     private ContactList contactList;
@@ -78,6 +81,11 @@ public class EditEventCard extends ViewComponent {
 
     private void close(MouseEvent mouseEvent) {
         this.getPane().toBack();
+        closeWindowHandler.handle(mouseEvent);
+    }
+
+    public void setOnClose(EventHandler<javafx.event.Event> handler){
+         closeWindowHandler = handler;
     }
 
     private void setFields() {
