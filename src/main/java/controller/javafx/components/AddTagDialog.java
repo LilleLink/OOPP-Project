@@ -50,7 +50,7 @@ public class AddTagDialog extends ViewComponent {
 
         stage.setTitle("Dialog");
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
     }
 
 }
