@@ -20,9 +20,13 @@ public class TagHandler implements ICacheVisitable{
      * @return the new ITag
      */
     public ITag createTag(String name) throws NameNotAllowedException{
+        return createTag(name, "CDCDCD");
+    }
+
+    public ITag createTag(String name, String color) throws NameNotAllowedException {
         Tag tag;
         checkNameLegality(name);
-        tag = new Tag(name);
+        tag = new Tag(name, color);
         stringTagHashMap.put(name, tag);
         return tag;
     }
