@@ -89,13 +89,7 @@ public class EditEventCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event){
-        TextInputDialog td = new TextInputDialog();
-        td.showAndWait();
-        try {
-            tagHandler.createTag(td.getEditor().getText());
-        } catch (NameNotAvailableException e) {
-            throw new RuntimeException(e);
-        }
+        new AddTagDialog(tagHandler).display();
         resetTagComboBox();
     }
 

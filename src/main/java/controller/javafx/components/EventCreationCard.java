@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.*;
+import model.exceptions.NameNotAllowedException;
 import model.exceptions.NameNotAvailableException;
 
 import java.time.LocalDate;
@@ -83,13 +84,8 @@ class EventCreationCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event){
-        TextInputDialog td = new TextInputDialog();
-        td.showAndWait();
-        try {
-            tagHandler.createTag(td.getEditor().getText());
-        } catch (NameNotAvailableException e) {
-            throw new RuntimeException(e);
-        }
+        new AddTagDialog(tagHandler).display();
+        //TODO add waiting
         resetTagComboBox();
     }
 
