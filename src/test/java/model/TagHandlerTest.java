@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.NameNotAllowedException;
 import model.exceptions.NameNotAvailableException;
 import model.exceptions.TagNotFoundException;
 import org.junit.Before;
@@ -22,7 +23,7 @@ public class TagHandlerTest {
         try {
             handler.createTag("First tag");
             handler.createTag("Second Tag");
-        } catch (NameNotAvailableException e){
+        } catch (NameNotAllowedException e){
             fail();
         }
         List<ITag> tags = handler.getAllTags();
@@ -34,7 +35,7 @@ public class TagHandlerTest {
         try {
             handler.createTag("First tag");
             assertThrows(NameNotAvailableException.class, () -> handler.createTag("First tag"));
-        } catch (NameNotAvailableException e){
+        } catch (NameNotAllowedException e){
             fail();
         }
     }
@@ -45,7 +46,7 @@ public class TagHandlerTest {
             ITag tag = handler.createTag("First tag");
             handler.rename(tag,"new name");
             assertEquals("new name", tag.getName());
-        } catch (NameNotAvailableException e){
+        } catch (NameNotAllowedException e){
             fail();
         }
     }
@@ -57,7 +58,7 @@ public class TagHandlerTest {
             ITag second = handler.createTag("Second tag");
             assertThrows(NameNotAvailableException.class, () -> handler.rename(first, "Second tag"));
             assertNotEquals(first.getName(), second.getName());
-        } catch (NameNotAvailableException e){
+        } catch (NameNotAllowedException e){
             fail();
         }
     }
@@ -83,7 +84,7 @@ public class TagHandlerTest {
     public void getTagTest(){
         try {
             handler.createTag("Existing tag");
-        } catch (NameNotAvailableException e){
+        } catch (NameNotAllowedException e){
             fail();
         }
         try {
@@ -106,7 +107,7 @@ public class TagHandlerTest {
             assertNotEquals("ilegal", tag.getColor());
             handler.setColor(tag, "FA6607");
             assertEquals("FA6607", tag.getColor());
-        } catch (NameNotAvailableException e){
+        } catch (NameNotAllowedException e){
             fail();
         }
     }
