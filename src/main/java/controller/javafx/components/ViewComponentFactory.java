@@ -97,4 +97,6 @@ public class ViewComponentFactory {
 
     public static ContactGrayBox CreateContactGrayBox(){ return new ContactGrayBox();}
 
+    public static AddTagDialog CreateAddTagDialog(TagHandler tagHandler){ return new AddTagDialog(tagHandler); }
+
 }

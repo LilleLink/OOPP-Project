@@ -6,8 +6,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.*;
-import model.exceptions.NameNotAllowedException;
-import model.exceptions.NameNotAvailableException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -84,8 +82,7 @@ class EventCreationCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event){
-        new AddTagDialog(tagHandler).display();
-        //TODO add waiting
+        ViewComponentFactory.CreateAddTagDialog(tagHandler).displayAndWait();
         resetTagComboBox();
     }
 

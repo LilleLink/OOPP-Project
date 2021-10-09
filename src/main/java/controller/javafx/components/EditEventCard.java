@@ -9,12 +9,11 @@ import model.ContactList;
 import model.Event;
 import model.ITag;
 import model.TagHandler;
-import model.exceptions.NameNotAvailableException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class EditEventCard extends ViewComponent {
+class EditEventCard extends ViewComponent {
 
     private final TagHandler tagHandler;
     @FXML private AnchorPane lightboxAnchorPane;
@@ -89,7 +88,7 @@ public class EditEventCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event){
-        new AddTagDialog(tagHandler).display();
+        ViewComponentFactory.CreateAddTagDialog(tagHandler).displayAndWait();
         resetTagComboBox();
     }
 

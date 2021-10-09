@@ -16,7 +16,7 @@ import java.util.Objects;
  * {@author Simon Johnsson}
  * Uses {@link NoteCard}
  */
-public class NotesComponent extends ViewComponent{
+class NotesComponent extends ViewComponent{
 
     private final Notes notes;
 
