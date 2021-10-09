@@ -76,6 +76,15 @@ class AttachmentHandler implements IAttachmentHandler {
     }
 
     @Override
+    public void removeAttachment(UUID id, Path attachment) throws IOException, IllegalArgumentException {
+        if (attachment.toString().contains(baseDirectory.resolve(id.toString()).toString())){
+            Files.delete(attachment);
+        } else{
+            throw new IllegalArgumentException("Attachment does not belong to contact");
+        }
+    }
+
+    @Override
     public void removeAttachmentCategory(UUID id, String category) throws IOException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         if (Files.exists(attachmentDirectory.resolve(category)))

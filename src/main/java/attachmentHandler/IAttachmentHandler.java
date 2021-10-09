@@ -59,6 +59,15 @@ public interface IAttachmentHandler {
     List<String> getAttachmentCategories(UUID id) throws IOException;
 
     /**
+     * Removes the given attachment from the id.
+     * @param id Id that has the attachment
+     * @param attachment The attachment to delete
+     * @throws IOException If an I/O error occurs.
+     * @throws IllegalArgumentException If the attachment does not belong to the contact.
+     */
+    void removeAttachment(UUID id, Path attachment) throws IOException, IllegalArgumentException;
+
+    /**
      * Removes the given ID's directory and all it's subdirectories and files.
      * @param id The ID to remove.
      * @throws IOException If an I/O error occurs.

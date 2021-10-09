@@ -17,6 +17,7 @@ public class AttachmentHandlerTest {
     private static final IAttachmentHandler fileHandler = AttachmentHandlerFactory.getService();
 
     private static final UUID id = UUID.randomUUID();
+    private static final UUID id2 = UUID.randomUUID();
     private static final Path testFileDirectory = Paths.get("src/test/java/attachmentHandler/testFiles/");
 
     //TODO javadoc for tests, maybe write some more rigorous tests
@@ -25,6 +26,7 @@ public class AttachmentHandlerTest {
     public void removeTestIdDirectory(){
         try {
             fileHandler.removeAllFiles(id);
+            fileHandler.removeAllFiles(id2);
         } catch (NoSuchFileException ignored) {}
         catch (IOException e) {
             e.printStackTrace();
@@ -55,6 +57,16 @@ public class AttachmentHandlerTest {
         fileHandler.addAttachment(id, testFileDirectory.resolve("testImage.png"), "images");
         fileHandler.removeAttachmentCategory(id,"textfiles");
         assertEquals(1, fileHandler.getAttachments(id).size());
+    }
+
+    @Test
+    public void removeAttachmentTest() throws IOException {
+        fileHandler.addAttachment(id, testFileDirectory.resolve("test1.txt"));
+        fileHandler.addAttachment(id2, testFileDirectory.resolve("test2.txt"));
+        assertThrows(IllegalArgumentException.class,
+                () -> fileHandler.removeAttachment(id2, fileHandler.getAttachments(id).get(0)));
+        fileHandler.removeAttachment(id, fileHandler.getAttachments(id).get(0));
+        assertEquals(0, fileHandler.getAttachments(id).size());
     }
 
     @Test
