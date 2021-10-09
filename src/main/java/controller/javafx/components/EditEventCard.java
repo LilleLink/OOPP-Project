@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import model.ContactList;
-import model.Event;
-import model.ITag;
-import model.TagHandler;
+import model.*;
 import model.exceptions.NameNotAvailableException;
 
 import java.time.LocalDate;
@@ -32,23 +29,32 @@ public class EditEventCard extends ViewComponent {
 
     @FXML private Button saveButton;
     @FXML private Button closeButton;
+    @FXML private Button removeButton;
 
     private Event event;
     private ContactList contactList;
+    private EventList eventList;
 
-    public EditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
+    public EditEventCard(Event event, ContactList contactList, EventList eventList, TagHandler tagHandler) {
         this.event = event;
         this.contactList = contactList;
         this.tagHandler = tagHandler;
+        this.eventList = eventList;
 
         saveButton.setOnAction(this::saveEvent);
         closeButton.setOnMouseClicked(this::close);
+        removeButton.setOnMouseClicked(this::removeEvent);
 
         lightboxAnchorPane.setOnMouseClicked(this::close);
         cardAnchorPane.setOnMouseClicked(this::consumeClick);
         addTagButton.setOnAction(this::addTag);
 
         setFields();
+    }
+
+    private void removeEvent(MouseEvent mouseEvent) {
+        eventList.removeEvent(this.event);
+        close(null);
     }
 
     private void consumeClick(MouseEvent mouseEvent) {
