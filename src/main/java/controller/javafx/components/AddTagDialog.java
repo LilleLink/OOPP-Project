@@ -30,7 +30,7 @@ class AddTagDialog extends ViewComponent {
         this.tagHandler = tagHandler;
         errorMessageText.setVisible(false);
         errorMessageText.setFill(Color.RED);
-        addTagButton.setOnAction(this::btnAddPersonClicked);
+        addTagButton.setOnAction(this::btnAddTagClicked);
         cancelButton.setOnAction(this::closeStage);
         tagName.textProperty().addListener(this::textFieldChanged);
     }
@@ -40,7 +40,7 @@ class AddTagDialog extends ViewComponent {
     }
 
     @FXML
-    void btnAddPersonClicked(ActionEvent event) {
+    void btnAddTagClicked(ActionEvent event) {
         try{
             tagHandler.createTag(tagName.getText(), Integer.toHexString(colorPicker.getValue().hashCode()));
             closeStage(event);
