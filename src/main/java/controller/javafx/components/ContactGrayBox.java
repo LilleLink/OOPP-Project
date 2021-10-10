@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.Contact;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.lang.invoke.LambdaConversionException;
 import java.net.URI;
 import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
+import java.util.logging.FileHandler;
 
 class ContactGrayBox extends ViewComponent implements IObserver {
 
@@ -35,6 +38,8 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     @FXML private AnchorPane notesAnchorPane;
 
+    @FXML private VBox attachmentVBox;
+
     @FXML private ImageView contactImage;
 
     @FXML private TextField contactName;
@@ -44,6 +49,8 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     @FXML private Button deleteButton;
 
     @FXML private Button saveButton;
+
+    @FXML private Button addAttachmentButton;
 
     @FXML private Text contactChangedText;
 
@@ -69,6 +76,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         openMapButton.setOnAction(this::openMap);
         addressText.textProperty().addListener((observable -> fieldsChanged()));
         cardAnchorPane.setOnMouseClicked(MouseEvent::consume);
+        addAttachmentButton.setOnAction(this::addAttachment);
     }
 
     private void fieldsChanged(){
@@ -84,6 +92,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         notesAnchorPane.getChildren().add(notesComponent.getPane());
         contactImage.setOnMouseClicked(this::setNewContactImage);
         updateContactImage();
+        drawAttachments();
     }
 
     Contact getContact(){
@@ -146,6 +155,43 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         contact.notifyObservers();
     }
 
+    private void addAttachment(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select a file to add as attachment");
+        File selectedFile =fileChooser.showOpenDialog(this.getPane().getScene().getWindow());
+        if (selectedFile != null){
+            try {
+                attachmentHandler.addAttachment(contact.getDirectoryId(), selectedFile.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        contact.notifyObservers();
+    }
+
+
+
+    private void drawAttachments() {
+        attachmentVBox.getChildren().clear();
+        try {
+            for (Path attachment : attachmentHandler.getAttachments(contact.getDirectoryId())){
+                AttachmentCard attachmentCard = ViewComponentFactory.CreateAttachmentCard(attachment);
+                attachmentCard.setDeleteHandler(mouseEvent ->
+                {
+                    try {
+                        attachmentHandler.removeAttachment(contact.getDirectoryId(), attachment);
+                        contact.notifyObservers();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+                attachmentVBox.getChildren().add(attachmentCard.getPane());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private boolean isValidName(String name){
         return name.length() >= 1;
     }
@@ -163,5 +209,6 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     @Override
     public void onEvent() {
         updateContactImage();
+        drawAttachments();
     }
 }
