@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.NameNotAllowedException;
 import model.exceptions.NameNotAvailableException;
 import model.exceptions.TagNotFoundException;
 import org.junit.Before;
@@ -52,9 +53,13 @@ public class UserTest {
 
     @Test
     public void addContact(){
-        user.getContacts().addContact("Test Testson");
-        user.getContacts().addContact("Simon E");
-        assertEquals(2, user.getContacts().getList().size());
+        try {
+            user.getContacts().addContact("Test Testson");
+            user.getContacts().addContact("Simon E");
+            assertEquals(2, user.getContacts().getList().size());
+        } catch (NameNotAllowedException e){
+            fail();
+        }
     }
 
     @Test
@@ -66,10 +71,14 @@ public class UserTest {
 
     @Test
     public void removeContact(){
-        user.getContacts().addContact("Test Testson");
-        user.getContacts().addContact("Simon E");
-        user.getContacts().removeContact(user.getContacts().getList().get(0));
-        assertEquals(1, user.getContacts().getList().size());
+        try {
+            user.getContacts().addContact("Test Testson");
+            user.getContacts().addContact("Simon E");
+            user.getContacts().removeContact(user.getContacts().getList().get(0));
+            assertEquals(1, user.getContacts().getList().size());
+        } catch (NameNotAllowedException e){
+            fail();
+        }
     }
 
 }
