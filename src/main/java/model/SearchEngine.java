@@ -55,6 +55,6 @@ public class SearchEngine<T extends ISearchable<String> >{
 
 
     private int getRelevancy(String s1, String s2) {
-        return Levenshtein.distance(s1,s2,2,1,5,5);
+        return Levenshtein.distance(s1,s2);
     }
 }
