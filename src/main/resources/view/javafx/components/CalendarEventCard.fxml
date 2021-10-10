@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<fx:root fx:id="calendarEventAnchorPane" prefHeight="119.0" prefWidth="173.0" styleClass="DefaultStyle" stylesheets="@style/CalendarEventCard.css" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label fx:id="eventNameLabel" alignment="CENTER" layoutX="2.0" layoutY="29.0" prefHeight="20.0" prefWidth="168.0" text="Event name">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="eventTimeLabel" alignment="CENTER" layoutX="1.0" layoutY="49.0" prefHeight="20.0" prefWidth="171.0" text="XX:XX" />
+      <Label fx:id="eventAddressLabel" alignment="CENTER" layoutX="1.0" layoutY="69.0" prefHeight="20.0" prefWidth="171.0" text="Examplestreet 10" />
+   </children>
+</fx:root>
