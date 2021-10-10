@@ -1,20 +1,29 @@
 package model;
 
-import java.util.Arrays;
-
 /**
  * Calculates the Levenshtein distance of two sequences of characters.
- * Based on the Damerau-Levenshtein distance found on:
- * {@see https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance}.
+ * Based on the Wagner-Fischer dynamic programming algorithm calculating Damerau-Levenshtein distance.
+ * @see <a href="https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance">
+ *     The Damerua-Levenshtein Wikipedia article</a>
+ * @author Simon Johnsson
  */
 public class Levenshtein {
 
-
+    /**
+     * Gives the <b>Optimal string alignment distance</b> for two sequences of characters.
+     * Determining operations inlcude:
+     * <ul>
+     *     <li><b>Deletions</b></li>
+     *     <li><b>Insertions</b></li>
+     *     <li><b>Substitutions</b></li>
+     *     <li><b>Transpositions</b></li>
+     * </ul>
+     * @param a the source sequence
+     * @param b the target sequence
+     * @return the edit distance between the two sequences
+     */
     public static int distance(CharSequence a, CharSequence b) {
-        return distance(a,b,1,1,1,1);
-    }
-
-    public static int distance(CharSequence a, CharSequence b,int deletionCost, int insertionCost, int substitutionCost, int transpositionCost) {
+        //matrix containing operations
         int[][] d = new int[a.length() + 1][b.length() + 1];
 
 
