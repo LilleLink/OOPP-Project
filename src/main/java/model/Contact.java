@@ -16,7 +16,7 @@ public class Contact implements ICacheVisitable, IObservable {
     private List<ITag> tags;
     private Notes notes;
     private List<IObserver> observers = new ArrayList<>();
-    private final UUID id = UUID.randomUUID();
+    private final UUID directoryId = UUID.randomUUID();
 
     /**
      * @param name The contact's name.
@@ -185,6 +185,14 @@ public class Contact implements ICacheVisitable, IObservable {
         for (IObserver observer : observers){
             observer.onEvent();
         }
+    }
+
+    /**
+     *
+     * @return The contact's directoryId.
+     */
+    public UUID getDirectoryId(){
+        return directoryId;
     }
 
 

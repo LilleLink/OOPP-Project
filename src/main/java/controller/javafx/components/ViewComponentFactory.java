@@ -3,6 +3,7 @@ package controller.javafx.components;
 import controller.javafx.IPageNavigator;
 import model.*;
 
+import java.nio.file.Path;
 import java.util.Calendar;
 
 /***
@@ -96,6 +97,8 @@ public class ViewComponentFactory {
     }
 
     public static ContactGrayBox CreateContactGrayBox(){ return new ContactGrayBox();}
+
+    public static AttachmentCard CreateAttachmentCard(Path path) { return new AttachmentCard(path);}
 
     public static AddTagDialog CreateAddTagDialog(TagHandler tagHandler){ return new AddTagDialog(tagHandler); }
 

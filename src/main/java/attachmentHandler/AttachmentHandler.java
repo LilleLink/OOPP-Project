@@ -1,4 +1,4 @@
-package fileHandler;
+package attachmentHandler;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,10 +9,10 @@ import java.util.*;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
-class FileHandler implements IFileHandler {
+class AttachmentHandler implements IAttachmentHandler {
     private final Path baseDirectory = Paths.get(System.getProperty("user.home") + "/.prm/");
 
-    FileHandler(){
+    AttachmentHandler(){
 
     }
 
@@ -73,6 +73,15 @@ class FileHandler implements IFileHandler {
                     }
                 });
         return attachmentCategories;
+    }
+
+    @Override
+    public void removeAttachment(UUID id, Path attachment) throws IOException, IllegalArgumentException {
+        if (attachment.toString().contains(baseDirectory.resolve(id.toString()).toString())){
+            Files.delete(attachment);
+        } else{
+            throw new IllegalArgumentException("Attachment does not belong to contact");
+        }
     }
 
     @Override
