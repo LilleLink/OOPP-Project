@@ -32,7 +32,7 @@ class EventCreationCard extends ViewComponent {
     private EventList eventList;
     private ContactList contactList;
 
-    public EventCreationCard(EventList eventList, ContactList contactList, TagHandler tagHandler) {
+    EventCreationCard(EventList eventList, ContactList contactList, TagHandler tagHandler) {
         this.eventList = eventList;
         this.contactList = contactList;
         this.tagHandler = tagHandler;
@@ -82,7 +82,7 @@ class EventCreationCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event){
-        ViewComponentFactory.CreateAddTagDialog(tagHandler).displayAndWait();
+        new AddTagDialog(tagHandler).displayAndWait();
         resetTagComboBox();
     }
 

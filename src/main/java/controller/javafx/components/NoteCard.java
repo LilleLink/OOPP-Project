@@ -19,7 +19,7 @@ class NoteCard extends ViewComponent {
     @FXML
     private Label dateLabel;
 
-    public NoteCard(Note note) {
+    NoteCard(Note note) {
         super();
         noteTextArea.setText(note.viewNote());
         dateLabel.setText("Created: " + note.dateToString() + " " + note.timeToString());

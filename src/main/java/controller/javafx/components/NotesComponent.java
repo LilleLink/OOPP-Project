@@ -36,7 +36,7 @@ class NotesComponent extends ViewComponent{
      * Instantiates a component representing the given Notes object.
      * @param notes the notes to represent.
      */
-    public NotesComponent(Notes notes) {
+    NotesComponent(Notes notes) {
         super();
         this.notes = notes;
         initializeNotes();

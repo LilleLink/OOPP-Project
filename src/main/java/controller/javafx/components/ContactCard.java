@@ -16,7 +16,7 @@ class ContactCard extends ViewComponent implements IObserver {
     @FXML private HBox tagHBox;
     private Contact contact;
 
-    public ContactCard(Contact contact){
+    ContactCard(Contact contact){
         super();
         nameLabel.setText(contact.getName());
         this.contact = contact;
@@ -29,7 +29,7 @@ class ContactCard extends ViewComponent implements IObserver {
 
     public void onEvent(){
         for (ITag tag : contact.getTags()){
-            tagHBox.getChildren().add(ViewComponentFactory.CreateTagCard(tag).getPane());
+            tagHBox.getChildren().add(new TagCard(tag).getPane());
         }
     }
 }

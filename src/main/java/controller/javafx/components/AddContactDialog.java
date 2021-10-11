@@ -17,7 +17,7 @@ import model.ContactList;
 import model.TagHandler;
 import model.exceptions.NameNotAllowedException;
 
-public class AddContactDialog  extends ViewComponent {
+class AddContactDialog  extends ViewComponent {
 
     private final ContactList contacts;
     @FXML private TextField contactName;

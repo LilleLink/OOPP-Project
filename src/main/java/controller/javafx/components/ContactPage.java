@@ -22,7 +22,7 @@ class ContactPage extends ViewComponent implements IObserver {
     private ContactList contacts;
     private List<ContactCard> contactCards = new ArrayList<>();
 
-    public ContactPage(ContactList contacts){
+    ContactPage(ContactList contacts){
         super();
         this.contacts = contacts;
         contacts.subscribe(this);
@@ -61,7 +61,7 @@ class ContactPage extends ViewComponent implements IObserver {
     }
 
     private void newContact(MouseEvent mouseEvent){
-        ViewComponentFactory.CreateAddContactDialog(contacts).displayAndWait();
+        new AddContactDialog(contacts).displayAndWait();
     }
 
     private void removeContact(Contact contact){
