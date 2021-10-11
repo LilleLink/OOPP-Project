@@ -12,27 +12,28 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Contact;
+import model.ContactList;
 import model.TagHandler;
 import model.exceptions.NameNotAllowedException;
 
-class AddTagDialog extends ViewComponent {
+public class AddContactDialog  extends ViewComponent {
 
-    private final TagHandler tagHandler;
-    @FXML private TextField tagName;
-    @FXML private Button addTagButton;
+    private final ContactList contacts;
+    @FXML private TextField contactName;
+    @FXML private Button addContactButton;
     @FXML private Button cancelButton;
-    @FXML private ColorPicker colorPicker;
     @FXML private Text errorMessageText;
 
 
-    AddTagDialog(TagHandler tagHandler){
+    AddContactDialog(ContactList contacts){
         super();
-        this.tagHandler = tagHandler;
+        this.contacts = contacts;
         errorMessageText.setVisible(false);
         errorMessageText.setFill(Color.RED);
-        addTagButton.setOnAction(this::btnAddTagClicked);
+        addContactButton.setOnAction(this::btnAddContactClicked);
         cancelButton.setOnAction(this::closeStage);
-        tagName.textProperty().addListener(this::textFieldChanged);
+        contactName.textProperty().addListener(this::textFieldChanged);
     }
 
     private void textFieldChanged(Observable observable) {
@@ -40,18 +41,17 @@ class AddTagDialog extends ViewComponent {
     }
 
     @FXML
-    private void btnAddTagClicked(ActionEvent event) {
-        try{
-            tagHandler.createTag(tagName.getText(), Integer.toHexString(colorPicker.getValue().hashCode()));
-            closeStage(event);
-        } catch (NameNotAllowedException e) {
+    private void btnAddContactClicked(ActionEvent event) {
+        try {
+            contacts.addContact(contactName.getText());
+        } catch (NameNotAllowedException e){
             errorMessageText.setText(e.getMessage());
             errorMessageText.setVisible(true);
         }
     }
 
     private void closeStage(ActionEvent event) {
-        Node  source = (Node)  event.getSource();
+        Node source = (Node)  event.getSource();
         Stage stage  = (Stage) source.getScene().getWindow();
         stage.close();
     }
@@ -66,5 +66,6 @@ class AddTagDialog extends ViewComponent {
         stage.setScene(scene);
         stage.showAndWait();
     }
+
 
 }

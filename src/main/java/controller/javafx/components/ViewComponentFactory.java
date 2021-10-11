@@ -99,4 +99,6 @@ public class ViewComponentFactory {
 
     public static AddTagDialog CreateAddTagDialog(TagHandler tagHandler){ return new AddTagDialog(tagHandler); }
 
+    public static AddContactDialog CreateAddContactDialog(ContactList contacts) { return new AddContactDialog(contacts); }
+
 }

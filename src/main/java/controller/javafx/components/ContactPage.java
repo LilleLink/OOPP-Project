@@ -17,7 +17,6 @@ import java.util.List;
 class ContactPage extends ViewComponent implements IObserver {
     @FXML private AnchorPane baseAnchorPane;
     @FXML private FlowPane cardFlowPane;
-    @FXML private TextField newContactNameTextField;
     @FXML private Button newContactButton;
     private ContactGrayBox contactGrayBox;
     private ContactList contacts;
@@ -62,11 +61,7 @@ class ContactPage extends ViewComponent implements IObserver {
     }
 
     private void newContact(MouseEvent mouseEvent){
-        String name = newContactNameTextField.getText();
-        if (name.length() > 0) {
-            contacts.addContact(name);
-            newContactNameTextField.clear();
-        }
+        ViewComponentFactory.CreateAddContactDialog(contacts).displayAndWait();
     }
 
     private void removeContact(Contact contact){
