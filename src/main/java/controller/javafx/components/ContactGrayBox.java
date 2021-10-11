@@ -175,7 +175,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         attachmentVBox.getChildren().clear();
         try {
             for (Path attachment : attachmentHandler.getAttachments(contact.getDirectoryId())){
-                AttachmentCard attachmentCard = ViewComponentFactory.CreateAttachmentCard(attachment);
+                AttachmentCard attachmentCard = new AttachmentCard(attachment);
                 attachmentCard.setDeleteHandler(mouseEvent ->
                 {
                     try {
