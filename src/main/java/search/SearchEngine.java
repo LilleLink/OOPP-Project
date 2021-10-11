@@ -35,6 +35,7 @@ public class SearchEngine<T extends ISearchable<String>>{
      *     Relevancy is measured by comparing the {@link Levenshtein} distance to the {@code tol} integer,
      *     where the integer is the maximum tolerated distance between the query and the target search base.
      * </p>
+     * The comparison is case-insensitive and will perform calculations based on lower case versions of the inputs.
      * @param query the string to compare the searchbase to
      * @param tol the tolerance of the output results
      * @return a list containing results considered relevant to the query
@@ -43,12 +44,10 @@ public class SearchEngine<T extends ISearchable<String>>{
     public List<T> search(String query, int tol) {
         List<T> results = new ArrayList<>();
         for(T elem : searchBase) {
-            if(tol >= Levenshtein.distance(query,elem.getSearchIdentity())) {
+            if(tol >= Levenshtein.distance(query.toLowerCase(),elem.getSearchIdentity().toLowerCase())) {
                 results.add(elem);
             }
         }
         return results;
     }
-
-
 }
