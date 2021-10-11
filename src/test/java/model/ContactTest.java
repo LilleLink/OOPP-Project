@@ -45,7 +45,7 @@ public class ContactTest {
             c1.addTag(t1);
             assertEquals(1, c1.getTags().size());
             assertTrue(c1.getTags().contains(t1));
-        } catch (model.exceptions.NameNotAvailableException e) {
+        } catch (NameNotAllowedException e) {
             fail(e.getMessage());
         }
     }
@@ -57,7 +57,7 @@ public class ContactTest {
             c1.addTag(t1);
             c1.removeTag(t1);
             assertThrows(TagNotFoundException.class, () -> c1.removeTag(t1));
-        } catch (NameNotAvailableException | TagNotFoundException e) {
+        } catch (TagNotFoundException | NameNotAllowedException e) {
             fail(e.getMessage());
         }
     }

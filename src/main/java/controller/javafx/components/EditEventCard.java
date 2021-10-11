@@ -9,12 +9,11 @@ import model.ContactList;
 import model.Event;
 import model.ITag;
 import model.TagHandler;
-import model.exceptions.NameNotAvailableException;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class EditEventCard extends ViewComponent {
+class EditEventCard extends ViewComponent {
 
     private final TagHandler tagHandler;
     @FXML private AnchorPane lightboxAnchorPane;
@@ -33,8 +32,8 @@ public class EditEventCard extends ViewComponent {
     @FXML private Button saveButton;
     @FXML private Button closeButton;
 
-    private Event event;
-    private ContactList contactList;
+    private final Event event;
+    private final ContactList contactList;
 
     public EditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
         this.event = event;
@@ -42,7 +41,7 @@ public class EditEventCard extends ViewComponent {
         this.tagHandler = tagHandler;
 
         saveButton.setOnAction(this::saveEvent);
-        closeButton.setOnMouseClicked(this::close);
+        closeButton.setOnAction(this::close);
 
         lightboxAnchorPane.setOnMouseClicked(this::close);
         cardAnchorPane.setOnMouseClicked(this::consumeClick);
@@ -62,7 +61,7 @@ public class EditEventCard extends ViewComponent {
         event.setDescription(descriptionTextArea.getText());
         event.setTag(tagComboBox.getValue());
         //Contacts
-        close(null);
+        close();
     }
 
     private LocalDateTime getLocalDateTime() {
@@ -70,7 +69,15 @@ public class EditEventCard extends ViewComponent {
         return localDate.atTime(hourSpinner.getValue(), minuteSpinner.getValue());
     }
 
-    private void close(MouseEvent mouseEvent) {
+    private void close(ActionEvent e){
+        close();
+    }
+
+    private void close(MouseEvent e){
+        close();
+    }
+
+    private void close() {
         this.getPane().toBack();
     }
 
@@ -89,13 +96,7 @@ public class EditEventCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event){
-        TextInputDialog td = new TextInputDialog();
-        td.showAndWait();
-        try {
-            tagHandler.createTag(td.getEditor().getText());
-        } catch (NameNotAvailableException e) {
-            throw new RuntimeException(e);
-        }
+        ViewComponentFactory.CreateAddTagDialog(tagHandler).displayAndWait();
         resetTagComboBox();
     }
 

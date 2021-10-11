@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.NameNotAllowedException;
 import model.exceptions.NameNotAvailableException;
 import model.exceptions.TagNotFoundException;
 
@@ -18,15 +19,30 @@ public class TagHandler implements ICacheVisitable{
      * @param name The name of the new ITag
      * @return the new ITag
      */
-    public ITag createTag(String name) throws NameNotAvailableException{
+    public ITag createTag(String name) throws NameNotAllowedException{
+        return createTag(name, "CDCDCD");
+    }
+
+    public ITag createTag(String name, String color) throws NameNotAllowedException {
         Tag tag;
-        if (!nameIsAvailable(name)){
-            throw new NameNotAvailableException(name);
-        } else {
-            tag = new Tag(name);
-            stringTagHashMap.put(name, tag);
-        }
+        checkNameLegality(name);
+        tag = new Tag(name, color);
+        stringTagHashMap.put(name, tag);
         return tag;
+    }
+
+    /**
+     * Checks if the name {name} is allowed for a Tag
+     * @param name the name to be checked
+     * @throws NameNotAllowedException if the name was not allowed
+     */
+    private void checkNameLegality(String name) throws NameNotAllowedException {
+        if (!nameIsAvailable(name)) {
+            throw new NameNotAvailableException(name);
+        }
+        if (name.length() == 0){
+            throw new NameNotAllowedException("Tags must have a name");
+        }
     }
 
     /**

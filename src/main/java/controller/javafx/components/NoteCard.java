@@ -12,7 +12,7 @@ import model.Note;
  * {@author Simon Johnsson}
  * Used by {@link NotesComponent}
  */
-public class NoteCard extends ViewComponent {
+class NoteCard extends ViewComponent {
 
     @FXML
     private TextArea noteTextArea;

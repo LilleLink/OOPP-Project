@@ -9,7 +9,7 @@ import model.IObserver;
 
 import java.util.Objects;
 
-public class CalendarEventCard extends ViewComponent implements IObserver {
+class CalendarEventCard extends ViewComponent implements IObserver {
 
     @FXML private AnchorPane calendarEventAnchorPane;
     @FXML private Label eventNameLabel;
