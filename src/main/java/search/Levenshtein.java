@@ -1,4 +1,4 @@
-package model;
+package search;
 
 /**
  * Calculates the Levenshtein distance of two sequences of characters.
@@ -7,11 +7,11 @@ package model;
  *     The Damerua-Levenshtein Wikipedia article</a>
  * @author Simon Johnsson
  */
-public class Levenshtein {
+class Levenshtein {
 
     /**
      * Gives the <b>Optimal string alignment distance</b> for two sequences of characters.
-     * Determining operations inlcude:
+     * Determining operations include:
      * <ul>
      *     <li><b>Deletions</b></li>
      *     <li><b>Insertions</b></li>

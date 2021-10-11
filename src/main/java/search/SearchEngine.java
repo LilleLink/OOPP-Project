@@ -1,4 +1,4 @@
-package model;
+package search;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
  * @param <T> the type to search through which must implement ISearchable of type String
  * @author Simon Johnsson
  */
-public class SearchEngine<T extends ISearchable<String> >{
+public class SearchEngine<T extends ISearchable<String>>{
 
     /**
      * The collection this search engine iterates through.
@@ -39,6 +39,7 @@ public class SearchEngine<T extends ISearchable<String> >{
      * @param tol the tolerance of the output results
      * @return a list containing results considered relevant to the query
      */
+    //TODO Increase relevancy complexity
     public List<T> search(String query, int tol) {
         List<T> results = new ArrayList<>();
         for(T elem : searchBase) {
@@ -48,4 +49,6 @@ public class SearchEngine<T extends ISearchable<String> >{
         }
         return results;
     }
+
+
 }
