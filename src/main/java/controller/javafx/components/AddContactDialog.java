@@ -44,6 +44,7 @@ public class AddContactDialog  extends ViewComponent {
     private void btnAddContactClicked(ActionEvent event) {
         try {
             contacts.addContact(contactName.getText());
+            closeStage(event);
         } catch (NameNotAllowedException e){
             errorMessageText.setText(e.getMessage());
             errorMessageText.setVisible(true);
