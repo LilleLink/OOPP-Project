@@ -41,6 +41,7 @@ class EditEventCard extends ViewComponent {
         this.event = event;
         this.contactList = contactList;
         this.tagHandler = tagHandler;
+        this.participants = event.getContacts();
 
         saveButton.setOnAction(this::saveEvent);
         closeButton.setOnAction(this::close);

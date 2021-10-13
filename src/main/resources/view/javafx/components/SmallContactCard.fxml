@@ -4,10 +4,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<fx:root prefHeight="100.0" prefWidth="100.0" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="90.0" prefWidth="100.0" type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="avatarImageView" fitHeight="63.0" fitWidth="68.0" layoutX="15.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true" />
-      <Label fx:id="nameLabel" layoutX="14.0" layoutY="68.0" text="NameLabel" />
+      <Label fx:id="nameLabel" alignment="CENTER" layoutX="2.0" layoutY="69.0" prefHeight="17.0" prefWidth="94.0" text="NameLabel" />
    </children>
 </fx:root>

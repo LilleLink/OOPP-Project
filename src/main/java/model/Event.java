@@ -189,7 +189,7 @@ public class Event implements ICacheVisitable, IObservable {
      * Returns the contact arraylist.
      * @return the contact arraylist.
      */
-    public Collection<Contact> getContacts(){
+    public List<Contact> getContacts(){
         return this.contacts;
     }
 
