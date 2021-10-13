@@ -127,6 +127,10 @@ public class Notes implements ICacheVisitable{
         return Objects.hash(elements);
     }
 
+    public Notes(NotesCache cache) {
+       this.elements = new ArrayList<>(cache.elements);
+    }
+
     public static class NotesCache {
         public List<Note> elements;
     }

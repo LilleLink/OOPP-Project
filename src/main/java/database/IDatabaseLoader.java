@@ -12,6 +12,6 @@ public interface IDatabaseLoader {
      * @param name The name of the user.
      * @return The loaded user.
      */
-    User load(String name, Path databasePath) throws IOException;
+    User load(Path databasePath) throws IOException;
 
 }

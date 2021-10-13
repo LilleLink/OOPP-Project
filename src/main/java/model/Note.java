@@ -150,6 +150,11 @@ public class Note implements Comparable<Note>, ICacheVisitable {
         return otherNote.viewNote().equals(text);
     }
 
+    public Note(NoteCache cache) {
+        this.text = cache.text;
+        this.pointOfCreation = cache.pointOfCreation;
+    }
+
     public static class NoteCache {
         public String text;
         public LocalDateTime pointOfCreation;
