@@ -18,9 +18,13 @@ class ContactPage extends ViewComponent implements IObserver {
     @FXML private AnchorPane baseAnchorPane;
     @FXML private FlowPane cardFlowPane;
     @FXML private Button newContactButton;
-    private ContactGrayBox contactGrayBox;
-    private ContactList contacts;
-    private List<ContactCard> contactCards = new ArrayList<>();
+    @FXML private AnchorPane searchBarAnchorPane;
+    private final ContactGrayBox contactGrayBox;
+    private final SearchBar<Contact> searchBar;
+    private final int searchTolerance;
+
+    private final ContactList contacts;
+    private final List<ContactCard> contactCards = new ArrayList<>();
 
     ContactPage(ContactList contacts){
         super();
@@ -32,6 +36,9 @@ class ContactPage extends ViewComponent implements IObserver {
         AnchorPane contactGrayBoxPane = contactGrayBox.getPane();
         baseAnchorPane.getChildren().add(contactGrayBoxPane);
         contactGrayBoxPane.setVisible(false);
+        searchTolerance = 4;
+        searchBar = new SearchBar<>(contacts.getList(),searchTolerance);
+        searchBarAnchorPane.getChildren().add(searchBar.getPane());
         onEvent();
     }
 
@@ -65,10 +72,12 @@ class ContactPage extends ViewComponent implements IObserver {
     private void newContact(MouseEvent mouseEvent){
         new AddContactDialog(contacts).displayAndWait();
         onEvent();
+        searchBar.updateSearchBase(contacts.getList());
     }
 
     private void removeContact(Contact contact){
         contacts.removeContact(contact);
+        searchBar.updateSearchBase(contacts.getList());
     }
 
 }

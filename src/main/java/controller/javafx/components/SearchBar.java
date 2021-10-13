@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class SearchBar<T extends ISearchable<String>> extends ViewComponent{
 
-    private final SearchEngine<T> searchEngine;
+    private SearchEngine<T> searchEngine;
     private List<T> results;
     private final int tolerance;
 
@@ -52,8 +52,20 @@ public class SearchBar<T extends ISearchable<String>> extends ViewComponent{
         results = searchEngine.search(textField.getText(),tolerance);
     }
 
+    /**
+     * Returns the results from the previous search operation.
+     * @return a list of the searchable type
+     */
     List<T> getResults() {
         return results;
+    }
+
+    /**
+     * Constructs a new search engine with the given search base and sets it to the current engine
+      * @param searchBase the new search base
+     */
+    void updateSearchBase(List<T> searchBase) {
+        this.searchEngine = new SearchEngine<>(searchBase);
     }
 
 
