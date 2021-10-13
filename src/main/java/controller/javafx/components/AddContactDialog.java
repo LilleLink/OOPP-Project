@@ -10,6 +10,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -51,19 +52,38 @@ class AddContactDialog  extends ViewComponent {
         chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Contact file", "*.vcf"));
         Stage stage = new Stage();
         File contactFile = chooser.showOpenDialog(stage);
-        readContactFile(contactFile);
+        if (contactFile != null) {
+            readContactFile(contactFile);
+        }
     }
 
     private void loadContactDirectory(ActionEvent actionEvent){
-        //TODO add
+        DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setTitle("Select a directory");
+        Stage stage = new Stage();
+        File contactDirectory = chooser.showDialog(stage);
+        if (contactDirectory != null) {
+            readContactDirectory(contactDirectory);
+        }
+    }
+
+    private void readContactDirectory(File contactDirectory) {
+        try{
+            new VCFParser(contacts).addContactsFromDirectory(contactDirectory.toPath());
+            cancelButton.fire();
+        } catch (IOException e) {
+            errorMessageText.setText(e.getMessage());
+            errorMessageText.setVisible(true);
+        }
     }
 
     private void readContactFile(File contactFile) {
         try{
             new VCFParser(contacts).addContact(contactFile.toPath());
+            cancelButton.fire();
         } catch (IOException | NameNotAllowedException e) {
+            errorMessageText.setVisible(true);
             errorMessageText.setText(e.getMessage());
-            //TODO fix error handling with contact creation
         }
     }
 

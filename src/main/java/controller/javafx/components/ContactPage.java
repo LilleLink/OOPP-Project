@@ -64,6 +64,7 @@ class ContactPage extends ViewComponent implements IObserver {
 
     private void newContact(MouseEvent mouseEvent){
         new AddContactDialog(contacts).displayAndWait();
+        onEvent();
     }
 
     private void removeContact(Contact contact){
