@@ -36,7 +36,7 @@ public class SearchEngine<T extends ISearchable<String>>{
      *     where the integer is the maximum tolerated distance between the query and the target search base.
      * </p>
      * The comparison is case-insensitive and will perform calculations based on lower case versions of the inputs.
-     * @param query the string to compare the searchbase to
+     * @param query the string to compare the search base to
      * @param tol the tolerance of the output results
      * @return a list containing results considered relevant to the query
      */
@@ -49,5 +49,13 @@ public class SearchEngine<T extends ISearchable<String>>{
             }
         }
         return results;
+    }
+
+    /**
+     * Returns the iterated search base.
+     * @return a list of the search base
+     */
+    public List<T> getSearchBase() {
+        return searchBase;
     }
 }
