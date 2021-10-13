@@ -4,11 +4,12 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import model.exceptions.TagNotFoundException;
+import search.ISearchable;
 
 import java.util.Optional;
 import java.util.UUID;
 
-public class Contact implements ICacheVisitable, IObservable {
+public class Contact implements ICacheVisitable, ISearchable<String>, IObservable {
 
     private String name;
     private String phoneNumber = "";
@@ -196,6 +197,11 @@ public class Contact implements ICacheVisitable, IObservable {
         return directoryId;
     }
 
+
+    @Override
+    public String getSearchIdentity() {
+        return name.toLowerCase();
+    }
 
     /***
      * The contact cache class contains fields which should be saved/loaded to persistent storage.

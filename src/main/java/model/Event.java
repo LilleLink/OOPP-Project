@@ -1,5 +1,8 @@
 package model;
 
+import search.ISearchable;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.Collection;
@@ -7,7 +10,7 @@ import java.util.Collection;
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
  */
-public class Event implements ICacheVisitable, IObservable {
+public class Event implements ICacheVisitable, ISearchable<String>, IObservable {
 
     private String name;
     private String address = "";
@@ -182,6 +185,11 @@ public class Event implements ICacheVisitable, IObservable {
      */
     public Collection<Contact> getContacts(){
         return this.contacts;
+    }
+
+    @Override
+    public String getSearchIdentity() {
+        return name.toLowerCase();
     }
 
     /***
