@@ -45,6 +45,12 @@ public class ContactList implements IObservable {
         notifyObservers();
     }
 
+    public void addContact(Contact.ContactCache cache) throws NameNotAllowedException {
+        if (cache.name.length() < 1) throw new NameNotAllowedException("Contacts must have a name");
+        if (cache.notes == null) cache.notes = new Notes();
+        contactList.add(new Contact(cache));
+    }
+
     /***
      * Removes a contact from the contactList
      * @param contact the contact to be removed
