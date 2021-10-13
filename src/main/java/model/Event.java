@@ -169,6 +169,15 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
     }
 
     /***
+     * Sets the list of participating contacts to the given contact list.
+     * @param inputContactList the list of new participating contacts.
+     */
+    public void setContacts(List<Contact> inputContactList) {
+        this.contacts = inputContactList;
+        notifyObservers();
+    }
+
+    /***
      * Removes a contact from the event
      * @param contact the contact to be removed
      * @return true if operation successful, false if not.
@@ -183,7 +192,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      * Returns the contact arraylist.
      * @return the contact arraylist.
      */
-    public Collection<Contact> getContacts(){
+    public List<Contact> getContacts(){
         return this.contacts;
     }
 

@@ -5,13 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import model.ContactList;
-import model.Event;
-import model.ITag;
-import model.TagHandler;
+import javafx.scene.layout.HBox;
+import model.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 class EditEventCard extends ViewComponent {
 
@@ -26,19 +26,22 @@ class EditEventCard extends ViewComponent {
     @FXML private Spinner<Integer> minuteSpinner;
     @FXML private ComboBox<ITag> tagComboBox;
     @FXML private TextArea descriptionTextArea;
-    @FXML private TextField contactSearchField;
     @FXML private Button addTagButton;
+    @FXML private Button selectContactsButton;
+    @FXML private HBox participantsHBox;
 
     @FXML private Button saveButton;
     @FXML private Button closeButton;
 
     private final Event event;
     private final ContactList contactList;
+    private List<Contact> participants = new ArrayList<>();
 
     EditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
         this.event = event;
         this.contactList = contactList;
         this.tagHandler = tagHandler;
+        this.participants = event.getContacts();
 
         saveButton.setOnAction(this::saveEvent);
         closeButton.setOnAction(this::close);
@@ -46,8 +49,16 @@ class EditEventCard extends ViewComponent {
         lightboxAnchorPane.setOnMouseClicked(this::close);
         cardAnchorPane.setOnMouseClicked(this::consumeClick);
         addTagButton.setOnAction(this::addTag);
+        selectContactsButton.setOnAction(this::selectContacts);
 
         setFields();
+
+    }
+
+    private void selectContacts(ActionEvent actionEvent) {
+        ContactPickerDialog dialog = new ContactPickerDialog(contactList);
+        participants = dialog.getPickedContacts();
+        updateParticipantFlowPane();
     }
 
     private void consumeClick(MouseEvent mouseEvent) {
@@ -60,7 +71,7 @@ class EditEventCard extends ViewComponent {
         event.setDateTime(getLocalDateTime());
         event.setDescription(descriptionTextArea.getText());
         event.setTag(tagComboBox.getValue());
-        //Contacts
+        event.setContacts(participants);
         close();
     }
 
@@ -88,7 +99,15 @@ class EditEventCard extends ViewComponent {
         initializeSpinners();
         descriptionTextArea.setText(event.getDescription());
         initializeComboBox();
-        //contactSearchField
+        updateParticipantFlowPane();
+    }
+
+    private void updateParticipantFlowPane() {
+        participantsHBox.getChildren().clear();
+
+        for (Contact c : participants) {
+            participantsHBox.getChildren().add(new SmallContactCard(c).getPane());
+        }
     }
 
     private void initializeComboBox() {
