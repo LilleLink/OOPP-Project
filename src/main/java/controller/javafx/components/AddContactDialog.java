@@ -61,7 +61,7 @@ class AddContactDialog  extends ViewComponent {
     private void readContactFile(File contactFile) {
         try{
             new VCFParser(contacts).addContact(contactFile.toPath());
-        } catch (IOException e) {
+        } catch (IOException | NameNotAllowedException e) {
             errorMessageText.setText(e.getMessage());
             //TODO fix error handling with contact creation
         }
