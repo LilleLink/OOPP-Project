@@ -10,6 +10,7 @@ import model.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 class EventCreationCard extends ViewComponent {
 
@@ -24,13 +25,14 @@ class EventCreationCard extends ViewComponent {
     @FXML private Spinner<Integer> minuteSpinner;
     @FXML private ComboBox<ITag> tagComboBox;
     @FXML private TextArea descriptionTextArea;
-    @FXML private TextField contactSearchField;
     @FXML private Button addTagButton;
+    @FXML private Button selectContactsButton;
 
     @FXML private Button saveButton;
 
     private EventList eventList;
     private ContactList contactList;
+    private List<Contact> participants = new ArrayList<>();
 
     EventCreationCard(EventList eventList, ContactList contactList, TagHandler tagHandler) {
         this.eventList = eventList;
@@ -40,8 +42,15 @@ class EventCreationCard extends ViewComponent {
         lightboxAnchorPane.setOnMouseClicked(this::close);
         cardAnchorPane.setOnMouseClicked(this::consumeClick);
         addTagButton.setOnAction(this::addTag);
+        selectContactsButton.setOnAction(this::selectContacts);
+
         initializeSpinners();
         initializeComboBox();
+    }
+
+    private void selectContacts(ActionEvent actionEvent) {
+        ContactPickerDialog dialog = new ContactPickerDialog(contactList);
+        participants = dialog.getPickedContacts();
     }
 
     private void consumeClick(MouseEvent mouseEvent) {
@@ -68,9 +77,7 @@ class EventCreationCard extends ViewComponent {
         String address = addressTextField.getText();
         LocalDateTime localDateTime = getLocalDateTime();
         String description = descriptionTextArea.getText();
-        //Cannot search yet, just use comma separated values?
-        //List<Contact> participants = ContactList.search(participantsTextField.getText())?
-        eventList.addEvent(name, localDateTime, address, description, new ArrayList<>(), tagComboBox.getValue());
+        eventList.addEvent(name, localDateTime, address, description, participants, tagComboBox.getValue());
         close(null);
     }
 
@@ -95,7 +102,6 @@ class EventCreationCard extends ViewComponent {
         initializeSpinners();
         descriptionTextArea.clear();
         resetTagComboBox();
-        contactSearchField.clear();
     }
 
     private void resetTagComboBox(){
