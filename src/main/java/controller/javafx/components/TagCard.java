@@ -5,11 +5,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import model.ITag;
 
-public class TagCard extends ViewComponent {
+class TagCard extends ViewComponent {
     @FXML private AnchorPane baseAnchorPane;
     @FXML private Label tagLabel;
 
-    public TagCard(ITag tag){
+    TagCard(ITag tag){
         this.tagLabel.setText(tag.getName());
         baseAnchorPane.setStyle("-fx-background-color: #" + tag.getColor());
     }

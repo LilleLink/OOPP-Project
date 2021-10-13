@@ -2,10 +2,7 @@ package database.json;
 
 import model.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class JSONRecords {
 
@@ -61,9 +58,10 @@ public class JSONRecords {
     static class ContactRecord implements JSONRecords.IRecordVisitable {
         String name;
         String phoneNumber;
-        Address address;
+        String address;
         NotesRecord notes;
         List<String> tags;
+        String directoryId;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
@@ -94,11 +92,12 @@ public class JSONRecords {
     @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
     static class EventRecord implements JSONRecords.IRecordVisitable {
         String name;
-        Address address = new Address("");
+        String address = "";
         String dateTime;
         String description;
         ArrayList<Integer> contacts = new ArrayList<>();
         String tag;
+        String directoryId;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {

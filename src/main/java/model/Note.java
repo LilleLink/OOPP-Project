@@ -48,7 +48,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
      * Gives the text contained in the note.
      * @return a String
      */
-    String viewNote() {
+    public String viewNote() {
         return this.text;
     }
 
@@ -66,7 +66,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
      * Gives the date of creation as a String.
       * @return a String
      */
-    String dateToString() {
+    public String dateToString() {
         return viewDate().toString();
     }
 
@@ -77,7 +77,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
      * </p>
      * @return a String
      */
-    String timeToString() {
+    public String timeToString() {
         LocalTime time = pointOfCreation.toLocalTime();
         return time.getHour() + ":" + time.getMinute();
     }
@@ -148,6 +148,11 @@ public class Note implements Comparable<Note>, ICacheVisitable {
         if (other == null || this.getClass() != other.getClass()) return false;
         Note otherNote = (Note) other;
         return otherNote.viewNote().equals(text);
+    }
+
+    public Note(NoteCache cache) {
+        this.text = cache.text;
+        this.pointOfCreation = cache.pointOfCreation;
     }
 
     public static class NoteCache {

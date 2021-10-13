@@ -1,13 +1,11 @@
 package controller.javafx;
 
 import controller.javafx.components.ViewComponent;
+import controller.javafx.components.PageFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
-import model.Contact;
-import model.TagHandler;
 import model.User;
-import model.exceptions.NameNotAvailableException;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -46,11 +44,11 @@ public class RootWindow implements IPageNavigator, Initializable {
     }
 
     private void initiatePages() {
-        testTopBar = ViewComponentFactory.CreateTestTopBar(this);
-        mainPage = ViewComponentFactory.CreateMainPage();
-        secondaryPage = ViewComponentFactory.CreateSecondaryPage();
-        calendarPage = ViewComponentFactory.CreateCalendarPage(user.getEvents());
-        contactPage = ViewComponentFactory.CreateContactPage(user.getContacts());
+        testTopBar = PageFactory.CreateTestTopBar(this);
+        mainPage = PageFactory.CreateMainPage();
+        secondaryPage = PageFactory.CreateSecondaryPage();
+        calendarPage = PageFactory.CreateCalendarPage(user.getEvents(), user.getContacts(), user.getTagHandler());
+        contactPage = PageFactory.CreateContactPage(user.getContacts());
     }
 
     @Override

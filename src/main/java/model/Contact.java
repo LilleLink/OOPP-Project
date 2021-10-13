@@ -7,14 +7,17 @@ import model.exceptions.TagNotFoundException;
 import search.ISearchable;
 
 import java.util.Optional;
+import java.util.UUID;
 
-public class Contact implements ICacheVisitable, ISearchable<String> {
+public class Contact implements ICacheVisitable, ISearchable<String>, IObservable {
 
     private String name;
     private String phoneNumber = "";
-    private Address address = new Address("");
+    private String address = "";
     private List<ITag> tags;
     private Notes notes;
+    private List<IObserver> observers = new ArrayList<>();
+    private final UUID directoryId;
 
     /**
      * @param name The contact's name.
@@ -23,6 +26,7 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
         this.name = name;
         this.tags = new ArrayList<>();
         this.notes = new Notes();
+        this.directoryId = UUID.randomUUID();
     }
 
     /**
@@ -46,23 +50,16 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
      * @return Contact's address as string.
      */
     public String getAddress(){
-        return this.address.getAddress();
-    }
-
-    /**
-     * Opens the contact's address on google maps in browser.
-     * @return If it worked or not.
-     */
-    public boolean openMap(){
-        return this.address.openMap();
+        return this.address;
     }
 
     /**
      * Updates the contact's address.
      * @param address The address to be updated to.
      */
-    void setAddress(String address){
-        this.address = this.address.setAddress(address);
+    public void setAddress(String address){
+        this.address = address;
+        notifyObservers();
     }
 
 
@@ -70,10 +67,11 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
      * Sets the name of the contact.
      * @param name The name to change to.
      */
-    void setName(String name){
+    public void setName(String name){
         this.name = name;
         this.tags = new ArrayList<>();
         this.notes = new Notes();
+        notifyObservers();
     }
 
     /**
@@ -82,6 +80,7 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
      */
     void setPhoneNumber(String number){
         this.phoneNumber = number;
+        notifyObservers();
     }
 
 
@@ -102,6 +101,7 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
     void removeTag(ITag tag) throws TagNotFoundException {
         if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
         tags.remove(tag);
+        notifyObservers();
     }
 
     /**
@@ -123,6 +123,7 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
     /**
      * Adds a note with empty text to Notes.
      */
+
     void addNote() {
         notes.addNote();
     }
@@ -133,6 +134,7 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
      */
     void removeNote(int index) {
         notes.removeNote(index);
+        notifyObservers();
     }
 
     /**
@@ -154,11 +156,45 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
     }
 
     /**
-     * Retrieves the notes in this contact.
-     * @return a list of notes
+     * Retrieves the notes list of notes in this contact.
+     * @return a notes list object
      */
-    List<Note> getNotes() {
+    public List<Note> getListOfNotes() {
         return notes.getSortedElem();
+    }
+
+    /**
+     * Retrieves the notes of this contact
+     * @return a notes object
+     */
+    public Notes getNotes() {
+        return this.notes;
+    }
+
+    @Override
+    public void subscribe(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+
+    public void unSubscribe(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers){
+            observer.onEvent();
+        }
+    }
+
+    /**
+     *
+     * @return The contact's directoryId.
+     */
+    public UUID getDirectoryId(){
+        return directoryId;
     }
 
 
@@ -173,9 +209,10 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
     public static class ContactCache {
         public String name;
         public String phoneNumber;
-        public Address address;
+        public String address;
         public List<ITag> tags;
         public Notes notes;
+        public UUID directoryId;
 
         public ContactCache() {}
     }
@@ -187,6 +224,7 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
         cache.address = this.address;
         cache.tags = new ArrayList<>(this.tags);
         cache.notes = this.notes;
+        cache.directoryId = this.directoryId;
         return cache;
     }
 
@@ -196,6 +234,7 @@ public class Contact implements ICacheVisitable, ISearchable<String> {
         this.address = cache.address;
         this.tags = new ArrayList<>(cache.tags);
         this.notes = cache.notes;
+        this.directoryId = cache.directoryId;
     }
 
     /***

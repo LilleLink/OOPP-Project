@@ -1,8 +1,8 @@
 package controller.javafx.components;
 
-public class SecondaryPage extends ViewComponent {
+class SecondaryPage extends ViewComponent {
 
-    public SecondaryPage() {
+    SecondaryPage() {
         super();
     }
 

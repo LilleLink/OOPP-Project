@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 
-public class TestTopBar extends ViewComponent {
+class TopBar extends ViewComponent {
 
     @FXML private Button toMainButton;
     @FXML private Button toSecondButton;
@@ -14,7 +14,7 @@ public class TestTopBar extends ViewComponent {
 
     IPageNavigator nav;
 
-    public TestTopBar(IPageNavigator nav) {
+    TopBar(IPageNavigator nav) {
         super();
         this.nav = nav;
 

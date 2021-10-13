@@ -1,25 +1,28 @@
 package model;
 
+import model.exceptions.NameNotAllowedException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /***
  * Wrapper for a list of contacts.
  */
-public class ContactList {
+public class ContactList implements IObservable {
 
     private List<Contact> contactList = new ArrayList<>();
+    private List<IObserver> observers = new ArrayList<>();
 
     /***
      * Creates a new contactlist wrapper object
      */
-    public ContactList() {}
+    ContactList() {}
 
     /***
      * Wraps a given list of contacts.
      * @param contacts the list to be wrapped
      */
-    public ContactList(List<Contact> contacts) {
+    ContactList(List<Contact> contacts) {
         this.contactList = contacts;
     }
 
@@ -27,8 +30,10 @@ public class ContactList {
      * Adds a contact to the contactList.
      * @param name the name of the contact
      */
-    public void addContact(String name) {
+    public void addContact(String name) throws NameNotAllowedException {
+        if (name.length() == 0) throw new NameNotAllowedException("Contacts must have a name");
         contactList.add(new Contact(name));
+        notifyObservers();
     }
 
     /***
@@ -37,6 +42,13 @@ public class ContactList {
      */
     public void addContact(Contact contact) {
         contactList.add(contact);
+        notifyObservers();
+    }
+
+    public void addContact(Contact.ContactCache cache) throws NameNotAllowedException {
+        if (cache.name.length() < 1) throw new NameNotAllowedException("Contacts must have a name");
+        if (cache.notes == null) cache.notes = new Notes();
+        contactList.add(new Contact(cache));
     }
 
     /***
@@ -45,6 +57,7 @@ public class ContactList {
      */
     public void removeContact(Contact contact) {
         contactList.remove(contact);
+        notifyObservers();
     }
 
     /***
@@ -53,6 +66,23 @@ public class ContactList {
      */
     public List<Contact> getList() {
         return this.contactList;
+    }
+
+    @Override
+    public void subscribe(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unSubscribe(IObserver observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (IObserver observer : observers){
+            observer.onEvent();
+        }
     }
 
 }

@@ -1,11 +1,5 @@
 package model;
 
-import model.exceptions.NameNotAvailableException;
-import model.exceptions.TagNotFoundException;
-
-import javax.lang.model.type.ArrayType;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 /***
@@ -64,61 +58,20 @@ public class User implements ICacheVisitable {
     }
 
     /***
-     * Returns a the wrapper object for the contact list
+     * Returns the wrapper object for the contact list
      * @return ContactList wrapper object
      */
     public ContactList getContacts(){
         return contactList;
     }
 
-    /***
-     * Creates a tag given the specified name
-     * @param name the name of the tag
-     * @return a tag with the specified name
-     * @throws NameNotAvailableException if the name is already taken
+    /**
+     * Returns the tag handler used by the user
+     * @return the tag handler
      */
-    public ITag createTag(String name) throws NameNotAvailableException{
-        return tagHandler.createTag(name);
+    public TagHandler getTagHandler(){
+        return tagHandler;
     }
-
-    /***
-     * Returns a list of all tags
-     * @return a list of all tags
-     */
-    public List<ITag> getTags(){
-        return tagHandler.getTags();
-    }
-
-    /***
-     * Gets a tag given the specified name
-     * @param name name of the tag saught after
-     * @return the tag with the given name
-     * @throws TagNotFoundException if the tag with the given name cannot be found
-     */
-    public ITag getTag(String name) throws TagNotFoundException{
-        return tagHandler.getTag(name);
-    }
-
-    /***
-     * Sets the color of a tag to the specified color
-     * @param tag the subject tag
-     * @param color the specified color
-     * @return boolean depending on operation result
-     */
-    public boolean setColor(ITag tag, String color) {
-        return tagHandler.setColor(tag, color);
-    }
-
-    /***
-     * Renames a given tag to the specified name
-     * @param tag the tag to be renamed
-     * @param newName the new name of the tag
-     * @throws NameNotAvailableException if the name is already taken
-     */
-    public void renameTag(ITag tag, String newName) throws NameNotAvailableException {
-        tagHandler.rename(tag, newName);
-    }
-
 
     /***
      * The user cache class contains fields which should be saved/loaded to persistent storage.

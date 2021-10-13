@@ -33,10 +33,10 @@ public class Notes implements ICacheVisitable{
     }
 
     /**
-     * Private copy constructor for setting a selected list of note in this.
+     * Copy constructor for setting a selected list of note in this.
      * @param notes the new list of elements
      */
-    private Notes(List<Note> notes) {
+    public Notes(List<Note> notes) {
         this.elements = notes;
         elements.sort(Note::compareTo);
     }
@@ -45,7 +45,7 @@ public class Notes implements ICacheVisitable{
      * Instantiates an empty note with default constructor and appends it to the list of elements.
      * New note objects will always be newer than the object last added to the list.
      */
-    void addNote() {
+   public void addNote() {
         elements.add(new Note());
     }
 
@@ -54,7 +54,7 @@ public class Notes implements ICacheVisitable{
      * New note objects will always be newer than the object last added to the list.
      * @param text the String of text to be contained in the note.
      */
-    void addNote(String text) {
+   public void addNote(String text) {
         elements.add(new Note(text));
     }
 
@@ -62,7 +62,7 @@ public class Notes implements ICacheVisitable{
      * Removes the Note from the list of elements at the specified position.
      * @param index the index of the note to be removed.
      */
-    void removeNote(int index) {
+   public void removeNote(int index) {
         elements.remove(index);
     }
 
@@ -70,7 +70,7 @@ public class Notes implements ICacheVisitable{
      * Gives the current number of elements in notes
      * @return the number of elements
      */
-    int size() {
+   public int size() {
         return elements.size();
     }
 
@@ -79,8 +79,17 @@ public class Notes implements ICacheVisitable{
      * @param index the index of the note to view
      * @return the text of the viewed note
      */
-    String viewNoteAt(int index) {
+   public String viewNoteAt(int index) {
         return elements.get(index).viewNote();
+    }
+
+    /**
+     * Gives the note at the given index.
+     * @param index the index of the note to receive
+     * @return a note
+     */
+    public Note getNoteAt(int index) {
+       return elements.get(index);
     }
 
     /**
@@ -89,20 +98,21 @@ public class Notes implements ICacheVisitable{
      * @param index the index of the note being edited
      * @param text the new text
      */
-    void editNoteAt(int index, String text) {
+   public void editNoteAt(int index, String text) {
         Note note = elements.get(index).editNote(text);
-        elements.set(index, note);
+        elements.add(index, note);
     }
 
     /**
      * Returns a copy of the list of note objects.
      * @return the list of notes
      */
-    List<Note> getSortedElem() {
+   public List<Note> getSortedElem() {
         List<Note> list = new ArrayList<>(elements);
         list.sort(Note::compareTo);
         return list;
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -115,6 +125,10 @@ public class Notes implements ICacheVisitable{
     @Override
     public int hashCode() {
         return Objects.hash(elements);
+    }
+
+    public Notes(NotesCache cache) {
+       this.elements = new ArrayList<>(cache.elements);
     }
 
     public static class NotesCache {

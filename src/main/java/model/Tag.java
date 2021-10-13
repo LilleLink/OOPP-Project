@@ -9,9 +9,22 @@ public class Tag implements ITag, ICacheVisitable {
 
     private String color;
 
+    /**
+     * Creates a Tag with the name {name}
+     * @param name the name of the new Tag
+     */
     Tag(String name){
+        this(name, "CDCDCD");
+    }
+
+    /**
+     * Creates a Tag with the name {name}, and the color {color}
+     * @param name the name of the Tag
+     * @param color the color of the Tag
+     */
+    Tag(String name, String color){
         this.name = name;
-        color = "CDCDCD";
+        this.color = color;
     }
 
     /**
@@ -38,6 +51,11 @@ public class Tag implements ITag, ICacheVisitable {
         this.color = color;
     }
 
+    public Tag(TagCache cache) {
+        this.name = cache.name;
+        this.color = cache.color;
+    }
+
     public static class TagCache {
         public String name;
         public String color;
@@ -55,4 +73,8 @@ public class Tag implements ITag, ICacheVisitable {
         return visitor.visit(this.getCache(), env);
     }
 
+    @Override
+    public String toString(){
+        return name;
+    }
 }

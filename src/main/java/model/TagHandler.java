@@ -1,31 +1,50 @@
 package model;
 
+import model.exceptions.NameNotAllowedException;
 import model.exceptions.NameNotAvailableException;
 import model.exceptions.TagNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Optional;
 
 public class TagHandler implements ICacheVisitable{
 
-    private final HashMap<String, Tag> stringTagHashMap = new HashMap<>();
+    private HashMap<String, Tag> stringTagHashMap = new HashMap<>();
+
+    public TagHandler() {}
 
     /**
      * Creates a new ITag if the name is available. If a tag of the given name already exists, that tag is returned
      * @param name The name of the new ITag
      * @return the new ITag
      */
-    ITag createTag(String name) throws NameNotAvailableException{
+    public ITag createTag(String name) throws NameNotAllowedException{
+        return createTag(name, "CDCDCD");
+    }
+
+    public ITag createTag(String name, String color) throws NameNotAllowedException {
         Tag tag;
-        if (!nameIsAvailable(name)){
-            throw new NameNotAvailableException(name);
-        } else {
-            tag = new Tag(name);
-            stringTagHashMap.put(name, tag);
-        }
+        checkNameLegality(name);
+        tag = new Tag(name, color);
+        stringTagHashMap.put(name, tag);
         return tag;
+    }
+
+    /**
+     * Checks if the name {name} is allowed for a Tag
+     * @param name the name to be checked
+     * @throws NameNotAllowedException if the name was not allowed
+     */
+    private void checkNameLegality(String name) throws NameNotAllowedException {
+        if (!nameIsAvailable(name)) {
+            throw new NameNotAvailableException(name);
+        }
+        if (name.length() == 0){
+            throw new NameNotAllowedException("Tags must have a name");
+        }
     }
 
     /**
@@ -44,9 +63,10 @@ public class TagHandler implements ICacheVisitable{
      * Get all tags created by the handler
      * @return an ArrayList of ITags
      */
-    ArrayList<ITag> getTags(){
+    public ArrayList<ITag> getAllTags(){
         ArrayList<ITag> tags = new ArrayList<>();
         stringTagHashMap.forEach((k,v) -> tags.add(v));
+        tags.sort(Comparator.comparing(ITag::getName));
         return tags;
     }
 
@@ -110,6 +130,10 @@ public class TagHandler implements ICacheVisitable{
             }
         }
         return true;
+    }
+
+    public TagHandler(TagHandlerCache cache) {
+        this.stringTagHashMap = new HashMap<>(cache.stringTagHashMap);
     }
 
     public static class TagHandlerCache {

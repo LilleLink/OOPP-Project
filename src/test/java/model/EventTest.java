@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.NameNotAllowedException;
 import model.exceptions.NameNotAvailableException;
 import org.junit.Before;
 import org.junit.Test;
@@ -18,16 +19,6 @@ public class EventTest {
     @Test
     public void testCreation() {
         assertEquals("Test event", event.getName());
-    }
-
-    @Test
-    public void timeTest() {
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        assertTrue(event.getDateTime().getSecond() < LocalDateTime.now().getSecond());
     }
 
     // To make sure its visible and things are returned without side-effects
@@ -62,11 +53,11 @@ public class EventTest {
         ITag myTag = null;
         try {
             myTag = tf.createTag("Kompisaj");
-        } catch (NameNotAvailableException e) {
+        } catch (NameNotAllowedException e) {
             e.printStackTrace();
         }
 
-        event.addTag(myTag);
+        event.setTag(myTag);
         assertEquals(event.getTag(), myTag);
 
         event.removeTag();
