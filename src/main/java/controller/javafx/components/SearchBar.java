@@ -8,13 +8,12 @@ import javafx.scene.input.KeyCode;
 import search.ISearchable;
 import search.SearchEngine;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A component responsible for getting text input and returning results relevant to the given input.
- *
- * @param <T> the searchable type of the domain of which to search.
+ * Client decides when to query for the results. Searches can be done without handling the results.
+ * @param <T> the searchable type of the domain to search.
  * @author Simon Johnsson
  */
 public class SearchBar<T extends ISearchable<String>> extends ViewComponent{
@@ -26,10 +25,15 @@ public class SearchBar<T extends ISearchable<String>> extends ViewComponent{
     @FXML private TextField textField;
     @FXML private Button searchButton;
 
+    /**
+     * Constructs a search bar with the given search base and tolerance.
+     * @param searchBase the information to iterate
+     * @param tolerance the maximum allowed edit distance from the search query to the result
+     */
     SearchBar(List<T> searchBase,int tolerance) {
         this.searchEngine = new SearchEngine<>(searchBase);
         this.tolerance = tolerance;
-        results = new ArrayList<>();
+        results = searchBase;
         textField.setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode() == KeyCode.ENTER) {
                 search(keyEvent);
@@ -38,6 +42,12 @@ public class SearchBar<T extends ISearchable<String>> extends ViewComponent{
         searchButton.setOnAction(this::search);
     }
 
+    /**
+     * Performs a search operation with the input text and updates the result list.
+     * Searches are case-insensitive and returns a result depending on the input query and tolerance.
+     * Tolerance is the maximum allowed edit distance for the query and result.
+     * @param event the event triggering the search
+     */
     @FXML void search(Event event) {
         results = searchEngine.search(textField.getText(),tolerance);
     }
