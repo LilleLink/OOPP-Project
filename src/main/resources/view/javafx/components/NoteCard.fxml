@@ -7,12 +7,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
-   <VBox>
-      <TextArea fx:id="noteTextArea" editable="false"/>
-      <HBox>
-         <Pane HBox.hgrow="ALWAYS"/>
-         <Label fx:id="dateLabel" text="Date" HBox.hgrow="ALWAYS"/>
+<fx:root prefHeight="109.0" prefWidth="478.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <VBox prefHeight="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TextArea fx:id="noteTextArea" editable="false" minHeight="100.0" wrapText="true" VBox.vgrow="ALWAYS" />
+      <HBox VBox.vgrow="ALWAYS">
+         <Pane HBox.hgrow="ALWAYS" />
+         <Label fx:id="dateLabel" text="Date" HBox.hgrow="ALWAYS" />
       </HBox>
    </VBox>
 </fx:root>
