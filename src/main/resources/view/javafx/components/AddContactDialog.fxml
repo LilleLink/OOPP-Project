@@ -23,6 +23,12 @@
                         <Insets right="30.0" />
                     </padding>
                 </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="fileLoad" mnemonicParsing="false" text="Add Contact from file" />
+                  <Button fx:id="dirLoad" mnemonicParsing="false" text="Add Contact from directory" />
+               </children>
+            </HBox>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                     <children>
                         <Text fx:id="errorMessageText" strokeType="OUTSIDE" strokeWidth="0.0" text="Contact creation error" />
