@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -84,6 +85,7 @@ public class VCFParser {
                 cache.address = data[3];
             }
         }
+        cache.tags = new ArrayList<>();
         contacts.addContact(cache);
     }
 }
