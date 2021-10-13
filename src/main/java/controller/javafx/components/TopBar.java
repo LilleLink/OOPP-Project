@@ -14,7 +14,7 @@ class TopBar extends ViewComponent {
 
     IPageNavigator nav;
 
-    public TopBar(IPageNavigator nav) {
+    TopBar(IPageNavigator nav) {
         super();
         this.nav = nav;
 

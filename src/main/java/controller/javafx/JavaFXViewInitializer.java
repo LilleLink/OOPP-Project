@@ -12,7 +12,7 @@ import java.io.IOException;
 public class JavaFXViewInitializer {
 
     /***
-     * Initiates the JavaFX environment using the given stage from the launch method, and the user fron the instantiated model.
+     * Initiates the JavaFX environment using the given stage from the launch method, and the user from the instantiated model.
      * Loads the root window and sets the RootWindow class to the controller.
      * Displays the scene.
      * @param stage the stage to initialize the scene upon

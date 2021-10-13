@@ -1,18 +1,19 @@
 package controller.javafx.components;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import model.*;
-import model.exceptions.NameNotAvailableException;
+import model.ContactList;
+import model.Event;
+import model.ITag;
+import model.TagHandler;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-public class EditEventCard extends ViewComponent {
+class EditEventCard extends ViewComponent {
 
     private final TagHandler tagHandler;
     @FXML private AnchorPane lightboxAnchorPane;
@@ -30,34 +31,23 @@ public class EditEventCard extends ViewComponent {
 
     @FXML private Button saveButton;
     @FXML private Button closeButton;
-    @FXML private Button removeButton;
 
-    private EventHandler<javafx.event.Event> closeWindowHandler;
+    private final Event event;
+    private final ContactList contactList;
 
-    private Event event;
-    private ContactList contactList;
-    private EventList eventList;
-
-    public EditEventCard(Event event, ContactList contactList, EventList eventList, TagHandler tagHandler) {
+    EditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
         this.event = event;
         this.contactList = contactList;
         this.tagHandler = tagHandler;
-        this.eventList = eventList;
 
         saveButton.setOnAction(this::saveEvent);
-        closeButton.setOnMouseClicked(this::close);
-        removeButton.setOnMouseClicked(this::removeEvent);
+        closeButton.setOnAction(this::close);
 
         lightboxAnchorPane.setOnMouseClicked(this::close);
         cardAnchorPane.setOnMouseClicked(this::consumeClick);
         addTagButton.setOnAction(this::addTag);
 
         setFields();
-    }
-
-    private void removeEvent(MouseEvent mouseEvent) {
-        eventList.removeEvent(this.event);
-        close(null);
     }
 
     private void consumeClick(MouseEvent mouseEvent) {
@@ -71,7 +61,7 @@ public class EditEventCard extends ViewComponent {
         event.setDescription(descriptionTextArea.getText());
         event.setTag(tagComboBox.getValue());
         //Contacts
-        close(null);
+        close();
     }
 
     private LocalDateTime getLocalDateTime() {
@@ -79,13 +69,16 @@ public class EditEventCard extends ViewComponent {
         return localDate.atTime(hourSpinner.getValue(), minuteSpinner.getValue());
     }
 
-    private void close(MouseEvent mouseEvent) {
-        this.getPane().toBack();
-        closeWindowHandler.handle(mouseEvent);
+    private void close(ActionEvent e){
+        close();
     }
 
-    public void setOnClose(EventHandler<javafx.event.Event> handler){
-         closeWindowHandler = handler;
+    private void close(MouseEvent e){
+        close();
+    }
+
+    private void close() {
+        this.getPane().toBack();
     }
 
     private void setFields() {
@@ -103,7 +96,7 @@ public class EditEventCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event){
-        new AddTagDialog(tagHandler).display();
+        new AddTagDialog(tagHandler).displayAndWait();
         resetTagComboBox();
     }
 
@@ -116,10 +109,8 @@ public class EditEventCard extends ViewComponent {
     private void initializeSpinners() {
         SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,
                 event.getDateTime().getHour(), 1);
-        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,
-                event.getDateTime().getMinute()-event.getDateTime().getMinute()%15, 5);
-        hourValueFactory.setWrapAround(true);
-        minuteValueFactory.setWrapAround(true);
+        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,60,
+                event.getDateTime().getMinute(), 5);
         hourSpinner.setValueFactory(hourValueFactory);
         minuteSpinner.setValueFactory(minuteValueFactory);
     }

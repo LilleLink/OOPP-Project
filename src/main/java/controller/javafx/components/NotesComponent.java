@@ -16,7 +16,7 @@ import java.util.Objects;
  * {@author Simon Johnsson}
  * Uses {@link NoteCard}
  */
-public class NotesComponent extends ViewComponent{
+class NotesComponent extends ViewComponent{
 
     private final Notes notes;
 
@@ -36,7 +36,7 @@ public class NotesComponent extends ViewComponent{
      * Instantiates a component representing the given Notes object.
      * @param notes the notes to represent.
      */
-    public NotesComponent(Notes notes) {
+    NotesComponent(Notes notes) {
         super();
         this.notes = notes;
         initializeNotes();

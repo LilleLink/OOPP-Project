@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.NameNotAllowedException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,8 @@ public class ContactList implements IObservable {
      * Adds a contact to the contactList.
      * @param name the name of the contact
      */
-    public void addContact(String name) {
+    public void addContact(String name) throws NameNotAllowedException {
+        if (name.length() == 0) throw new NameNotAllowedException("Contacts must have a name");
         contactList.add(new Contact(name));
         notifyObservers();
     }
@@ -40,6 +43,12 @@ public class ContactList implements IObservable {
     public void addContact(Contact contact) {
         contactList.add(contact);
         notifyObservers();
+    }
+
+    public void addContact(Contact.ContactCache cache) throws NameNotAllowedException {
+        if (cache.name.length() < 1) throw new NameNotAllowedException("Contacts must have a name");
+        if (cache.notes == null) cache.notes = new Notes();
+        contactList.add(new Contact(cache));
     }
 
     /***

@@ -24,6 +24,8 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
         CacheVisitorState state = new CacheVisitorState();
 
         state.prm.user = (JSONRecords.UserRecord) user.accept(new CacheVisitor(), state).orElseThrow(IllegalStateException::new);
+        Files.createDirectories(databaseFile.getParent());
+        Files.createFile(databaseFile);
         Files.write(databaseFile, new Gson().toJson(state.prm).getBytes(), StandardOpenOption.WRITE);
     }
 
@@ -74,6 +76,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             record.phoneNumber = contact.phoneNumber;
             record.notes = (JSONRecords.NotesRecord) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
             record.tags = contact.tags.stream().map(t -> t.getName()).collect(Collectors.toList());
+            record.directoryId = contact.directoryId.toString();
             return Optional.of(record);
         }
 
@@ -86,6 +89,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             record.name = event.name;
             record.description = event.description;
             record.tag = event.tag.getName();
+            record.directoryId = event.directoryId.toString();
             // Add contact indices to event record.
             for (Contact contact : event.contacts) {
                 record.contacts.add(createContact(contact, env));

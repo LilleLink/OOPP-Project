@@ -50,13 +50,13 @@ class CalendarPage extends ViewComponent implements IObserver {
     private EventList eventList;
     private ContactList contactList;
 
-    public CalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
+    CalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
         this.eventList = eventList;
         this.contactList = contactList;
         this.tagHandler = tagHandler;
         eventList.subscribe(this);
 
-        eventCreationCard = ViewComponentFactory.CreateEventCreationCard(eventList, contactList, tagHandler);
+        eventCreationCard = new EventCreationCard(eventList, contactList, tagHandler);
         calendarPageStackPane.getChildren().add(eventCreationCard.getPane());
         calendarPageAnchorPane.toFront();
 
@@ -115,7 +115,7 @@ class CalendarPage extends ViewComponent implements IObserver {
         List<Event> eventsThisWeek = eventList.getEventsOfWeek(weekToDisplay);
 
         for (Event event : eventsThisWeek) {
-            CalendarEventCard calendarEventCard = ViewComponentFactory.CreateCalendarEventCard(event);
+            CalendarEventCard calendarEventCard = new CalendarEventCard(event);
             calendarEventCard.getPane().setOnMouseClicked(mouseEvent -> editEvent(event));
             calendarEventCards.add(calendarEventCard);
             event.subscribe(calendarEventCard);
@@ -125,8 +125,7 @@ class CalendarPage extends ViewComponent implements IObserver {
     }
 
     private void editEvent(Event event) {
-        editEventCard = ViewComponentFactory.CreateEditEventCard(event, contactList, eventList, tagHandler);
-        editEventCard.setOnClose(mouseEvent -> onEvent());
+        editEventCard = new EditEventCard(event, contactList, tagHandler);
         calendarPageStackPane.getChildren().add(editEventCard.getPane());
         editEventCard.getPane().toFront();
     }
