@@ -20,10 +20,10 @@ public class DatabaseFactory {
      * @throws IOException If the factory failed to initialize the database disk storage.
      * @return The new PRM database.
      */
-    static public Database getDatabase() throws IOException {
+    static public Database getService() {
         if (database == null) {
             /// TODO Don't use a temporary file dummy!
-                database = new Database(Files.createTempFile("prm-database", ""), new JSONDatabaseLoader(), new JSONDatabaseSaver());
+                database = new Database(new JSONDatabaseLoader(), new JSONDatabaseSaver());
         }
         return database;
     }

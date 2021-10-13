@@ -2,10 +2,7 @@ package database.json;
 
 import model.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class JSONRecords {
 
@@ -64,6 +61,7 @@ public class JSONRecords {
         String address;
         NotesRecord notes;
         List<String> tags;
+        String directoryId;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
@@ -99,6 +97,7 @@ public class JSONRecords {
         String description;
         ArrayList<Integer> contacts = new ArrayList<>();
         String tag;
+        String directoryId;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {

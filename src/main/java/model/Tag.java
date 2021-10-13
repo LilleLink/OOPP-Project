@@ -51,6 +51,11 @@ public class Tag implements ITag, ICacheVisitable {
         this.color = color;
     }
 
+    public Tag(TagCache cache) {
+        this.name = cache.name;
+        this.color = cache.color;
+    }
+
     public static class TagCache {
         public String name;
         public String color;

@@ -17,7 +17,7 @@ public class Event implements ICacheVisitable, IObservable {
     private ITag tag;
     private List<Contact> contacts = new ArrayList<>();
     private List<IObserver> observers = new ArrayList<>();
-    private final UUID directoryId = UUID.randomUUID();
+    private final UUID directoryId;
 
     /***
      * Creates an event with the given parameters.
@@ -35,6 +35,7 @@ public class Event implements ICacheVisitable, IObservable {
         this.description = description;
         this.contacts = contacts;
         this.tag = tag;
+        this.directoryId = UUID.randomUUID();
     }
 
     /***
@@ -45,6 +46,7 @@ public class Event implements ICacheVisitable, IObservable {
     Event(String name, LocalDateTime date) {
         this.name = name;
         this.dateTime = date;
+        this.directoryId = UUID.randomUUID();
     }
 
     public boolean isInFuture() {
@@ -192,6 +194,7 @@ public class Event implements ICacheVisitable, IObservable {
         public String description;
         public ITag tag;
         public List<Contact> contacts;
+        public UUID directoryId;
 
         public EventCache() {}
     }
@@ -204,6 +207,7 @@ public class Event implements ICacheVisitable, IObservable {
         cache.description = this.description;
         cache.tag = this.tag;
         cache.contacts = new ArrayList<>(this.contacts);
+        cache.directoryId = this.directoryId;
         return cache;
     }
 
@@ -214,6 +218,7 @@ public class Event implements ICacheVisitable, IObservable {
         this.description = cache.description;
         this.tag = cache.tag;
         this.contacts = cache.contacts;
+        this.directoryId = cache.directoryId;
     }
 
     /***

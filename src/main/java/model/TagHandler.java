@@ -12,7 +12,9 @@ import java.util.Optional;
 
 public class TagHandler implements ICacheVisitable{
 
-    private final HashMap<String, Tag> stringTagHashMap = new HashMap<>();
+    private HashMap<String, Tag> stringTagHashMap = new HashMap<>();
+
+    public TagHandler() {}
 
     /**
      * Creates a new ITag if the name is available. If a tag of the given name already exists, that tag is returned
@@ -128,6 +130,10 @@ public class TagHandler implements ICacheVisitable{
             }
         }
         return true;
+    }
+
+    public TagHandler(TagHandlerCache cache) {
+        this.stringTagHashMap = new HashMap<>(cache.stringTagHashMap);
     }
 
     public static class TagHandlerCache {

@@ -16,7 +16,7 @@ public class Contact implements ICacheVisitable, IObservable {
     private List<ITag> tags;
     private Notes notes;
     private List<IObserver> observers = new ArrayList<>();
-    private final UUID directoryId = UUID.randomUUID();
+    private final UUID directoryId;
 
     /**
      * @param name The contact's name.
@@ -25,6 +25,7 @@ public class Contact implements ICacheVisitable, IObservable {
         this.name = name;
         this.tags = new ArrayList<>();
         this.notes = new Notes();
+        this.directoryId = UUID.randomUUID();
     }
 
     /**
@@ -205,6 +206,7 @@ public class Contact implements ICacheVisitable, IObservable {
         public String address;
         public List<ITag> tags;
         public Notes notes;
+        public UUID directoryId;
 
         public ContactCache() {}
     }
@@ -216,6 +218,7 @@ public class Contact implements ICacheVisitable, IObservable {
         cache.address = this.address;
         cache.tags = new ArrayList<>(this.tags);
         cache.notes = this.notes;
+        cache.directoryId = this.directoryId;
         return cache;
     }
 
@@ -225,6 +228,7 @@ public class Contact implements ICacheVisitable, IObservable {
         this.address = cache.address;
         this.tags = new ArrayList<>(cache.tags);
         this.notes = cache.notes;
+        this.directoryId = cache.directoryId;
     }
 
     /***
