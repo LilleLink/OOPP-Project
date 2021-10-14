@@ -2,6 +2,8 @@ package controller.javafx.components;
 
 import attachmentHandler.AttachmentHandlerFactory;
 import attachmentHandler.IAttachmentHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -48,11 +50,9 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     @FXML private Button deleteButton;
 
-    @FXML private Button saveButton;
+    @FXML private Button doneButton;
 
     @FXML private Button addAttachmentButton;
-
-    @FXML private Text contactChangedText;
 
     @FXML private TextField addressText;
 
@@ -71,22 +71,17 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         baseAnchorPane.setOnMouseClicked(this::close);
         closeButton.setOnAction(this::close);
         deleteButton.setOnAction(this::delete);
-        contactName.textProperty().addListener(((observableValue, s, t1) -> fieldsChanged()));
-        saveButton.setOnAction(this::save);
+        doneButton.setOnAction(this::close);
+        contactName.textProperty().addListener((observableValue, s, t1) -> contact.setName(t1));
+        addressText.textProperty().addListener(((observableValue, s, t1) -> contact.setAddress(t1)));
         openMapButton.setOnAction(this::openMap);
-        addressText.textProperty().addListener((observable -> fieldsChanged()));
         cardAnchorPane.setOnMouseClicked(MouseEvent::consume);
         addAttachmentButton.setOnAction(this::addAttachment);
-    }
-
-    private void fieldsChanged(){
-        contactChangedText.setVisible(true);
     }
 
     void setContact(Contact contact){
         this.contact = contact;
         contactName.setText(contact.getName());
-        contactChangedText.setVisible(false);
         addressText.setText(contact.getAddress());
         this.notesComponent = new NotesComponent(contact.getNotes());
         notesAnchorPane.getChildren().add(notesComponent.getPane());
@@ -99,21 +94,34 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         return contact;
     }
 
+    /**
+     * Sets a handler for closing the page
+     * @param handler the handler for closing
+     */
     void setOnClose(EventHandler<Event> handler){
         closeWindowHandler = handler;
     }
 
-    void close(Event event){
+    private void close(Event event){
+        saveFields();
         closeWindowHandler.handle(event);
     }
 
+    private void saveFields(){
+
+    }
+
+    /**
+     * sets a handler for deletion of a contact
+     * @param handler the handler for deletion
+     */
     void setOnDelete(EventHandler<Event> handler){
         deleteContactHandler = handler;
     }
 
     private void delete(Event event){
         deleteContactHandler.handle(event);
-        close(event);
+        closeWindowHandler.handle(event);
     }
 
     private boolean openMap(ActionEvent event){
