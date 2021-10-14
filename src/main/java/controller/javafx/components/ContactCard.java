@@ -41,6 +41,7 @@ class ContactCard extends ViewComponent implements IObserver {
         }
     }
 
+
     private void updateImage(){
         try {
             contactImage.setImage(new Image(attachmentHandler.getMainImage(contact.getDirectoryId()).toUri().toString()));
