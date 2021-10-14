@@ -47,7 +47,6 @@ public class VCFParser {
      * @throws IOException if no {*.vcf} file is found or if an error occurs in {@link Scanner}
      */
     public void addContactsFromDirectory(Path directory) throws IOException {
-        //FIXME make recursive?
         int createdContacts = 0;
         for (Path path: Files.newDirectoryStream(directory)){
             if (isVCFFile(path)){
@@ -67,6 +66,7 @@ public class VCFParser {
     }
     
     private void readContact(Path path) throws IOException, NameNotAllowedException{
+        //TODO add more reading (and increased parsing) from https://en.wikipedia.org/wiki/VCard#Properties
         Scanner reader = new Scanner(path);
         Contact.ContactCache cache = new Contact.ContactCache();
         while (reader.hasNextLine()){
