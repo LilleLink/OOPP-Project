@@ -112,6 +112,7 @@ public class JSONRecords {
         List<Integer> contacts = new ArrayList<>();
         List<EventRecord> events = new ArrayList<>();
         TagHandlerRecord tags;
+        String uuid;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
@@ -129,6 +130,10 @@ public class JSONRecords {
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
             return visitor.visit(this, env);
         }
+    }
+
+    static class TrackerRecord {
+        HashMap<UUID, String> users = new HashMap<>();
     }
 
 }

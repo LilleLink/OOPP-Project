@@ -16,10 +16,9 @@ import java.util.Arrays;
 import java.util.UUID;
 
 public class DatabaseTest {
-
-    private final UUID id = UUID.randomUUID();
     private final Database db = DatabaseFactory.getService();
     private final User user = new User("Pelle");
+    private final User user2 = new User("Dawg");
 
     @Before
     public void setUp() throws Exception {
@@ -28,7 +27,8 @@ public class DatabaseTest {
 
     @After
     public void tearDown() throws IOException {
-        db.remove(id);
+        db.remove(user);
+        db.remove(user2);
     }
 
     @Test
@@ -43,6 +43,12 @@ public class DatabaseTest {
         contact.getNotes().addNote("Hahah this guy amirite");
         contact.getNotes().addNote("K he's aight I guess");
 
+        user.getContacts().addContact("Bruh");
+        Contact contact2 = user.getContacts().getList().stream().filter(c -> c.getName().equals("Bruh"))
+                .findFirst().orElseThrow(IllegalStateException::new);
+        contact.setAddress("Kungsportsavenyen 32");
+        contact.getNotes().addNote("Wow same address wtf lame");
+
         //TODO Fix addTag? Not public.
         //contact.addTag(friendTag);
         //contact.addTag(biznizTag);
@@ -53,8 +59,18 @@ public class DatabaseTest {
                 "Mars", "Cool event on mars",
                 Arrays.asList(contact), pleasureTag);
 
-        db.save(user, id);
-        assertThat(user).usingRecursiveComparison().isEqualTo(db.load(id));
+        db.save(user2);
+        db.save(user);
+        assertThat(user).usingRecursiveComparison().isEqualTo(db.load(user.getId()));
+
+        assertThat(db.getUsers().stream().map(id -> {
+            try {
+                return db.getUsername(id);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        })).contains("Pelle", "Dawg");
     }
 
 }

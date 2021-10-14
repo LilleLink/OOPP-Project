@@ -39,6 +39,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             cache.name = user.name;
             cache.contacts = user.contacts.stream().map(i -> env.contacts.get(i)).collect(Collectors.toList());
             cache.events = user.events.stream().map(e -> (Event) e.accept(this, env).orElseThrow(IllegalStateException::new)).collect(Collectors.toList());
+            cache.uuid = UUID.fromString(user.uuid);
             return Optional.of(new User(cache));
         }
 
