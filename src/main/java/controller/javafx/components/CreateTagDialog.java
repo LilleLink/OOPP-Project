@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 import model.TagHandler;
 import model.exceptions.NameNotAllowedException;
 
-class AddTagDialog extends ViewComponent {
+class CreateTagDialog extends ViewComponent {
 
     private final TagHandler tagHandler;
     @FXML private TextField tagName;
@@ -25,7 +25,7 @@ class AddTagDialog extends ViewComponent {
     @FXML private Text errorMessageText;
 
 
-    AddTagDialog(TagHandler tagHandler){
+    CreateTagDialog(TagHandler tagHandler){
         super();
         this.tagHandler = tagHandler;
         errorMessageText.setVisible(false);

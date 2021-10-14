@@ -23,7 +23,7 @@ import vcf.VCFParser;
 import java.io.File;
 import java.io.IOException;
 
-class AddContactDialog  extends ViewComponent {
+class CreateContactDialog extends ViewComponent {
 
     private final ContactList contacts;
     @FXML private TextField contactName;
@@ -34,7 +34,7 @@ class AddContactDialog  extends ViewComponent {
     @FXML private Button dirLoad;
 
 
-    AddContactDialog(ContactList contacts){
+    CreateContactDialog(ContactList contacts){
         super();
         this.contacts = contacts;
         errorMessageText.setVisible(false);

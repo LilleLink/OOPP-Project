@@ -35,7 +35,7 @@ class EditEventCard extends ViewComponent {
 
     private final Event event;
     private final ContactList contactList;
-    private List<Contact> participants = new ArrayList<>();
+    private List<Contact> participants;
 
     EditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
         this.event = event;
@@ -115,7 +115,7 @@ class EditEventCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event){
-        new AddTagDialog(tagHandler).displayAndWait();
+        new CreateTagDialog(tagHandler).displayAndWait();
         resetTagComboBox();
     }
 

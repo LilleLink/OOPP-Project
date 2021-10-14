@@ -61,7 +61,7 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
     }
 
     private void newContact(MouseEvent mouseEvent){
-        new AddContactDialog(contacts).displayAndWait();
+        new CreateContactDialog(contacts).displayAndWait();
         onEvent();
         searchBar.updateSearchBase(contacts.getList());
     }

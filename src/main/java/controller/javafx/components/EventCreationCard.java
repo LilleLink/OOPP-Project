@@ -91,7 +91,7 @@ class EventCreationCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event){
-        new AddTagDialog(tagHandler).displayAndWait();
+        new CreateTagDialog(tagHandler).displayAndWait();
         resetTagComboBox();
     }
 
