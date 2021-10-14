@@ -71,7 +71,6 @@ public class VCFParser {
         Contact.ContactCache cache = new Contact.ContactCache();
         while (reader.hasNextLine()){
             String line = reader.nextLine();
-            System.out.println(line);
             String[] data = line.split(";");
             if (data[0].charAt(0)=='#') continue;
             if (data[0].startsWith("FN")){
