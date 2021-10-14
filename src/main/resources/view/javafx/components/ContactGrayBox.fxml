@@ -78,7 +78,11 @@
       </AnchorPane>
       <Button fx:id="addAttachmentButton" layoutX="1022.0" layoutY="276.0" mnemonicParsing="false" text="Add" />
       <Label layoutX="600.0" layoutY="253.0" text="Attachments" />
-      <HBox fx:id="tagHBox" layoutX="200.0" layoutY="109.0" prefHeight="51.0" prefWidth="878.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="101.60000000000002" AnchorPane.topAnchor="109.0" />
+      <ScrollPane layoutX="200.0" layoutY="109.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="101.60000000000002" AnchorPane.topAnchor="109.0">
+         <content>
+            <HBox fx:id="tagHBox" prefHeight="51.0" prefWidth="868.0" />
+         </content>
+      </ScrollPane>
       <Button fx:id="addTagButton" layoutX="1086.0" layoutY="128.0" mnemonicParsing="false" text="Add Tag" AnchorPane.leftAnchor="1093.0" AnchorPane.topAnchor="123.0" />
    </AnchorPane>
 </fx:root>
