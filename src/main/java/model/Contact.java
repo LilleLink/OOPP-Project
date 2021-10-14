@@ -94,6 +94,14 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
     }
 
     /**
+     * Adds multiple tags to the contact
+     * @param tags the tags to add
+     */
+    public void addAllTags(List<ITag> tags) {
+        this.tags.addAll(tags);
+    }
+
+    /**
      * Removes a tag from the contact.
      * @param tag The tag to remove.
      * @throws TagNotFoundException If the contact does not have the given tag.

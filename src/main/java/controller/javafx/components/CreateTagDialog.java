@@ -60,9 +60,9 @@ class CreateTagDialog extends ViewComponent {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 
-        Scene scene = new Scene(this.getPane(), 300, 200);
+        Scene scene = new Scene(this.getPane(), 300, 150);
 
-        stage.setTitle("Dialog");
+        stage.setTitle("Create new Tag");
         stage.setScene(scene);
         stage.showAndWait();
     }
