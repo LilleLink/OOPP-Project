@@ -98,7 +98,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @param tag The tag to remove.
      * @throws TagNotFoundException If the contact does not have the given tag.
      */
-    void removeTag(ITag tag) throws TagNotFoundException {
+    public void removeTag(ITag tag) throws TagNotFoundException {
         if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
         tags.remove(tag);
         notifyObservers();

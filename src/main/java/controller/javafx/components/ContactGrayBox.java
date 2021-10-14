@@ -15,11 +15,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import model.Contact;
 import model.IObserver;
+import model.ITag;
+import model.exceptions.TagNotFoundException;
 
 import java.awt.*;
 import java.io.File;
@@ -28,6 +31,8 @@ import java.lang.invoke.LambdaConversionException;
 import java.net.URI;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.function.Consumer;
 import java.util.logging.FileHandler;
 
 class ContactGrayBox extends ViewComponent implements IObserver {
@@ -57,6 +62,10 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     @FXML private TextField addressText;
 
     @FXML private Button openMapButton;
+
+    @FXML private Button addTagButton;
+
+    @FXML private HBox tagHBox;
 
     private NotesComponent notesComponent;
 
@@ -88,6 +97,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         contactImage.setOnMouseClicked(this::setNewContactImage);
         updateContactImage();
         drawAttachments();
+        updateTagBox();
     }
 
     Contact getContact(){
@@ -103,12 +113,24 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     }
 
     private void close(Event event){
-        saveFields();
         closeWindowHandler.handle(event);
     }
 
-    private void saveFields(){
+    private void updateTagBox(){
+        tagHBox.getChildren().clear();
+        ArrayList<TagCard> cards = new ArrayList<>();
+        for (ITag tag: contact.getTags()){
+            cards.add(new TagCard(tag));
+        }
+        cards.forEach(tagCard -> tagCard.setOnDelete(actionEvent -> removeTag(tagCard.getTag())));
+    }
 
+    private void removeTag(ITag tag){
+        try {
+            contact.removeTag(tag);
+        } catch (TagNotFoundException ignored){
+        }
+        updateTagBox();
     }
 
     /**
@@ -121,7 +143,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     private void delete(Event event){
         deleteContactHandler.handle(event);
-        closeWindowHandler.handle(event);
+        close(event);
     }
 
     private boolean openMap(ActionEvent event){
@@ -137,14 +159,6 @@ class ContactGrayBox extends ViewComponent implements IObserver {
             }
         }
         return false;
-    }
-
-    private void save(Event e){
-        if (isValidName(contactName.getText())) {
-            contact.setName(contactName.getText());
-            contact.setAddress(addressText.getText());
-            close(e);
-        }
     }
 
     private void setNewContactImage(MouseEvent event){
