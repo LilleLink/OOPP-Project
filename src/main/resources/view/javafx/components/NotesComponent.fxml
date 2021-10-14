@@ -20,8 +20,10 @@
             <Button fx:id="removeButton" mnemonicParsing="false" text="Remove" />
          </ToolBar>
       </HBox>
-      <ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" prefWidth="420.0" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
-         <VBox fx:id="noteVBox" />
+      <ScrollPane fitToHeight="true" fitToWidth="true" focusTraversable="false" hbarPolicy="NEVER" prefWidth="420.0" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox fx:id="noteVBox" />
+         </content>
       </ScrollPane>
       <TextArea fx:id="inputTextArea" prefHeight="58.0" prefWidth="420.0" promptText="Write a note here..." wrapText="true" VBox.vgrow="NEVER" />
       <HBox>

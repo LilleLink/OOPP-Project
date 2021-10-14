@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -9,10 +10,16 @@
 
 <fx:root prefHeight="109.0" prefWidth="478.0" type="AnchorPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
    <VBox prefHeight="50.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-      <TextArea fx:id="noteTextArea" editable="false" minHeight="100.0" wrapText="true" VBox.vgrow="ALWAYS" />
+      <TextArea fx:id="noteTextArea" editable="false" focusTraversable="false" minHeight="100.0" wrapText="true" VBox.vgrow="ALWAYS">
+         <cursor>
+            <Cursor fx:constant="TEXT" />
+         </cursor></TextArea>
       <HBox VBox.vgrow="ALWAYS">
          <Pane HBox.hgrow="ALWAYS" />
          <Label fx:id="dateLabel" text="Date" HBox.hgrow="ALWAYS" />
       </HBox>
    </VBox>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </fx:root>

@@ -93,6 +93,14 @@ public class Notes implements ICacheVisitable{
     }
 
     /**
+     * Returns the last note added.
+     * @return the last added note
+     */
+    public Note getLastAdded() {
+        return elements.get(elements.size() - 1);
+    }
+
+    /**
      * Replaces the note at the given index with a new one containing the given text.
      * The list order is unaffected.
      * @param index the index of the note being edited
@@ -100,7 +108,7 @@ public class Notes implements ICacheVisitable{
      */
    public void editNoteAt(int index, String text) {
         Note note = elements.get(index).editNote(text);
-        elements.add(index, note);
+        elements.set(index, note);
     }
 
     /**
