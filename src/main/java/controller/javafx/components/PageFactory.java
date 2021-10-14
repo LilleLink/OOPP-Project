@@ -40,8 +40,8 @@ public class PageFactory {
      * @param contactList A list of the contacts to display
      * @return ContactPage as a ViewComponent
      */
-    public static ContactPage CreateContactPage (ContactList contactList) {
-        return new ContactPage(contactList);
+    public static ContactPage CreateContactPage (ContactList contactList, TagHandler tagHandler) {
+        return new ContactPage(contactList, tagHandler);
     }
 
     /***

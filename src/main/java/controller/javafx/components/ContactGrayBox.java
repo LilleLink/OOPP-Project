@@ -22,6 +22,7 @@ import javafx.stage.FileChooser;
 import model.Contact;
 import model.IObserver;
 import model.ITag;
+import model.TagHandler;
 import model.exceptions.TagNotFoundException;
 
 import java.awt.*;
@@ -37,6 +38,7 @@ import java.util.logging.FileHandler;
 
 class ContactGrayBox extends ViewComponent implements IObserver {
 
+    private final TagHandler tagHandler;
     private Contact contact;
 
     @FXML private AnchorPane baseAnchorPane;
@@ -75,8 +77,9 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     private final IAttachmentHandler attachmentHandler = AttachmentHandlerFactory.getService();
 
-    ContactGrayBox(){
+    ContactGrayBox(TagHandler tagHandler){
         super();
+        this.tagHandler = tagHandler;
         baseAnchorPane.setOnMouseClicked(this::close);
         closeButton.setOnAction(this::close);
         deleteButton.setOnAction(this::delete);
@@ -86,6 +89,10 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         openMapButton.setOnAction(this::openMap);
         cardAnchorPane.setOnMouseClicked(MouseEvent::consume);
         addAttachmentButton.setOnAction(this::addAttachment);
+        addTagButton.setOnAction(actionEvent -> {
+            new AddTagDialog(contact, tagHandler).displayAndWait();
+            updateTagBox();
+        });
     }
 
     void setContact(Contact contact){

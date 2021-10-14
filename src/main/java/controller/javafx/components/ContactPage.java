@@ -8,6 +8,7 @@ import javafx.scene.layout.FlowPane;
 import model.ContactList;
 import model.Contact;
 import model.IObserver;
+import model.TagHandler;
 import search.ISearchObserver;
 
 import java.util.ArrayList;
@@ -26,12 +27,12 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
     private final ContactList contacts;
     private final List<ContactCard> contactCards = new ArrayList<>();
 
-    ContactPage(ContactList contacts){
+    ContactPage(ContactList contacts, TagHandler tagHandler){
         super();
         this.contacts = contacts;
         contacts.subscribe(this);
         this.newContactButton.setOnMouseClicked(this::newContact);
-        contactGrayBox = new ContactGrayBox();
+        contactGrayBox = new ContactGrayBox(tagHandler);
         contactGrayBox.setOnClose( mouseEvent -> closeGrayPane());
         AnchorPane contactGrayBoxPane = contactGrayBox.getPane();
         baseAnchorPane.getChildren().add(contactGrayBoxPane);
