@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,11 +18,19 @@ import java.util.List;
 
 public class AddTagDialog extends ViewComponent {
 
+    private final Stage stage = new Stage();
+
     @FXML
     private Button createTagButton;
 
     @FXML
     private VBox tagContainer;
+
+    @FXML
+    private Button addTagsButton;
+
+    @FXML
+    private Button cancelButton;
 
     private final Contact contact;
 
@@ -34,9 +44,12 @@ public class AddTagDialog extends ViewComponent {
         this.tagHandler = tagHandler;
         updateTagContainer();
         createTagButton.setOnAction(actionEvent -> {
-            new CreateTagDialog(tagHandler).displayAndWait();
+            new CreateTagDialog(tagHandler);
             updateTagContainer();
         });
+        cancelButton.setOnAction(actionEvent -> close());
+        addTagsButton.setOnAction(actionEvent -> save());
+        displayAndWait();
     }
 
     private void updateTagContainer() {
@@ -53,19 +66,34 @@ public class AddTagDialog extends ViewComponent {
                     selectedTags.remove(tag);
                 }
             });
+            if (selectedTags.contains(tag)) {
+                checkBox.setSelected(true);
+            }
             tagContainer.getChildren().add(checkBox);
         }
     }
 
-    void displayAndWait() {
-        Stage stage = new Stage();
+    private void save() {
+        contact.addAllTags(selectedTags);
+        close();
+    }
+
+    private void close() {
+        stage.close();
+    }
+
+    private void displayAndWait() {
         stage.initModality(Modality.APPLICATION_MODAL);
 
         Scene scene = new Scene(this.getPane(), 400, 250);
 
         stage.setTitle("Add tag to contact");
         stage.setScene(scene);
-        stage.setOnCloseRequest(windowEvent -> contact.addAllTags(selectedTags));
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                save();
+            }
+        });
         stage.showAndWait();
     }
 

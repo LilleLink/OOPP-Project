@@ -102,7 +102,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         cardAnchorPane.setOnMouseClicked(MouseEvent::consume);
         addAttachmentButton.setOnAction(this::addAttachment);
         addTagButton.setOnAction(actionEvent -> {
-            new AddTagDialog(contact, tagHandler).displayAndWait();
+            new AddTagDialog(contact, tagHandler);
             updateTagBox();
         });
     }

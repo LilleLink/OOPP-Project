@@ -5,13 +5,15 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<fx:root prefHeight="216.0" prefWidth="331.0" type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="216.0" prefWidth="290.0" type="AnchorPane" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="createTagButton" layoutX="241.0" layoutY="95.0" mnemonicParsing="false" text="Add new Tag" />
-      <ScrollPane layoutX="14.0" layoutY="8.0" prefHeight="194.0" prefWidth="212.0">
+      <Button fx:id="createTagButton" layoutX="191.0" layoutY="95.0" mnemonicParsing="false" text="Add new Tag" AnchorPane.rightAnchor="12.599999999999994" AnchorPane.topAnchor="95.0" />
+      <ScrollPane layoutX="14.0" layoutY="8.0" prefHeight="142.0" prefWidth="162.0" AnchorPane.bottomAnchor="65.6" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="113.6" AnchorPane.topAnchor="8.0">
          <content>
-            <VBox fx:id="tagContainer" prefHeight="191.0" prefWidth="196.0" />
+            <VBox fx:id="tagContainer" prefHeight="138.0" prefWidth="150.0" />
          </content>
       </ScrollPane>
+      <Button fx:id="addTagsButton" layoutX="191.0" layoutY="167.0" mnemonicParsing="false" text="Save" AnchorPane.bottomAnchor="23.4" AnchorPane.rightAnchor="12.599999999999994" />
+      <Button fx:id="cancelButton" layoutX="14.0" layoutY="167.0" mnemonicParsing="false" text="Cancel" AnchorPane.bottomAnchor="23.4" AnchorPane.leftAnchor="14.0" />
    </children>
 </fx:root>

@@ -142,7 +142,7 @@ class EditEventCard extends ViewComponent {
     }
 
     private void addTag(ActionEvent event) {
-        new CreateTagDialog(tagHandler).displayAndWait();
+        new CreateTagDialog(tagHandler);
         resetTagComboBox();
     }
 
