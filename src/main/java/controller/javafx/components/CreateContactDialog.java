@@ -3,10 +3,11 @@ package controller.javafx.components;
 import javafx.beans.Observable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.DirectoryChooser;
@@ -44,7 +45,7 @@ class CreateContactDialog extends ViewComponent {
         errorMessageText.setVisible(false);
         errorMessageText.setFill(Color.RED);
         addContactButton.setOnAction(this::btnAddContactClicked);
-        cancelButton.setOnAction(this::closeStage);
+        cancelButton.setOnAction(ActionEvent -> close());
         contactName.textProperty().addListener(this::textFieldChanged);
         fileLoad.setOnAction(this::loadContactFile);
         dirLoad.setOnAction(this::loadContactDirectory);
@@ -97,18 +98,20 @@ class CreateContactDialog extends ViewComponent {
 
     @FXML
     private void btnAddContactClicked(ActionEvent event) {
+        addContact();
+    }
+
+    private void addContact() {
         try {
             contacts.addContact(contactName.getText());
-            closeStage(event);
+            close();
         } catch (NameNotAllowedException e) {
             errorMessageText.setText(e.getMessage());
             errorMessageText.setVisible(true);
         }
     }
 
-    private void closeStage(ActionEvent event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
+    private void close() {
         stage.close();
     }
 
@@ -116,6 +119,12 @@ class CreateContactDialog extends ViewComponent {
         stage.initModality(Modality.APPLICATION_MODAL);
 
         Scene scene = new Scene(this.getPane(), 300, 200);
+
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                addContact();
+            }
+        });
 
         stage.setTitle("Dialog");
         stage.setScene(scene);
