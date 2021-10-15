@@ -22,37 +22,37 @@
                      <children>
                         <ScrollPane hbarPolicy="NEVER" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1085.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <FlowPane fx:id="mondayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                              <FlowPane fx:id="mondayFlowPane" prefHeight="566.0" prefWidth="173.0" vgap="2.0" />
                            </content>
                         </ScrollPane>
                         <ScrollPane hbarPolicy="NEVER" layoutX="180.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="180.0" AnchorPane.rightAnchor="905.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <FlowPane fx:id="tuesdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                              <FlowPane fx:id="tuesdayFlowPane" prefHeight="566.0" prefWidth="173.0" vgap="2.0" />
                            </content>
                         </ScrollPane>
                         <ScrollPane hbarPolicy="NEVER" layoutX="361.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="361.0" AnchorPane.rightAnchor="724.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <FlowPane fx:id="wednesdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                              <FlowPane fx:id="wednesdayFlowPane" prefHeight="566.0" prefWidth="173.0" vgap="2.0" />
                            </content>
                         </ScrollPane>
                         <ScrollPane hbarPolicy="NEVER" layoutX="542.0" layoutY="33.0" prefHeight="568.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="541.0" AnchorPane.rightAnchor="543.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <FlowPane fx:id="thursdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                              <FlowPane fx:id="thursdayFlowPane" prefHeight="566.0" prefWidth="173.0" vgap="2.0" />
                            </content>
                         </ScrollPane>
                         <ScrollPane hbarPolicy="NEVER" layoutX="723.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="723.0" AnchorPane.rightAnchor="361.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <FlowPane fx:id="fridayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                              <FlowPane fx:id="fridayFlowPane" prefHeight="566.0" prefWidth="173.0" vgap="2.0" />
                            </content>
                         </ScrollPane>
                         <ScrollPane hbarPolicy="NEVER" layoutX="904.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="904.0" AnchorPane.rightAnchor="180.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <FlowPane fx:id="saturdayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                              <FlowPane fx:id="saturdayFlowPane" prefHeight="566.0" prefWidth="173.0" vgap="2.0" />
                            </content>
                         </ScrollPane>
                         <ScrollPane hbarPolicy="NEVER" layoutX="1085.0" layoutY="33.0" prefHeight="567.0" prefWidth="175.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="1085.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <content>
-                              <FlowPane fx:id="sundayFlowPane" prefHeight="566.0" prefWidth="173.0" />
+                              <FlowPane fx:id="sundayFlowPane" prefHeight="566.0" prefWidth="173.0" vgap="2.0" />
                            </content>
                         </ScrollPane>
                      </children>
