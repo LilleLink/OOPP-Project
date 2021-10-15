@@ -1,69 +1,99 @@
 package controller.javafx.components;
 
-import javafx.beans.Observable;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.TextField;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
+import javafx.scene.control.CheckBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import model.Contact;
+import model.ITag;
 import model.TagHandler;
-import model.exceptions.NameNotAllowedException;
 
-class AddTagDialog extends ViewComponent {
+import java.util.ArrayList;
+import java.util.List;
 
-    private final TagHandler tagHandler;
-    @FXML private TextField tagName;
-    @FXML private Button addTagButton;
-    @FXML private Button cancelButton;
-    @FXML private ColorPicker colorPicker;
-    @FXML private Text errorMessageText;
+public class AddTagDialog extends ViewComponent {
 
-
-    AddTagDialog(TagHandler tagHandler){
-        super();
-        this.tagHandler = tagHandler;
-        errorMessageText.setVisible(false);
-        errorMessageText.setFill(Color.RED);
-        addTagButton.setOnAction(this::btnAddTagClicked);
-        cancelButton.setOnAction(this::closeStage);
-        tagName.textProperty().addListener(this::textFieldChanged);
-    }
-
-    private void textFieldChanged(Observable observable) {
-        errorMessageText.setVisible(false);
-    }
+    private final Stage stage = new Stage();
 
     @FXML
-    private void btnAddTagClicked(ActionEvent event) {
-        try{
-            tagHandler.createTag(tagName.getText(), Integer.toHexString(colorPicker.getValue().hashCode()));
-            closeStage(event);
-        } catch (NameNotAllowedException e) {
-            errorMessageText.setText(e.getMessage());
-            errorMessageText.setVisible(true);
+    private Button createTagButton;
+
+    @FXML
+    private VBox tagContainer;
+
+    @FXML
+    private Button addTagsButton;
+
+    @FXML
+    private Button cancelButton;
+
+    private final Contact contact;
+
+    private final TagHandler tagHandler;
+
+    private final ArrayList<ITag> selectedTags = new ArrayList<>();
+
+    AddTagDialog(Contact contact, TagHandler tagHandler) {
+        super();
+        this.contact = contact;
+        this.tagHandler = tagHandler;
+        updateTagContainer();
+        createTagButton.setOnAction(actionEvent -> {
+            new CreateTagDialog(tagHandler);
+            updateTagContainer();
+        });
+        cancelButton.setOnAction(actionEvent -> close());
+        addTagsButton.setOnAction(actionEvent -> save());
+        displayAndWait();
+    }
+
+    private void updateTagContainer() {
+        tagContainer.getChildren().clear();
+        List<ITag> availableTags = tagHandler.getAllTags();
+        availableTags.removeAll(contact.getTags());
+        CheckBox checkBox;
+        for (ITag tag : availableTags) {
+            checkBox = new CheckBox(tag.toString());
+            checkBox.selectedProperty().addListener((observableValue, oldValue, newValue) -> {
+                if (newValue) {
+                    selectedTags.add(tag);
+                } else {
+                    selectedTags.remove(tag);
+                }
+            });
+            if (selectedTags.contains(tag)) {
+                checkBox.setSelected(true);
+            }
+            tagContainer.getChildren().add(checkBox);
         }
     }
 
-    private void closeStage(ActionEvent event) {
-        Node  source = (Node)  event.getSource();
-        Stage stage  = (Stage) source.getScene().getWindow();
+    private void save() {
+        contact.addAllTags(selectedTags);
+        close();
+    }
+
+    private void close() {
         stage.close();
     }
 
-    public void displayAndWait(){
-        Stage stage = new Stage();
+    private void displayAndWait() {
         stage.initModality(Modality.APPLICATION_MODAL);
 
-        Scene scene = new Scene(this.getPane(), 300, 200);
+        Scene scene = new Scene(this.getPane(), 400, 250);
 
-        stage.setTitle("Dialog");
+        stage.setTitle("Add tag to contact");
         stage.setScene(scene);
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                save();
+            }
+        });
         stage.showAndWait();
     }
 

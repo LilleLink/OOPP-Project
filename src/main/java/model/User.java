@@ -1,6 +1,8 @@
 package model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 /***
  * The user object holding user specific data.
@@ -15,7 +17,7 @@ public class User implements ICacheVisitable {
      * Instantiates a user object with the specified name.
      * @param name the name of the user
      */
-    public User(String name){
+    public User(String name) {
         this.name = name;
     }
 
@@ -23,7 +25,7 @@ public class User implements ICacheVisitable {
      * Sets the name of the user
      * @param name new name of the user
      */
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -49,8 +51,8 @@ public class User implements ICacheVisitable {
      * @return an arraylist of the events the contact is a part of
      */
     public List<Event> getContactEvents(Contact contact) {
-        List<Event> contactEvents= new ArrayList<>();
-        for (Event e: eventList.getList()) {
+        List<Event> contactEvents = new ArrayList<>();
+        for (Event e : eventList.getList()) {
             if (e.getContacts().contains(contact))
                 contactEvents.add(e);
         }
@@ -61,15 +63,16 @@ public class User implements ICacheVisitable {
      * Returns the wrapper object for the contact list
      * @return ContactList wrapper object
      */
-    public ContactList getContacts(){
+    public ContactList getContacts() {
         return contactList;
     }
 
     /**
      * Returns the tag handler used by the user
+     *
      * @return the tag handler
      */
-    public TagHandler getTagHandler(){
+    public TagHandler getTagHandler() {
         return tagHandler;
     }
 
@@ -82,7 +85,8 @@ public class User implements ICacheVisitable {
         public List<Contact> contacts;
         public TagHandler tagHandler;
 
-        public UserCache() {}
+        public UserCache() {
+        }
     }
 
     private UserCache getCache() {

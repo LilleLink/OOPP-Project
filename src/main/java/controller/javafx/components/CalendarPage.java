@@ -2,8 +2,8 @@ package controller.javafx.components;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -11,35 +11,59 @@ import model.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.temporal.*;
-import java.util.*;
+import java.time.temporal.TemporalAdjusters;
+import java.time.temporal.TemporalField;
+import java.time.temporal.WeekFields;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 class CalendarPage extends ViewComponent implements IObserver {
 
     private final TagHandler tagHandler;
-    @FXML private Label weekLabel;
-    @FXML private Button nextWeekButton;
-    @FXML private Button previousWeekButton;
-    @FXML private Button newEventButton;
+    @FXML
+    private Label weekLabel;
+    @FXML
+    private Button nextWeekButton;
+    @FXML
+    private Button previousWeekButton;
+    @FXML
+    private Button newEventButton;
 
-    @FXML private Label mondayLabel;
-    @FXML private Label tuesdayLabel;
-    @FXML private Label wednesdayLabel;
-    @FXML private Label thursdayLabel;
-    @FXML private Label fridayLabel;
-    @FXML private Label saturdayLabel;
-    @FXML private Label sundayLabel;
+    @FXML
+    private Label mondayLabel;
+    @FXML
+    private Label tuesdayLabel;
+    @FXML
+    private Label wednesdayLabel;
+    @FXML
+    private Label thursdayLabel;
+    @FXML
+    private Label fridayLabel;
+    @FXML
+    private Label saturdayLabel;
+    @FXML
+    private Label sundayLabel;
 
-    @FXML private FlowPane mondayFlowPane;
-    @FXML private FlowPane tuesdayFlowPane;
-    @FXML private FlowPane wednesdayFlowPane;
-    @FXML private FlowPane thursdayFlowPane;
-    @FXML private FlowPane fridayFlowPane;
-    @FXML private FlowPane saturdayFlowPane;
-    @FXML private FlowPane sundayFlowPane;
+    @FXML
+    private FlowPane mondayFlowPane;
+    @FXML
+    private FlowPane tuesdayFlowPane;
+    @FXML
+    private FlowPane wednesdayFlowPane;
+    @FXML
+    private FlowPane thursdayFlowPane;
+    @FXML
+    private FlowPane fridayFlowPane;
+    @FXML
+    private FlowPane saturdayFlowPane;
+    @FXML
+    private FlowPane sundayFlowPane;
 
-    @FXML private StackPane calendarPageStackPane;
-    @FXML private AnchorPane calendarPageAnchorPane;
+    @FXML
+    private StackPane calendarPageStackPane;
+    @FXML
+    private AnchorPane calendarPageAnchorPane;
 
     private LocalDate weekToDisplay;
 
@@ -86,21 +110,21 @@ class CalendarPage extends ViewComponent implements IObserver {
         date = date.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
         TemporalField weekGetter = WeekFields.of(Locale.getDefault()).weekOfWeekBasedYear();
 
-        weekLabel.setText("Week "+date.get(weekGetter)+" "+date.getYear());
+        weekLabel.setText("Week " + date.get(weekGetter) + " " + date.getYear());
 
-        mondayLabel.setText("Monday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        mondayLabel.setText("Monday " + date.getDayOfMonth() + "/" + date.getMonthValue());
         date = date.plusDays(1);
-        tuesdayLabel.setText("Tuesday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        tuesdayLabel.setText("Tuesday " + date.getDayOfMonth() + "/" + date.getMonthValue());
         date = date.plusDays(1);
-        wednesdayLabel.setText("Wednesday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        wednesdayLabel.setText("Wednesday " + date.getDayOfMonth() + "/" + date.getMonthValue());
         date = date.plusDays(1);
-        thursdayLabel.setText("Thursday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        thursdayLabel.setText("Thursday " + date.getDayOfMonth() + "/" + date.getMonthValue());
         date = date.plusDays(1);
-        fridayLabel.setText("Friday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        fridayLabel.setText("Friday " + date.getDayOfMonth() + "/" + date.getMonthValue());
         date = date.plusDays(1);
-        saturdayLabel.setText("Saturday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        saturdayLabel.setText("Saturday " + date.getDayOfMonth() + "/" + date.getMonthValue());
         date = date.plusDays(1);
-        sundayLabel.setText("Sunday "+date.getDayOfMonth()+"/"+date.getMonthValue());
+        sundayLabel.setText("Sunday " + date.getDayOfMonth() + "/" + date.getMonthValue());
     }
 
     private void newEvent(ActionEvent actionEvent) {
@@ -126,12 +150,13 @@ class CalendarPage extends ViewComponent implements IObserver {
 
     private void editEvent(Event event) {
         editEventCard = new EditEventCard(event, contactList, tagHandler);
+        editEventCard.setOnDelete(actionEvent -> eventList.removeEvent(event));
         calendarPageStackPane.getChildren().add(editEventCard.getPane());
         editEventCard.getPane().toFront();
     }
 
     private void clearCalendar() {
-        for(CalendarEventCard calendarEventCard : calendarEventCards) {
+        for (CalendarEventCard calendarEventCard : calendarEventCards) {
             calendarEventCard.unsubscribe();
         }
 

@@ -1,8 +1,9 @@
 package database.json;
 
-import model.*;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Optional;
 
 public class JSONRecords {
 
@@ -11,21 +12,34 @@ public class JSONRecords {
         default Optional<T> visit(UserRecord user, E env) {
             return Optional.empty();
         }
+
         default Optional<T> visit(ContactRecord contact, E env) {
             return Optional.empty();
         }
+
         default Optional<T> visit(EventRecord event, E env) {
             return Optional.empty();
         }
-        default Optional<T> visit(PRMRecord prm, E env) { return Optional.empty(); }
+
+        default Optional<T> visit(PRMRecord prm, E env) {
+            return Optional.empty();
+        }
+
         default Optional<T> visit(NoteRecord note, E env) {
             return Optional.empty();
         }
+
         default Optional<T> visit(NotesRecord notes, E env) {
             return Optional.empty();
         }
-        default Optional<T> visit(TagHandlerRecord tagHandler, E env) { return Optional.empty(); }
-        default Optional<T> visit(TagRecord tag, E env) { return Optional.empty(); }
+
+        default Optional<T> visit(TagHandlerRecord tagHandler, E env) {
+            return Optional.empty();
+        }
+
+        default Optional<T> visit(TagRecord tag, E env) {
+            return Optional.empty();
+        }
     }
 
     // The visitable record interface.

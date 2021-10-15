@@ -8,9 +8,10 @@ import java.util.Optional;
 /**
  * Represents a list of Note objects with restricted operations.
  * Note objects contained in the list are sorted after age using the LocalDateTime class.
+ *
  * @see java.time.LocalDateTime
  */
-public class Notes implements ICacheVisitable{
+public class Notes implements ICacheVisitable {
 
     // Elements represented as a list of note objects
     private final List<Note> elements;
@@ -25,6 +26,7 @@ public class Notes implements ICacheVisitable{
     /**
      * Copy constructor.
      * Instantiates a new sorted list from the list contained in the given notes.
+     *
      * @param oldNotes the notes to be copied
      */
     Notes(Notes oldNotes) {
@@ -34,6 +36,7 @@ public class Notes implements ICacheVisitable{
 
     /**
      * Copy constructor for setting a selected list of note in this.
+     *
      * @param notes the new list of elements
      */
     public Notes(List<Note> notes) {
@@ -45,55 +48,61 @@ public class Notes implements ICacheVisitable{
      * Instantiates an empty note with default constructor and appends it to the list of elements.
      * New note objects will always be newer than the object last added to the list.
      */
-   public void addNote() {
+    public void addNote() {
         elements.add(new Note());
     }
 
     /**
      * Instantiates a note with the given string and appends it to the list of elements.
      * New note objects will always be newer than the object last added to the list.
+     *
      * @param text the String of text to be contained in the note.
      */
-   public void addNote(String text) {
+    public void addNote(String text) {
         elements.add(new Note(text));
     }
 
     /**
      * Removes the Note from the list of elements at the specified position.
+     *
      * @param index the index of the note to be removed.
      */
-   public void removeNote(int index) {
+    public void removeNote(int index) {
         elements.remove(index);
     }
 
     /**
      * Gives the current number of elements in notes
+     *
      * @return the number of elements
      */
-   public int size() {
+    public int size() {
         return elements.size();
     }
 
     /**
      * Gives the text for the note at the given index.
+     *
      * @param index the index of the note to view
      * @return the text of the viewed note
      */
-   public String viewNoteAt(int index) {
+    public String viewNoteAt(int index) {
         return elements.get(index).viewNote();
     }
 
     /**
      * Gives the note at the given index.
+     *
      * @param index the index of the note to receive
      * @return a note
      */
     public Note getNoteAt(int index) {
-       return elements.get(index);
+        return elements.get(index);
     }
 
     /**
      * Returns the last note added.
+     *
      * @return the last added note
      */
     public Note getLastAdded() {
@@ -103,19 +112,21 @@ public class Notes implements ICacheVisitable{
     /**
      * Replaces the note at the given index with a new one containing the given text.
      * The list order is unaffected.
+     *
      * @param index the index of the note being edited
-     * @param text the new text
+     * @param text  the new text
      */
-   public void editNoteAt(int index, String text) {
+    public void editNoteAt(int index, String text) {
         Note note = elements.get(index).editNote(text);
         elements.set(index, note);
     }
 
     /**
      * Returns a copy of the list of note objects.
+     *
      * @return the list of notes
      */
-   public List<Note> getSortedElem() {
+    public List<Note> getSortedElem() {
         List<Note> list = new ArrayList<>(elements);
         list.sort(Note::compareTo);
         return list;
@@ -136,7 +147,7 @@ public class Notes implements ICacheVisitable{
     }
 
     public Notes(NotesCache cache) {
-       this.elements = new ArrayList<>(cache.elements);
+        this.elements = new ArrayList<>(cache.elements);
     }
 
     public static class NotesCache {
