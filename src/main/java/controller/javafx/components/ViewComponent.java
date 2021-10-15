@@ -3,7 +3,6 @@ package controller.javafx.components;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 
-import java.io.File;
 import java.io.IOException;
 
 /***
@@ -19,8 +18,8 @@ public abstract class ViewComponent {
      */
     protected ViewComponent() {
         // Loads the fxml file and sets this file as the controller
-        String fxmlFileName = getClass().getSimpleName()+".fxml";
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/javafx/components/"+fxmlFileName));
+        String fxmlFileName = getClass().getSimpleName() + ".fxml";
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/javafx/components/" + fxmlFileName));
         fxmlLoader.setController(this);
         fxmlLoader.setRoot(pane);
         try {
@@ -30,7 +29,7 @@ public abstract class ViewComponent {
         }
 
         // Anchors the component
-        AnchorPane.setBottomAnchor(pane,0.0);
+        AnchorPane.setBottomAnchor(pane, 0.0);
         AnchorPane.setLeftAnchor(pane, 0.0);
         AnchorPane.setRightAnchor(pane, 0.0);
         AnchorPane.setTopAnchor(pane, 0.0);

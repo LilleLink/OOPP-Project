@@ -17,9 +17,12 @@ import java.util.List;
 
 class ContactPickerDialog extends ViewComponent {
 
-    @FXML private AnchorPane searchBarAnchorPane;
-    @FXML private VBox contactCardVBox;
-    @FXML private Button saveButton;
+    @FXML
+    private AnchorPane searchBarAnchorPane;
+    @FXML
+    private VBox contactCardVBox;
+    @FXML
+    private Button saveButton;
 
     ContactList contactList;
     List<ContactPickerContactCard> contactPickerContactCardList = new ArrayList<>();
@@ -42,15 +45,15 @@ class ContactPickerDialog extends ViewComponent {
                 pickedContacts.add(cpcc.getContact());
             }
         }
-        Node source = (Node)  actionEvent.getSource();
-        Stage stage  = (Stage) source.getScene().getWindow();
+        Node source = (Node) actionEvent.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 
     private void displayAndWait() {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
-        Scene scene =  new Scene(this.getPane());
+        Scene scene = new Scene(this.getPane());
         stage.setTitle("Pick contacts");
         stage.setScene(scene);
         stage.showAndWait();

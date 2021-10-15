@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.User;
 
-import java.io.File;
 import java.io.IOException;
 
 public class JavaFXViewInitializer {

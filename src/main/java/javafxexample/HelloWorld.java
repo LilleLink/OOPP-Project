@@ -8,8 +8,7 @@ import javafx.stage.Stage;
 
 import java.util.Objects;
 
-public class HelloWorld extends Application
-{
+public class HelloWorld extends Application {
 
     public static void run(String[] args) {
         launch(args);
