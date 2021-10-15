@@ -1,13 +1,13 @@
 package controller.javafx.components;
 
 import javafx.beans.Observable;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -37,8 +37,8 @@ class CreateTagDialog extends ViewComponent {
         this.tagHandler = tagHandler;
         errorMessageText.setVisible(false);
         errorMessageText.setFill(Color.RED);
-        addTagButton.setOnAction(this::btnAddTagClicked);
-        cancelButton.setOnAction(this::closeStage);
+        addTagButton.setOnAction(ActionEvent -> btnAddTagClicked());
+        cancelButton.setOnAction(ActionEvent -> closeStage());
         tagName.textProperty().addListener(this::textFieldChanged);
         displayAndWait();
     }
@@ -48,19 +48,17 @@ class CreateTagDialog extends ViewComponent {
     }
 
     @FXML
-    private void btnAddTagClicked(Event event) {
+    private void btnAddTagClicked() {
         try {
             tagHandler.createTag(tagName.getText(), Integer.toHexString(colorPicker.getValue().hashCode()));
-            closeStage(event);
+            closeStage();
         } catch (NameNotAllowedException e) {
             errorMessageText.setText(e.getMessage());
             errorMessageText.setVisible(true);
         }
     }
 
-    private void closeStage(Event event) {
-        Node source = (Node) event.getSource();
-        Stage stage = (Stage) source.getScene().getWindow();
+    private void closeStage() {
         stage.close();
     }
 
@@ -68,6 +66,12 @@ class CreateTagDialog extends ViewComponent {
         stage.initModality(Modality.APPLICATION_MODAL);
 
         Scene scene = new Scene(this.getPane(), 300, 150);
+
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
+            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
+                btnAddTagClicked();
+            }
+        });
 
         stage.setTitle("Create new Tag");
         stage.setScene(scene);
