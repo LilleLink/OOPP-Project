@@ -17,7 +17,8 @@ public class ContactList implements IObservable {
     /***
      * Creates a new contactlist wrapper object
      */
-    ContactList() {}
+    ContactList() {
+    }
 
     /***
      * Wraps a given list of contacts.
@@ -82,7 +83,7 @@ public class ContactList implements IObservable {
 
     @Override
     public void notifyObservers() {
-        for (IObserver observer : observers){
+        for (IObserver observer : observers) {
             observer.onEvent();
         }
     }

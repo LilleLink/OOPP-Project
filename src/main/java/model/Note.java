@@ -18,6 +18,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
     /**
      * Creates an instance of Note containing the given text.
      * Sets the text to an empty String and the point of creation to the current time.
+     *
      * @param text the string to be stored
      */
     Note(String text) {
@@ -36,7 +37,8 @@ public class Note implements Comparable<Note>, ICacheVisitable {
 
     /**
      * Private constructor for instancing a note with the given text, date and time.
-     * @param text a String
+     *
+     * @param text            a String
      * @param pointOfCreation a date and time
      */
     private Note(String text, LocalDateTime pointOfCreation) {
@@ -46,6 +48,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
 
     /**
      * Gives the text contained in the note.
+     *
      * @return a String
      */
     public String viewNote() {
@@ -55,16 +58,18 @@ public class Note implements Comparable<Note>, ICacheVisitable {
     /**
      * Returns a new Note containing the given text and keeps this point of creation.
      * Uses mutate by copy.
+     *
      * @param newText a new String
      * @return a new Note containing the given text
      */
     Note editNote(String newText) {
-        return new Note(newText,pointOfCreation);
+        return new Note(newText, pointOfCreation);
     }
 
     /**
      * Gives the date of creation as a String.
-      * @return a String
+     *
+     * @return a String
      */
     public String dateToString() {
         return viewDate().toString();
@@ -73,8 +78,9 @@ public class Note implements Comparable<Note>, ICacheVisitable {
     /**
      * Gives the time of creation as a String containing numerical hour and minute.
      * <p>
-     *     The output will be HH:MM.
+     * The output will be HH:MM.
      * </p>
+     *
      * @return a String
      */
     public String timeToString() {
@@ -85,11 +91,12 @@ public class Note implements Comparable<Note>, ICacheVisitable {
     /**
      * Compares the time and date of this note to another note.
      * The comparison is firstly based on the date. Compares time if dates are considered equal.
+     *
      * @return the comparator value, negative if this is older, positive if this is newer
      */
     int compareAge(Note other) {
         int cmp = viewDate().compareTo(other.viewDate());
-        if(cmp == 0) {
+        if (cmp == 0) {
             cmp = viewTime().compareTo(other.viewTime());
         }
         return cmp;
@@ -97,6 +104,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
 
     /**
      * Returns the number of characters contained in the text.
+     *
      * @return an integer
      */
     int size() {
@@ -105,6 +113,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
 
     /**
      * Gives the date of creation.
+     *
      * @return a date consisting of year, month and day
      */
     LocalDate viewDate() {
@@ -113,6 +122,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
 
     /**
      * Gives the time of creation.
+     *
      * @return a time consisting of hours, minutes, seconds and nanoseconds
      */
     LocalTime viewTime() {
@@ -120,15 +130,17 @@ public class Note implements Comparable<Note>, ICacheVisitable {
     }
 
     //-----------------------------------------------------------------------
+
     /**
      * Compares this note to another note.
      * <p>
-     *     The comparison is based on the date and time of creation.
-     *     If this note is considered older, a negative value is returned.
-     *     If this note is considered newer, a positive value is returned.
+     * The comparison is based on the date and time of creation.
+     * If this note is considered older, a negative value is returned.
+     * If this note is considered newer, a positive value is returned.
      *
      * </p>
      * Note: this class has a natural ordering that is inconsistent with equals
+     *
      * @param o the other note to compare to, not null
      * @return the comparator value, negative if considered less, positive if considered greater
      */
@@ -139,11 +151,12 @@ public class Note implements Comparable<Note>, ICacheVisitable {
 
     /**
      * Determines whether an object is equal to this note
+     *
      * @param other the object to be checked
      * @return if the object equals this
      */
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (this == other) return true;
         if (other == null || this.getClass() != other.getClass()) return false;
         Note otherNote = (Note) other;

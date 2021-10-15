@@ -16,7 +16,8 @@ public class EventList implements IObservable {
     /***
      * Creates a new eventlist wrapper object
      */
-    EventList() {}
+    EventList() {
+    }
 
     /***
      * Wraps a given list of events.
@@ -107,7 +108,7 @@ public class EventList implements IObservable {
 
     @Override
     public void notifyObservers() {
-        for (IObserver observer : observers){
+        for (IObserver observer : observers) {
             observer.onEvent();
         }
     }

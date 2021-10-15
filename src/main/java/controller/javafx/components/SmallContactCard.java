@@ -10,10 +10,12 @@ import model.Contact;
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 
-class SmallContactCard extends ViewComponent{
+class SmallContactCard extends ViewComponent {
 
-    @FXML private Label nameLabel;
-    @FXML private ImageView avatarImageView;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private ImageView avatarImageView;
 
     private Contact contact;
 

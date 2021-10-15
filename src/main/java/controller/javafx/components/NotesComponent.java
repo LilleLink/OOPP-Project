@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 import model.Note;
 import model.Notes;
+
 import java.util.Objects;
 
 /**
@@ -18,7 +19,7 @@ import java.util.Objects;
  * {@author Simon Johnsson}
  * Uses {@link NoteCard}
  */
-class NotesComponent extends ViewComponent{
+class NotesComponent extends ViewComponent {
 
     private final Notes notes;
 
@@ -37,8 +38,10 @@ class NotesComponent extends ViewComponent{
      * The
      */
     private Node selected;
+
     /**
      * Instantiates a component representing the given Notes object.
+     *
      * @param notes the notes to represent
      */
     NotesComponent(Notes notes) {
@@ -49,7 +52,7 @@ class NotesComponent extends ViewComponent{
         removeButton.setOnAction(this::removeNote);
         editButton.setOnAction(this::editNote);
         inputTextArea.setOnKeyPressed(keyEvent -> {
-            if(keyEvent.getCode() == KeyCode.ENTER) {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
                 addNote(keyEvent);
                 inputTextArea.clear();
             }
@@ -61,13 +64,14 @@ class NotesComponent extends ViewComponent{
      * to the VBox.
      */
     private void initializeNotes() {
-        for(Note note : notes.getSortedElem()) {
+        for (Note note : notes.getSortedElem()) {
             addToVBox(createCard(note));
         }
     }
 
     /**
      * Adds the given card to the VBox.
+     *
      * @param card the card to add
      */
     private void addToVBox(NoteCard card) {
@@ -76,15 +80,17 @@ class NotesComponent extends ViewComponent{
 
     /**
      * Sets the element at the given index to a note card created from the given note.
+     *
      * @param index the index of the element to set
-     * @param card the replacing card
+     * @param card  the replacing card
      */
-    private void setVBoxElement(int index, NoteCard card){
-        noteVBox.getChildren().set(index,card.getPane());
+    private void setVBoxElement(int index, NoteCard card) {
+        noteVBox.getChildren().set(index, card.getPane());
     }
 
     /**
      * Creates a card of the given note and sets the on click method for it.
+     *
      * @param note the note to represent as a card
      * @return the created card
      */
@@ -97,15 +103,17 @@ class NotesComponent extends ViewComponent{
 
     /**
      * Sets the selected node to the one being clicked on.
+     *
      * @param mouseEvent the currently given mouse input.
      */
     private void updateSelected(MouseEvent mouseEvent) {
-        if(isValidSelected( (Node) mouseEvent.getSource()))
-        selected = (Node) mouseEvent.getSource();
+        if (isValidSelected((Node) mouseEvent.getSource()))
+            selected = (Node) mouseEvent.getSource();
     }
 
     /**
      * Validates the selected node.
+     *
      * @return true if the selected node is valid
      */
     private boolean isValidSelected(Node node) {
@@ -116,18 +124,20 @@ class NotesComponent extends ViewComponent{
     /**
      * Removes a note from the notes object and the related card from the vbox.
      * Updates selected to null.
+     *
      * @param actionEvent the input event.
      */
     private void removeNote(ActionEvent actionEvent) {
-            int noteIndex = noteVBox.getChildren().indexOf(selected);
-            notes.removeNote(noteIndex);
-            noteVBox.getChildren().remove(selected);
-            this.selected = null;
+        int noteIndex = noteVBox.getChildren().indexOf(selected);
+        notes.removeNote(noteIndex);
+        noteVBox.getChildren().remove(selected);
+        this.selected = null;
     }
 
     /**
      * Adds a note containing the current text in the text area.
      * A new {@link NoteCard} is instanced with the string contained in the text area.
+     *
      * @param event the user input
      */
     private void addNote(Event event) {
@@ -138,16 +148,15 @@ class NotesComponent extends ViewComponent{
     /**
      * Edits a note with the current text in the text area.
      * A new {@link NoteCard} is instanced with the edited note and replaces the current card.
+     *
      * @param actionEvent the user input
      */
     private void editNote(ActionEvent actionEvent) {
-            int noteIndex = noteVBox.getChildren().indexOf(selected);
-            notes.editNoteAt(noteIndex,inputTextArea.getText());
-            setVBoxElement(noteIndex,createCard(notes.getLastAdded()));
-            selected = null;
+        int noteIndex = noteVBox.getChildren().indexOf(selected);
+        notes.editNoteAt(noteIndex, inputTextArea.getText());
+        setVBoxElement(noteIndex, createCard(notes.getLastAdded()));
+        selected = null;
     }
-
-
 
 
 }

@@ -1,7 +1,7 @@
 package controller.javafx;
 
-import controller.javafx.components.ViewComponent;
 import controller.javafx.components.PageFactory;
+import controller.javafx.components.ViewComponent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
@@ -14,8 +14,10 @@ public class RootWindow implements IPageNavigator, Initializable {
 
     private User user;
 
-    @FXML private AnchorPane topBarAnchorPane;
-    @FXML private AnchorPane pageAnchorPane;
+    @FXML
+    private AnchorPane topBarAnchorPane;
+    @FXML
+    private AnchorPane pageAnchorPane;
 
     private ViewComponent mainPage;
     private ViewComponent secondaryPage;
