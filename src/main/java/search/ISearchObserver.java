@@ -3,6 +3,7 @@ package search;
 
 /**
  * A client interested in knowing the results of a search operation.
+ *
  * @author Simon Johnsson
  */
 public interface ISearchObserver {

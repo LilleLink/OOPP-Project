@@ -119,7 +119,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             tagHandlerCache.stringTagHashMap.values().forEach(t -> t.accept(this, env));
             JSONRecords.TagHandlerRecord record = new JSONRecords.TagHandlerRecord();
             record.tags = new HashMap<>();
-            for(String k : tagHandlerCache.stringTagHashMap.keySet()) {
+            for (String k : tagHandlerCache.stringTagHashMap.keySet()) {
                 record.tags.put(k, (JSONRecords.TagRecord) tagHandlerCache
                         .stringTagHashMap.get(k).accept(this, env).orElseThrow(IllegalStateException::new));
             }

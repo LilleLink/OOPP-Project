@@ -6,12 +6,13 @@ package attachmentHandler;
 public class AttachmentHandlerFactory {
     static private IAttachmentHandler instance = null;
 
-    public static IAttachmentHandler getService(){
-        if (instance == null){
+    public static IAttachmentHandler getService() {
+        if (instance == null) {
             instance = new AttachmentHandler();
         }
         return instance;
     }
 
-    private AttachmentHandlerFactory(){}
+    private AttachmentHandlerFactory() {
+    }
 }

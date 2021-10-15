@@ -12,7 +12,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 class AttachmentHandler implements IAttachmentHandler {
     private final Path baseDirectory = Paths.get(System.getProperty("user.home") + "/.prm/");
 
-    AttachmentHandler(){
+    AttachmentHandler() {
 
     }
 
@@ -28,7 +28,7 @@ class AttachmentHandler implements IAttachmentHandler {
     @Override
     public void addAttachment(UUID id, Path sourceFile, String category) throws IOException, IllegalArgumentException {
         category = category.toLowerCase();
-        if (!category.chars().allMatch(Character::isLetter)){
+        if (!category.chars().allMatch(Character::isLetter)) {
             throw new IllegalArgumentException("A category should only contain letters");
         }
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
@@ -52,7 +52,7 @@ class AttachmentHandler implements IAttachmentHandler {
     public List<Path> getAttachments(UUID id, String category) throws IOException, IllegalArgumentException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         category = category.toLowerCase();
-        if (!category.chars().allMatch(Character::isLetter)){
+        if (!category.chars().allMatch(Character::isLetter)) {
             throw new IllegalArgumentException("A category should only contain letters");
         }
         List<Path> files = new ArrayList<>();
@@ -68,7 +68,7 @@ class AttachmentHandler implements IAttachmentHandler {
         Files.walk(attachmentDirectory, 1)
                 .filter(Files::isDirectory)
                 .forEach((directory) -> {
-                    if (directory != attachmentDirectory){
+                    if (directory != attachmentDirectory) {
                         attachmentCategories.add(directory.getFileName().toString());
                     }
                 });
@@ -77,9 +77,9 @@ class AttachmentHandler implements IAttachmentHandler {
 
     @Override
     public void removeAttachment(UUID id, Path attachment) throws IOException, IllegalArgumentException {
-        if (attachment.toString().contains(baseDirectory.resolve(id.toString()).toString())){
+        if (attachment.toString().contains(baseDirectory.resolve(id.toString()).toString())) {
             Files.delete(attachment);
-        } else{
+        } else {
             throw new IllegalArgumentException("Attachment does not belong to contact");
         }
     }
@@ -118,7 +118,7 @@ class AttachmentHandler implements IAttachmentHandler {
     @Override
     public void removeMainImage(UUID id) throws IOException {
         Path mainImage = baseDirectory.resolve(id.toString()).resolve("mainImage");
-        if (Files.exists(mainImage)){
+        if (Files.exists(mainImage)) {
             deleteDirectoryRecursively(mainImage);
         }
     }

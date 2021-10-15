@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -14,9 +13,7 @@ import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.Contact;
 import model.ContactList;
-import model.TagHandler;
 import model.exceptions.NameNotAllowedException;
 import vcf.VCFParser;
 
@@ -26,15 +23,21 @@ import java.io.IOException;
 class CreateContactDialog extends ViewComponent {
 
     private final ContactList contacts;
-    @FXML private TextField contactName;
-    @FXML private Button addContactButton;
-    @FXML private Button cancelButton;
-    @FXML private Text errorMessageText;
-    @FXML private Button fileLoad;
-    @FXML private Button dirLoad;
+    @FXML
+    private TextField contactName;
+    @FXML
+    private Button addContactButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private Text errorMessageText;
+    @FXML
+    private Button fileLoad;
+    @FXML
+    private Button dirLoad;
 
 
-    CreateContactDialog(ContactList contacts){
+    CreateContactDialog(ContactList contacts) {
         super();
         this.contacts = contacts;
         errorMessageText.setVisible(false);
@@ -57,7 +60,7 @@ class CreateContactDialog extends ViewComponent {
         }
     }
 
-    private void loadContactDirectory(ActionEvent actionEvent){
+    private void loadContactDirectory(ActionEvent actionEvent) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle("Select a directory");
         Stage stage = new Stage();
@@ -68,7 +71,7 @@ class CreateContactDialog extends ViewComponent {
     }
 
     private void readContactDirectory(File contactDirectory) {
-        try{
+        try {
             new VCFParser(contacts).addContactsFromDirectory(contactDirectory.toPath());
             cancelButton.fire();
         } catch (IOException e) {
@@ -78,7 +81,7 @@ class CreateContactDialog extends ViewComponent {
     }
 
     private void readContactFile(File contactFile) {
-        try{
+        try {
             new VCFParser(contacts).addContact(contactFile.toPath());
             cancelButton.fire();
         } catch (IOException | NameNotAllowedException e) {
@@ -96,19 +99,19 @@ class CreateContactDialog extends ViewComponent {
         try {
             contacts.addContact(contactName.getText());
             closeStage(event);
-        } catch (NameNotAllowedException e){
+        } catch (NameNotAllowedException e) {
             errorMessageText.setText(e.getMessage());
             errorMessageText.setVisible(true);
         }
     }
 
     private void closeStage(ActionEvent event) {
-        Node source = (Node)  event.getSource();
-        Stage stage  = (Stage) source.getScene().getWindow();
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 
-    public void displayAndWait(){
+    public void displayAndWait() {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 

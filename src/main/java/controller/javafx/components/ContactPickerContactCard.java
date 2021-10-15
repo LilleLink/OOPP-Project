@@ -16,10 +16,14 @@ class ContactPickerContactCard extends ViewComponent {
 
     private Contact contact;
 
-    @FXML private ImageView avatarImageView;
-    @FXML private Label nameLabel;
-    @FXML private Label tagNameLabel;
-    @FXML private CheckBox selectedCheckBox;
+    @FXML
+    private ImageView avatarImageView;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Label tagNameLabel;
+    @FXML
+    private CheckBox selectedCheckBox;
 
     ContactPickerContactCard(Contact contact) {
         this.contact = contact;
