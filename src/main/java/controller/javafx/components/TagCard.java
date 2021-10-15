@@ -1,7 +1,6 @@
 package controller.javafx.components;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -11,24 +10,28 @@ import model.ITag;
 
 
 class TagCard extends ViewComponent {
-    @FXML private AnchorPane baseAnchorPane;
-    @FXML private Label tagLabel;
-    @FXML private Button deleteButton;
+    @FXML
+    private AnchorPane baseAnchorPane;
+    @FXML
+    private Label tagLabel;
+    @FXML
+    private Button deleteButton;
     private EventHandler<ActionEvent> deleteHandler;
     private final ITag tag;
 
-    TagCard(ITag tag){
+    TagCard(ITag tag) {
+        super();
         this.tag = tag;
         this.tagLabel.setText(tag.getName());
         baseAnchorPane.setStyle("-fx-border-color: #" + tag.getColor());
         this.deleteButton.setOnAction(actionEvent -> deleteHandler.handle(actionEvent));
     }
 
-    ITag getTag(){
+    ITag getTag() {
         return this.tag;
     }
 
-    void setOnDelete(EventHandler<ActionEvent> eventHandler){
+    void setOnDelete(EventHandler<ActionEvent> eventHandler) {
         deleteHandler = eventHandler;
     }
 }
