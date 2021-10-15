@@ -53,15 +53,22 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
         this.directoryId = UUID.randomUUID();
     }
 
+    /***
+     * Returns whether the event is in the future or past.
+     * @return true if in the future, false if in the past.
+     */
     public boolean isInFuture() {
         return dateTime.compareTo(LocalDateTime.now()) > 0;
     }
 
     /***
      * Returns the name of the event
-     * @return name of the event
+     * @return name of the event or "Unnamed event" if the event has no name.
      */
     public String getName() {
+        if (this.name.isEmpty()) {
+            return "Unnamed event";
+        }
         return name;
     }
 
@@ -76,9 +83,12 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     /***
      * Returns the address of the event
-     * @return address of the event
+     * @return address of the event or "No address" if the event has no address.
      */
     public String getAddress() {
+        if (this.address.isEmpty()) {
+            return "No address";
+        }
         return address;
     }
 

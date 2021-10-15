@@ -50,7 +50,7 @@ public class RootWindow implements IPageNavigator, Initializable {
         mainPage = PageFactory.CreateMainPage();
         secondaryPage = PageFactory.CreateSecondaryPage();
         calendarPage = PageFactory.CreateCalendarPage(user.getEvents(), user.getContacts(), user.getTagHandler());
-        contactPage = PageFactory.CreateContactPage(user.getContacts(), user.getTagHandler());
+        contactPage = PageFactory.CreateContactPage(user.getContacts(), user.getTagHandler(), user.getEvents());
     }
 
     @Override
