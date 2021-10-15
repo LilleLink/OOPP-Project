@@ -5,10 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import model.Contact;
-import model.ContactList;
-import model.IObserver;
-import model.TagHandler;
+import model.*;
 import search.ISearchObserver;
 
 import java.util.ArrayList;
@@ -31,12 +28,12 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
     private final ContactList contacts;
     private final List<ContactCard> contactCards = new ArrayList<>();
 
-    ContactPage(ContactList contacts, TagHandler tagHandler) {
+    ContactPage(ContactList contacts, TagHandler tagHandler, EventList eventList) {
         super();
         this.contacts = contacts;
         contacts.subscribe(this);
         this.newContactButton.setOnMouseClicked(this::newContact);
-        contactGrayBox = new ContactGrayBox(tagHandler);
+        contactGrayBox = new ContactGrayBox(tagHandler, eventList);
         contactGrayBox.setOnClose(mouseEvent -> closeGrayPane());
         AnchorPane contactGrayBoxPane = contactGrayBox.getPane();
         baseAnchorPane.getChildren().add(contactGrayBoxPane);

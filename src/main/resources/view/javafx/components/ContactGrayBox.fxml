@@ -84,7 +84,7 @@
          </content>
       </ScrollPane>
       <Button fx:id="addTagButton" layoutX="615.0" layoutY="120.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="46.0" text="Add" AnchorPane.leftAnchor="615.0" AnchorPane.topAnchor="120.0" />
-      <AnchorPane fx:id="eventsAnchorPane" layoutX="16.0" layoutY="270.0" prefHeight="218.0" prefWidth="358.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="806.0" />
+      <AnchorPane fx:id="eventsAnchorPane" layoutX="16.0" layoutY="270.0" prefHeight="218.0" prefWidth="352.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="812.0" />
       <Label layoutX="14.0" layoutY="245.0" text="Events" />
    </AnchorPane>
 </fx:root>

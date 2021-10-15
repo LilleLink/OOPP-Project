@@ -15,10 +15,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import model.Contact;
-import model.IObserver;
-import model.ITag;
-import model.TagHandler;
+import model.*;
 import model.exceptions.TagNotFoundException;
 
 import java.awt.*;
@@ -76,7 +73,12 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     @FXML
     private HBox tagHBox;
 
+    @FXML
+    private AnchorPane eventsAnchorPane;
+
     private NotesComponent notesComponent;
+
+    private EventOverview eventOverview;
 
     private EventHandler<Event> closeWindowHandler;
 
@@ -84,9 +86,12 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     private final IAttachmentHandler attachmentHandler = AttachmentHandlerFactory.getService();
 
-    ContactGrayBox(TagHandler tagHandler) {
+    private final EventList eventList;
+
+    ContactGrayBox(TagHandler tagHandler, EventList eventList) {
         super();
         this.tagHandler = tagHandler;
+        this.eventList = eventList;
         baseAnchorPane.setOnMouseClicked(this::close);
         closeButton.setOnAction(this::close);
         deleteButton.setOnAction(this::delete);
@@ -107,6 +112,8 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         contactName.setText(contact.getName());
         addressText.setText(contact.getAddress());
         this.notesComponent = new NotesComponent(contact.getNotes());
+        this.eventOverview = new EventOverview(eventList.getContactsEvents(contact));
+        eventsAnchorPane.getChildren().add(eventOverview.getPane());
         notesAnchorPane.getChildren().add(notesComponent.getPane());
         contactImage.setOnMouseClicked(this::setNewContactImage);
         updateContactImage();
