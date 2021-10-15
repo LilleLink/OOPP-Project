@@ -23,6 +23,7 @@ import java.io.IOException;
 class CreateContactDialog extends ViewComponent {
 
     private final ContactList contacts;
+    private final Stage stage = new Stage();
     @FXML
     private TextField contactName;
     @FXML
@@ -112,7 +113,6 @@ class CreateContactDialog extends ViewComponent {
     }
 
     public void displayAndWait() {
-        Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 
         Scene scene = new Scene(this.getPane(), 300, 200);
