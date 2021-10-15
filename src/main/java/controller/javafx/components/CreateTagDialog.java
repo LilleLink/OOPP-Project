@@ -1,7 +1,7 @@
 package controller.javafx.components;
 
 import javafx.beans.Observable;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -17,15 +17,22 @@ import model.exceptions.NameNotAllowedException;
 
 class CreateTagDialog extends ViewComponent {
 
+    private final Stage stage = new Stage();
+
     private final TagHandler tagHandler;
-    @FXML private TextField tagName;
-    @FXML private Button addTagButton;
-    @FXML private Button cancelButton;
-    @FXML private ColorPicker colorPicker;
-    @FXML private Text errorMessageText;
+    @FXML
+    private TextField tagName;
+    @FXML
+    private Button addTagButton;
+    @FXML
+    private Button cancelButton;
+    @FXML
+    private ColorPicker colorPicker;
+    @FXML
+    private Text errorMessageText;
 
 
-    CreateTagDialog(TagHandler tagHandler){
+    CreateTagDialog(TagHandler tagHandler) {
         super();
         this.tagHandler = tagHandler;
         errorMessageText.setVisible(false);
@@ -33,6 +40,7 @@ class CreateTagDialog extends ViewComponent {
         addTagButton.setOnAction(this::btnAddTagClicked);
         cancelButton.setOnAction(this::closeStage);
         tagName.textProperty().addListener(this::textFieldChanged);
+        displayAndWait();
     }
 
     private void textFieldChanged(Observable observable) {
@@ -40,8 +48,8 @@ class CreateTagDialog extends ViewComponent {
     }
 
     @FXML
-    private void btnAddTagClicked(ActionEvent event) {
-        try{
+    private void btnAddTagClicked(Event event) {
+        try {
             tagHandler.createTag(tagName.getText(), Integer.toHexString(colorPicker.getValue().hashCode()));
             closeStage(event);
         } catch (NameNotAllowedException e) {
@@ -50,14 +58,13 @@ class CreateTagDialog extends ViewComponent {
         }
     }
 
-    private void closeStage(ActionEvent event) {
-        Node  source = (Node)  event.getSource();
-        Stage stage  = (Stage) source.getScene().getWindow();
+    private void closeStage(Event event) {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
         stage.close();
     }
 
-    public void displayAndWait(){
-        Stage stage = new Stage();
+    private void displayAndWait() {
         stage.initModality(Modality.APPLICATION_MODAL);
 
         Scene scene = new Scene(this.getPane(), 300, 150);

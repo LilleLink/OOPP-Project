@@ -34,7 +34,7 @@ public class AddTagDialog extends ViewComponent {
         this.tagHandler = tagHandler;
         updateTagContainer();
         createTagButton.setOnAction(actionEvent -> {
-            new CreateTagDialog(tagHandler).displayAndWait();
+            new CreateTagDialog(tagHandler);
             updateTagContainer();
         });
     }
