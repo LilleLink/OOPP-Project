@@ -66,6 +66,9 @@ public class AddTagDialog extends ViewComponent {
                     selectedTags.remove(tag);
                 }
             });
+            if (selectedTags.contains(tag)) {
+                checkBox.setSelected(true);
+            }
             tagContainer.getChildren().add(checkBox);
         }
     }
