@@ -2,7 +2,6 @@ package controller.javafx.components;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import model.Event;
 import model.IObserver;
@@ -11,14 +10,18 @@ import java.util.Objects;
 
 class CalendarEventCard extends ViewComponent implements IObserver {
 
-    @FXML private AnchorPane calendarEventAnchorPane;
-    @FXML private Label eventNameLabel;
-    @FXML private Label eventTimeLabel;
-    @FXML private Label eventAddressLabel;
+    @FXML
+    private AnchorPane calendarEventAnchorPane;
+    @FXML
+    private Label eventNameLabel;
+    @FXML
+    private Label eventTimeLabel;
+    @FXML
+    private Label eventAddressLabel;
 
     private Event event;
 
-    public CalendarEventCard(Event event) {
+    CalendarEventCard(Event event) {
         this.event = event;
         setLabels();
         setBorder();
@@ -32,7 +35,7 @@ class CalendarEventCard extends ViewComponent implements IObserver {
 
     private void setBorder() {
         if (!Objects.isNull(event.getTag())) {
-            getPane().setStyle("-fx-border-color: #"+event.getTag().getColor()+";");
+            getPane().setStyle("-fx-border-color: #" + event.getTag().getColor() + ";");
         }
     }
 
@@ -43,5 +46,6 @@ class CalendarEventCard extends ViewComponent implements IObserver {
     @Override
     public void onEvent() {
         setLabels();
+        setBorder();
     }
 }

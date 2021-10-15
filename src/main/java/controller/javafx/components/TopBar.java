@@ -7,14 +7,18 @@ import javafx.scene.input.MouseEvent;
 
 class TopBar extends ViewComponent {
 
-    @FXML private Button toMainButton;
-    @FXML private Button toSecondButton;
-    @FXML private Button toContactButton;
-    @FXML private Button toCalendarButton;
+    @FXML
+    private Button toMainButton;
+    @FXML
+    private Button toSecondButton;
+    @FXML
+    private Button toContactButton;
+    @FXML
+    private Button toCalendarButton;
 
     IPageNavigator nav;
 
-    public TopBar(IPageNavigator nav) {
+    TopBar(IPageNavigator nav) {
         super();
         this.nav = nav;
 

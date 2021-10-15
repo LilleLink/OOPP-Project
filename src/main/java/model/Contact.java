@@ -1,14 +1,15 @@
 package model;
 
 
+import model.exceptions.TagNotFoundException;
+import model.search.ISearchable;
+
 import java.util.ArrayList;
 import java.util.List;
-import model.exceptions.TagNotFoundException;
-
 import java.util.Optional;
 import java.util.UUID;
 
-public class Contact implements ICacheVisitable, IObservable {
+public class Contact implements ICacheVisitable, ISearchable<String>, IObservable {
 
     private String name;
     private String phoneNumber = "";
@@ -16,19 +17,19 @@ public class Contact implements ICacheVisitable, IObservable {
     private List<ITag> tags;
     private Notes notes;
     private List<IObserver> observers = new ArrayList<>();
-    private final UUID directoryId = UUID.randomUUID();
+    private final UUID directoryId;
 
     /**
      * @param name The contact's name.
      */
-    Contact(String name){
+    Contact(String name) {
         this.name = name;
         this.tags = new ArrayList<>();
         this.notes = new Notes();
+        this.directoryId = UUID.randomUUID();
     }
 
     /**
-     *
      * @return The contact's name.
      */
     public String getName() {
@@ -36,7 +37,6 @@ public class Contact implements ICacheVisitable, IObservable {
     }
 
     /**
-     *
      * @return The contact's phone number.
      */
     public String getPhoneNumber() {
@@ -44,18 +44,18 @@ public class Contact implements ICacheVisitable, IObservable {
     }
 
     /**
-     *
      * @return Contact's address as string.
      */
-    public String getAddress(){
+    public String getAddress() {
         return this.address;
     }
 
     /**
      * Updates the contact's address.
+     *
      * @param address The address to be updated to.
      */
-    public void setAddress(String address){
+    public void setAddress(String address) {
         this.address = address;
         notifyObservers();
     }
@@ -63,9 +63,10 @@ public class Contact implements ICacheVisitable, IObservable {
 
     /**
      * Sets the name of the contact.
+     *
      * @param name The name to change to.
      */
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
         this.tags = new ArrayList<>();
         this.notes = new Notes();
@@ -74,44 +75,55 @@ public class Contact implements ICacheVisitable, IObservable {
 
     /**
      * Sets the phone number of the contact.
+     *
      * @param number The number to change to.
      */
-    void setPhoneNumber(String number){
+    void setPhoneNumber(String number) {
         this.phoneNumber = number;
         notifyObservers();
     }
 
 
-
     /**
      * Adds a tag to the contact.
+     *
      * @param tag The desired tag.
      */
-    void addTag(ITag tag){
+    void addTag(ITag tag) {
         tags.add(tag);
     }
 
     /**
+     * Adds multiple tags to the contact
+     *
+     * @param tags the tags to add
+     */
+    public void addAllTags(List<ITag> tags) {
+        this.tags.addAll(tags);
+    }
+
+    /**
      * Removes a tag from the contact.
+     *
      * @param tag The tag to remove.
      * @throws TagNotFoundException If the contact does not have the given tag.
      */
-    void removeTag(ITag tag) throws TagNotFoundException {
+    public void removeTag(ITag tag) throws TagNotFoundException {
         if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
         tags.remove(tag);
         notifyObservers();
     }
 
     /**
-     *
      * @return A list of the contact's tags.
      */
-    public List<ITag> getTags(){
+    public List<ITag> getTags() {
         return new ArrayList<>(tags);
     }
 
     /**
      * Adds a note with the specified text to Notes.
+     *
      * @param text the information to be added
      */
     void addNote(String text) {
@@ -128,7 +140,8 @@ public class Contact implements ICacheVisitable, IObservable {
 
     /**
      * Removes the note at the specified index
-      * @param index the index of the note to be removed
+     *
+     * @param index the index of the note to be removed
      */
     void removeNote(int index) {
         notes.removeNote(index);
@@ -137,15 +150,17 @@ public class Contact implements ICacheVisitable, IObservable {
 
     /**
      * Edits the note at the specified index with the given text.
+     *
      * @param index the index of the note to be edited
-     * @param text the new text
+     * @param text  the new text
      */
     void editNote(int index, String text) {
-        notes.editNoteAt(index,text);
+        notes.editNoteAt(index, text);
     }
 
     /**
      * Retrieves the text at the given index
+     *
      * @param index the index of the note to view
      * @return a string
      */
@@ -155,6 +170,7 @@ public class Contact implements ICacheVisitable, IObservable {
 
     /**
      * Retrieves the notes list of notes in this contact.
+     *
      * @return a notes list object
      */
     public List<Note> getListOfNotes() {
@@ -163,6 +179,7 @@ public class Contact implements ICacheVisitable, IObservable {
 
     /**
      * Retrieves the notes of this contact
+     *
      * @return a notes object
      */
     public Notes getNotes() {
@@ -182,19 +199,23 @@ public class Contact implements ICacheVisitable, IObservable {
 
     @Override
     public void notifyObservers() {
-        for (IObserver observer : observers){
+        for (IObserver observer : observers) {
             observer.onEvent();
         }
     }
 
     /**
-     *
      * @return The contact's directoryId.
      */
-    public UUID getDirectoryId(){
+    public UUID getDirectoryId() {
         return directoryId;
     }
 
+
+    @Override
+    public String getSearchIdentity() {
+        return name.toLowerCase();
+    }
 
     /***
      * The contact cache class contains fields which should be saved/loaded to persistent storage.
@@ -205,8 +226,10 @@ public class Contact implements ICacheVisitable, IObservable {
         public String address;
         public List<ITag> tags;
         public Notes notes;
+        public UUID directoryId;
 
-        public ContactCache() {}
+        public ContactCache() {
+        }
     }
 
     private ContactCache getCache() {
@@ -216,6 +239,7 @@ public class Contact implements ICacheVisitable, IObservable {
         cache.address = this.address;
         cache.tags = new ArrayList<>(this.tags);
         cache.notes = this.notes;
+        cache.directoryId = this.directoryId;
         return cache;
     }
 
@@ -225,6 +249,7 @@ public class Contact implements ICacheVisitable, IObservable {
         this.address = cache.address;
         this.tags = new ArrayList<>(cache.tags);
         this.notes = cache.notes;
+        this.directoryId = cache.directoryId;
     }
 
     /***

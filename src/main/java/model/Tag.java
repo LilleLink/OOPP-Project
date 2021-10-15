@@ -1,6 +1,5 @@
 package model;
 
-import java.util.HashMap;
 import java.util.Optional;
 
 public class Tag implements ITag, ICacheVisitable {
@@ -11,35 +10,35 @@ public class Tag implements ITag, ICacheVisitable {
 
     /**
      * Creates a Tag with the name {name}
+     *
      * @param name the name of the new Tag
      */
-    Tag(String name){
+    Tag(String name) {
         this(name, "CDCDCD");
     }
 
     /**
      * Creates a Tag with the name {name}, and the color {color}
-     * @param name the name of the Tag
+     *
+     * @param name  the name of the Tag
      * @param color the color of the Tag
      */
-    Tag(String name, String color){
+    Tag(String name, String color) {
         this.name = name;
         this.color = color;
     }
 
     /**
-     *
      * @return the name of a Tag
      */
-    public String getName(){
+    public String getName() {
         return name;
     }
 
     /**
-     *
      * @return the color code of a Tag
      */
-    public String getColor(){
+    public String getColor() {
         return color;
     }
 
@@ -49,6 +48,11 @@ public class Tag implements ITag, ICacheVisitable {
 
     void setColor(String color) {
         this.color = color;
+    }
+
+    public Tag(TagCache cache) {
+        this.name = cache.name;
+        this.color = cache.color;
     }
 
     public static class TagCache {
@@ -69,7 +73,7 @@ public class Tag implements ITag, ICacheVisitable {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return name;
     }
 }

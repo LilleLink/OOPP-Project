@@ -1,7 +1,5 @@
 package database.json;
 
-import model.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,21 +12,34 @@ public class JSONRecords {
         default Optional<T> visit(UserRecord user, E env) {
             return Optional.empty();
         }
+
         default Optional<T> visit(ContactRecord contact, E env) {
             return Optional.empty();
         }
+
         default Optional<T> visit(EventRecord event, E env) {
             return Optional.empty();
         }
-        default Optional<T> visit(PRMRecord prm, E env) { return Optional.empty(); }
+
+        default Optional<T> visit(PRMRecord prm, E env) {
+            return Optional.empty();
+        }
+
         default Optional<T> visit(NoteRecord note, E env) {
             return Optional.empty();
         }
+
         default Optional<T> visit(NotesRecord notes, E env) {
             return Optional.empty();
         }
-        default Optional<T> visit(TagHandlerRecord tagHandler, E env) { return Optional.empty(); }
-        default Optional<T> visit(TagRecord tag, E env) { return Optional.empty(); }
+
+        default Optional<T> visit(TagHandlerRecord tagHandler, E env) {
+            return Optional.empty();
+        }
+
+        default Optional<T> visit(TagRecord tag, E env) {
+            return Optional.empty();
+        }
     }
 
     // The visitable record interface.
@@ -64,6 +75,7 @@ public class JSONRecords {
         String address;
         NotesRecord notes;
         List<String> tags;
+        String directoryId;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
@@ -99,6 +111,7 @@ public class JSONRecords {
         String description;
         ArrayList<Integer> contacts = new ArrayList<>();
         String tag;
+        String directoryId;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
