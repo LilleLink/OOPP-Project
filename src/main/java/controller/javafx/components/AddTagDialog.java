@@ -16,11 +16,19 @@ import java.util.List;
 
 public class AddTagDialog extends ViewComponent {
 
+    private final Stage stage = new Stage();
+
     @FXML
     private Button createTagButton;
 
     @FXML
     private VBox tagContainer;
+
+    @FXML
+    private Button addTagsButton;
+
+    @FXML
+    private Button cancelButton;
 
     private final Contact contact;
 
@@ -37,6 +45,8 @@ public class AddTagDialog extends ViewComponent {
             new CreateTagDialog(tagHandler);
             updateTagContainer();
         });
+        cancelButton.setOnAction(actionEvent -> close());
+        addTagsButton.setOnAction(actionEvent -> save());
         displayAndWait();
     }
 
@@ -58,15 +68,22 @@ public class AddTagDialog extends ViewComponent {
         }
     }
 
+    private void save() {
+        contact.addAllTags(selectedTags);
+        close();
+    }
+
+    private void close() {
+        stage.close();
+    }
+
     private void displayAndWait() {
-        Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 
         Scene scene = new Scene(this.getPane(), 400, 250);
 
         stage.setTitle("Add tag to contact");
         stage.setScene(scene);
-        stage.setOnCloseRequest(windowEvent -> contact.addAllTags(selectedTags));
         stage.showAndWait();
     }
 
