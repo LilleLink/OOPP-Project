@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Contact;
 import model.ContactList;
+import model.Event;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,15 +25,43 @@ class ContactPickerDialog extends ViewComponent {
     @FXML
     private Button saveButton;
 
-    ContactList contactList;
-    List<ContactPickerContactCard> contactPickerContactCardList = new ArrayList<>();
-    List<Contact> pickedContacts = new ArrayList<>();
+    private ContactList contactList;
+    private List<Contact> allContacts;
+    private List<ContactPickerContactCard> contactPickerContactCardList = new ArrayList<>();
+    private List<Contact> pickedContacts = new ArrayList<>();
+
+    ContactPickerDialog(ContactList contactList, Event event) {
+        this.contactList = contactList;
+        allContacts = xorAddLists(contactList.getList(), event.getContacts());
+        initializeComponent();
+    }
 
     ContactPickerDialog(ContactList contactList) {
         this.contactList = contactList;
+        allContacts = contactList.getList();
+        initializeComponent();
+    }
+
+    private void initializeComponent() {
         initContactPickerContactCardList();
         saveButton.setOnAction(this::saveAndClose);
         displayAndWait();
+    }
+
+    /***
+     * XOR-adds two lists.
+     * @param a list 1
+     * @param b list 2
+     * @param <T> some type T
+     * @return a superset of the two lists
+     */
+    private <T> List<T> xorAddLists(List<T> a, List<T> b) {
+        List<T> result = new ArrayList<>(a);
+        for (T t : b) {
+            if (!a.contains(t))
+                result.add(t);
+        }
+        return result;
     }
 
     public List<Contact> getPickedContacts() {
@@ -60,7 +89,7 @@ class ContactPickerDialog extends ViewComponent {
     }
 
     private void initContactPickerContactCardList() {
-        for (Contact contact : contactList.getList()) {
+        for (Contact contact : allContacts) {
             ContactPickerContactCard contactPickerContactCard = new ContactPickerContactCard(contact);
             contactPickerContactCardList.add(contactPickerContactCard);
             contactCardVBox.getChildren().add(contactPickerContactCard.getPane());

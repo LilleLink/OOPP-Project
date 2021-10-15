@@ -74,7 +74,7 @@ class EditEventCard extends ViewComponent {
     }
 
     private void selectContacts(ActionEvent actionEvent) {
-        ContactPickerDialog dialog = new ContactPickerDialog(contactList);
+        ContactPickerDialog dialog = new ContactPickerDialog(contactList, event);
         participants = dialog.getPickedContacts();
         updateParticipantFlowPane();
     }
