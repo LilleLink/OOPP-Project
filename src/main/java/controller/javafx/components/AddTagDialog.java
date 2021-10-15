@@ -37,6 +37,7 @@ public class AddTagDialog extends ViewComponent {
             new CreateTagDialog(tagHandler);
             updateTagContainer();
         });
+        displayAndWait();
     }
 
     private void updateTagContainer() {
@@ -57,7 +58,7 @@ public class AddTagDialog extends ViewComponent {
         }
     }
 
-    void displayAndWait() {
+    private void displayAndWait() {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
 
