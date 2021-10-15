@@ -16,7 +16,8 @@ public class EventList implements IObservable {
     /***
      * Creates a new eventlist wrapper object
      */
-    EventList() {}
+    EventList() {
+    }
 
     /***
      * Wraps a given list of events.
@@ -70,6 +71,22 @@ public class EventList implements IObservable {
     }
 
     /***
+     * Gathers and returns all events that a given contact is a part of.
+     * @param contact the contact
+     * @return a list of all the events the contact is a part of.
+     */
+    public List<Event> getContactsEvents(Contact contact) {
+        List<Event> res = new ArrayList<>();
+
+        for (Event event : eventList) {
+            if (event.getContacts().contains(contact))
+                res.add(event);
+        }
+
+        return res;
+    }
+
+    /***
      * Adds a event to the eventList
      * @param event the event object
      */
@@ -107,7 +124,7 @@ public class EventList implements IObservable {
 
     @Override
     public void notifyObservers() {
-        for (IObserver observer : observers){
+        for (IObserver observer : observers) {
             observer.onEvent();
         }
     }
