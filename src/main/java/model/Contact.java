@@ -2,7 +2,7 @@ package model;
 
 
 import model.exceptions.TagNotFoundException;
-import search.ISearchable;
+import model.search.ISearchable;
 
 import java.util.ArrayList;
 import java.util.List;

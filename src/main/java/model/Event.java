@@ -1,6 +1,6 @@
 package model;
 
-import search.ISearchable;
+import model.search.ISearchable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;

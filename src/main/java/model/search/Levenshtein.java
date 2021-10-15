@@ -1,4 +1,4 @@
-package search;
+package model.search;
 
 /**
  * Calculates the Levenshtein distance of two sequences of characters.

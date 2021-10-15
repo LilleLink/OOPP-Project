@@ -6,7 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import model.*;
-import search.ISearchObserver;
+import model.search.ISearchObserver;
 
 import java.util.ArrayList;
 import java.util.List;

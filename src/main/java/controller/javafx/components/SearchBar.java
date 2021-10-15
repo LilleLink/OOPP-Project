@@ -5,10 +5,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import search.ISearchObservable;
-import search.ISearchObserver;
-import search.ISearchable;
-import search.SearchEngine;
+import model.search.ISearchObservable;
+import model.search.ISearchObserver;
+import model.search.ISearchable;
+import model.search.SearchEngine;
 
 import java.util.ArrayList;
 import java.util.List;

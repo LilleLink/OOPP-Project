@@ -1,6 +1,6 @@
 package mocks;
 
-import search.ISearchable;
+import model.search.ISearchable;
 
 /**
  * Testing class to contain a searchable string identity.

@@ -1,4 +1,4 @@
-package search;
+package model.search;
 
 /**
  * An object containing searchable information. The user of this interface determines which information defines its
