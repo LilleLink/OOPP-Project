@@ -67,8 +67,7 @@ class CalendarPage extends ViewComponent implements IObserver {
 
     private LocalDate weekToDisplay;
 
-    private EventCreationCard eventCreationCard;
-    private EditEventCard editEventCard;
+    private EventCard eventCard;
     private List<CalendarEventCard> calendarEventCards = new ArrayList<>();
 
     private EventList eventList;
@@ -80,8 +79,6 @@ class CalendarPage extends ViewComponent implements IObserver {
         this.tagHandler = tagHandler;
         eventList.subscribe(this);
 
-        eventCreationCard = new EventCreationCard(eventList, contactList, tagHandler);
-        calendarPageStackPane.getChildren().add(eventCreationCard.getPane());
         calendarPageAnchorPane.toFront();
 
         newEventButton.setOnAction(this::newEvent);
@@ -128,8 +125,11 @@ class CalendarPage extends ViewComponent implements IObserver {
     }
 
     private void newEvent(ActionEvent actionEvent) {
-        eventCreationCard.clearFields();
-        eventCreationCard.getPane().toFront();
+        Event newEvent = eventList.addEvent();
+        eventCard = new EventCard(tagHandler, contactList, newEvent);
+        eventCard.setOnDelete(e -> eventList.removeEvent(newEvent));
+        calendarPageStackPane.getChildren().add(eventCard.getPane());
+        eventCard.getPane().toFront();
     }
 
     @Override
@@ -149,10 +149,10 @@ class CalendarPage extends ViewComponent implements IObserver {
     }
 
     private void editEvent(Event event) {
-        editEventCard = new EditEventCard(event, contactList, tagHandler);
-        editEventCard.setOnDelete(actionEvent -> eventList.removeEvent(event));
-        calendarPageStackPane.getChildren().add(editEventCard.getPane());
-        editEventCard.getPane().toFront();
+        eventCard = new EventCard(tagHandler, contactList, event);
+        eventCard.setOnDelete(actionEvent -> eventList.removeEvent(event));
+        calendarPageStackPane.getChildren().add(eventCard.getPane());
+        eventCard.getPane().toFront();
     }
 
     private void clearCalendar() {
