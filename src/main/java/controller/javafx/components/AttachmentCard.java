@@ -33,6 +33,9 @@ class AttachmentCard extends ViewComponent {
     }
 
     private void openAttachment(MouseEvent event) {
+        if (!System.getProperty("os.name").startsWith("Windows")) {
+            return;
+        }
         try {
             Desktop.getDesktop().open(attachment.toFile());
         } catch (IOException e) {

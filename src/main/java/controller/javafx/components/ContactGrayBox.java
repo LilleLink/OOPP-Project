@@ -242,6 +242,9 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     }
 
     private void updateContactImage() {
+        if (!System.getProperty("os.name").startsWith("Windows")) {
+            return;
+        }
         try {
             contactImage.setImage(new Image(attachmentHandler.getMainImage(contact.getDirectoryId()).toUri().toString()));
         } catch (NoSuchFileException e) {
