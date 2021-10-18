@@ -9,8 +9,8 @@ import java.util.Optional;
  * Represents a list of {@link Note} objects with restricted operations.
  * Note objects contained in the list are sorted after age using the {@link java.time.LocalDateTime} class.
  *
- * @see java.time.LocalDateTime
  * @author Simon Johnsson
+ * @see java.time.LocalDateTime
  */
 public class Notes implements ICacheVisitable {
 
@@ -20,7 +20,7 @@ public class Notes implements ICacheVisitable {
     /**
      * Default constructor containing an empty list.
      */
-    Notes() {
+    public Notes() {
         elements = new ArrayList<>();
     }
 
@@ -30,7 +30,7 @@ public class Notes implements ICacheVisitable {
      *
      * @param oldNotes the notes to be copied
      */
-    Notes(Notes oldNotes) {
+    public Notes(Notes oldNotes) {
         this.elements = new ArrayList<>(oldNotes.elements);
         elements.sort(Note::compareTo);
     }
@@ -164,5 +164,12 @@ public class Notes implements ICacheVisitable {
     @Override
     public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
         return visitor.visit(this.getCache(), env);
+    }
+
+    @Override
+    public String toString() {
+        return "Notes{" +
+                "elements=" + elements +
+                '}';
     }
 }

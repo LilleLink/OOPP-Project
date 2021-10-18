@@ -126,7 +126,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      *
      * @param text the information to be added
      */
-    void addNote(String text) {
+    public void addNote(String text) {
         notes.add(text);
     }
 
@@ -258,5 +258,16 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
     @Override
     public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
         return visitor.visit(this.getCache(), env);
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", tags=" + tags +
+                ", notes=" + notes +
+                '}';
     }
 }
