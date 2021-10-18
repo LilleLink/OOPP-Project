@@ -259,4 +259,15 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
     public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
         return visitor.visit(this.getCache(), env);
     }
+
+    @Override
+    public String toString() {
+        return "Contact{" +
+                "name='" + name + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", tags=" + tags +
+                ", notes=" + notes +
+                '}';
+    }
 }

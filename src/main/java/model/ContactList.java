@@ -15,7 +15,7 @@ public class ContactList implements IObservable {
     private List<IObserver> observers = new ArrayList<>();
 
     /***
-     * Creates a new contactlist wrapper object
+     * Creates a new contact list wrapper object
      */
     ContactList() {
     }
@@ -88,4 +88,10 @@ public class ContactList implements IObservable {
         }
     }
 
+    @Override
+    public String toString() {
+        return "ContactList{" +
+                "contactList=" + contactList +
+                '}';
+    }
 }

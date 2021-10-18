@@ -71,7 +71,6 @@ class VCFParser implements IVCFParser {
     private void readContact(Path path) throws IOException, NameNotAllowedException {
         HashMap<FIELD, List<String>> data = parseData(path);
         Contact.ContactCache cache = new Contact.ContactCache();
-        System.out.println(data);
         readName(data, cache);
         readAddress(data, cache);
         readTags(data, cache);
@@ -192,7 +191,6 @@ class VCFParser implements IVCFParser {
     private void readNote(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
         Notes notes = new Notes();
         data.get(FIELD.NOTE).forEach(notes::add);
-        System.out.println(notes);
         cache.notes = notes;
     }
 
