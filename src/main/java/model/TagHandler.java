@@ -56,7 +56,7 @@ public class TagHandler implements ICacheVisitable {
      * @return the tag with the wanted name
      * @throws TagNotFoundException if no tag with the name {@code name} exists
      */
-    ITag getTag(String name) throws TagNotFoundException {
+    public ITag getTag(String name) throws TagNotFoundException {
         ITag tag = stringTagHashMap.get(name);
         if (tag == null) throw new TagNotFoundException(name);
         return tag;

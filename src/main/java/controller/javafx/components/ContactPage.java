@@ -13,6 +13,7 @@ import java.util.List;
 
 
 class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
+    private final TagHandler tagHandler;
     @FXML
     private AnchorPane baseAnchorPane;
     @FXML
@@ -31,6 +32,7 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
     ContactPage(ContactList contacts, TagHandler tagHandler, EventList eventList) {
         super();
         this.contacts = contacts;
+        this.tagHandler = tagHandler;
         contacts.subscribe(this);
         this.newContactButton.setOnMouseClicked(this::newContact);
         contactGrayBox = new ContactGrayBox(tagHandler, eventList);
@@ -63,7 +65,7 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
     }
 
     private void newContact(MouseEvent mouseEvent) {
-        new CreateContactDialog(contacts).displayAndWait();
+        new CreateContactDialog(contacts, tagHandler).displayAndWait();
         onEvent();
         searchBar.updateSearchBase(contacts.getList());
     }

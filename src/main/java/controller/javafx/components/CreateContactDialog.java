@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.ContactList;
+import model.TagHandler;
 import model.exceptions.NameNotAllowedException;
 import vcf.VCFParser;
 
@@ -25,6 +26,7 @@ class CreateContactDialog extends ViewComponent {
 
     private final ContactList contacts;
     private final Stage stage = new Stage();
+    private final TagHandler tagHandler;
     @FXML
     private TextField contactName;
     @FXML
@@ -39,9 +41,10 @@ class CreateContactDialog extends ViewComponent {
     private Button dirLoad;
 
 
-    CreateContactDialog(ContactList contacts) {
+    CreateContactDialog(ContactList contacts, TagHandler tagHandler) {
         super();
         this.contacts = contacts;
+        this.tagHandler = tagHandler;
         errorMessageText.setVisible(false);
         errorMessageText.setFill(Color.RED);
         addContactButton.setOnAction(this::btnAddContactClicked);
@@ -74,7 +77,7 @@ class CreateContactDialog extends ViewComponent {
 
     private void readContactDirectory(File contactDirectory) {
         try {
-            new VCFParser(contacts).addContactsFromDirectory(contactDirectory.toPath());
+            new VCFParser(contacts, tagHandler).addContactsFromDirectory(contactDirectory.toPath());
             cancelButton.fire();
         } catch (IOException e) {
             errorMessageText.setText(e.getMessage());
@@ -84,7 +87,7 @@ class CreateContactDialog extends ViewComponent {
 
     private void readContactFile(File contactFile) {
         try {
-            new VCFParser(contacts).addContact(contactFile.toPath());
+            new VCFParser(contacts, tagHandler).addContact(contactFile.toPath());
             cancelButton.fire();
         } catch (IOException | NameNotAllowedException e) {
             errorMessageText.setVisible(true);
