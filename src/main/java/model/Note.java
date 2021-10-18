@@ -186,4 +186,12 @@ public class Note implements Comparable<Note>, ICacheVisitable {
     public <E, T> Optional<T> accept(ICacheVisitor<E, T> visitor, E env) {
         return visitor.visit(this.getCache(), env);
     }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "text='" + text + '\'' +
+                ", pointOfCreation=" + pointOfCreation +
+                '}';
+    }
 }
