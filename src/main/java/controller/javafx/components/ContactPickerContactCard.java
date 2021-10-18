@@ -43,7 +43,7 @@ class ContactPickerContactCard extends ViewComponent {
             this.avatarImageView.setImage(new Image(AttachmentHandlerFactory.getService().getMainImage(
                     contact.getDirectoryId()).toUri().toString()));
         } catch (NoSuchFileException e) {
-            this.avatarImageView.setImage(new Image("Images/defaultIcon.png"));
+            this.avatarImageView.setImage(new Image("images/defaultContactIcon.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

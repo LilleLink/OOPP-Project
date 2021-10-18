@@ -248,7 +248,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         try {
             contactImage.setImage(new Image(attachmentHandler.getMainImage(contact.getDirectoryId()).toUri().toString()));
         } catch (NoSuchFileException e) {
-            contactImage.setImage(new Image("Images/defaultIcon.png"));
+            contactImage.setImage(new Image("images/defaultContactIcon.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
