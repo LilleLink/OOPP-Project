@@ -68,8 +68,6 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      */
     public void setName(String name) {
         this.name = name;
-        this.tags = new ArrayList<>();
-        this.notes = new Notes();
         notifyObservers();
     }
 
