@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Event implements ICacheVisitable, ISearchable<String>, IObservable {
 
     private String name;
-    private String address = "";
+    private String address;
     private LocalDateTime dateTime;
     private String description;
 
@@ -58,7 +58,8 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      */
     Event() {
         this.name = "Unnamed event";
-        this.dateTime = LocalDateTime.now();
+        this.dateTime = LocalDateTime.now().withSecond(0).withNano(0).withMinute(LocalDateTime.now().getMinute() -
+                LocalDateTime.now().getMinute() % 15);
         this.address = "No address";
         this.directoryId = UUID.randomUUID();
     }
