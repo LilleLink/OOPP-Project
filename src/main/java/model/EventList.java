@@ -28,12 +28,13 @@ public class EventList implements IObservable {
     }
 
     /***
-     * Adds an event to the eventList.
-     * @param name the name of the event
+     * Adds an event to the eventList and returns it to the client.
      */
-    public void addEvent(String name, LocalDateTime dateTime) {
-        eventList.add(new Event(name, dateTime));
+    public Event addEvent() {
+        Event event = new Event();
+        eventList.add(event);
         notifyObservers();
+        return event;
     }
 
     /***

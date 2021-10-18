@@ -11,11 +11,11 @@ import model.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
-class EditEventCard extends ViewComponent {
+class EventCard extends ViewComponent {
 
-    private final TagHandler tagHandler;
     @FXML
     private AnchorPane lightboxAnchorPane;
     @FXML
@@ -49,38 +49,19 @@ class EditEventCard extends ViewComponent {
     @FXML
     private Button deleteButton;
 
-    private final Event event;
+    private final TagHandler tagHandler;
     private final ContactList contactList;
-    private List<Contact> participants;
+    private List<Contact> participants = new ArrayList<>();
+    private final Event event;
     private EventHandler<ActionEvent> deleteHandler;
 
-    EditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
-        this.event = event;
-        this.contactList = contactList;
+    EventCard(TagHandler tagHandler, ContactList contactList, Event event) {
         this.tagHandler = tagHandler;
+        this.contactList = contactList;
+        this.event = event;
         this.participants = event.getContacts();
 
-        saveButton.setOnAction(this::saveEvent);
-        closeButton.setOnAction(this::close);
-        deleteButton.setOnAction(this::delete);
-
-        lightboxAnchorPane.setOnMouseClicked(this::close);
-        cardAnchorPane.setOnMouseClicked(this::consumeClick);
-        addTagButton.setOnAction(this::addTag);
-        selectContactsButton.setOnAction(this::selectContacts);
-
-        setFields();
-
-    }
-
-    private void selectContacts(ActionEvent actionEvent) {
-        ContactPickerDialog dialog = new ContactPickerDialog(contactList, event);
-        participants = dialog.getPickedContacts();
-        updateParticipantFlowPane();
-    }
-
-    private void consumeClick(MouseEvent mouseEvent) {
-        mouseEvent.consume();
+        initializeComponent();
     }
 
     private void saveEvent(ActionEvent actionEvent) {
@@ -98,35 +79,48 @@ class EditEventCard extends ViewComponent {
         return localDate.atTime(hourSpinner.getValue(), minuteSpinner.getValue());
     }
 
-    private void close(ActionEvent e) {
-        close();
-    }
+    private void initializeComponent() {
+        saveButton.setOnAction(this::saveEvent);
+        closeButton.setOnAction(this::close);
+        deleteButton.setOnAction(this::delete);
 
-    private void close(MouseEvent e) {
-        close();
-    }
+        lightboxAnchorPane.setOnMouseClicked(this::close);
+        cardAnchorPane.setOnMouseClicked(this::consumeClick);
+        addTagButton.setOnAction(this::addTag);
+        selectContactsButton.setOnAction(this::selectContacts);
 
-    private void delete(ActionEvent e) {
-        deleteHandler.handle(e);
-        close();
-    }
-
-    public void setOnDelete(EventHandler<ActionEvent> deleteHandler) {
-        this.deleteHandler = deleteHandler;
-    }
-
-    private void close() {
-        this.getPane().toBack();
+        setFields();
     }
 
     private void setFields() {
         nameTextField.setText(event.getName());
         addressTextField.setText(event.getAddress());
         eventDatePicker.setValue(event.getDateTime().toLocalDate());
-        initializeSpinners();
         descriptionTextArea.setText(event.getDescription());
+        initializeSpinners();
         initializeComboBox();
         updateParticipantFlowPane();
+    }
+
+    private void initializeSpinners() {
+        SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23,
+                LocalDateTime.now().getHour(), 1);
+        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59,
+                CalendarDateUtility.getCalendarizedMinutes(), 5);
+        hourValueFactory.setWrapAround(true);
+        minuteValueFactory.setWrapAround(true);
+        hourSpinner.setValueFactory(hourValueFactory);
+        minuteSpinner.setValueFactory(minuteValueFactory);
+    }
+
+    private void initializeComboBox() {
+        resetTagComboBox();
+    }
+
+    private void resetTagComboBox() {
+        tagComboBox.getItems().clear();
+        tagComboBox.getItems().addAll(tagHandler.getAllTags());
+        tagComboBox.setValue(event.getTag());
     }
 
     private void updateParticipantFlowPane() {
@@ -137,28 +131,40 @@ class EditEventCard extends ViewComponent {
         }
     }
 
-    private void initializeComboBox() {
-        resetTagComboBox();
+    private void selectContacts(ActionEvent actionEvent) {
+        ContactPickerDialog dialog = new ContactPickerDialog(contactList, event);
+        participants = dialog.getPickedContacts();
+        updateParticipantFlowPane();
     }
 
-    private void addTag(ActionEvent event) {
+    private void addTag(ActionEvent actionEvent) {
         new CreateTagDialog(tagHandler);
         resetTagComboBox();
     }
 
-    private void resetTagComboBox() {
-        tagComboBox.getItems().clear();
-        tagComboBox.getItems().addAll(tagHandler.getAllTags());
-        tagComboBox.setValue(event.getTag());
+    private void consumeClick(MouseEvent mouseEvent) {
+        mouseEvent.consume();
     }
 
-    private void initializeSpinners() {
-        SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23,
-                event.getDateTime().getHour(), 1);
-        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 60,
-                CalendarDateUtility.getCalendarizedMinutes(), 5);
-        hourSpinner.setValueFactory(hourValueFactory);
-        minuteSpinner.setValueFactory(minuteValueFactory);
+    private void delete(ActionEvent actionEvent) {
+        deleteHandler.handle(actionEvent);
+        close();
+    }
+
+    public void setOnDelete(EventHandler<ActionEvent> deleteHandler) {
+        this.deleteHandler = deleteHandler;
+    }
+
+    private void close(ActionEvent actionEvent) {
+        close();
+    }
+
+    private void close(MouseEvent mouseEvent) {
+        close();
+    }
+
+    private void close() {
+        this.getPane().toBack();
     }
 
 }

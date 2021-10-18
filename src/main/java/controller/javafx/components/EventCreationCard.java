@@ -77,7 +77,7 @@ class EventCreationCard extends ViewComponent {
         SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23,
                 LocalDateTime.now().getHour(), 1);
         SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59,
-                LocalDateTime.now().getMinute() - LocalDateTime.now().getMinute() % 15, 5);
+                CalendarDateUtility.getCalendarizedMinutes(), 5);
         hourValueFactory.setWrapAround(true);
         minuteValueFactory.setWrapAround(true);
         hourSpinner.setValueFactory(hourValueFactory);

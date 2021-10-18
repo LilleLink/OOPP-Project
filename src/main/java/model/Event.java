@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Event implements ICacheVisitable, ISearchable<String>, IObservable {
 
     private String name;
-    private String address = "";
+    private String address;
     private LocalDateTime dateTime;
     private String description;
 
@@ -54,6 +54,16 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
     }
 
     /***
+     * Creates an empty event with standard parameters.
+     */
+    Event() {
+        this.name = "Unnamed event";
+        this.dateTime = CalendarDateUtility.getCalendarizedDate();
+        this.address = "No address";
+        this.directoryId = UUID.randomUUID();
+    }
+
+    /***
      * Returns whether the event is in the future or past.
      * @return true if in the future, false if in the past.
      */
@@ -63,12 +73,9 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     /***
      * Returns the name of the event
-     * @return name of the event or "Unnamed event" if the event has no name.
+     * @return name of the event
      */
     public String getName() {
-        if (this.name.isEmpty()) {
-            return "Unnamed event";
-        }
         return name;
     }
 
@@ -83,12 +90,10 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     /***
      * Returns the address of the event
-     * @return address of the event or "No address" if the event has no address.
+     * @return address of the event
      */
     public String getAddress() {
-        if (this.address.isEmpty()) {
-            return "No address";
-        }
+
         return address;
     }
 
@@ -103,7 +108,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     /***
      * Returns the date/time object of the event
-     * @return the date/time object of the event
+     * @return the date/time object of the event.
      */
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -190,12 +195,10 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
     /***
      * Removes a contact from the event
      * @param contact the contact to be removed
-     * @return true if operation successful, false if not.
      */
-    public boolean removeContact(Contact contact) {
-        boolean success = contacts.remove(contact);
+    public void removeContact(Contact contact) {
+        contacts.remove(contact);
         notifyObservers();
-        return success;
     }
 
     /***
