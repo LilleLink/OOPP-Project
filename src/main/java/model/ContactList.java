@@ -51,6 +51,7 @@ public class ContactList implements IObservable {
         if (cache.name.length() < 1) throw new NameNotAllowedException("Contacts must have a name");
         if (cache.directoryId == null) cache.directoryId = UUID.randomUUID();
         contactList.add(new Contact(cache));
+        notifyObservers();
     }
 
     /***
