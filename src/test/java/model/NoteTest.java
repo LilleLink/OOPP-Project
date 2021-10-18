@@ -42,7 +42,7 @@ public class NoteTest {
     public void sizeIncreaseTest() {
         Note note = new Note();
         int oldSize = note.size();
-        note = note.editNote("Pizza");
+        note = note.withText("Pizza");
         int newSize = note.size();
         assert(oldSize < newSize);
     }

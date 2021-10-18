@@ -7,6 +7,8 @@ import java.util.Optional;
 
 /**
  * Represents a documented note containing text and the point in time that it was created.
+ *
+ * @author Simon Johnsson
  */
 public class Note implements Comparable<Note>, ICacheVisitable {
 
@@ -56,13 +58,13 @@ public class Note implements Comparable<Note>, ICacheVisitable {
     }
 
     /**
-     * Returns a new Note containing the given text and keeps this point of creation.
+     * Returns an adjusted copy containing the given text and keeps this point of creation.
      * Uses mutate by copy.
      *
      * @param newText a new String
      * @return a new Note containing the given text
      */
-    Note editNote(String newText) {
+    Note withText(String newText) {
         return new Note(newText, pointOfCreation);
     }
 

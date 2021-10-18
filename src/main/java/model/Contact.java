@@ -127,7 +127,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @param text the information to be added
      */
     void addNote(String text) {
-        notes.addNote(text);
+        notes.add(text);
     }
 
     /**
@@ -135,7 +135,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      */
 
     void addNote() {
-        notes.addNote();
+        notes.add();
     }
 
     /**
@@ -144,7 +144,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @param index the index of the note to be removed
      */
     void removeNote(int index) {
-        notes.removeNote(index);
+        notes.removeAt(index);
         notifyObservers();
     }
 
@@ -155,7 +155,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @param text  the new text
      */
     void editNote(int index, String text) {
-        notes.editNoteAt(index, text);
+        notes.editAt(index, text);
     }
 
     /**
@@ -165,7 +165,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @return a string
      */
     String viewNoteAt(int index) {
-        return notes.viewNoteAt(index);
+        return notes.viewAt(index);
     }
 
     /**
@@ -174,7 +174,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @return a notes list object
      */
     public List<Note> getListOfNotes() {
-        return notes.getSortedElem();
+        return notes.getSortedList();
     }
 
     /**
