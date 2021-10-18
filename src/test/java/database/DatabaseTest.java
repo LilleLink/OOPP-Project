@@ -2,7 +2,6 @@ package database;
 
 import model.Contact;
 import model.ITag;
-import model.Tag;
 import model.User;
 import model.exceptions.NameNotAllowedException;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -40,8 +39,8 @@ public class DatabaseTest {
         Contact contact = user.getContacts().getList().stream().filter(c -> c.getName().equals("McLovin"))
                 .findFirst().orElseThrow(IllegalStateException::new);
         contact.setAddress("Kungsportsavenyen 32");
-        contact.getNotes().addNote("Hahah this guy amirite");
-        contact.getNotes().addNote("K he's aight I guess");
+        contact.getNotes().add("Hahah this guy amirite");
+        contact.getNotes().add("K he's aight I guess");
 
         //TODO Fix addTag? Not public.
         //contact.addTag(friendTag);

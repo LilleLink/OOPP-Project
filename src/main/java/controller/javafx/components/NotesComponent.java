@@ -64,7 +64,7 @@ class NotesComponent extends ViewComponent {
      * to the VBox.
      */
     private void initializeNotes() {
-        for (Note note : notes.getSortedElem()) {
+        for (Note note : notes.getSortedList()) {
             addToVBox(createCard(note));
         }
     }
@@ -129,7 +129,7 @@ class NotesComponent extends ViewComponent {
      */
     private void removeNote(ActionEvent actionEvent) {
         int noteIndex = noteVBox.getChildren().indexOf(selected);
-        notes.removeNote(noteIndex);
+        notes.removeAt(noteIndex);
         noteVBox.getChildren().remove(selected);
         this.selected = null;
     }
@@ -141,7 +141,7 @@ class NotesComponent extends ViewComponent {
      * @param event the user input
      */
     private void addNote(Event event) {
-        notes.addNote(inputTextArea.getText());
+        notes.add(inputTextArea.getText());
         addToVBox(createCard(notes.getLastAdded()));
     }
 
@@ -153,7 +153,7 @@ class NotesComponent extends ViewComponent {
      */
     private void editNote(ActionEvent actionEvent) {
         int noteIndex = noteVBox.getChildren().indexOf(selected);
-        notes.editNoteAt(noteIndex, inputTextArea.getText());
+        notes.editAt(noteIndex, inputTextArea.getText());
         setVBoxElement(noteIndex, createCard(notes.getLastAdded()));
         selected = null;
     }
