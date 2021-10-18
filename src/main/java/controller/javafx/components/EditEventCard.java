@@ -1,6 +1,7 @@
 package controller.javafx.components;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -10,32 +11,48 @@ import model.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 class EditEventCard extends ViewComponent {
 
     private final TagHandler tagHandler;
-    @FXML private AnchorPane lightboxAnchorPane;
-    @FXML private AnchorPane cardAnchorPane;
+    @FXML
+    private AnchorPane lightboxAnchorPane;
+    @FXML
+    private AnchorPane cardAnchorPane;
 
-    @FXML private TextField nameTextField;
-    @FXML private TextField addressTextField;
-    @FXML private DatePicker eventDatePicker;
-    @FXML private Spinner<Integer> hourSpinner;
-    @FXML private Spinner<Integer> minuteSpinner;
-    @FXML private ComboBox<ITag> tagComboBox;
-    @FXML private TextArea descriptionTextArea;
-    @FXML private Button addTagButton;
-    @FXML private Button selectContactsButton;
-    @FXML private HBox participantsHBox;
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private TextField addressTextField;
+    @FXML
+    private DatePicker eventDatePicker;
+    @FXML
+    private Spinner<Integer> hourSpinner;
+    @FXML
+    private Spinner<Integer> minuteSpinner;
+    @FXML
+    private ComboBox<ITag> tagComboBox;
+    @FXML
+    private TextArea descriptionTextArea;
+    @FXML
+    private Button addTagButton;
+    @FXML
+    private Button selectContactsButton;
+    @FXML
+    private HBox participantsHBox;
 
-    @FXML private Button saveButton;
-    @FXML private Button closeButton;
+    @FXML
+    private Button saveButton;
+    @FXML
+    private Button closeButton;
+    @FXML
+    private Button deleteButton;
 
     private final Event event;
     private final ContactList contactList;
-    private List<Contact> participants = new ArrayList<>();
+    private List<Contact> participants;
+    private EventHandler<ActionEvent> deleteHandler;
 
     EditEventCard(Event event, ContactList contactList, TagHandler tagHandler) {
         this.event = event;
@@ -45,6 +62,7 @@ class EditEventCard extends ViewComponent {
 
         saveButton.setOnAction(this::saveEvent);
         closeButton.setOnAction(this::close);
+        deleteButton.setOnAction(this::delete);
 
         lightboxAnchorPane.setOnMouseClicked(this::close);
         cardAnchorPane.setOnMouseClicked(this::consumeClick);
@@ -80,12 +98,21 @@ class EditEventCard extends ViewComponent {
         return localDate.atTime(hourSpinner.getValue(), minuteSpinner.getValue());
     }
 
-    private void close(ActionEvent e){
+    private void close(ActionEvent e) {
         close();
     }
 
-    private void close(MouseEvent e){
+    private void close(MouseEvent e) {
         close();
+    }
+
+    private void delete(ActionEvent e) {
+        deleteHandler.handle(e);
+        close();
+    }
+
+    public void setOnDelete(EventHandler<ActionEvent> deleteHandler) {
+        this.deleteHandler = deleteHandler;
     }
 
     private void close() {
@@ -114,8 +141,8 @@ class EditEventCard extends ViewComponent {
         resetTagComboBox();
     }
 
-    private void addTag(ActionEvent event){
-        new AddTagDialog(tagHandler).displayAndWait();
+    private void addTag(ActionEvent event) {
+        new CreateTagDialog(tagHandler);
         resetTagComboBox();
     }
 
@@ -126,9 +153,9 @@ class EditEventCard extends ViewComponent {
     }
 
     private void initializeSpinners() {
-        SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,
+        SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23,
                 event.getDateTime().getHour(), 1);
-        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,60,
+        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 60,
                 event.getDateTime().getMinute(), 5);
         hourSpinner.setValueFactory(hourValueFactory);
         minuteSpinner.setValueFactory(minuteValueFactory);

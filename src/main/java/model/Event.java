@@ -1,11 +1,12 @@
 package model;
 
-import search.ISearchable;
+import model.search.ISearchable;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.*;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
@@ -52,15 +53,22 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
         this.directoryId = UUID.randomUUID();
     }
 
+    /***
+     * Returns whether the event is in the future or past.
+     * @return true if in the future, false if in the past.
+     */
     public boolean isInFuture() {
         return dateTime.compareTo(LocalDateTime.now()) > 0;
     }
 
     /***
      * Returns the name of the event
-     * @return name of the event
+     * @return name of the event or "Unnamed event" if the event has no name.
      */
     public String getName() {
+        if (this.name.isEmpty()) {
+            return "Unnamed event";
+        }
         return name;
     }
 
@@ -75,9 +83,12 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     /***
      * Returns the address of the event
-     * @return address of the event
+     * @return address of the event or "No address" if the event has no address.
      */
     public String getAddress() {
+        if (this.address.isEmpty()) {
+            return "No address";
+        }
         return address;
     }
 
@@ -99,10 +110,9 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
     }
 
     /**
-     *
      * @return The event's directoryId.
      */
-    public UUID getDirectoryId(){
+    public UUID getDirectoryId() {
         return directoryId;
     }
 
@@ -136,7 +146,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      * Adds a tag to the event
      * @param tag the tag to be added
      */
-    public void setTag(ITag tag){
+    public void setTag(ITag tag) {
         this.tag = tag;
         notifyObservers();
     }
@@ -144,7 +154,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
     /***
      * Removes a tag from the event
      */
-    public void removeTag(){
+    public void removeTag() {
         tag = null;
         notifyObservers();
     }
@@ -153,7 +163,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      * Returns tag
      * @return the tag
      */
-    public ITag getTag(){
+    public ITag getTag() {
         return this.tag;
     }
 
@@ -161,8 +171,8 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      * Adds a contact to the event
      * @param contact the contact to be added
      */
-    public void addContact(Contact contact){
-        if (!contacts.contains(contact)){
+    public void addContact(Contact contact) {
+        if (!contacts.contains(contact)) {
             contacts.add(contact);
         }
         notifyObservers();
@@ -182,7 +192,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      * @param contact the contact to be removed
      * @return true if operation successful, false if not.
      */
-    public boolean removeContact(Contact contact){
+    public boolean removeContact(Contact contact) {
         boolean success = contacts.remove(contact);
         notifyObservers();
         return success;
@@ -192,7 +202,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      * Returns the contact arraylist.
      * @return the contact arraylist.
      */
-    public List<Contact> getContacts(){
+    public List<Contact> getContacts() {
         return this.contacts;
     }
 
@@ -213,7 +223,8 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
         public List<Contact> contacts;
         public UUID directoryId;
 
-        public EventCache() {}
+        public EventCache() {
+        }
     }
 
     private EventCache getCache() {
@@ -258,7 +269,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     @Override
     public void notifyObservers() {
-        for (IObserver observer : observers){
+        for (IObserver observer : observers) {
             observer.onEvent();
         }
     }

@@ -1,11 +1,12 @@
-package search;
+package model.search;
 
 /**
  * Calculates the Levenshtein distance of two sequences of characters.
  * Based on the Wagner-Fischer dynamic programming algorithm calculating Damerau-Levenshtein distance.
- * @see <a href="https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance">
- *     The Damerua-Levenshtein Wikipedia article</a>
+ *
  * @author Simon Johnsson
+ * @see <a href="https://en.wikipedia.org/wiki/Damerau%E2%80%93Levenshtein_distance">
+ * The Damerua-Levenshtein Wikipedia article</a>
  */
 class Levenshtein {
 
@@ -18,6 +19,7 @@ class Levenshtein {
      *     <li><b>Substitutions</b></li>
      *     <li><b>Transpositions</b></li>
      * </ul>
+     *
      * @param a the source sequence
      * @param b the target sequence
      * @return the edit distance between the two sequences

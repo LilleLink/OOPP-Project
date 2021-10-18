@@ -3,7 +3,7 @@ package model;
 import mocks.MockStringSearchable;
 import org.junit.Before;
 import org.junit.Test;
-import search.SearchEngine;
+import model.search.SearchEngine;
 
 import java.util.ArrayList;
 import java.util.List;

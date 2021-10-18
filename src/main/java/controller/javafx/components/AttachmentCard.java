@@ -15,21 +15,27 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 class AttachmentCard extends ViewComponent {
-    @FXML private AnchorPane baseAnchorPane;
-    @FXML private Label nameLabel;
-    @FXML private Button removeButton;
+    @FXML
+    private AnchorPane baseAnchorPane;
+    @FXML
+    private Label nameLabel;
+    @FXML
+    private Button removeButton;
     private final Path attachment;
     private final IAttachmentHandler attachmentHandler = AttachmentHandlerFactory.getService();
     private EventHandler<Event> deleteHandler;
 
-    AttachmentCard(Path attachment){
+    AttachmentCard(Path attachment) {
         this.attachment = attachment;
         nameLabel.setText(attachment.getFileName().toString());
         baseAnchorPane.setOnMouseClicked(this::openAttachment);
         this.removeButton.setOnAction(this::deleteAttachment);
     }
 
-    private void openAttachment(MouseEvent event){
+    private void openAttachment(MouseEvent event) {
+        if (!System.getProperty("os.name").startsWith("Windows")) {
+            return;
+        }
         try {
             Desktop.getDesktop().open(attachment.toFile());
         } catch (IOException e) {
@@ -37,11 +43,11 @@ class AttachmentCard extends ViewComponent {
         }
     }
 
-    private void deleteAttachment(Event event){
+    private void deleteAttachment(Event event) {
         deleteHandler.handle(event);
     }
 
-    public void setDeleteHandler(EventHandler<Event> handler){
+    public void setDeleteHandler(EventHandler<Event> handler) {
         deleteHandler = handler;
     }
 }

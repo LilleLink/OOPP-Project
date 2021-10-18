@@ -1,7 +1,6 @@
 package controller.javafx.components;
 
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import model.Note;
@@ -24,5 +23,6 @@ class NoteCard extends ViewComponent {
         noteTextArea.setText(note.viewNote());
         dateLabel.setText("Created: " + note.dateToString() + " " + note.timeToString());
     }
+
 
 }

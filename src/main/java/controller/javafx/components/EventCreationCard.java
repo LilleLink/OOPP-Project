@@ -15,20 +15,32 @@ import java.util.List;
 class EventCreationCard extends ViewComponent {
 
     private final TagHandler tagHandler;
-    @FXML private AnchorPane lightboxAnchorPane;
-    @FXML private AnchorPane cardAnchorPane;
+    @FXML
+    private AnchorPane lightboxAnchorPane;
+    @FXML
+    private AnchorPane cardAnchorPane;
 
-    @FXML private TextField nameTextField;
-    @FXML private TextField addressTextField;
-    @FXML private DatePicker eventDatePicker;
-    @FXML private Spinner<Integer> hourSpinner;
-    @FXML private Spinner<Integer> minuteSpinner;
-    @FXML private ComboBox<ITag> tagComboBox;
-    @FXML private TextArea descriptionTextArea;
-    @FXML private Button addTagButton;
-    @FXML private Button selectContactsButton;
+    @FXML
+    private TextField nameTextField;
+    @FXML
+    private TextField addressTextField;
+    @FXML
+    private DatePicker eventDatePicker;
+    @FXML
+    private Spinner<Integer> hourSpinner;
+    @FXML
+    private Spinner<Integer> minuteSpinner;
+    @FXML
+    private ComboBox<ITag> tagComboBox;
+    @FXML
+    private TextArea descriptionTextArea;
+    @FXML
+    private Button addTagButton;
+    @FXML
+    private Button selectContactsButton;
 
-    @FXML private Button saveButton;
+    @FXML
+    private Button saveButton;
 
     private EventList eventList;
     private ContactList contactList;
@@ -62,10 +74,10 @@ class EventCreationCard extends ViewComponent {
     }
 
     private void initializeSpinners() {
-        SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,23,
+        SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23,
                 LocalDateTime.now().getHour(), 1);
-        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0,59,
-                LocalDateTime.now().getMinute()-LocalDateTime.now().getMinute()%15, 5);
+        SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59,
+                LocalDateTime.now().getMinute() - LocalDateTime.now().getMinute() % 15, 5);
         hourValueFactory.setWrapAround(true);
         minuteValueFactory.setWrapAround(true);
         hourSpinner.setValueFactory(hourValueFactory);
@@ -90,8 +102,8 @@ class EventCreationCard extends ViewComponent {
         this.getPane().toBack();
     }
 
-    private void addTag(ActionEvent event){
-        new AddTagDialog(tagHandler).displayAndWait();
+    private void addTag(ActionEvent event) {
+        new CreateTagDialog(tagHandler);
         resetTagComboBox();
     }
 
@@ -104,7 +116,7 @@ class EventCreationCard extends ViewComponent {
         resetTagComboBox();
     }
 
-    private void resetTagComboBox(){
+    private void resetTagComboBox() {
         tagComboBox.getItems().clear();
         tagComboBox.getItems().addAll(tagHandler.getAllTags());
     }

@@ -1,9 +1,9 @@
 package controller.javafx.components;
 
 import controller.javafx.IPageNavigator;
-import model.*;
-
-import java.util.Calendar;
+import model.ContactList;
+import model.EventList;
+import model.TagHandler;
 
 /***
  * Factory that creates JavaFX components and returns them as ViewComponents to the caller.
@@ -23,7 +23,7 @@ public class PageFactory {
      * Creates a MainPage component.
      * @return the MainPage in the form of a ViewComponent
      */
-    public static MainPage CreateMainPage() {
+    public static ViewComponent CreateMainPage() {
         return new MainPage();
     }
 
@@ -31,17 +31,18 @@ public class PageFactory {
      * Creates a SecondaryPage component
      * @return the SecondaryPage in the form of a ViewComponent
      */
-    public static SecondaryPage CreateSecondaryPage () {
+    public static ViewComponent CreateSecondaryPage() {
         return new SecondaryPage();
     }
 
     /**
      * Creates a ContactPage component.
+     *
      * @param contactList A list of the contacts to display
      * @return ContactPage as a ViewComponent
      */
-    public static ContactPage CreateContactPage (ContactList contactList) {
-        return new ContactPage(contactList);
+    public static ViewComponent CreateContactPage(ContactList contactList, TagHandler tagHandler, EventList eventList) {
+        return new ContactPage(contactList, tagHandler, eventList);
     }
 
     /***
@@ -49,7 +50,7 @@ public class PageFactory {
      * @param eventList the list of event to be displayed in the calendar
      * @return the CalendarPage in the form of a CalendarPage
      */
-    public static CalendarPage CreateCalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
+    public static ViewComponent CreateCalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
         return new CalendarPage(eventList, contactList, tagHandler);
     }
 }
