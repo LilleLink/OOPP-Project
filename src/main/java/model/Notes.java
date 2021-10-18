@@ -20,7 +20,7 @@ public class Notes implements ICacheVisitable {
     /**
      * Default constructor containing an empty list.
      */
-    Notes() {
+    public Notes() {
         elements = new ArrayList<>();
     }
 
@@ -30,7 +30,7 @@ public class Notes implements ICacheVisitable {
      *
      * @param oldNotes the notes to be copied
      */
-    Notes(Notes oldNotes) {
+    public Notes(Notes oldNotes) {
         this.elements = new ArrayList<>(oldNotes.elements);
         elements.sort(Note::compareTo);
     }
