@@ -15,13 +15,11 @@ import java.util.*;
 /**
  * Class that reads a file or directory and adds contacts to a given list
  */
-public class VCFParser {
+class VCFParser implements IVCFParser {
 
     private final ContactList contacts;
 
-    private HashMap<FIELD, List<String>> data;
-
-    private HashMap<String, FIELD> fields = initFIELDSHashMap();
+    private final HashMap<String, FIELD> fields = initFIELDSHashMap();
 
     private HashMap<String, FIELD> initFIELDSHashMap() {
         HashMap<String, FIELD> map = new HashMap<>();
@@ -34,7 +32,7 @@ public class VCFParser {
     private final TagHandler tagHandler;
 
     /**
-     * Creates a new parser
+     * Creates a new parser for VCF files
      *
      * @param contactList the ContactList where the new contacts will be added
      */
@@ -43,27 +41,14 @@ public class VCFParser {
         this.tagHandler = tagHandler;
     }
 
-    /**
-     * Adds a contact from a {*.vcf} file to the list given in the constructor
-     *
-     * @param path the path to the vcf file
-     * @throws IOException             if the file was not a {*.vcf} file or if an error occurs in {@link Scanner}
-     * @throws NameNotAllowedException if a card with an illegal name is read
-     */
     public void addContact(Path path) throws IOException, NameNotAllowedException {
         if (isVCFFile(path)) {
-            readContact2(path);
+            readContact(path);
         } else {
             throw new FileNotFoundException();
         }
     }
 
-    /**
-     * adds contacts from all vcf files in a directory (not recursive)
-     *
-     * @param directory the directory to be read
-     * @throws IOException if no {*.vcf} file is found or if an error occurs in {@link Scanner}
-     */
     public void addContactsFromDirectory(Path directory) throws IOException {
         int createdContacts = 0;
         for (Path path : Files.newDirectoryStream(directory)) {
@@ -83,15 +68,15 @@ public class VCFParser {
         return path.toString().toLowerCase().endsWith(".vcf");
     }
 
-    private void readContact2(Path path) throws IOException, NameNotAllowedException {
-        data = parseData(path);
+    private void readContact(Path path) throws IOException, NameNotAllowedException {
+        HashMap<FIELD, List<String>> data = parseData(path);
         Contact.ContactCache cache = new Contact.ContactCache();
         System.out.println(data);
-        readName(cache);
-        readAddress(cache);
-        readTags(cache);
-        readPhoneNumber(cache);
-        readNote(cache);
+        readName(data, cache);
+        readAddress(data, cache);
+        readTags(data, cache);
+        readPhoneNumber(data, cache);
+        readNote(data, cache);
         createUUID(cache);
         contacts.addContact(cache);
     }
@@ -105,43 +90,45 @@ public class VCFParser {
         String line;
         while (scanner.hasNext()) {
             line = scanner.nextLine();
-            String stringType = line.split(":")[0].split(";")[0];
-            System.out.println(stringType);
-            FIELD type = fields.get(stringType);
-            System.out.println(type);
+            FIELD type = fields.get(line.split(":")[0].split(";")[0]);
             if (type == null) {
                 continue;
             }
-            Collection<String> data = new ArrayList<>();
-            switch (type) {
-                case ADDRESS:
-                case NAME:
-                case NOTE: {
-                    data.add(line.split(":", 2)[1]);
-                    break;
-                }
-                case CATEGORIES: {
-                    String[] categories = line.split(":")[1].split(",");
-                    data.addAll(Arrays.asList(categories));
-                    break;
-                }
-                case FORMATTED_NAME:
-                case VERSION: {
-                    data.add(line.split(":")[1]);
-                    break;
-                }
-                case TELEPHONE: {
-                    String[] telInfo = line.split(":");
-                    data.add(telInfo[telInfo.length - 1]);
-                    break;
-                }
-            }
+            Collection<String> data = getDataFromLine(line, type);
             parsedData.get(type).addAll(data);
         }
         return parsedData;
     }
 
-    private void readName(Contact.ContactCache cache) {
+    private Collection<String> getDataFromLine(String line, FIELD type) {
+        Collection<String> data = new ArrayList<>();
+        switch (type) {
+            case ADDRESS:
+            case NAME:
+            case NOTE: {
+                data.add(line.split(":", 2)[1]);
+                break;
+            }
+            case CATEGORIES: {
+                String[] categories = line.split(":")[1].split(",");
+                data.addAll(Arrays.asList(categories));
+                break;
+            }
+            case FORMATTED_NAME:
+            case VERSION: {
+                data.add(line.split(":")[1]);
+                break;
+            }
+            case TELEPHONE: {
+                String[] telInfo = line.split(":");
+                data.add(telInfo[telInfo.length - 1]);
+                break;
+            }
+        }
+        return data;
+    }
+
+    private void readName(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
         if (data.get(FIELD.FORMATTED_NAME).size() > 0) {
             cache.name = data.get(FIELD.FORMATTED_NAME).get(0);
             return;
@@ -158,7 +145,7 @@ public class VCFParser {
         cache.name = sb.toString();
     }
 
-    private void readAddress(Contact.ContactCache cache) {
+    private void readAddress(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
         if (!(data.get(FIELD.ADDRESS).size() > 0)) {
             cache.address = "";
             return;
@@ -181,7 +168,7 @@ public class VCFParser {
         cache.address = sb.toString();
     }
 
-    private void readTags(Contact.ContactCache cache) {
+    private void readTags(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
         List<ITag> tags = new ArrayList<>();
         data.get(FIELD.CATEGORIES).forEach(tag -> {
             try {
@@ -197,53 +184,19 @@ public class VCFParser {
         cache.tags = tags;
     }
 
-    private void readPhoneNumber(Contact.ContactCache cache) {
+    private void readPhoneNumber(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
         List<String> numbers = data.get(FIELD.TELEPHONE);
         cache.phoneNumber = numbers.size() > 0 ? numbers.get(0) : "";
     }
 
-    private void readNote(Contact.ContactCache cache) {
+    private void readNote(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
         Notes notes = new Notes();
         data.get(FIELD.NOTE).forEach(notes::add);
+        System.out.println(notes);
         cache.notes = notes;
     }
 
     private void createUUID(Contact.ContactCache cache) {
         cache.directoryId = UUID.randomUUID();
-    }
-
-    private void readContact(Path path) throws IOException, NameNotAllowedException {
-        Scanner reader = new Scanner(path);
-        Contact.ContactCache cache = new Contact.ContactCache();
-        String line = reader.nextLine();
-        if (line.equals("BEGIN:VCARD")) {
-            line = reader.nextLine();
-        }
-        int version = 1;
-        if (line.startsWith("VERSION")) {
-            version = readVersion(line);
-        }
-        while (reader.hasNextLine()) {
-            line = reader.nextLine();
-            if (line.charAt(0) == '#') continue;
-            String[] data = line.split(";");
-            if (data[0].startsWith("FN") && version > 1) {
-                cache.name = data[0].substring(3);
-                continue;
-            }
-            if (data[0].equals("TEL")) {
-                cache.phoneNumber = data[1].split(":")[1];
-            }
-            if (data[0].equals("ADR")) {
-                cache.address = data[3];
-            }
-        }
-        cache.tags = new ArrayList<>();
-        contacts.addContact(cache);
-    }
-
-    private int readVersion(String line) {
-        String strVersion = line.split(":")[1];
-        return Integer.parseInt(strVersion);
     }
 }

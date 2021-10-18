@@ -1,6 +1,6 @@
 package vcf;
 
-public enum FIELD {
+enum FIELD {
     NAME("N"),
     FORMATTED_NAME("FN"),
     ADDRESS("ADR"),
