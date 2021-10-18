@@ -126,7 +126,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      *
      * @param text the information to be added
      */
-    void addNote(String text) {
+    public void addNote(String text) {
         notes.add(text);
     }
 

@@ -1,9 +1,6 @@
 package vcf;
 
-import model.Contact;
-import model.ContactList;
-import model.ITag;
-import model.TagHandler;
+import model.*;
 import model.exceptions.NameNotAllowedException;
 import model.exceptions.NameNotAvailableException;
 import model.exceptions.TagNotFoundException;
@@ -22,7 +19,17 @@ public class VCFParser {
 
     private final ContactList contacts;
 
-    private HashMap<String, List<String>> data;
+    private HashMap<FIELD, List<String>> data;
+
+    private HashMap<String, FIELD> fields = initFIELDSHashMap();
+
+    private HashMap<String, FIELD> initFIELDSHashMap() {
+        HashMap<String, FIELD> map = new HashMap<>();
+        for (FIELD field : FIELD.values()) {
+            map.put(field.getCode(), field);
+        }
+        return map;
+    }
 
     private final TagHandler tagHandler;
 
@@ -45,7 +52,7 @@ public class VCFParser {
      */
     public void addContact(Path path) throws IOException, NameNotAllowedException {
         if (isVCFFile(path)) {
-            readContact(path);
+            readContact2(path);
         } else {
             throw new FileNotFoundException();
         }
@@ -76,42 +83,54 @@ public class VCFParser {
         return path.toString().toLowerCase().endsWith(".vcf");
     }
 
-    private void readContact2(Path path) throws IOException {
+    private void readContact2(Path path) throws IOException, NameNotAllowedException {
         data = parseData(path);
         Contact.ContactCache cache = new Contact.ContactCache();
+        System.out.println(data);
         readName(cache);
         readAddress(cache);
         readTags(cache);
         readPhoneNumber(cache);
+        readNote(cache);
+        createUUID(cache);
+        contacts.addContact(cache);
     }
 
-    private HashMap<String, List<String>> parseData(Path path) throws IOException {
-        HashMap<String, List<String>> parsedData = new HashMap<>();
+    private HashMap<FIELD, List<String>> parseData(Path path) throws IOException {
+        HashMap<FIELD, List<String>> parsedData = new HashMap<>();
+        for (FIELD field : FIELD.values()) {
+            parsedData.put(field, new ArrayList<>());
+        }
         Scanner scanner = new Scanner(path);
         String line;
         while (scanner.hasNext()) {
             line = scanner.nextLine();
-            String type = line.split(":")[0].split(";")[0];
-            parsedData.computeIfAbsent(type, k -> new ArrayList<>());
+            String stringType = line.split(":")[0].split(";")[0];
+            System.out.println(stringType);
+            FIELD type = fields.get(stringType);
+            System.out.println(type);
+            if (type == null) {
+                continue;
+            }
             Collection<String> data = new ArrayList<>();
             switch (type) {
-                case "ADR":
-                case "N":
-                case "NOTE": {
+                case ADDRESS:
+                case NAME:
+                case NOTE: {
                     data.add(line.split(":", 2)[1]);
                     break;
                 }
-                case "CATEGORIES": {
+                case CATEGORIES: {
                     String[] categories = line.split(":")[1].split(",");
                     data.addAll(Arrays.asList(categories));
                     break;
                 }
-                case "FN":
-                case "VERSION": {
+                case FORMATTED_NAME:
+                case VERSION: {
                     data.add(line.split(":")[1]);
                     break;
                 }
-                case "TEL": {
+                case TELEPHONE: {
                     String[] telInfo = line.split(":");
                     data.add(telInfo[telInfo.length - 1]);
                     break;
@@ -123,11 +142,15 @@ public class VCFParser {
     }
 
     private void readName(Contact.ContactCache cache) {
-        if (data.containsKey("FN")) {
-            cache.name = data.get("FN").get(0);
+        if (data.get(FIELD.FORMATTED_NAME).size() > 0) {
+            cache.name = data.get(FIELD.FORMATTED_NAME).get(0);
             return;
         }
-        String[] unFormattedName = data.get("N").get(0).split(";");
+        if (data.get(FIELD.NAME).size() <= 0) {
+            cache.name = "";
+            return;
+        }
+        String[] unFormattedName = data.get(FIELD.NAME).get(0).split(";");
         StringBuilder sb = new StringBuilder();
         for (int i = unFormattedName.length - 1; i >= 0; i--) {
             sb.append(unFormattedName[i]);
@@ -136,7 +159,11 @@ public class VCFParser {
     }
 
     private void readAddress(Contact.ContactCache cache) {
-        String[] addressParts = data.get("ADR").get(0).split(";");
+        if (!(data.get(FIELD.ADDRESS).size() > 0)) {
+            cache.address = "";
+            return;
+        }
+        String[] addressParts = data.get(FIELD.ADDRESS).get(0).split(";");
         List<String> activeParts = new ArrayList<>();
         for (String part : addressParts) {
             if (part.length() > 0) {
@@ -156,7 +183,7 @@ public class VCFParser {
 
     private void readTags(Contact.ContactCache cache) {
         List<ITag> tags = new ArrayList<>();
-        for (String tag : data.get("CATEGORIES")) {
+        data.get(FIELD.CATEGORIES).forEach(tag -> {
             try {
                 tags.add(tagHandler.createTag(tag));
             } catch (NameNotAvailableException e) {
@@ -166,16 +193,23 @@ public class VCFParser {
                 }
             } catch (NameNotAllowedException ignored) {
             }
-        }
+        });
         cache.tags = tags;
     }
 
     private void readPhoneNumber(Contact.ContactCache cache) {
-        cache.phoneNumber = data.get("TEL").get(0);
+        List<String> numbers = data.get(FIELD.TELEPHONE);
+        cache.phoneNumber = numbers.size() > 0 ? numbers.get(0) : "";
     }
 
     private void readNote(Contact.ContactCache cache) {
-        
+        Notes notes = new Notes();
+        data.get(FIELD.NOTE).forEach(notes::add);
+        cache.notes = notes;
+    }
+
+    private void createUUID(Contact.ContactCache cache) {
+        cache.directoryId = UUID.randomUUID();
     }
 
     private void readContact(Path path) throws IOException, NameNotAllowedException {
