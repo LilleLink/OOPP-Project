@@ -5,7 +5,7 @@
  * {@link java.time.LocalDateTime} class.
  *
  * <header>
- *     <p>{@link model.notifications.Notifications} collects broadcast content.</p>
+ *     <p>{@link model.notifications.Notifier} collects broadcast content.</p>
  * </header>
  *
  * <header>

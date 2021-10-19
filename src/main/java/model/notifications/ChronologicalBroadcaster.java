@@ -37,13 +37,24 @@ public class ChronologicalBroadcaster<T extends IChronological> implements IObje
     }
 
     /**
-     * Default constructor broadcasting with an interval of 0 minutes.
-     * Broadcasts content when the current time corresponds with the
+     * Default constructor broadcasting with an interval of 1 minute.
+     * Broadcasts content when the current time is 1 minute from the chronological object's point in time.
      *
      * @param content the content to broadcast
      */
     ChronologicalBroadcaster(List<T> content) {
         this(content,1);
+    }
+
+    /**
+     * Private constructor for keeping adding listeners.
+     * @param content the content to broadcast
+     * @param minuteInterval how many minutes from the content's point in time to broadcast
+     * @param listeners the broadcaster's listeners
+     */
+    private ChronologicalBroadcaster(List<T> content, long minuteInterval, List<IObjectBroadcastListener<T>> listeners) {
+        this(content,minuteInterval);
+        this.listeners.addAll(listeners);
     }
 
     /**
@@ -53,7 +64,7 @@ public class ChronologicalBroadcaster<T extends IChronological> implements IObje
      * @return an adjusted copy with the given interval
      */
     ChronologicalBroadcaster<T> withInterval(long minuteInterval) {
-        return new ChronologicalBroadcaster<>(this.content,minuteInterval);
+        return new ChronologicalBroadcaster<>(this.content,minuteInterval,this.listeners);
     }
 
     /**
@@ -63,7 +74,7 @@ public class ChronologicalBroadcaster<T extends IChronological> implements IObje
      * @return an adjusted copy with the given content
      */
     ChronologicalBroadcaster<T> withContent(List<T> content) {
-        return new ChronologicalBroadcaster<>(content,this.minuteInterval);
+        return new ChronologicalBroadcaster<>(content,this.minuteInterval,this.listeners);
     }
 
     /**
@@ -126,9 +137,7 @@ public class ChronologicalBroadcaster<T extends IChronological> implements IObje
 
     @Override
     public void run() {
-        while(!Thread.interrupted()){
-            broadcastContent();
-            removePassed();
-        }
+        broadcastContent();
+        removePassed();
     }
 }

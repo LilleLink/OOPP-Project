@@ -15,35 +15,34 @@ import java.util.List;
  * @param <T> the type of chronological objects to collect
  * @author Simon Johnsson
  */
-public class Notifications<T extends IChronological> implements IObjectBroadcastListener<T>, Runnable{
+public class Notifier<T extends IChronological> implements IObjectBroadcastListener<T>, Runnable{
 
     private final List<T> active;
     private ChronologicalBroadcaster<T> broadcaster;
+    private boolean isMuted;
+    private long muteTime;
 
-    Notifications(List<T> content) {
+    public Notifier(List<T> content) {
         this.active = new ArrayList<>();
         this.broadcaster = new ChronologicalBroadcaster<>(content);
+        this.broadcaster.addListener(this);
     }
 
     /**
      * Updates the broadcaster's interval to the given minutes.
      *
-     * Note: changes are not reflected during {@code runtime}.
-     *
      * @param minutes the new notification time
      */
-    synchronized void setInterval(long minutes) {
+    public synchronized void setInterval(long minutes) {
         this.broadcaster = broadcaster.withInterval(minutes);
     }
 
     /**
      * Updates the broadcaster's content to the given list.
      *
-     * Note: changes are not reflected during {@code runtime}.
-     *
      * @param content the new content
      */
-    synchronized void setContent(List<T> content) {
+    public synchronized void setContent(List<T> content) {
         this.broadcaster = broadcaster.withContent(content);
     }
 
@@ -51,7 +50,7 @@ public class Notifications<T extends IChronological> implements IObjectBroadcast
     /**
      * Empties the list of notifications.
      */
-    synchronized void clear() {
+    public synchronized void clear() {
         active.clear();
     }
 
@@ -59,18 +58,44 @@ public class Notifications<T extends IChronological> implements IObjectBroadcast
      * Causes the thread which this notifications object is running on to sleep for the given milliseconds.
      *
      * @param millis the length of sleep in milliseconds
-     * @throws InterruptedException if the current thread is interrupted while muted.
      */
-    synchronized void mute(long millis) throws InterruptedException {
-        Thread.sleep(millis);
+    public synchronized void mute(long millis){
+        isMuted = true;
+        muteTime = millis;
     }
+
+    /**
+     * Unmutes notifications to receive notifications.
+     */
+    public synchronized void unmute() {
+        isMuted = false;
+    }
+
+    /**
+     * Puts the active thread to sleep as long as notifications are muted.
+     * Catches an interrupted exception and breaks the while loop if the thread is interrupted while sleeping.
+     *
+     * @param millis the amount of time to sleep in milliseconds
+     */
+    private void muteSleep(long millis) {
+        long t = millis;
+        while(isMuted && t != 0) {
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                break;
+            }
+            t--;
+        }
+    }
+
 
     /**
      * Returns the currently active notifications.
      *
      * @return a list of type {@code T extends {@link IChronological}}
      */
-    synchronized List<T> getActive() {
+    public synchronized List<T> getActive() {
         return new ArrayList<>(active);
     }
 
@@ -79,7 +104,7 @@ public class Notifications<T extends IChronological> implements IObjectBroadcast
      *
      * @return the amount of notifications
      */
-    synchronized int size() {
+    public synchronized int size() {
         return active.size();
     }
 
@@ -90,6 +115,14 @@ public class Notifications<T extends IChronological> implements IObjectBroadcast
 
     @Override
     public void run() {
-        broadcaster.run();
+        while (!Thread.interrupted()) {
+            if (!isMuted) {
+                broadcaster.run();
+            }
+            else {
+                muteSleep(muteTime);
+                unmute();
+            }
+        }
     }
 }
