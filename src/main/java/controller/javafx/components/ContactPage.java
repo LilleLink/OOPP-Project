@@ -62,6 +62,7 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
     public void closeGrayPane() {
         contactGrayBox.getPane().setVisible(false);
         contactGrayBox.getContact().unSubscribe(contactGrayBox);
+        onEvent();
     }
 
     private void newContact(MouseEvent mouseEvent) {
