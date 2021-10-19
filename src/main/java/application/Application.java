@@ -30,7 +30,6 @@ public class Application extends javafx.application.Application {
         HostServicesProvider.init(getHostServices());
 
         //Instantiates javafx controller/view
-        JavaFXViewInitializer javaFXViewInitializer = new JavaFXViewInitializer(stage, user);
         wizard.addListener(u -> {
             try {
                 this.user = u;
@@ -43,7 +42,7 @@ public class Application extends javafx.application.Application {
 
     @Override
     public void stop() throws Exception {
-        if(user != null) {
+        if (user != null) {
             DatabaseFactory.getService().save(user);
         }
     }
