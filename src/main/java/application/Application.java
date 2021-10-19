@@ -22,6 +22,9 @@ public class Application extends javafx.application.Application {
         // Instantiates model
         User user = new User("Pelle");
 
+        // Initializes HostServiceProvider
+        HostServicesProvider.init(getHostServices());
+
         //Instantiates javafx controller/view
         JavaFXViewInitializer javaFXViewInitializer = new JavaFXViewInitializer(stage, user);
     }
