@@ -38,6 +38,8 @@ public class SearchEngine<T extends ISearchable<String>> {
      * </p>
      * The comparison is case-insensitive and will perform calculations based on lower case versions of the inputs.
      *
+     * Results are sorted based on relevance using the {@link LevenshteinComparator}.
+     *
      * @param query the string to compare the search base to
      * @param tol   the tolerance of the output results
      * @return a list containing results considered relevant to the query
@@ -50,15 +52,19 @@ public class SearchEngine<T extends ISearchable<String>> {
                 results.add(elem);
             }
         }
+        LevenshteinComparator<T> comparator = new LevenshteinComparator<>(query);
+        results.sort(comparator);
         return results;
     }
 
     /**
      * Returns the iterated search base.
      *
-     * @return a list of the search base
+     * @return a copied list of the search base
      */
     public List<T> getSearchBase() {
-        return searchBase;
+        return new ArrayList<>(searchBase);
     }
+
+
 }
