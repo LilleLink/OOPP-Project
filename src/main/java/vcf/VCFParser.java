@@ -137,11 +137,11 @@ class VCFParser implements IVCFParser {
             return;
         }
         String[] unFormattedName = data.get(FIELD.NAME).get(0).split(";");
-        StringBuilder sb = new StringBuilder();
-        for (int i = unFormattedName.length - 1; i >= 0; i--) {
-            sb.append(unFormattedName[i]);
-        }
-        cache.name = sb.toString();
+        cache.name = unFormattedName[3] +
+                unFormattedName[1] +
+                unFormattedName[2] +
+                unFormattedName[0] +
+                unFormattedName[4];
     }
 
     private void readAddress(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
