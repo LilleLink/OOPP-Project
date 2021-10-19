@@ -1,5 +1,6 @@
 package controller.javafx.components;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -54,6 +55,7 @@ class EventCard extends ViewComponent {
     private List<Contact> participants = new ArrayList<>();
     private final Event event;
     private EventHandler<ActionEvent> deleteHandler;
+    private EventHandler<javafx.event.Event> closeHandler;
 
     EventCard(TagHandler tagHandler, ContactList contactList, Event event) {
         this.tagHandler = tagHandler;
@@ -71,6 +73,7 @@ class EventCard extends ViewComponent {
         event.setDescription(descriptionTextArea.getText());
         event.setTag(tagComboBox.getValue());
         event.setContacts(participants);
+        closeHandler.handle(actionEvent);
         close();
     }
 
@@ -88,6 +91,8 @@ class EventCard extends ViewComponent {
         cardAnchorPane.setOnMouseClicked(this::consumeClick);
         addTagButton.setOnAction(this::addTag);
         selectContactsButton.setOnAction(this::selectContacts);
+
+        Platform.runLater(() -> nameTextField.requestFocus());
 
         setFields();
     }
@@ -148,6 +153,7 @@ class EventCard extends ViewComponent {
 
     private void delete(ActionEvent actionEvent) {
         deleteHandler.handle(actionEvent);
+        closeHandler.handle(actionEvent);
         close();
     }
 
@@ -155,11 +161,17 @@ class EventCard extends ViewComponent {
         this.deleteHandler = deleteHandler;
     }
 
+    public void setOnClose(EventHandler<javafx.event.Event> closeHandler) {
+        this.closeHandler = closeHandler;
+    }
+
     private void close(ActionEvent actionEvent) {
+        closeHandler.handle(actionEvent);
         close();
     }
 
     private void close(MouseEvent mouseEvent) {
+        closeHandler.handle(mouseEvent);
         close();
     }
 

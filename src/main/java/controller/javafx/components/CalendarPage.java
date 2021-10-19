@@ -128,6 +128,7 @@ class CalendarPage extends ViewComponent implements IObserver {
         Event newEvent = eventList.addEvent();
         eventCard = new EventCard(tagHandler, contactList, newEvent);
         eventCard.setOnDelete(e -> eventList.removeEvent(newEvent));
+        eventCard.setOnClose(e -> this.onEvent());
         calendarPageStackPane.getChildren().add(eventCard.getPane());
         eventCard.getPane().toFront();
     }
@@ -151,6 +152,7 @@ class CalendarPage extends ViewComponent implements IObserver {
     private void editEvent(Event event) {
         eventCard = new EventCard(tagHandler, contactList, event);
         eventCard.setOnDelete(actionEvent -> eventList.removeEvent(event));
+        eventCard.setOnClose(actionEvent -> this.onEvent());
         calendarPageStackPane.getChildren().add(eventCard.getPane());
         eventCard.getPane().toFront();
     }
