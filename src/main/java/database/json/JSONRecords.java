@@ -121,6 +121,7 @@ public class JSONRecords {
     static class UserRecord implements JSONRecords.IRecordVisitable {
         String name;
         List<Integer> contacts = new ArrayList<>();
+        List<ContactRecord> contactObjects = new ArrayList<>();
         List<EventRecord> events = new ArrayList<>();
         TagHandlerRecord tags;
         String uuid;

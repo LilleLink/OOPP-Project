@@ -48,9 +48,7 @@ public class DatabaseTest {
         contact.setAddress("Kungsportsavenyen 32");
         contact.getNotes().add("Wow same address wtf lame");
 
-        //TODO Fix addTag? Not public.
-        //contact.addTag(friendTag);
-        //contact.addTag(biznizTag);
+        contact.addAllTags(Arrays.asList(friendTag, biznizTag));
 
         ITag pleasureTag = user.getTagHandler().createTag("pleasure");
 

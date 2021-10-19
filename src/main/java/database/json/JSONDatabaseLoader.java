@@ -19,7 +19,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
      */
     @Override
     public User load(Path databaseFile) throws IOException {
-        JSONRecords.PRMRecord record = new Gson().fromJson(String.join("\n", Files.readAllLines(databaseFile)), JSONRecords.PRMRecord.class);
+        JSONRecords.UserRecord record = new Gson().fromJson(String.join("\n", Files.readAllLines(databaseFile)), JSONRecords.UserRecord.class);
         RecordVisitorState env = new RecordVisitorState();
         return (User) record.accept(new RecordVisitor(), env).orElseThrow(IllegalStateException::new);
     }
@@ -36,6 +36,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
         public Optional<ICacheVisitable> visit(JSONRecords.UserRecord user, RecordVisitorState env) {
             User.UserCache cache = new User.UserCache();
             cache.tagHandler = (TagHandler) user.tags.accept(this, env).orElseThrow(IllegalStateException::new);
+            user.contactObjects.forEach(c -> env.contacts.add((Contact) c.accept(this, env).orElseThrow(IllegalStateException::new)));
             cache.name = user.name;
             cache.contacts = user.contacts.stream().map(i -> env.contacts.get(i)).collect(Collectors.toList());
             cache.events = user.events.stream().map(e -> (Event) e.accept(this, env).orElseThrow(IllegalStateException::new)).collect(Collectors.toList());
@@ -49,7 +50,8 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             cache.name = contact.name;
             cache.phoneNumber = contact.phoneNumber;
             cache.address = contact.address;
-            cache.tags = new ArrayList<>();
+            env.tags.forEach((t,v) -> System.out.println(t + "->" + v.getName()));
+            cache.tags = contact.tags.stream().map(t -> env.tags.get(t)).collect(Collectors.toList());
             cache.notes = (Notes) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
             cache.directoryId = UUID.fromString(contact.directoryId);
             return Optional.of(new Contact(cache));
@@ -66,12 +68,6 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             cache.contacts = event.contacts.stream().map(i -> env.contacts.get(i)).collect(Collectors.toList());
             cache.directoryId = UUID.fromString(event.directoryId);
             return Optional.of(new Event(cache));
-        }
-
-        @Override
-        public Optional<ICacheVisitable> visit(JSONRecords.PRMRecord prm, RecordVisitorState env) {
-            prm.contacts.forEach(c -> env.contacts.add((Contact) this.visit(c, env).orElseThrow(IllegalStateException::new)));
-            return prm.user.accept(this, env);
         }
 
         @Override
