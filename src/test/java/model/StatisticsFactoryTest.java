@@ -4,6 +4,10 @@ import model.exceptions.NameNotAllowedException;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+
+import static org.junit.Assert.assertEquals;
+
 public class StatisticsFactoryTest {
 
     EventList eventList;
@@ -33,11 +37,19 @@ public class StatisticsFactoryTest {
         testevent3.setTag(testtag2);
         Event testevent4 = new Event();
         testevent4.setTag(testtag3);
+
+        eventList.addEvent(testevent1);
+        eventList.addEvent(testevent2);
+        eventList.addEvent(testevent3);
+        eventList.addEvent(testevent4);
     }
 
     @Test
     public void testStats() {
-
+        HashMap<String, Integer> res = StatisticsFactory.getEventDelegation(eventList, tagHandler);
+        assertEquals(res.get("Test1"), Integer.valueOf(2));
+        assertEquals(res.get("Test2"), Integer.valueOf(1));
+        assertEquals(res.get("Test3"), Integer.valueOf(1));
     }
 
 
