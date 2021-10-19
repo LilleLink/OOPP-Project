@@ -189,9 +189,6 @@ public class Note implements Comparable<Note>, ICacheVisitable {
 
     @Override
     public String toString() {
-        return "Note{" +
-                "text='" + text + '\'' +
-                ", pointOfCreation=" + pointOfCreation +
-                '}';
+        return text;
     }
 }
