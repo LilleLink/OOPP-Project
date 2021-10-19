@@ -2,6 +2,8 @@ package controller.javafx.components;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -45,6 +47,7 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
         searchBar.subscribe(this);
         searchBarAnchorPane.getChildren().add(searchBar.getPane());
         searchBar.getPane().layout();
+        this.getPane().addEventFilter(KeyEvent.KEY_PRESSED, this::keyPressed);
         onEvent();
     }
 
@@ -63,6 +66,12 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
         contactGrayBox.getPane().setVisible(false);
         contactGrayBox.getContact().unSubscribe(contactGrayBox);
         onEvent();
+    }
+
+    private void keyPressed(KeyEvent key) {
+        if (key.getCode() == KeyCode.ESCAPE) {
+            closeGrayPane();
+        }
     }
 
     private void newContact(MouseEvent mouseEvent) {
