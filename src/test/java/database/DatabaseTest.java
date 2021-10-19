@@ -4,7 +4,6 @@ import model.Contact;
 import model.ITag;
 import model.User;
 import model.exceptions.NameNotAllowedException;
-import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +11,8 @@ import org.junit.Test;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class DatabaseTest {
     private final Database db = DatabaseFactory.getService();
@@ -46,7 +46,7 @@ public class DatabaseTest {
         Contact contact2 = user.getContacts().getList().stream().filter(c -> c.getName().equals("Bruh"))
                 .findFirst().orElseThrow(IllegalStateException::new);
         contact.setAddress("Kungsportsavenyen 32");
-        contact.getNotes().addNote("Wow same address wtf lame");
+        contact.getNotes().add("Wow same address wtf lame");
 
         //TODO Fix addTag? Not public.
         //contact.addTag(friendTag);
