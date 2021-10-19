@@ -9,15 +9,6 @@ public class Tag implements ITag, ICacheVisitable {
     private String color;
 
     /**
-     * Creates a Tag with the name {name}
-     *
-     * @param name the name of the new Tag
-     */
-    Tag(String name) {
-        this(name, "CDCDCD");
-    }
-
-    /**
      * Creates a Tag with the name {name}, and the color {color}
      *
      * @param name  the name of the Tag
