@@ -1,12 +1,16 @@
 package application;
 
 import controller.javafx.JavaFXViewInitializer;
+import controller.javafx.UserWizard;
+import database.DatabaseFactory;
 import javafx.stage.Stage;
 import model.User;
 
 import java.io.IOException;
 
 public class Application extends javafx.application.Application {
+
+    private User user = null;
 
     public static void main(String[] args) {
         launch(args);
@@ -20,12 +24,27 @@ public class Application extends javafx.application.Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Instantiates model
-        User user = new User("Pelle");
+        UserWizard wizard = JavaFXViewInitializer.createUserWizard(stage);
 
         // Initializes HostServiceProvider
         HostServicesProvider.init(getHostServices());
 
         //Instantiates javafx controller/view
         JavaFXViewInitializer javaFXViewInitializer = new JavaFXViewInitializer(stage, user);
+        wizard.addListener(u -> {
+            try {
+                this.user = u;
+                JavaFXViewInitializer javaFXViewInitializer = new JavaFXViewInitializer(stage, u);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    @Override
+    public void stop() throws Exception {
+        if(user != null) {
+            DatabaseFactory.getService().save(user);
+        }
     }
 }
