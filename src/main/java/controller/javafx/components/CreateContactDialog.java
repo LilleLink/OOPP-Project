@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -121,16 +120,23 @@ class CreateContactDialog extends ViewComponent {
         stage.close();
     }
 
+    private void keyPressed(KeyEvent key) {
+        switch (key.getCode()) {
+            case ESCAPE:
+                close();
+                break;
+            case ENTER:
+                addContact();
+                break;
+        }
+    }
+
     public void displayAndWait() {
         stage.initModality(Modality.APPLICATION_MODAL);
 
         Scene scene = new Scene(this.getPane(), 300, 200);
 
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-                addContact();
-            }
-        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, this::keyPressed);
 
         stage.setTitle("Dialog");
         stage.setScene(scene);

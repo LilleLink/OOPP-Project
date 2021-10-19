@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -82,6 +81,17 @@ public class AddTagDialog extends ViewComponent {
         stage.close();
     }
 
+    private void keyPressed(KeyEvent key) {
+        switch (key.getCode()) {
+            case ESCAPE:
+                close();
+                break;
+            case ENTER:
+                save();
+                break;
+        }
+    }
+
     private void displayAndWait() {
         stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -89,11 +99,7 @@ public class AddTagDialog extends ViewComponent {
 
         stage.setTitle("Add tag to contact");
         stage.setScene(scene);
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-                save();
-            }
-        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, this::keyPressed);
         stage.showAndWait();
     }
 
