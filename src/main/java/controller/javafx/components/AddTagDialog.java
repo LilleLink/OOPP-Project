@@ -68,6 +68,7 @@ public class AddTagDialog extends ViewComponent {
             if (selectedTags.contains(tag)) {
                 checkBox.setSelected(true);
             }
+            checkBox.setStyle("-fx-background-color: " + tag.getColor() + ";");
             tagContainer.getChildren().add(checkBox);
         }
     }
