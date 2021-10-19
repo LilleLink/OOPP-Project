@@ -2,7 +2,7 @@ package model;
 
 import java.util.HashMap;
 
-public class StatisticsFactory {
+public final class StatisticsFactory {
 
     public static HashMap<String, Integer> getEventDelegation(EventList eventList, TagHandler tagHandler) {
         HashMap<String, Integer> res = new HashMap<>();
