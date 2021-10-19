@@ -89,14 +89,14 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
      * @param contacts the contacts to be represented as cards
      */
     private void createCards(List<Contact> contacts) {
-        for (Contact contact : contacts) {
+        contacts.forEach(contact -> {
             ContactCard card = new ContactCard(contact);
             contact.subscribe(card);
             contactCards.add(card);
             AnchorPane pane = card.getPane();
             cardFlowPane.getChildren().add(pane);
             pane.setOnMouseClicked((MouseEvent event) -> openGrayPane(contact));
-        }
+        });
     }
 
     /**
