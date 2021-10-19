@@ -30,7 +30,7 @@ public class NotifierTest {
         Thread.sleep(10);
         thread.interrupt();
         List<MockChronological> notifications = notifier.getActive();
-        assert(notifications.size() == 1 && notifier.size() == 1);
+        assert (notifications.size() == 1 && notifier.size() == 1);
     }
 
     @Test
@@ -41,7 +41,7 @@ public class NotifierTest {
         Thread.sleep(100);
         thread.interrupt();
         List<MockChronological> notifications = notifier.getActive();
-        assert(notifications.isEmpty());
+        assert (notifications.isEmpty());
     }
 
     @Test
@@ -54,7 +54,7 @@ public class NotifierTest {
         Thread.sleep(100);
         thread.interrupt();
         List<MockChronological> notifications = notifier.getActive();
-        assert(notifications.size() == 1);
+        assert (notifications.size() == 1);
     }
 
     @Test
@@ -65,7 +65,7 @@ public class NotifierTest {
         thread.interrupt();
         notifier.clear();
         List<MockChronological> notifications = notifier.getActive();
-        assert(notifications.isEmpty());
+        assert (notifications.isEmpty());
     }
 
     @Test
@@ -79,6 +79,6 @@ public class NotifierTest {
         thread.start();
         Thread.sleep(10);
         List<MockChronological> notifications = notifier.getActive();
-        assert(notifications.contains(object));
+        assert (notifications.contains(object));
     }
 }
