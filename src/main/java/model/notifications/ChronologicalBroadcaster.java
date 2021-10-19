@@ -6,31 +6,75 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * A class responsible for broadcasting {@link IChronological} objects with a given interval.
+ * An immutable object responsible for broadcasting {@link IChronological} objects with a given interval of mintues.
  *
- * @param <T>
+ * @param <T> an chronological implementation
  * @author Simon Johnsson
  */
 public class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroadcaster<T>, Runnable {
 
     private final List<T> content;
     private final List<IObjectBroadcastListener<T>> listeners;
+    private final long minuteInterval;
 
-    ChronologicalBroadcaster(List<T> content) {
-        this.content = content;
+    /**
+     * Constructs a {@code ChronologicalBroadcaster} with the given content and interval in minutes.
+     *
+     * Given {@code content} list is copied and can therefore not be accessed within the object after construction.
+     *
+     * The {@code minuteInterval} determines how many minutes before the chronological object's point in time a broadcast is performed.
+     *
+     * Chronological objects whose point in time has passed are removed from the content list.
+     *
+     * @param content the content to broadcast
+     * @param minuteInterval how many minutes from the content's point in time to broadcast
+     */
+    ChronologicalBroadcaster(List<T> content, long minuteInterval) {
+        this.content = new ArrayList<>(content);
         removePassed();
         this.listeners = new ArrayList<>();
+        this.minuteInterval = minuteInterval;
     }
 
     /**
-     * Removes all content that has passed the current time.
+     * Default constructor broadcasting with an interval of 0 minutes.
+     * Broadcasts content when the current time corresponds with the
+     *
+     * @param content the content to broadcast
+     */
+    ChronologicalBroadcaster(List<T> content) {
+        this(content,1);
+    }
+
+    /**
+     * Returns an adjusted copy with the given interval.
+     *
+     * @param minuteInterval the new interval
+     * @return an adjusted copy with the given interval
+     */
+    ChronologicalBroadcaster<T> withInterval(long minuteInterval) {
+        return new ChronologicalBroadcaster<>(this.content,minuteInterval);
+    }
+
+    /**
+     * Returns an adjusted copy with the given content.
+     *
+     * @param content the content to broadcast
+     * @return an adjusted copy with the given content
+     */
+    ChronologicalBroadcaster<T> withContent(List<T> content) {
+        return new ChronologicalBroadcaster<>(content,this.minuteInterval);
+    }
+
+    /**
+     * Removes all content that lies chronologically behind the current time.
      */
     private void removePassed() {
         content.removeIf(this::hasPassed);
     }
 
     /**
-     * Checks if a chronological object has passed the current time.
+     * Checks if a chronological object is chronologically behind the current time.
      *
      * @param chronological the object to check
      * @return true if the time has passed - false if not
@@ -39,10 +83,24 @@ public class ChronologicalBroadcaster<T extends IChronological> implements IObje
         return chronological.compareTime(LocalDateTime.now()) < 0;
     }
 
+    /**
+     * Checks if a chronological object is within the {@code minuteInterval} minutes of the current time.
+     *
+     * @param chronological the object to check
+     * @return true if within the interval, false if not
+     */
+    private boolean isWithinInterval(IChronological chronological) {
+        return 0 <= chronological.compareTime(LocalDateTime.now().minusMinutes(minuteInterval));
+    }
+
+    /**
+     * Broadcasts content that is within the given {@code minuteInterval}.
+     * Removes it from the content list after it has been broadcast.
+     */
     private void broadcastContent() {
         for(Iterator<T> iterator = content.iterator(); iterator.hasNext();) {
             T chronological = iterator.next();
-            if(0 <= chronological.compareTime(LocalDateTime.now())) {
+            if(isWithinInterval(chronological)) {
                 broadcast(chronological);
                 iterator.remove();
             }
@@ -68,7 +126,7 @@ public class ChronologicalBroadcaster<T extends IChronological> implements IObje
 
     @Override
     public void run() {
-        while(true){
+        while(!Thread.interrupted()){
             broadcastContent();
             removePassed();
         }
