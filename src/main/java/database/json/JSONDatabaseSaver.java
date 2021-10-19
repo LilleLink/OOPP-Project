@@ -25,7 +25,8 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
 
         state.prm.user = (JSONRecords.UserRecord) user.accept(new CacheVisitor(), state).orElseThrow(IllegalStateException::new);
         Files.createDirectories(databaseFile.getParent());
-        Files.createFile(databaseFile);
+        if(!Files.exists(databaseFile))
+            Files.createFile(databaseFile);
         Files.write(databaseFile, new Gson().toJson(state.prm).getBytes(), StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
     }
 
