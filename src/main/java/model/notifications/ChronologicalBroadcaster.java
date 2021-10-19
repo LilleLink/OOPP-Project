@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * An immutable object responsible for broadcasting {@link IChronological} objects with a given interval of mintues.
  *
- * @param <T> an chronological implementation
+ * @param <T> a chronological implementation
  * @author Simon Johnsson
  */
 public class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroadcaster<T>, Runnable {
