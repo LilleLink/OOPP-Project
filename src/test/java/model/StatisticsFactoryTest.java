@@ -10,7 +10,7 @@ public class StatisticsFactoryTest {
     TagHandler tagHandler;
 
     @Before
-    private void initEnvironment() {
+    public void initEnvironment() {
         eventList = new EventList();
         tagHandler = new TagHandler();
         ITag testtag1 = null;
@@ -37,7 +37,7 @@ public class StatisticsFactoryTest {
 
     @Test
     public void testStats() {
-        
+
     }
 
 
