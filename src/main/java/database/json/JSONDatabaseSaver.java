@@ -90,7 +90,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             record.dateTime = event.dateTime.toString();
             record.name = event.name;
             record.description = event.description;
-            record.tag = event.tag.getName();
+            Optional.ofNullable(event.tag).ifPresent(t -> record.tag = t.getName());
             record.directoryId = event.directoryId.toString();
             // Add contact indices to event record.
             for (Contact contact : event.contacts) {
