@@ -137,7 +137,7 @@ class CalendarPage extends ViewComponent implements IObserver {
 
     private void initEventCard(Event event) {
         eventCard.setOnDelete(actionEvent -> eventList.removeEvent(event));
-        eventCard.setOnClose(actionEvent -> this.onEvent());
+        eventCard.setOnClose(this::closeEventPane);
         calendarPageStackPane.getChildren().add(eventCard.getPane());
         eventCard.getPane().toFront();
     }
@@ -156,6 +156,11 @@ class CalendarPage extends ViewComponent implements IObserver {
             determineFlowPane(event, calendarEventCard);
         }
 
+    }
+
+    private void closeEventPane(javafx.event.Event event) {
+        calendarPageStackPane.getChildren().remove(eventCard.getPane());
+        eventList.notifyObservers();
     }
 
     private void clearCalendar() {
