@@ -93,12 +93,12 @@ public class EventList implements IObservable {
      * @param tag the tag to look for
      * @return the number of events tagged with the given tag, 0 if none are found.
      */
-    public int getEventsOfTag(ITag tag) {
-        int res = 0;
+    public List<Event> getEventsOfTag(ITag tag) {
+        List<Event> res = new ArrayList<>();
         for (Event e : eventList) {
             if (!Objects.isNull(e.getTag())) {
                 if (e.getTag().equals(tag))
-                    res++;
+                    res.add(e);
             }
         }
 

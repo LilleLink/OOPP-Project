@@ -17,7 +17,7 @@ public final class StatisticsFactory {
     public static HashMap<ITag, Integer> getEventDelegation(EventList eventList, TagHandler tagHandler) {
         HashMap<ITag, Integer> res = new HashMap<>();
         for (ITag tag : tagHandler.getAllTags()) {
-            res.put(tag, eventList.getEventsOfTag(tag));
+            res.put(tag, eventList.getEventsOfTag(tag).size());
         }
         return res;
     }
