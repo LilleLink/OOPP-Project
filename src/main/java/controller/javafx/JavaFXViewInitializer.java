@@ -28,4 +28,17 @@ public class JavaFXViewInitializer {
         stage.show();
     }
 
+    public static UserWizard createUserWizard(Stage stage) throws IOException {
+        UserWizard wizard = new UserWizard();
+        FXMLLoader loader = new FXMLLoader(JavaFXViewInitializer.class.getResource("/view/javafx/UserWizard.fxml"));
+        loader.setController(wizard);
+
+        Parent root = loader.load();
+        stage.setScene(new Scene(root));
+        stage.setTitle("User Wizard");
+        stage.show();
+
+        return wizard;
+    }
+
 }

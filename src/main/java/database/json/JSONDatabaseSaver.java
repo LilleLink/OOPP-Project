@@ -23,10 +23,11 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
     public void save(User user, Path databaseFile) throws IOException {
         CacheVisitorState state = new CacheVisitorState();
 
-        state.prm.user = (JSONRecords.UserRecord) user.accept(new CacheVisitor(), state).orElseThrow(IllegalStateException::new);
+        JSONRecords.UserRecord userRecord = (JSONRecords.UserRecord) user.accept(new CacheVisitor(), state).orElseThrow(IllegalStateException::new);
         Files.createDirectories(databaseFile.getParent());
-        Files.createFile(databaseFile);
-        Files.write(databaseFile, new Gson().toJson(state.prm).getBytes(), StandardOpenOption.WRITE);
+        if(!Files.exists(databaseFile))
+            Files.createFile(databaseFile);
+        Files.write(databaseFile, new Gson().toJson(state.user).getBytes(), StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
     }
 
     // The environment of the cache visitor.
@@ -34,7 +35,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
         // The indices of contact records in the prm model.
         HashMap<Contact, Integer> contactIndices = new HashMap<>();
         // The final prm record to serialize.
-        JSONRecords.PRMRecord prm = new JSONRecords.PRMRecord();
+        JSONRecords.UserRecord user = new JSONRecords.UserRecord();
     }
 
     // The cache visitor visits the entire cache hierarchy of the model and returns a serializable JSON record.
@@ -43,8 +44,8 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
         private int createContact(Contact contact, CacheVisitorState env) {
             if (!env.contactIndices.containsKey(contact)) {
                 JSONRecords.ContactRecord result = (JSONRecords.ContactRecord) contact.accept(this, env).orElseThrow(IllegalStateException::new);
-                env.contactIndices.put(contact, env.prm.contacts.size());
-                env.prm.contacts.add(result);
+                env.contactIndices.put(contact, env.user.contactObjects.size());
+                env.user.contactObjects.add(result);
             }
 
             return env.contactIndices.get(contact);
@@ -54,8 +55,10 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
         @Override
         public Optional<JSONRecords.IRecordVisitable> visit(User.UserCache user, CacheVisitorState env) {
             JSONRecords.UserRecord record = new JSONRecords.UserRecord();
+            env.user = record;
             record.name = user.name;
             record.tags = (JSONRecords.TagHandlerRecord) user.tagHandler.accept(this, env).orElseThrow(IllegalStateException::new);
+            record.uuid = user.uuid.toString();
             // Add contact indices to user record.
             for (Contact contact : user.contacts) {
                 record.contacts.add(createContact(contact, env));
@@ -88,7 +91,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             record.dateTime = event.dateTime.toString();
             record.name = event.name;
             record.description = event.description;
-            record.tag = event.tag.getName();
+            Optional.ofNullable(event.tag).ifPresent(t -> record.tag = t.getName());
             record.directoryId = event.directoryId.toString();
             // Add contact indices to event record.
             for (Contact contact : event.contacts) {

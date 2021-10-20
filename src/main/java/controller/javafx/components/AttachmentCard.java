@@ -1,5 +1,6 @@
 package controller.javafx.components;
 
+import application.HostServicesProvider;
 import attachmentHandler.AttachmentHandlerFactory;
 import attachmentHandler.IAttachmentHandler;
 import javafx.event.Event;
@@ -10,8 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.awt.*;
-import java.io.IOException;
 import java.nio.file.Path;
 
 class AttachmentCard extends ViewComponent {
@@ -33,14 +32,7 @@ class AttachmentCard extends ViewComponent {
     }
 
     private void openAttachment(MouseEvent event) {
-        if (!System.getProperty("os.name").startsWith("Windows")) {
-            return;
-        }
-        try {
-            Desktop.getDesktop().open(attachment.toFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        HostServicesProvider.getHostServices().showDocument(attachment.toString());
     }
 
     private void deleteAttachment(Event event) {

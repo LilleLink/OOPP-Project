@@ -188,7 +188,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      * @param inputContactList the list of new participating contacts.
      */
     public void setContacts(List<Contact> inputContactList) {
-        this.contacts = inputContactList;
+        this.contacts = new ArrayList<>(inputContactList);
         notifyObservers();
     }
 
