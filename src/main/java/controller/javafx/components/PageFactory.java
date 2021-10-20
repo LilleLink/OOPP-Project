@@ -11,11 +11,11 @@ import model.TagHandler;
 public class PageFactory {
 
     /***
-     * Creates a top bar for testing purposes.
+     * Creates a top bar.
      * @param nav the navigator object
      * @return the top bar in the form of a ViewComponent
      */
-    public static ViewComponent CreateTestTopBar(IPageNavigator nav) {
+    public static ViewComponent createTopBar(IPageNavigator nav) {
         return new TopBar(nav);
     }
 
@@ -23,7 +23,7 @@ public class PageFactory {
      * Creates a MainPage component.
      * @return the MainPage in the form of a ViewComponent
      */
-    public static ViewComponent CreateMainPage() {
+    public static ViewComponent createMainPage() {
         return new MainPage();
     }
 
@@ -31,7 +31,7 @@ public class PageFactory {
      * Creates a StatisticsPage component
      * @return the StatisticsPage in the form of a ViewComponent
      */
-    public static ViewComponent CreateStatisticsPage(EventList eventList, TagHandler tagHandler) {
+    public static ViewComponent createStatisticsPage(EventList eventList, TagHandler tagHandler) {
         return new StatisticsPage(eventList, tagHandler);
     }
 
@@ -41,7 +41,7 @@ public class PageFactory {
      * @param contactList A list of the contacts to display
      * @return ContactPage as a ViewComponent
      */
-    public static ViewComponent CreateContactPage(ContactList contactList, TagHandler tagHandler, EventList eventList) {
+    public static ViewComponent createContactPage(ContactList contactList, TagHandler tagHandler, EventList eventList) {
         return new ContactPage(contactList, tagHandler, eventList);
     }
 
@@ -50,7 +50,7 @@ public class PageFactory {
      * @param eventList the list of event to be displayed in the calendar
      * @return the CalendarPage in the form of a CalendarPage
      */
-    public static ViewComponent CreateCalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
+    public static ViewComponent createCalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
         return new CalendarPage(eventList, contactList, tagHandler);
     }
 }
