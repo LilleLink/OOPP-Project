@@ -1,4 +1,7 @@
-package model;
+package model.notes;
+
+import model.ICacheVisitable;
+import model.ICacheVisitor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +15,7 @@ import java.util.Optional;
  * @author Simon Johnsson
  * @see java.time.LocalDateTime
  */
-public class Notes implements ICacheVisitable {
+public class NoteBook implements ICacheVisitable {
 
     // Elements represented as a list of note objects
     private final List<Note> elements;
@@ -20,7 +23,7 @@ public class Notes implements ICacheVisitable {
     /**
      * Default constructor containing an empty list.
      */
-    public Notes() {
+    public NoteBook() {
         elements = new ArrayList<>();
     }
 
@@ -28,10 +31,10 @@ public class Notes implements ICacheVisitable {
      * Copy constructor.
      * Instantiates a new sorted list from the list contained in the given notes.
      *
-     * @param oldNotes the notes to be copied
+     * @param oldNoteBook the notes to be copied
      */
-    public Notes(Notes oldNotes) {
-        this.elements = new ArrayList<>(oldNotes.elements);
+    public NoteBook(NoteBook oldNoteBook) {
+        this.elements = new ArrayList<>(oldNoteBook.elements);
         elements.sort(Note::compareTo);
     }
 
@@ -40,7 +43,7 @@ public class Notes implements ICacheVisitable {
      *
      * @param notes the new list of elements
      */
-    public Notes(List<Note> notes) {
+    public NoteBook(List<Note> notes) {
         this.elements = notes;
         elements.sort(Note::compareTo);
     }
@@ -98,7 +101,7 @@ public class Notes implements ICacheVisitable {
      * @return a note
      */
     public Note getAt(int index) {
-        return elements.get(index);
+        return new Note(elements.get(index));
     }
 
     /**
@@ -107,7 +110,7 @@ public class Notes implements ICacheVisitable {
      * @return the last added note
      */
     public Note getLastAdded() {
-        return elements.get(elements.size() - 1);
+        return new Note(elements.get(elements.size() - 1));
     }
 
     /**
@@ -138,8 +141,8 @@ public class Notes implements ICacheVisitable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Notes notes = (Notes) o;
-        return elements.equals(notes.elements);
+        NoteBook noteBook = (NoteBook) o;
+        return elements.equals(noteBook.elements);
     }
 
     @Override
@@ -147,7 +150,7 @@ public class Notes implements ICacheVisitable {
         return Objects.hash(elements);
     }
 
-    public Notes(NotesCache cache) {
+    public NoteBook(NotesCache cache) {
         this.elements = new ArrayList<>(cache.elements);
     }
 

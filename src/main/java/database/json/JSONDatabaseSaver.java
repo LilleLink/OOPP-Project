@@ -3,6 +3,8 @@ package database.json;
 import com.google.gson.Gson;
 import database.IDatabaseSaver;
 import model.*;
+import model.notes.Note;
+import model.notes.NoteBook;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -77,7 +79,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             record.address = contact.address;
             record.name = contact.name;
             record.phoneNumber = contact.phoneNumber;
-            record.notes = (JSONRecords.NotesRecord) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
+            record.notes = (JSONRecords.NotesRecord) contact.noteBook.accept(this, env).orElseThrow(IllegalStateException::new);
             record.tags = contact.tags.stream().map(t -> t.getName()).collect(Collectors.toList());
             record.directoryId = contact.directoryId.toString();
             return Optional.of(record);
@@ -101,7 +103,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
         }
 
         @Override
-        public Optional<JSONRecords.IRecordVisitable> visit(Notes.NotesCache cache, CacheVisitorState env) {
+        public Optional<JSONRecords.IRecordVisitable> visit(NoteBook.NotesCache cache, CacheVisitorState env) {
             JSONRecords.NotesRecord record = new JSONRecords.NotesRecord();
             record.elements = cache.elements.stream().map(
                             n -> (JSONRecords.NoteRecord) n.accept(this, env).orElseThrow(IllegalStateException::new))
