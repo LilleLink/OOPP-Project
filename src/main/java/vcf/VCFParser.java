@@ -2,7 +2,6 @@ package vcf;
 
 import model.*;
 import model.exceptions.NameNotAllowedException;
-import model.exceptions.NameNotAvailableException;
 import model.exceptions.TagNotFoundException;
 
 import java.io.FileNotFoundException;
@@ -52,13 +51,10 @@ class VCFParser implements IVCFParser {
     public void addContactsFromDirectory(Path directory) throws IOException {
         int createdContacts = 0;
         for (Path path : Files.newDirectoryStream(directory)) {
-            if (isVCFFile(path)) {
-                try {
-                    addContact(path);
-                    createdContacts++;
-                } catch (IOException | NameNotAllowedException ignored) {
-
-                }
+            try {
+                addContact(path);
+                createdContacts++;
+            } catch (IOException | NameNotAllowedException ignored) {
             }
         }
         if (createdContacts == 0) throw new IOException("No *.vcf files found in the directory");
@@ -137,11 +133,27 @@ class VCFParser implements IVCFParser {
             return;
         }
         String[] unFormattedName = data.get(FIELD.NAME).get(0).split(";");
-        cache.name = unFormattedName[3] +
-                unFormattedName[1] +
-                unFormattedName[2] +
-                unFormattedName[0] +
-                unFormattedName[4];
+        int size = unFormattedName.length;
+        StringBuilder sb = new StringBuilder();
+        if (size > 3) {
+            sb.append(unFormattedName[3]).append(" ");
+        }
+        if (size > 1) {
+            sb.append(unFormattedName[1]).append(" ");
+        }
+        if (size > 2) {
+            sb.append(unFormattedName[2]).append(" ");
+        }
+        if (size > 0) {
+            sb.append(unFormattedName[0]).append(" ");
+        }
+        if (size > 4) {
+            sb.append(unFormattedName[4]).append(" ");
+        }
+        if (sb.charAt(sb.length() - 1) == ' ') {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        cache.name = sb.toString();
     }
 
     private void readAddress(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
@@ -172,12 +184,11 @@ class VCFParser implements IVCFParser {
         data.get(FIELD.CATEGORIES).forEach(tag -> {
             try {
                 tags.add(tagHandler.createTag(tag));
-            } catch (NameNotAvailableException e) {
+            } catch (NameNotAllowedException e) {
                 try {
                     tags.add(tagHandler.getTag(tag));
                 } catch (TagNotFoundException ignored) {
                 }
-            } catch (NameNotAllowedException ignored) {
             }
         });
         cache.tags = tags;
