@@ -48,7 +48,7 @@ public class RootWindow implements IPageNavigator, Initializable {
     private void initiatePages() {
         testTopBar = PageFactory.CreateTestTopBar(this);
         mainPage = PageFactory.CreateMainPage();
-        statisticsPage = PageFactory.CreateSecondaryPage(user.getEvents(), user.getTagHandler());
+        statisticsPage = PageFactory.CreateStatisticsPage(user.getEvents(), user.getTagHandler());
         calendarPage = PageFactory.CreateCalendarPage(user.getEvents(), user.getContacts(), user.getTagHandler());
         contactPage = PageFactory.CreateContactPage(user.getContacts(), user.getTagHandler(), user.getEvents());
     }

@@ -74,7 +74,6 @@ class EventCard extends ViewComponent {
         event.setTag(tagComboBox.getValue());
         event.setContacts(participants);
         closeHandler.handle(actionEvent);
-        close();
     }
 
     private LocalDateTime getLocalDateTime() {
@@ -153,8 +152,7 @@ class EventCard extends ViewComponent {
 
     private void delete(ActionEvent actionEvent) {
         deleteHandler.handle(actionEvent);
-        closeHandler.handle(actionEvent);
-        close();
+        close(actionEvent);
     }
 
     public void setOnDelete(EventHandler<ActionEvent> deleteHandler) {
@@ -165,18 +163,9 @@ class EventCard extends ViewComponent {
         this.closeHandler = closeHandler;
     }
 
-    private void close(ActionEvent actionEvent) {
-        closeHandler.handle(actionEvent);
-        close();
+    private void close(javafx.event.Event event) {
+        closeHandler.handle(event);
     }
 
-    private void close(MouseEvent mouseEvent) {
-        closeHandler.handle(mouseEvent);
-        close();
-    }
-
-    private void close() {
-        this.getPane().toBack();
-    }
 
 }
