@@ -1,12 +1,11 @@
 package model;
 
+import model.notes.Note;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
 
 
 public class NoteTest {
@@ -23,7 +22,7 @@ public class NoteTest {
     public void dateOfCreationTest() {
         Note note = new Note();
         LocalDate date = LocalDate.now();
-        assert (note.viewDate().equals(date));
+        assert(note.viewDate().equals(date));
     }
 
     @Test
@@ -31,12 +30,13 @@ public class NoteTest {
         Note note = new Note();
         try {
             Thread.sleep(1000);
-        } catch (InterruptedException e) {
+        }
+        catch(InterruptedException e) {
             Thread.currentThread().interrupt();
         }
         Note newNote = new Note();
-        int diff = newNote.compareAge(note);
-        assert (diff > 0);
+        int diff = note.compareAge(newNote);
+        assert(diff < 0);
 
     }
 
@@ -46,7 +46,7 @@ public class NoteTest {
         int oldSize = note.size();
         note = note.withText("Pizza");
         int newSize = note.size();
-        assert (oldSize < newSize);
+        assert(oldSize < newSize);
     }
 
     @Test
@@ -60,15 +60,14 @@ public class NoteTest {
     public void dateStringNotNullTest() {
         Note note = new Note();
         String text = note.dateToString();
-        assertNotEquals(null, text);
+        assertNotEquals(null,text);
     }
 
     @Test
     public void noteTextEqualsTest() {
         Note firstNote = new Note("Text");
         Note secondNote = new Note("Text");
-        assert (firstNote.equals(secondNote));
-        assertEquals(firstNote.toString(), secondNote.toString());
+        assert(firstNote.equals(secondNote));
     }
 
 

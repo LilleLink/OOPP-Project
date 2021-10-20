@@ -1,5 +1,8 @@
 package model;
 
+import model.notes.Note;
+import model.notes.NoteBook;
+
 import java.util.Optional;
 
 /***
@@ -39,7 +42,7 @@ public interface ICacheVisitor<E, T> {
         return Optional.empty();
     }
 
-    default Optional<T> visit(Notes.NotesCache event, E env) {
+    default Optional<T> visit(NoteBook.NotesCache event, E env) {
         return Optional.empty();
     }
 

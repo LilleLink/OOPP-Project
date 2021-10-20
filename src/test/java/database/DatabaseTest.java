@@ -39,14 +39,14 @@ public class DatabaseTest {
         Contact contact = user.getContacts().getList().stream().filter(c -> c.getName().equals("McLovin"))
                 .findFirst().orElseThrow(IllegalStateException::new);
         contact.setAddress("Kungsportsavenyen 32");
-        contact.getNotes().add("Hahah this guy amirite");
-        contact.getNotes().add("K he's aight I guess");
+        contact.addNote("Hahah this guy amirite");
+        contact.addNote("K he's aight I guess");
 
         user.getContacts().addContact("Bruh");
         Contact contact2 = user.getContacts().getList().stream().filter(c -> c.getName().equals("Bruh"))
                 .findFirst().orElseThrow(IllegalStateException::new);
         contact.setAddress("Kungsportsavenyen 32");
-        contact.getNotes().add("Wow same address wtf lame");
+        contact.addNote("Wow same address wtf lame");
 
         contact.addAllTags(Arrays.asList(friendTag, biznizTag));
 

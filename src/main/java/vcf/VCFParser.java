@@ -3,6 +3,7 @@ package vcf;
 import model.*;
 import model.exceptions.NameNotAllowedException;
 import model.exceptions.TagNotFoundException;
+import model.notes.NoteBook;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -200,9 +201,9 @@ class VCFParser implements IVCFParser {
     }
 
     private void readNote(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
-        Notes notes = new Notes();
-        data.get(FIELD.NOTE).forEach(notes::add);
-        cache.notes = notes;
+        NoteBook noteBook = new NoteBook();
+        data.get(FIELD.NOTE).forEach(noteBook::add);
+        cache.noteBook = noteBook;
     }
 
     private void createUUID(Contact.ContactCache cache) {

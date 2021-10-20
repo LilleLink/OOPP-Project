@@ -2,6 +2,9 @@ package model;
 
 
 import model.exceptions.TagNotFoundException;
+import model.notes.IDocumentable;
+import model.notes.Note;
+import model.notes.NoteBook;
 import model.search.ISearchable;
 
 import java.util.ArrayList;
@@ -9,13 +12,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public class Contact implements ICacheVisitable, ISearchable<String>, IObservable {
+public class Contact implements ICacheVisitable, ISearchable<String>, IObservable, IDocumentable {
 
     private String name;
     private String phoneNumber = "";
     private String address = "";
     private List<ITag> tags;
-    private Notes notes;
+    private NoteBook noteBook;
     private List<IObserver> observers = new ArrayList<>();
     private final UUID directoryId;
 
@@ -25,7 +28,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
     Contact(String name) {
         this.name = name;
         this.tags = new ArrayList<>();
-        this.notes = new Notes();
+        this.noteBook = new NoteBook();
         this.directoryId = UUID.randomUUID();
     }
 
@@ -125,15 +128,15 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @param text the information to be added
      */
     public void addNote(String text) {
-        notes.add(text);
+        noteBook.add(text);
     }
 
     /**
      * Adds a note with empty text to Notes.
      */
 
-    void addNote() {
-        notes.add();
+    public void addNote() {
+        noteBook.add();
     }
 
     /**
@@ -141,8 +144,8 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      *
      * @param index the index of the note to be removed
      */
-    void removeNote(int index) {
-        notes.removeAt(index);
+    public void removeNote(int index) {
+        noteBook.removeAt(index);
         notifyObservers();
     }
 
@@ -152,8 +155,8 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @param index the index of the note to be edited
      * @param text  the new text
      */
-    void editNote(int index, String text) {
-        notes.editAt(index, text);
+    public void editNote(int index, String text) {
+        noteBook.editAt(index, text);
     }
 
     /**
@@ -162,26 +165,23 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @param index the index of the note to view
      * @return a string
      */
-    String viewNoteAt(int index) {
-        return notes.viewAt(index);
+    public String viewNote(int index) {
+        return noteBook.viewAt(index);
     }
 
-    /**
-     * Retrieves the notes list of notes in this contact.
-     *
-     * @return a notes list object
-     */
-    public List<Note> getListOfNotes() {
-        return notes.getSortedList();
+    @Override
+    public Note getNote(int index) {
+        return noteBook.getAt(index);
     }
 
-    /**
-     * Retrieves the notes of this contact
-     *
-     * @return a notes object
-     */
-    public Notes getNotes() {
-        return this.notes;
+    @Override
+    public Note getLastAddedNote() {
+        return noteBook.getLastAdded();
+    }
+
+    @Override
+    public int sizeOfNotes() {
+        return noteBook.size();
     }
 
     @Override
@@ -223,7 +223,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
         public String phoneNumber;
         public String address;
         public List<ITag> tags;
-        public Notes notes;
+        public NoteBook noteBook;
         public UUID directoryId;
 
         public ContactCache() {
@@ -236,7 +236,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
         cache.phoneNumber = this.phoneNumber;
         cache.address = this.address;
         cache.tags = new ArrayList<>(this.tags);
-        cache.notes = this.notes;
+        cache.noteBook = this.noteBook;
         cache.directoryId = this.directoryId;
         return cache;
     }
@@ -246,7 +246,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
         this.phoneNumber = cache.phoneNumber;
         this.address = cache.address;
         this.tags = new ArrayList<>(cache.tags);
-        this.notes = cache.notes;
+        this.noteBook = cache.noteBook;
         this.directoryId = cache.directoryId;
     }
 
@@ -265,7 +265,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", address='" + address + '\'' +
                 ", tags=" + tags +
-                ", notes=" + notes +
+                ", notes=" + noteBook +
                 '}';
     }
 }
