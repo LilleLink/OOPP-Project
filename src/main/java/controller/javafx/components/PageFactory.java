@@ -31,8 +31,8 @@ public class PageFactory {
      * Creates a SecondaryPage component
      * @return the SecondaryPage in the form of a ViewComponent
      */
-    public static ViewComponent CreateSecondaryPage() {
-        return new SecondaryPage();
+    public static ViewComponent CreateSecondaryPage(EventList eventList, TagHandler tagHandler) {
+        return new StatisticsPage(eventList, tagHandler);
     }
 
     /**

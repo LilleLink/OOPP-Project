@@ -10,7 +10,7 @@ class TopBar extends ViewComponent {
     @FXML
     private Button toMainButton;
     @FXML
-    private Button toSecondButton;
+    private Button toStatisticsButton;
     @FXML
     private Button toContactButton;
     @FXML
@@ -23,13 +23,13 @@ class TopBar extends ViewComponent {
         this.nav = nav;
 
         toMainButton.setOnMouseClicked(this::mainButtonClicked);
-        toSecondButton.setOnMouseClicked(this::secondButtonClicked);
+        toStatisticsButton.setOnMouseClicked(this::statisticsButtonClicked);
         toContactButton.setOnMouseClicked(this::toContactButton);
         toCalendarButton.setOnMouseClicked(this::toCalendarButton);
     }
 
-    private void secondButtonClicked(MouseEvent mouseEvent) {
-        nav.openSecondaryPage();
+    private void statisticsButtonClicked(MouseEvent mouseEvent) {
+        nav.openStatisticsPage();
     }
 
     private void mainButtonClicked(MouseEvent mouseEvent) {

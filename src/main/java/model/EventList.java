@@ -7,6 +7,7 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class EventList implements IObservable {
 
@@ -82,6 +83,23 @@ public class EventList implements IObservable {
         for (Event event : eventList) {
             if (event.getContacts().contains(contact))
                 res.add(event);
+        }
+
+        return res;
+    }
+
+    /***
+     * Gets the number of event tagged with the given tag.
+     * @param tag the tag to look for
+     * @return the number of events tagged with the given tag, 0 if none are found.
+     */
+    public int getEventsOfTag(ITag tag) {
+        int res = 0;
+        for (Event e : eventList) {
+            if (!Objects.isNull(e.getTag())) {
+                if (e.getTag().equals(tag))
+                    res++;
+            }
         }
 
         return res;

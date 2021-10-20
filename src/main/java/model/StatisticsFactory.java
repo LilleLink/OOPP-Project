@@ -17,14 +17,10 @@ public final class StatisticsFactory {
     public static HashMap<ITag, Integer> getEventDelegation(EventList eventList, TagHandler tagHandler) {
         HashMap<ITag, Integer> res = new HashMap<>();
         for (ITag tag : tagHandler.getAllTags()) {
-            res.put(tag, 0);
+            res.put(tag, eventList.getEventsOfTag(tag));
         }
-
-        for (Event event : eventList.getList()) {
-            res.replace(event.getTag(), res.get(event.getTag()) + 1);
-        }
-
         return res;
     }
+
 
 }
