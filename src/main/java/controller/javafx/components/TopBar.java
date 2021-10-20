@@ -1,9 +1,9 @@
 package controller.javafx.components;
 
 import controller.javafx.IPageNavigator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseEvent;
 
 class TopBar extends ViewComponent {
 
@@ -22,25 +22,25 @@ class TopBar extends ViewComponent {
         super();
         this.nav = nav;
 
-        toMainButton.setOnMouseClicked(this::mainButtonClicked);
-        toStatisticsButton.setOnMouseClicked(this::statisticsButtonClicked);
-        toContactButton.setOnMouseClicked(this::toContactButton);
-        toCalendarButton.setOnMouseClicked(this::toCalendarButton);
+        toMainButton.setOnAction(this::mainButtonClicked);
+        toStatisticsButton.setOnAction(this::statisticsButtonClicked);
+        toContactButton.setOnAction(this::toContactButton);
+        toCalendarButton.setOnAction(this::toCalendarButton);
     }
 
-    private void statisticsButtonClicked(MouseEvent mouseEvent) {
+    private void statisticsButtonClicked(ActionEvent actionEvent) {
         nav.openStatisticsPage();
     }
 
-    private void mainButtonClicked(MouseEvent mouseEvent) {
+    private void mainButtonClicked(ActionEvent actionEvent) {
         nav.openMainPage();
     }
 
-    private void toContactButton(MouseEvent mouseEvent) {
+    private void toContactButton(ActionEvent actionEvent) {
         nav.openContactPage();
     }
 
-    private void toCalendarButton(MouseEvent mouseEvent) {
+    private void toCalendarButton(ActionEvent actionEvent) {
         nav.openCalendarPage();
     }
 
