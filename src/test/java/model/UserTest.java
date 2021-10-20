@@ -1,12 +1,10 @@
 package model;
 
 import model.exceptions.NameNotAllowedException;
-import model.exceptions.NameNotAvailableException;
-import model.exceptions.TagNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
+
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -16,7 +14,7 @@ public class UserTest {
 
     @Before
     public void beforeTests() {
-        user =  new User("TestUser");
+        user = new User("TestUser");
     }
 
     @Test
@@ -52,12 +50,28 @@ public class UserTest {
     }
 
     @Test
-    public void addContact(){
+    public void getEventsOfTagTest() {
+        ITag tag = null;
+        try {
+            tag = user.getTagHandler().createTag("Test");
+        } catch (NameNotAllowedException e) {
+            e.printStackTrace();
+        }
+
+        Event testevent = new Event();
+        testevent.setTag(tag);
+        user.getEvents().addEvent(testevent);
+
+        assertEquals(1, user.getEvents().getEventsOfTag(tag).size());
+    }
+
+    @Test
+    public void addContact() {
         try {
             user.getContacts().addContact("Test Testson");
             user.getContacts().addContact("Simon E");
             assertEquals(2, user.getContacts().getList().size());
-        } catch (NameNotAllowedException e){
+        } catch (NameNotAllowedException e) {
             fail();
         }
     }
@@ -70,13 +84,13 @@ public class UserTest {
     }
 
     @Test
-    public void removeContact(){
+    public void removeContact() {
         try {
             user.getContacts().addContact("Test Testson");
             user.getContacts().addContact("Simon E");
             user.getContacts().removeContact(user.getContacts().getList().get(0));
             assertEquals(1, user.getContacts().getList().size());
-        } catch (NameNotAllowedException e){
+        } catch (NameNotAllowedException e) {
             fail();
         }
     }

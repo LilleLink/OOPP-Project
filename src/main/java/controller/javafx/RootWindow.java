@@ -20,7 +20,7 @@ public class RootWindow implements IPageNavigator, Initializable {
     private AnchorPane pageAnchorPane;
 
     private ViewComponent mainPage;
-    private ViewComponent secondaryPage;
+    private ViewComponent statisticsPage;
     private ViewComponent testTopBar;
     private ViewComponent contactPage;
     private ViewComponent calendarPage;
@@ -48,7 +48,7 @@ public class RootWindow implements IPageNavigator, Initializable {
     private void initiatePages() {
         testTopBar = PageFactory.CreateTestTopBar(this);
         mainPage = PageFactory.CreateMainPage();
-        secondaryPage = PageFactory.CreateSecondaryPage();
+        statisticsPage = PageFactory.CreateStatisticsPage(user.getEvents(), user.getTagHandler());
         calendarPage = PageFactory.CreateCalendarPage(user.getEvents(), user.getContacts(), user.getTagHandler());
         contactPage = PageFactory.CreateContactPage(user.getContacts(), user.getTagHandler(), user.getEvents());
     }
@@ -60,9 +60,9 @@ public class RootWindow implements IPageNavigator, Initializable {
     }
 
     @Override
-    public void openSecondaryPage() {
+    public void openStatisticsPage() {
         clearRootPage();
-        pageAnchorPane.getChildren().add(secondaryPage.getPane());
+        pageAnchorPane.getChildren().add(statisticsPage.getPane());
     }
 
     @Override

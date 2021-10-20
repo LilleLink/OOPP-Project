@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<fx:root prefHeight="660.0" prefWidth="1280.0" type="AnchorPane" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <PieChart fx:id="eventDelegationPieChart" layoutX="351.0" layoutY="136.0" prefHeight="388.0" prefWidth="578.0" style="-fx-border-width: 2px; -fx-border-color: black; -fx-border-radius: 10px;" title="Event delegation" AnchorPane.bottomAnchor="136.0" AnchorPane.leftAnchor="350.0" AnchorPane.rightAnchor="350.0" AnchorPane.topAnchor="136.0" />
+   </children>
+</fx:root>

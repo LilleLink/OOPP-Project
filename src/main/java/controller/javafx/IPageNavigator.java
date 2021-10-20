@@ -10,9 +10,9 @@ public interface IPageNavigator {
     void openMainPage();
 
     /***
-     * Opens the SecondaryPage
+     * Opens the StatisticsPage
      */
-    void openSecondaryPage();
+    void openStatisticsPage();
 
     /**
      * Opens the ContactPage
