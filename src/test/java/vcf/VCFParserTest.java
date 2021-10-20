@@ -46,7 +46,7 @@ public class VCFParserTest {
         if (!c1.getName().equals("PreFIX NAME MIDDLE_NAME SURNAME Suffix")) return false;
         if (!c1.getPhoneNumber().equals("1234567890")) return false;
         if (!c1.getTags().get(0).getName().equals("Tag1")) return false;
-        if (!c1.getNotes().getAt(0).toString().equals("Contact note")) return false;
+        if (!c1.getNote(0).toString().equals("Contact note")) return false;
         return c1.getAddress().equals("Teknologstigen 3, Chalmers");
     }
 
@@ -55,7 +55,7 @@ public class VCFParserTest {
         if (!c2.getPhoneNumber().equals("0734111337")) return false;
         if (!c2.getTags().get(0).getName().equals("Tag1") || !c2.getTags().get(1).getName().equals("Tag2"))
             return false;
-        if (!c2.getNotes().getAt(0).toString().equals("Contact 2 note")) return false;
+        if (!c2.getNote(0).toString().equals("Contact 2 note")) return false;
         return c2.getAddress().equals("");
     }
 

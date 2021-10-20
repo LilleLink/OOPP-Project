@@ -56,7 +56,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             cache.noteBook = (NoteBook) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
             env.tags.forEach((t,v) -> System.out.println(t + "->" + v.getName()));
             cache.tags = contact.tags.stream().map(t -> env.tags.get(t)).collect(Collectors.toList());
-            cache.notes = (Notes) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
+            cache.noteBook = (NoteBook) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
             cache.directoryId = UUID.fromString(contact.directoryId);
             return Optional.of(new Contact(cache));
         }
