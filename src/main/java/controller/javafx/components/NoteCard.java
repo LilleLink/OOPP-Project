@@ -3,7 +3,7 @@ package controller.javafx.components;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import model.Note;
+import model.notes.Note;
 
 /**
  * A card representing a note.

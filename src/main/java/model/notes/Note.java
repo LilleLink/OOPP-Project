@@ -1,4 +1,7 @@
-package model;
+package model.notes;
+
+import model.ICacheVisitable;
+import model.ICacheVisitor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -18,22 +21,29 @@ public class Note implements Comparable<Note>, ICacheVisitable {
     private final LocalDateTime pointOfCreation;
 
     /**
-     * Creates an instance of Note containing the given text.
+     * Constructs a note containing the given text.
      * Sets the text to an empty String and the point of creation to the current time.
      *
      * @param text the string to be stored
      */
-    Note(String text) {
+    public Note(String text) {
         this.text = text;
         this.pointOfCreation = LocalDateTime.now();
     }
 
+    /**
+     * Copies the given note to a new note.
+     * @param oldNote the note to copy
+     */
+    public Note(Note oldNote) {
+        this(oldNote.text,oldNote.pointOfCreation);
+    }
 
     /**
-     * Creates an instance of Note containing default values as if it were empty.
+     * Constructs Note containing default values as if it were empty.
      * Sets the text to an empty String and the point of creation to the current time.
      */
-    Note() {
+    public Note() {
         this("");
     }
 
@@ -64,7 +74,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
      * @param newText a new String
      * @return a new Note containing the given text
      */
-    Note withText(String newText) {
+    public Note withText(String newText) {
         return new Note(newText, pointOfCreation);
     }
 
@@ -96,7 +106,7 @@ public class Note implements Comparable<Note>, ICacheVisitable {
      *
      * @return the comparator value, negative if this is older, positive if this is newer
      */
-    int compareAge(Note other) {
+    public int compareAge(Note other) {
         int cmp = viewDate().compareTo(other.viewDate());
         if (cmp == 0) {
             cmp = viewTime().compareTo(other.viewTime());
@@ -109,25 +119,25 @@ public class Note implements Comparable<Note>, ICacheVisitable {
      *
      * @return an integer
      */
-    int size() {
+    public int size() {
         return text.length();
     }
 
     /**
-     * Gives the date of creation.
+     * Gives the immutable date of creation.
      *
      * @return a date consisting of year, month and day
      */
-    LocalDate viewDate() {
+    public LocalDate viewDate() {
         return pointOfCreation.toLocalDate();
     }
 
     /**
-     * Gives the time of creation.
+     * Gives the immutable time of creation.
      *
      * @return a time consisting of hours, minutes, seconds and nanoseconds
      */
-    LocalTime viewTime() {
+    public LocalTime viewTime() {
         return pointOfCreation.toLocalTime();
     }
 

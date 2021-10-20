@@ -3,6 +3,8 @@ package database.json;
 import com.google.gson.Gson;
 import database.IDatabaseLoader;
 import model.*;
+import model.notes.Note;
+import model.notes.NoteBook;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -50,7 +52,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             cache.phoneNumber = contact.phoneNumber;
             cache.address = contact.address;
             cache.tags = new ArrayList<>();
-            cache.notes = (Notes) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
+            cache.noteBook = (NoteBook) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
             cache.directoryId = UUID.fromString(contact.directoryId);
             return Optional.of(new Contact(cache));
         }
@@ -84,9 +86,9 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
 
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.NotesRecord notes, RecordVisitorState env) {
-            Notes.NotesCache cache = new Notes.NotesCache();
+            NoteBook.NotesCache cache = new NoteBook.NotesCache();
             cache.elements = notes.elements.stream().map(n -> (Note) n.accept(this, env).orElseThrow(IllegalStateException::new)).collect(Collectors.toList());
-            return Optional.of(new Notes(cache));
+            return Optional.of(new NoteBook(cache));
         }
 
         @Override

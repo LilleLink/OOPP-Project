@@ -108,7 +108,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     void setContact(Contact contact) {
         this.contact = contact;
-        this.notesComponent = new NotesComponent(contact.getNotes());
+        this.notesComponent = new NotesComponent(contact);
         contactName.setText(contact.getName());
         addressText.setText(contact.getAddress());
         this.eventOverview = new EventOverview(eventList.getContactsEvents(contact));
