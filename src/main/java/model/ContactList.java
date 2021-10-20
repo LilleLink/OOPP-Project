@@ -68,7 +68,7 @@ public class ContactList implements IObservable {
      * @return the contact list
      */
     public List<Contact> getList() {
-        return this.contactList;
+        return new ArrayList<>(this.contactList);
     }
 
     @Override

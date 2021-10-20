@@ -106,7 +106,7 @@ public class EventList implements IObservable {
     }
 
     /***
-     * Adds a event to the eventList
+     * Adds an event to the eventList
      * @param event the event object
      */
     public void addEvent(Event event) {
@@ -124,11 +124,11 @@ public class EventList implements IObservable {
     }
 
     /***
-     * Returns the eventList
-     * @return the event list
+     * Returns a copy of the eventlist
+     * @return the copy of the eventlist.
      */
     public List<Event> getList() {
-        return this.eventList;
+        return new ArrayList<>(this.eventList);
     }
 
     @Override
