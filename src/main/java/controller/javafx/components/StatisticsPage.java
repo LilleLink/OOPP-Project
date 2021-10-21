@@ -32,6 +32,8 @@ class StatisticsPage extends ViewComponent implements IObserver {
 
         if (eventList.getList().isEmpty() || tagHandler.getAllTags().isEmpty())
             eventDelegationPieChart.setTitle("No data to track, start tagging!");
+        else
+            eventDelegationPieChart.setTitle("Event delegation");
     }
 
     private ObservableList<PieChart.Data> convertStatistics(HashMap<ITag, Integer> stats) {
