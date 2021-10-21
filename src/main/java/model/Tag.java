@@ -19,16 +19,10 @@ public class Tag implements ITag, ICacheVisitable {
         this.color = color;
     }
 
-    /**
-     * @return the name of a Tag
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @return the color code of a Tag
-     */
     public String getColor() {
         return color;
     }
