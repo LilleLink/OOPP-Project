@@ -27,7 +27,11 @@ public class NotifierTest {
     public void notificationReceivedTest() throws InterruptedException {
         Thread thread = new Thread(notifier);
         thread.start();
-        Thread.sleep(10);
+        int t = 0;
+        while(t < 100 && notifier.getActive().isEmpty()) {
+            Thread.sleep(10);
+            t++;
+        }
         thread.interrupt();
         List<MockChronological> notifications = notifier.getActive();
         assert(notifications.size() == 1 && notifier.size() == 1);
@@ -36,8 +40,8 @@ public class NotifierTest {
     @Test
     public void objectNotAddedWhenMutedTest() throws InterruptedException {
         Thread thread = new Thread(notifier);
+        notifier.mute(100000);
         thread.start();
-        notifier.mute(1000);
         Thread.sleep(100);
         thread.interrupt();
         List<MockChronological> notifications = notifier.getActive();
@@ -47,8 +51,8 @@ public class NotifierTest {
     @Test
     public void objectAddedAfterUnmuteTest() throws InterruptedException {
         Thread thread = new Thread(notifier);
+        notifier.mute(100000);
         thread.start();
-        notifier.mute(1000);
         Thread.sleep(100);
         notifier.unmute();
         Thread.sleep(100);
@@ -61,7 +65,11 @@ public class NotifierTest {
     public void notificationsAreClearedTest() throws InterruptedException {
         Thread thread = new Thread(notifier);
         thread.start();
-        Thread.sleep(10);
+        int t = 0;
+        while(t < 100 && notifier.getActive().isEmpty()) {
+            Thread.sleep(10);
+            t++;
+        }
         thread.interrupt();
         notifier.clear();
         List<MockChronological> notifications = notifier.getActive();
@@ -77,7 +85,11 @@ public class NotifierTest {
         Thread thread = new Thread(notifier);
         notifier.setInterval(1440);
         thread.start();
-        Thread.sleep(10);
+        int t = 0;
+        while(t < 100 && notifier.getActive().isEmpty()) {
+            Thread.sleep(10);
+            t++;
+        }
         List<MockChronological> notifications = notifier.getActive();
         assert(notifications.contains(object));
     }
