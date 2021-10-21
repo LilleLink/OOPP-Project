@@ -1,3 +1,6 @@
+# TODO
+FIX A HOW TO RUN
+
 # OOPP-Project
 Project assignment in the Object Oriented Programming Project course at Chalmers University of Technology.
 
