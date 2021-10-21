@@ -115,9 +115,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         eventsAnchorPane.getChildren().add(eventOverview.getPane());
         notesAnchorPane.getChildren().add(notesComponent.getPane());
         contactImage.setOnMouseClicked(this::setNewContactImage);
-        updateContactImage();
-        drawAttachments();
-        updateTagBox();
+        onEvent();
     }
 
     Contact getContact() {
@@ -226,14 +224,7 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         }
     }
 
-    private boolean isValidName(String name) {
-        return name.length() >= 1;
-    }
-
     private void updateContactImage() {
-        if (!System.getProperty("os.name").startsWith("Windows")) {
-            return;
-        }
         try {
             contactImage.setImage(new Image(attachmentHandler.getMainImage(contact.getDirectoryId()).toUri().toString()));
         } catch (NoSuchFileException e) {
@@ -247,5 +238,6 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     public void onEvent() {
         updateContactImage();
         drawAttachments();
+        updateTagBox();
     }
 }
