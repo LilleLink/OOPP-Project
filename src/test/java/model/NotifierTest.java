@@ -43,8 +43,8 @@ public class NotifierTest {
         notifier.mute(100000);
         thread.start();
         Thread.sleep(100);
-        thread.interrupt();
         List<MockChronological> notifications = notifier.getActive();
+        thread.interrupt();
         assert (notifications.isEmpty());
     }
 
@@ -56,8 +56,8 @@ public class NotifierTest {
         Thread.sleep(100);
         notifier.unmute();
         Thread.sleep(100);
-        thread.interrupt();
         List<MockChronological> notifications = notifier.getActive();
+        thread.interrupt();
         assert (notifications.size() == 1);
     }
 
@@ -70,9 +70,9 @@ public class NotifierTest {
             Thread.sleep(10);
             t++;
         }
-        thread.interrupt();
         notifier.clear();
         List<MockChronological> notifications = notifier.getActive();
+        thread.interrupt();
         assert (notifications.isEmpty());
     }
 
