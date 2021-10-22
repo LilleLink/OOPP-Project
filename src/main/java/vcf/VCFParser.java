@@ -205,7 +205,7 @@ class VCFParser implements IVCFParser {
 
     private void readPhoneNumber(Map<FIELD, List<String>> data, Contact.ContactCache cache) {
         List<String> numbers = data.get(FIELD.TELEPHONE);
-        cache.phoneNumber = numbers.size() > 0 ? numbers.get(0) : "";
+        cache.phoneNumber = !numbers.isEmpty() ? numbers.get(0) : "";
     }
 
     private void readNote(Map<FIELD, List<String>> data, Contact.ContactCache cache) {
