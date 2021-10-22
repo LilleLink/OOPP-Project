@@ -110,7 +110,9 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
      * @throws TagNotFoundException If the contact does not have the given tag.
      */
     public void removeTag(ITag tag) throws TagNotFoundException {
-        if (!tags.contains(tag)) throw new TagNotFoundException(tag.getName());
+        if (!tags.contains(tag)) {
+            throw new TagNotFoundException(tag.getName());
+        }
         tags.remove(tag);
         notifyObservers();
     }
@@ -225,9 +227,6 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
         public List<ITag> tags;
         public NoteBook noteBook;
         public UUID directoryId;
-
-        public ContactCache() {
-        }
     }
 
     private ContactCache getCache() {
