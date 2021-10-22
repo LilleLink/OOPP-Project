@@ -17,7 +17,7 @@ public class AttachmentHandlerTest {
 
     private static final UUID id = UUID.randomUUID();
     private static final UUID id2 = UUID.randomUUID();
-    private static final Path testFileDirectory = Paths.get("src/test/java/attachmentHandler/testFiles/");
+    private static final Path testFileDirectory = Paths.get("src/test/java/attachmenthandler/testFiles/");
 
     @After
     public void removeTestIdDirectory() {
