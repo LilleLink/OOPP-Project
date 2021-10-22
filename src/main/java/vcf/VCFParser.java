@@ -1,6 +1,9 @@
 package vcf;
 
-import model.*;
+import model.Contact;
+import model.ContactList;
+import model.ITag;
+import model.TagHandler;
 import model.exceptions.NameNotAllowedException;
 import model.exceptions.TagNotFoundException;
 import model.notes.NoteBook;
@@ -19,10 +22,10 @@ class VCFParser implements IVCFParser {
 
     private final ContactList contacts;
 
-    private final HashMap<String, FIELD> fields = initFIELDSHashMap();
+    private final Map<String, FIELD> fields = initFIELDSMap();
 
-    private HashMap<String, FIELD> initFIELDSHashMap() {
-        HashMap<String, FIELD> map = new HashMap<>();
+    private Map<String, FIELD> initFIELDSMap() {
+        Map<String, FIELD> map = new HashMap<>();
         for (FIELD field : FIELD.values()) {
             map.put(field.getCode(), field);
         }
@@ -58,7 +61,9 @@ class VCFParser implements IVCFParser {
             } catch (IOException | NameNotAllowedException ignored) {
             }
         }
-        if (createdContacts == 0) throw new IOException("No *.vcf files found in the directory");
+        if (createdContacts == 0) {
+            throw new IOException("No *.vcf files found in the directory");
+        }
     }
 
     private boolean isVCFFile(Path path) {
@@ -66,7 +71,7 @@ class VCFParser implements IVCFParser {
     }
 
     private void readContact(Path path) throws IOException, NameNotAllowedException {
-        HashMap<FIELD, List<String>> data = parseData(path);
+        Map<FIELD, List<String>> data = parseData(path);
         Contact.ContactCache cache = new Contact.ContactCache();
         readName(data, cache);
         readAddress(data, cache);
@@ -77,8 +82,8 @@ class VCFParser implements IVCFParser {
         contacts.addContact(cache);
     }
 
-    private HashMap<FIELD, List<String>> parseData(Path path) throws IOException {
-        HashMap<FIELD, List<String>> parsedData = new HashMap<>();
+    private Map<FIELD, List<String>> parseData(Path path) throws IOException {
+        Map<FIELD, List<String>> parsedData = new HashMap<>();
         for (FIELD field : FIELD.values()) {
             parsedData.put(field, new ArrayList<>());
         }
@@ -93,6 +98,7 @@ class VCFParser implements IVCFParser {
             Collection<String> data = getDataFromLine(line, type);
             parsedData.get(type).addAll(data);
         }
+        scanner.close();
         return parsedData;
     }
 
@@ -124,12 +130,12 @@ class VCFParser implements IVCFParser {
         return data;
     }
 
-    private void readName(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
-        if (data.get(FIELD.FORMATTED_NAME).size() > 0) {
+    private void readName(Map<FIELD, List<String>> data, Contact.ContactCache cache) {
+        if (!data.get(FIELD.FORMATTED_NAME).isEmpty()) {
             cache.name = data.get(FIELD.FORMATTED_NAME).get(0);
             return;
         }
-        if (data.get(FIELD.NAME).size() <= 0) {
+        if (data.get(FIELD.NAME).isEmpty()) {
             cache.name = "";
             return;
         }
@@ -157,8 +163,8 @@ class VCFParser implements IVCFParser {
         cache.name = sb.toString();
     }
 
-    private void readAddress(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
-        if (!(data.get(FIELD.ADDRESS).size() > 0)) {
+    private void readAddress(Map<FIELD, List<String>> data, Contact.ContactCache cache) {
+        if (data.get(FIELD.ADDRESS).isEmpty()) {
             cache.address = "";
             return;
         }
@@ -180,7 +186,7 @@ class VCFParser implements IVCFParser {
         cache.address = sb.toString();
     }
 
-    private void readTags(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
+    private void readTags(Map<FIELD, List<String>> data, Contact.ContactCache cache) {
         List<ITag> tags = new ArrayList<>();
         data.get(FIELD.CATEGORIES).forEach(tag -> {
             try {
@@ -195,12 +201,12 @@ class VCFParser implements IVCFParser {
         cache.tags = tags;
     }
 
-    private void readPhoneNumber(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
+    private void readPhoneNumber(Map<FIELD, List<String>> data, Contact.ContactCache cache) {
         List<String> numbers = data.get(FIELD.TELEPHONE);
         cache.phoneNumber = numbers.size() > 0 ? numbers.get(0) : "";
     }
 
-    private void readNote(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
+    private void readNote(Map<FIELD, List<String>> data, Contact.ContactCache cache) {
         NoteBook noteBook = new NoteBook();
         data.get(FIELD.NOTE).forEach(noteBook::addNote);
         cache.noteBook = noteBook;
