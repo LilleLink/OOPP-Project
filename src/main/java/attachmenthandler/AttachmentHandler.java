@@ -41,7 +41,9 @@ class AttachmentHandler implements IAttachmentHandler {
     public List<Path> getAttachments(UUID id) throws IOException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         List<Path> files = new ArrayList<>();
-        if (!Files.exists(attachmentDirectory)) return files;
+        if (!Files.exists(attachmentDirectory)) {
+            return files;
+        }
         Files.walk(attachmentDirectory)
                 .filter(Files::isRegularFile).forEach(files::add);
         return files;
@@ -54,7 +56,9 @@ class AttachmentHandler implements IAttachmentHandler {
             throw new IllegalArgumentException("A category should only contain letters");
         }
         List<Path> files = new ArrayList<>();
-        if (!Files.exists(attachmentDirectory.resolve(category))) return files;
+        if (!Files.exists(attachmentDirectory.resolve(category))) {
+            return files;
+        }
         Files.walk(attachmentDirectory.resolve(category)).filter(Files::isRegularFile).forEach(files::add);
         return files;
     }
@@ -84,20 +88,23 @@ class AttachmentHandler implements IAttachmentHandler {
 
     public void removeAttachmentCategory(UUID id, String category) throws IOException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
-        if (Files.exists(attachmentDirectory.resolve(category)))
+        if (Files.exists(attachmentDirectory.resolve(category))) {
             deleteDirectoryRecursively(attachmentDirectory.resolve(category));
+        }
     }
 
 
     public void removeAllAttachments(UUID id) throws IOException {
-        if (Files.exists(baseDirectory.resolve(id.toString() + "/attachments")))
-            deleteDirectoryRecursively(baseDirectory.resolve(id.toString() + "/attachments"));
+        if (Files.exists(baseDirectory.resolve(id.toString() + "/attachments"))) {
+            deleteDirectoryRecursively(baseDirectory.resolve(id + "/attachments"));
+        }
     }
 
 
     public void removeAllFiles(UUID id) throws IOException {
-        if (Files.exists(baseDirectory.resolve(id.toString())))
+        if (Files.exists(baseDirectory.resolve(id.toString()))) {
             deleteDirectoryRecursively(baseDirectory.resolve(id.toString()));
+        }
     }
 
 
@@ -121,7 +128,7 @@ class AttachmentHandler implements IAttachmentHandler {
     }
 
 
-    public Path getMainImage(UUID id) throws IOException, NoSuchFileException {
+    public Path getMainImage(UUID id) throws IOException {
         Path mainImageDirectory = baseDirectory.resolve(id.toString()).resolve("mainImage/");
         List<Path> mainImageDirectoryFiles = new ArrayList<>();
         Files.walk(mainImageDirectory, 1).filter(Files::isRegularFile).forEach(mainImageDirectoryFiles::add);
