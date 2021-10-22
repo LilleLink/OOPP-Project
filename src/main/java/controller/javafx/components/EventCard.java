@@ -12,7 +12,6 @@ import model.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 class EventCard extends ViewComponent {
@@ -52,7 +51,7 @@ class EventCard extends ViewComponent {
 
     private final TagHandler tagHandler;
     private final ContactList contactList;
-    private List<Contact> participants = new ArrayList<>();
+    private List<Contact> participants;
     private final Event event;
     private EventHandler<ActionEvent> deleteHandler;
     private EventHandler<javafx.event.Event> closeHandler;
@@ -108,9 +107,9 @@ class EventCard extends ViewComponent {
 
     private void initializeSpinners() {
         SpinnerValueFactory<Integer> hourValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 23,
-                LocalDateTime.now().getHour(), 1);
+                event.getDateTime().getHour(), 1);
         SpinnerValueFactory<Integer> minuteValueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(0, 59,
-                CalendarDateUtility.getCalendarizedMinutes(), 5);
+                event.getDateTime().getMinute(), 5);
         hourValueFactory.setWrapAround(true);
         minuteValueFactory.setWrapAround(true);
         hourSpinner.setValueFactory(hourValueFactory);
