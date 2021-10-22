@@ -191,7 +191,7 @@ class VCFParser implements IVCFParser {
 
     private void readNote(HashMap<FIELD, List<String>> data, Contact.ContactCache cache) {
         NoteBook noteBook = new NoteBook();
-        data.get(FIELD.NOTE).forEach(noteBook::add);
+        data.get(FIELD.NOTE).forEach(noteBook::addNote);
         cache.noteBook = noteBook;
     }
 
