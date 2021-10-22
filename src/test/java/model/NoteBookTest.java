@@ -14,34 +14,34 @@ public class NoteBookTest {
     @Test
     public void sizeIncreasedTest() {
         NoteBook notes = new NoteBook();
-        int oSize = notes.size();
-        notes.add();
-        assert(oSize == notes.size() - 1);
+        int oSize = notes.sizeOfNotes();
+        notes.addNote();
+        assert(oSize == notes.sizeOfNotes() - 1);
     }
 
     @Test
     public void sizeDecreasedTest() {
         NoteBook notes = new NoteBook();
-        notes.add();
-        int oSize = notes.size();
-        notes.removeAt(0);
-        assert(oSize == notes.size() + 1);
+        notes.addNote();
+        int oSize = notes.sizeOfNotes();
+        notes.removeNote(0);
+        assert(oSize == notes.sizeOfNotes() + 1);
     }
 
     @Test
     public void noteIsEditedTest() {
         NoteBook notes = new NoteBook();
-        notes.add("Pizza");
-        String oText = notes.viewAt(0);
-        notes.editAt(0,"Taco");
-        String nText = notes.viewAt(0);
+        notes.addNote("Pizza");
+        String oText = notes.viewNote(0);
+        notes.editNote(0,"Taco");
+        String nText = notes.viewNote(0);
         assertNotEquals(oText, nText);
     }
 
     @Test
     public void transferNotesTest() {
         NoteBook notes = new NoteBook();
-        notes.add("Pizza");
+        notes.addNote("Pizza");
         NoteBook tNotes = new NoteBook(notes);
         assertEquals(notes,tNotes);
     }
@@ -49,18 +49,18 @@ public class NoteBookTest {
     @Test
     public void notesSortedTest() {
         NoteBook noteBook = new NoteBook();
-        noteBook.add();
+        noteBook.addNote();
         for(int i = 0; i < 100; i++) {
             try {
                 Thread.sleep(1); // must wait a very small amount of time to be considered different times
-                noteBook.add();
+                noteBook.addNote();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
         List<Note> list = noteBook.getSortedList();
         boolean sorted;
-        for(int i = 0; i < noteBook.size() - 1; i++) {
+        for(int i = 0; i < noteBook.sizeOfNotes() - 1; i++) {
             Note note = list.get(i);
             Note other = list.get(i+1);
             sorted = note.compareAge(other) < 0;
@@ -70,7 +70,7 @@ public class NoteBookTest {
     @Test
     public void consistentHashTest() {
         NoteBook noteBook = new NoteBook();
-        noteBook.add();
+        noteBook.addNote();
         int firstHash = noteBook.hashCode();
         int secondHash = noteBook.hashCode();
         assertEquals(firstHash,secondHash);
@@ -79,7 +79,7 @@ public class NoteBookTest {
     @Test
     public void copiedListEqualsTest() {
         NoteBook notes = new NoteBook();
-        notes.add("Bamse");
+        notes.addNote("Bamse");
         NoteBook copiedNotes = new NoteBook(notes.getSortedList());
         assert(notes.equals(copiedNotes));
     }
@@ -87,9 +87,9 @@ public class NoteBookTest {
     @Test
     public void changedCopyNotEqualsTest() {
         NoteBook notes = new NoteBook();
-        notes.add("Bamse");
+        notes.addNote("Bamse");
         NoteBook copiedNotes = new NoteBook(notes);
-        copiedNotes.add("Lille-Skutt");
+        copiedNotes.addNote("Lille-Skutt");
         assert(!notes.equals(copiedNotes));
     }
 
