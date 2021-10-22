@@ -58,7 +58,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      */
     Event() {
         this.name = "Unnamed event";
-        this.dateTime = CalendarDateUtility.getCalendarizedDate();
+        this.dateTime = CalendarDateUtils.getCalendarizedDate();
         this.address = "No address";
         this.directoryId = UUID.randomUUID();
     }
