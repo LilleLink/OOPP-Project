@@ -67,7 +67,7 @@ class VCFParser implements IVCFParser {
     }
 
     private boolean isVCFFile(Path path) {
-        return path.toString().toLowerCase().endsWith(".vcf");
+        return path.toString().toLowerCase(Locale.getDefault()).endsWith(".vcf");
     }
 
     private void readContact(Path path) throws IOException, NameNotAllowedException {
@@ -87,7 +87,7 @@ class VCFParser implements IVCFParser {
         for (FIELD field : FIELD.values()) {
             parsedData.put(field, new ArrayList<>());
         }
-        Scanner scanner = new Scanner(path);
+        Scanner scanner = new Scanner(path, "UTF-8");
         String line;
         while (scanner.hasNext()) {
             line = scanner.nextLine();
