@@ -67,7 +67,7 @@ class VCFParser implements IVCFParser {
     }
 
     private boolean isVCFFile(Path path) {
-        return path.toString().toLowerCase().endsWith(".vcf");
+        return path.toString().toLowerCase(Locale.getDefault()).endsWith(".vcf");
     }
 
     private void readContact(Path path) throws IOException, NameNotAllowedException {
