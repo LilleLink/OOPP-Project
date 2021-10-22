@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.PieChart;
 import model.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 class StatisticsPage extends ViewComponent implements IObserver {
@@ -26,7 +25,7 @@ class StatisticsPage extends ViewComponent implements IObserver {
     }
 
     private void createStatistics() {
-        HashMap<ITag, Integer> stats = StatisticsFactory.getEventDelegation(eventList, tagHandler);
+        Map<ITag, Integer> stats = StatisticsFactory.getEventDelegation(eventList, tagHandler);
         ObservableList<PieChart.Data> pieChartData = convertStatistics(stats);
         eventDelegationPieChart.setData(pieChartData);
 
@@ -36,7 +35,7 @@ class StatisticsPage extends ViewComponent implements IObserver {
             eventDelegationPieChart.setTitle("Event delegation");
     }
 
-    private ObservableList<PieChart.Data> convertStatistics(HashMap<ITag, Integer> stats) {
+    private ObservableList<PieChart.Data> convertStatistics(Map<ITag, Integer> stats) {
         ObservableList<PieChart.Data> result = FXCollections.observableArrayList();
 
         for (Map.Entry<ITag, Integer> entry : stats.entrySet()) {

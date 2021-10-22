@@ -5,7 +5,10 @@ import java.time.LocalDateTime;
 /***
  * A utility class that helps unify LocalDateTime formats across the application.
  */
-public final class CalendarDateUtility {
+public final class CalendarDateUtils {
+
+    private CalendarDateUtils() {
+    }
 
     /***
      * Gets the current date and time, formats it to a calendarized date and returns it.

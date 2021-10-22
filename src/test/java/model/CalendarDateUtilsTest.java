@@ -6,11 +6,11 @@ import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
-public class CalendarDateUtilityTest {
+public class CalendarDateUtilsTest {
 
     @Test
     public void testGetCalendarizedDate() {
-        LocalDateTime dateTime = CalendarDateUtility.getCalendarizedDate();
+        LocalDateTime dateTime = CalendarDateUtils.getCalendarizedDate();
         assertEquals(dateTime.getSecond(), 0);
         assertEquals(dateTime.getNano(), 0);
         assertEquals(dateTime.getMinute(), LocalDateTime.now().getMinute() - LocalDateTime.now().getMinute() % 15);
@@ -18,7 +18,7 @@ public class CalendarDateUtilityTest {
 
     @Test
     public void testGetCalendarizedMinutes() {
-        int calendarizedMinutes = CalendarDateUtility.getCalendarizedMinutes();
+        int calendarizedMinutes = CalendarDateUtils.getCalendarizedMinutes();
         assertEquals(calendarizedMinutes, LocalDateTime.now().getMinute() - LocalDateTime.now().getMinute() % 15);
     }
 
