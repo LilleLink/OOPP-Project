@@ -1,4 +1,4 @@
-package attachmentHandler;
+package attachmenthandler;
 
 /**
  * A static class to provide the instance of the service.

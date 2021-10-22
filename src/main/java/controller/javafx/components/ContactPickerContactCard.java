@@ -1,6 +1,6 @@
 package controller.javafx.components;
 
-import attachmentHandler.AttachmentHandlerFactory;
+import attachmenthandler.AttachmentHandlerFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
