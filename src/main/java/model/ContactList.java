@@ -34,7 +34,7 @@ public class ContactList implements IObservable {
      * @param name the name of the contact
      */
     public void addContact(String name) throws NameNotAllowedException {
-        if (name.length() == 0) {
+        if (name.isEmpty()) {
             throw new NameNotAllowedException("Contacts must have a name");
         }
         contactList.add(new Contact(name));
@@ -51,7 +51,7 @@ public class ContactList implements IObservable {
     }
 
     public void addContact(Contact.ContactCache cache) throws NameNotAllowedException {
-        if (cache.name.length() < 1) {
+        if (cache.name.isEmpty()) {
             throw new NameNotAllowedException("Contacts must have a name");
         }
         if (cache.directoryId == null) {
