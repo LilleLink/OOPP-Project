@@ -19,7 +19,6 @@ public class RootWindow implements IPageNavigator, Initializable {
     @FXML
     private AnchorPane pageAnchorPane;
 
-    private ViewComponent mainPage;
     private ViewComponent statisticsPage;
     private ViewComponent testTopBar;
     private ViewComponent contactPage;
@@ -42,21 +41,14 @@ public class RootWindow implements IPageNavigator, Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initiatePages();
         topBarAnchorPane.getChildren().add(testTopBar.getPane());
-        openMainPage();
+        openContactPage();
     }
 
     private void initiatePages() {
         testTopBar = PageFactory.createTopBar(this);
-        mainPage = PageFactory.createMainPage();
         statisticsPage = PageFactory.createStatisticsPage(user.getEvents(), user.getTagHandler());
         calendarPage = PageFactory.createCalendarPage(user.getEvents(), user.getContacts(), user.getTagHandler());
         contactPage = PageFactory.createContactPage(user.getContacts(), user.getTagHandler(), user.getEvents());
-    }
-
-    @Override
-    public void openMainPage() {
-        clearRootPage();
-        pageAnchorPane.getChildren().add(mainPage.getPane());
     }
 
     @Override

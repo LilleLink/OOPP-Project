@@ -20,14 +20,6 @@ public class PageFactory {
     }
 
     /***
-     * Creates a MainPage component.
-     * @return the MainPage in the form of a ViewComponent
-     */
-    public static ViewComponent createMainPage() {
-        return new MainPage();
-    }
-
-    /***
      * Creates a StatisticsPage component
      * @return the StatisticsPage in the form of a ViewComponent
      */

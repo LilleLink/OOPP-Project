@@ -5,11 +5,6 @@ package controller.javafx;
  */
 public interface IPageNavigator {
     /***
-     * Opens the MainPage
-     */
-    void openMainPage();
-
-    /***
      * Opens the StatisticsPage
      */
     void openStatisticsPage();

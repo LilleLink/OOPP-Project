@@ -8,8 +8,6 @@ import javafx.scene.control.Button;
 class TopBar extends ViewComponent {
 
     @FXML
-    private Button toMainButton;
-    @FXML
     private Button toStatisticsButton;
     @FXML
     private Button toContactButton;
@@ -22,7 +20,6 @@ class TopBar extends ViewComponent {
         super();
         this.nav = nav;
 
-        toMainButton.setOnAction(this::mainButtonClicked);
         toStatisticsButton.setOnAction(this::statisticsButtonClicked);
         toContactButton.setOnAction(this::toContactButton);
         toCalendarButton.setOnAction(this::toCalendarButton);
@@ -30,10 +27,6 @@ class TopBar extends ViewComponent {
 
     private void statisticsButtonClicked(ActionEvent actionEvent) {
         nav.openStatisticsPage();
-    }
-
-    private void mainButtonClicked(ActionEvent actionEvent) {
-        nav.openMainPage();
     }
 
     private void toContactButton(ActionEvent actionEvent) {
