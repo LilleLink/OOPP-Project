@@ -64,7 +64,7 @@ class NotesComponent extends ViewComponent {
      * to the VBox.
      */
     private void initializeNotes() {
-        for(int i = 0; i < noteBook.sizeOfNotes(); i++) {
+        for (int i = 0; i < noteBook.sizeOfNotes(); i++) {
             addToVBox(createCard(noteBook.getNote(i)));
         }
     }
@@ -107,8 +107,9 @@ class NotesComponent extends ViewComponent {
      * @param mouseEvent the currently given mouse input.
      */
     private void updateSelected(MouseEvent mouseEvent) {
-        if (isValidSelected((Node) mouseEvent.getSource()))
+        if (isValidSelected((Node) mouseEvent.getSource())) {
             selected = (Node) mouseEvent.getSource();
+        }
     }
 
     /**
@@ -117,7 +118,7 @@ class NotesComponent extends ViewComponent {
      * @return true if the selected node is valid
      */
     private boolean isValidSelected(Node node) {
-        return (!Objects.isNull(node) && noteVBox.getChildren().contains(node));
+        return !Objects.isNull(node) && noteVBox.getChildren().contains(node);
     }
 
 

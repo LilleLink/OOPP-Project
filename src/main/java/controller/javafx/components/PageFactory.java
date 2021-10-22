@@ -8,7 +8,10 @@ import model.TagHandler;
 /***
  * Factory that creates JavaFX components and returns them as ViewComponents to the caller.
  */
-public class PageFactory {
+public final class PageFactory {
+
+    private PageFactory() {
+    }
 
     /***
      * Creates a top bar.

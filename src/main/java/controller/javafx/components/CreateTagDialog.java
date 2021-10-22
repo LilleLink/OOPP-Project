@@ -36,8 +36,8 @@ class CreateTagDialog extends ViewComponent {
         this.tagHandler = tagHandler;
         errorMessageText.setVisible(false);
         errorMessageText.setFill(Color.RED);
-        addTagButton.setOnAction(ActionEvent -> addTag());
-        cancelButton.setOnAction(ActionEvent -> closeStage());
+        addTagButton.setOnAction(actionEvent -> addTag());
+        cancelButton.setOnAction(actionEvent -> closeStage());
         tagName.textProperty().addListener(this::textFieldChanged);
         displayAndWait();
     }
@@ -68,6 +68,8 @@ class CreateTagDialog extends ViewComponent {
                 break;
             case ENTER:
                 addTag();
+                break;
+            default:
                 break;
         }
     }

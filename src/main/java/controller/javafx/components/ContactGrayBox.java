@@ -74,10 +74,6 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     @FXML
     private AnchorPane eventsAnchorPane;
 
-    private NotesComponent notesComponent;
-
-    private EventOverview eventOverview;
-
     private EventHandler<Event> closeWindowHandler;
 
     private EventHandler<Event> deleteContactHandler;
@@ -106,10 +102,10 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     void setContact(Contact contact) {
         this.contact = contact;
-        this.notesComponent = new NotesComponent(contact);
+        NotesComponent notesComponent = new NotesComponent(contact);
         contactName.setText(contact.getName());
         addressText.setText(contact.getAddress());
-        this.eventOverview = new EventOverview(eventList.getContactsEvents(contact));
+        EventOverview eventOverview = new EventOverview(eventList.getContactsEvents(contact));
         eventsAnchorPane.getChildren().add(eventOverview.getPane());
         notesAnchorPane.getChildren().add(notesComponent.getPane());
         contactImage.setOnMouseClicked(this::setNewContactImage);

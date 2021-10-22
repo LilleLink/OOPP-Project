@@ -48,7 +48,7 @@ class CreateContactDialog extends ViewComponent {
         errorMessageText.setVisible(false);
         errorMessageText.setFill(Color.RED);
         addContactButton.setOnAction(this::btnAddContactClicked);
-        cancelButton.setOnAction(ActionEvent -> close());
+        cancelButton.setOnAction(actionEvent -> close());
         contactName.textProperty().addListener(this::textFieldChanged);
         fileLoad.setOnAction(this::loadContactFile);
         dirLoad.setOnAction(this::loadContactDirectory);
@@ -125,6 +125,8 @@ class CreateContactDialog extends ViewComponent {
                 break;
             case ENTER:
                 addContact();
+                break;
+            default:
                 break;
         }
     }
