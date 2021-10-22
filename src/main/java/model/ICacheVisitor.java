@@ -42,18 +42,42 @@ public interface ICacheVisitor<E, T> {
         return Optional.empty();
     }
 
-    default Optional<T> visit(NoteBook.NotesCache event, E env) {
+    /***
+     * Visit a Note Book.
+     * @param noteBook The event to visit.
+     * @param env The visitor environment.
+     * @return The result of the visitor case.
+     */
+    default Optional<T> visit(NoteBook.NotesCache noteBook, E env) {
         return Optional.empty();
     }
 
-    default Optional<T> visit(Note.NoteCache event, E env) {
+    /***
+     * Visit a note.
+     * @param note The event to visit.
+     * @param env The visitor environment.
+     * @return The result of the visitor case.
+     */
+    default Optional<T> visit(Note.NoteCache note, E env) {
         return Optional.empty();
     }
 
+    /***
+     * Visit a tag handler.
+     * @param tagHandlerCache The event to visit.
+     * @param env The visitor environment.
+     * @return The result of the visitor case.
+     */
     default Optional<T> visit(TagHandler.TagHandlerCache tagHandlerCache, E env) {
         return Optional.empty();
     }
 
+    /***
+     * Visit a tag.
+     * @param tagCache The event to visit.
+     * @param env The visitor environment.
+     * @return The result of the visitor case.
+     */
     default Optional<T> visit(Tag.TagCache tagCache, E env) {
         return Optional.empty();
     }
