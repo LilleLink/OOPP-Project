@@ -7,6 +7,9 @@ import java.util.HashMap;
  */
 public final class StatisticsFactory {
 
+    private StatisticsFactory() {
+    }
+
     /***
      * Creates a hashmap containing the ITags and the number of events tagged on it. Serves as a base for creating
      * statistics based on the data.
