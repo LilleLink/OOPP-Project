@@ -6,6 +6,9 @@ package attachmentHandler;
 public class AttachmentHandlerFactory {
     static private IAttachmentHandler instance = null;
 
+    /**
+     * @return The AttachmentHandler Service
+     */
     public static IAttachmentHandler getService() {
         if (instance == null) {
             instance = new AttachmentHandler();

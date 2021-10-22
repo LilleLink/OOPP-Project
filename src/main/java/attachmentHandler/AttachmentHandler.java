@@ -16,7 +16,6 @@ class AttachmentHandler implements IAttachmentHandler {
 
     }
 
-    @Override
     public void addAttachment(UUID id, Path sourceFile) throws IOException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         Files.createDirectories(attachmentDirectory);
@@ -25,7 +24,6 @@ class AttachmentHandler implements IAttachmentHandler {
 
     }
 
-    @Override
     public void addAttachment(UUID id, Path sourceFile, String category) throws IOException, IllegalArgumentException {
         category = category.toLowerCase();
         if (!category.chars().allMatch(Character::isLetter)) {
@@ -38,7 +36,6 @@ class AttachmentHandler implements IAttachmentHandler {
                 .resolve(sourceFile.getFileName()), REPLACE_EXISTING);
     }
 
-    @Override
     public List<Path> getAttachments(UUID id) throws IOException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         List<Path> files = new ArrayList<>();
@@ -48,7 +45,6 @@ class AttachmentHandler implements IAttachmentHandler {
         return files;
     }
 
-    @Override
     public List<Path> getAttachments(UUID id, String category) throws IOException, IllegalArgumentException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         category = category.toLowerCase();
@@ -61,7 +57,6 @@ class AttachmentHandler implements IAttachmentHandler {
         return files;
     }
 
-    @Override
     public List<String> getAttachmentCategories(UUID id) throws IOException {
         List<String> attachmentCategories = new ArrayList<>();
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
@@ -75,7 +70,7 @@ class AttachmentHandler implements IAttachmentHandler {
         return attachmentCategories;
     }
 
-    @Override
+
     public void removeAttachment(UUID id, Path attachment) throws IOException, IllegalArgumentException {
         if (attachment.toString().contains(baseDirectory.resolve(id.toString()).toString())) {
             Files.delete(attachment);
@@ -84,26 +79,26 @@ class AttachmentHandler implements IAttachmentHandler {
         }
     }
 
-    @Override
+
     public void removeAttachmentCategory(UUID id, String category) throws IOException {
         Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
         if (Files.exists(attachmentDirectory.resolve(category)))
             deleteDirectoryRecursively(attachmentDirectory.resolve(category));
     }
 
-    @Override
+
     public void removeAllAttachments(UUID id) throws IOException {
         if (Files.exists(baseDirectory.resolve(id.toString() + "/attachments")))
             deleteDirectoryRecursively(baseDirectory.resolve(id.toString() + "/attachments"));
     }
 
-    @Override
+
     public void removeAllFiles(UUID id) throws IOException {
         if (Files.exists(baseDirectory.resolve(id.toString())))
             deleteDirectoryRecursively(baseDirectory.resolve(id.toString()));
     }
 
-    @Override
+
     public void saveMainImage(UUID id, Path picture) throws IllegalArgumentException, IOException {
         List<String> imageFileExtensions = Arrays.asList("bmp", "gif", "jpeg", "jpg", "png");
         Path mainImageDirectory = baseDirectory.resolve(id.toString()).resolve("mainImage/");
@@ -115,7 +110,7 @@ class AttachmentHandler implements IAttachmentHandler {
         Files.copy(picture, mainImageDirectory.resolve(picture.getFileName()), REPLACE_EXISTING);
     }
 
-    @Override
+
     public void removeMainImage(UUID id) throws IOException {
         Path mainImage = baseDirectory.resolve(id.toString()).resolve("mainImage");
         if (Files.exists(mainImage)) {
@@ -123,7 +118,7 @@ class AttachmentHandler implements IAttachmentHandler {
         }
     }
 
-    @Override
+
     public Path getMainImage(UUID id) throws IOException, NoSuchFileException {
         Path mainImageDirectory = baseDirectory.resolve(id.toString()).resolve("mainImage/");
         List<Path> mainImageDirectoryFiles = new ArrayList<>();
