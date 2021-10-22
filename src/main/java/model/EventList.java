@@ -18,6 +18,7 @@ public class EventList implements IObservable {
      * Creates a new eventlist wrapper object
      */
     EventList() {
+        //Constructor here to explicitly declare that it is package private.
     }
 
     /***
@@ -81,8 +82,9 @@ public class EventList implements IObservable {
         List<Event> res = new ArrayList<>();
 
         for (Event event : eventList) {
-            if (event.getContacts().contains(contact))
+            if (event.getContacts().contains(contact)) {
                 res.add(event);
+            }
         }
 
         return res;
@@ -97,8 +99,9 @@ public class EventList implements IObservable {
         List<Event> res = new ArrayList<>();
         for (Event e : eventList) {
             if (!Objects.isNull(e.getTag())) {
-                if (e.getTag().equals(tag))
+                if (e.getTag().equals(tag)) {
                     res.add(e);
+                }
             }
         }
 

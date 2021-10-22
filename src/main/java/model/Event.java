@@ -225,9 +225,6 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
         public ITag tag;
         public List<Contact> contacts;
         public UUID directoryId;
-
-        public EventCache() {
-        }
     }
 
     private EventCache getCache() {
