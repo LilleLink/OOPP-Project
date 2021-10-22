@@ -126,6 +126,8 @@ class VCFParser implements IVCFParser {
                 data.add(telInfo[telInfo.length - 1]);
                 break;
             }
+            default:
+                break;
         }
         return data;
     }
