@@ -1,8 +1,8 @@
 package controller.javafx.components;
 
 import application.HostServicesProvider;
-import attachmentHandler.AttachmentHandlerFactory;
-import attachmentHandler.IAttachmentHandler;
+import attachmenthandler.AttachmentHandlerFactory;
+import attachmenthandler.IAttachmentHandler;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
