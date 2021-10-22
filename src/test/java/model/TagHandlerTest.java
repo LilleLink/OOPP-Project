@@ -53,7 +53,7 @@ public class TagHandlerTest {
             handler.rename(tag, "new name");
             assertEquals("new name", tag.getName());
             assertEquals("new name", tag.toString());
-        } catch (NameNotAllowedException e) {
+        } catch (NameNotAllowedException | TagNotFoundException e) {
             fail();
         }
     }
@@ -77,7 +77,7 @@ public class TagHandlerTest {
             handler.rename(t1, "Something else");
             ITag t2 = handler.createTag("First tag");
             assertNotEquals(t1.toString(), t2.toString());
-        } catch (NameNotAllowedException e) {
+        } catch (NameNotAllowedException | TagNotFoundException e) {
             fail();
         }
     }
