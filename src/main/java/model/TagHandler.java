@@ -112,10 +112,10 @@ public class TagHandler implements ICacheVisitable {
      * @param color The new color as HEX-code
      * @return If the change succeeded
      */
-    boolean setColor(ITag iTag, String color) {
+    boolean setColor(ITag iTag, String color) throws TagNotFoundException {
         Tag tag = stringTagHashMap.get(iTag.getName());
         if (tag == null) {
-            throw new RuntimeException(iTag.getName());
+            throw new TagNotFoundException(iTag.getName());
         }
         if (isValidColor(color)) {
             tag.setColor(color);
