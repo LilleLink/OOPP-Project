@@ -1,5 +1,8 @@
 package model.notifications;
 
+import model.IObservable;
+import model.IObserver;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,18 +18,22 @@ import java.util.List;
  * @param <T> the type of chronological objects to collect
  * @author Simon Johnsson
  */
-public class Notifier<T extends IChronological> implements IObjectBroadcastListener<T>, Runnable{
+public class Notifier<T extends IChronological> implements IObjectBroadcastListener<T>, Runnable, IObservable {
 
     private final List<T> active;
+    private final List<IObserver> observers;
     private ChronologicalBroadcaster<T> broadcaster;
     private boolean isMuted;
     private long muteTime;
 
     public Notifier(List<T> content) {
         this.active = new ArrayList<>();
+        this.observers = new ArrayList<>();
         this.broadcaster = new ChronologicalBroadcaster<>(content);
         this.broadcaster.addListener(this);
+        this.isMuted = false;
     }
+
 
     /**
      * Updates the broadcaster's interval to the given minutes.
@@ -111,6 +118,7 @@ public class Notifier<T extends IChronological> implements IObjectBroadcastListe
     @Override
     public void onBroadcast(T object) {
         active.add(object);
+        notifyObservers();
     }
 
     @Override
@@ -123,6 +131,23 @@ public class Notifier<T extends IChronological> implements IObjectBroadcastListe
                 muteSleep(muteTime);
                 unmute();
             }
+        }
+    }
+
+    @Override
+    public void subscribe(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void unSubscribe(IObserver observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(IObserver observer : observers) {
+                observer.onEvent();
         }
     }
 }

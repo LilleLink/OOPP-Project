@@ -48,4 +48,13 @@ public final class PageFactory {
     public static ViewComponent createCalendarPage(EventList eventList, ContactList contactList, TagHandler tagHandler) {
         return new CalendarPage(eventList, contactList, tagHandler);
     }
+
+    /**
+     * Creates a {@link EventNotificationsPage} component.
+     * @param eventList the list of events to be notified about
+     * @return the notifications component
+     */
+    public static ViewComponent createNotificationsPage(EventList eventList) {
+        return new EventNotificationsPage(eventList);
+    }
 }

@@ -13,13 +13,15 @@ class TopBar extends ViewComponent {
     private Button toContactButton;
     @FXML
     private Button toCalendarButton;
+    @FXML
+    private Button toNotificationsButton;
 
     IPageNavigator nav;
 
     TopBar(IPageNavigator nav) {
         super();
         this.nav = nav;
-
+        toNotificationsButton.setOnAction(this::toNotificationsButton);
         toStatisticsButton.setOnAction(this::statisticsButtonClicked);
         toContactButton.setOnAction(this::toContactButton);
         toCalendarButton.setOnAction(this::toCalendarButton);
@@ -36,5 +38,7 @@ class TopBar extends ViewComponent {
     private void toCalendarButton(ActionEvent actionEvent) {
         nav.openCalendarPage();
     }
+
+    private void toNotificationsButton(ActionEvent actionEvent){ nav.openNotificationPage();}
 
 }
