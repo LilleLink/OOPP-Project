@@ -1,8 +1,6 @@
 package controller.javafx.components;
 
 import application.HostServicesProvider;
-import attachmentHandler.AttachmentHandlerFactory;
-import attachmentHandler.IAttachmentHandler;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,7 +19,6 @@ class AttachmentCard extends ViewComponent {
     @FXML
     private Button removeButton;
     private final Path attachment;
-    private final IAttachmentHandler attachmentHandler = AttachmentHandlerFactory.getService();
     private EventHandler<Event> deleteHandler;
 
     AttachmentCard(Path attachment) {

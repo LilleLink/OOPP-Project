@@ -26,8 +26,6 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
     private AnchorPane searchBarAnchorPane;
     private final ContactGrayBox contactGrayBox;
     private final SearchBar<Contact> searchBar;
-    private final int searchTolerance;
-
     private final ContactList contacts;
     private final List<ContactCard> contactCards = new ArrayList<>();
 
@@ -42,7 +40,7 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
         AnchorPane contactGrayBoxPane = contactGrayBox.getPane();
         baseAnchorPane.getChildren().add(contactGrayBoxPane);
         contactGrayBoxPane.setVisible(false);
-        searchTolerance = 4;
+        int searchTolerance = 4;
         searchBar = new SearchBar<>(contacts.getList(), searchTolerance);
         searchBar.subscribe(this);
         searchBarAnchorPane.getChildren().add(searchBar.getPane());

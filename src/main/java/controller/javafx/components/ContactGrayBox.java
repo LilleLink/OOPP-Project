@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 class ContactGrayBox extends ViewComponent implements IObserver {
 
-    private final TagHandler tagHandler;
     private Contact contact;
 
     @FXML
@@ -89,14 +88,13 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     ContactGrayBox(TagHandler tagHandler, EventList eventList) {
         super();
-        this.tagHandler = tagHandler;
         this.eventList = eventList;
         baseAnchorPane.setOnMouseClicked(this::close);
         closeButton.setOnAction(this::close);
         deleteButton.setOnAction(this::delete);
         doneButton.setOnAction(this::close);
         contactName.textProperty().addListener((observableValue, s, t1) -> contact.setName(t1));
-        addressText.textProperty().addListener(((observableValue, s, t1) -> contact.setAddress(t1)));
+        addressText.textProperty().addListener((observableValue, s, t1) -> contact.setAddress(t1));
         openMapButton.setOnAction(this::openMap);
         cardAnchorPane.setOnMouseClicked(MouseEvent::consume);
         addAttachmentButton.setOnAction(this::addAttachment);

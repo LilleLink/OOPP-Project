@@ -26,7 +26,6 @@ class CreateContactDialog extends ViewComponent {
 
     private final ContactList contacts;
     private final Stage stage = new Stage();
-    private final TagHandler tagHandler;
     private final IVCFParser fileParser;
     @FXML
     private TextField contactName;
@@ -45,7 +44,6 @@ class CreateContactDialog extends ViewComponent {
     CreateContactDialog(ContactList contacts, TagHandler tagHandler) {
         super();
         this.contacts = contacts;
-        this.tagHandler = tagHandler;
         fileParser = VCFParserFactory.getService(contacts, tagHandler);
         errorMessageText.setVisible(false);
         errorMessageText.setFill(Color.RED);

@@ -35,7 +35,7 @@ public class AddTagDialog extends ViewComponent {
 
     private final TagHandler tagHandler;
 
-    private final ArrayList<ITag> selectedTags = new ArrayList<>();
+    private final List<ITag> selectedTags = new ArrayList<>();
 
     AddTagDialog(Contact contact, TagHandler tagHandler) {
         super();
@@ -89,6 +89,8 @@ public class AddTagDialog extends ViewComponent {
                 break;
             case ENTER:
                 save();
+                break;
+            default:
                 break;
         }
     }

@@ -25,20 +25,12 @@ class ContactPickerDialog extends ViewComponent {
     @FXML
     private Button saveButton;
 
-    private ContactList contactList;
     private List<Contact> allContacts;
     private List<ContactPickerContactCard> contactPickerContactCardList = new ArrayList<>();
     private List<Contact> pickedContacts = new ArrayList<>();
 
     ContactPickerDialog(ContactList contactList, Event event) {
-        this.contactList = contactList;
         allContacts = xorAddLists(contactList.getList(), event.getContacts());
-        initializeComponent();
-    }
-
-    ContactPickerDialog(ContactList contactList) {
-        this.contactList = contactList;
-        allContacts = contactList.getList();
         initializeComponent();
     }
 
@@ -58,8 +50,9 @@ class ContactPickerDialog extends ViewComponent {
     private <T> List<T> xorAddLists(List<T> a, List<T> b) {
         List<T> result = new ArrayList<>(a);
         for (T t : b) {
-            if (!a.contains(t))
+            if (!a.contains(t)) {
                 result.add(t);
+            }
         }
         return result;
     }

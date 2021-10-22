@@ -22,7 +22,7 @@ public class UserWizard implements Initializable {
     private TextField userNameField;
 
     private Set<UUID> users;
-    private HashMap<UUID, String> userNames = new HashMap<>();
+    private Map<UUID, String> userNames = new HashMap<>();
 
     public interface UserWizardListener {
         void onUser(User user);
@@ -32,14 +32,14 @@ public class UserWizard implements Initializable {
 
     public UserWizard() throws IOException {
         this.users = DatabaseFactory.getService().getUsers();
-        for(UUID uuid : this.users) {
+        for (UUID uuid : this.users) {
             userNames.put(uuid, DatabaseFactory.getService().getUsername(uuid));
         }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        for(UUID user : this.users) {
+        for (UUID user : this.users) {
             Button button = new Button(this.userNames.get(user));
 
             button.setOnAction(a -> {
