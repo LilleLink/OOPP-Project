@@ -1,8 +1,11 @@
 package model;
 
+import model.notifications.IChronological;
 import model.search.ISearchable;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +14,7 @@ import java.util.UUID;
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
  */
-public class Event implements ICacheVisitable, ISearchable<String>, IObservable {
+public class Event implements ICacheVisitable, ISearchable<String>, IObservable, IChronological {
 
     private String name;
     private String address;
@@ -212,6 +215,11 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
     @Override
     public String getSearchIdentity() {
         return name.toLowerCase();
+    }
+
+    @Override
+    public int compareTime(ChronoLocalDateTime<LocalDate> dateTime) {
+        return this.dateTime.compareTo(dateTime);
     }
 
     /***

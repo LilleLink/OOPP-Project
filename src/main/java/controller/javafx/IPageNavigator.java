@@ -24,6 +24,11 @@ public interface IPageNavigator {
      */
     void openCalendarPage();
 
+    /**
+     * Opens the notifications page.
+     */
+    void openNotificationPage();
+
     /***
      * Clears the root-element so that a new page can be loaded.
      */

@@ -31,7 +31,9 @@ public class Notifier<T extends IChronological> implements IObjectBroadcastListe
         this.observers = new ArrayList<>();
         this.broadcaster = new ChronologicalBroadcaster<>(content);
         this.broadcaster.addListener(this);
+        this.isMuted = false;
     }
+
 
     /**
      * Updates the broadcaster's interval to the given minutes.
@@ -116,6 +118,7 @@ public class Notifier<T extends IChronological> implements IObjectBroadcastListe
     @Override
     public void onBroadcast(T object) {
         active.add(object);
+        notifyObservers();
     }
 
     @Override
@@ -144,7 +147,7 @@ public class Notifier<T extends IChronological> implements IObjectBroadcastListe
     @Override
     public void notifyObservers() {
         for(IObserver observer : observers) {
-            observer.onEvent();
+                observer.onEvent();
         }
     }
 }
