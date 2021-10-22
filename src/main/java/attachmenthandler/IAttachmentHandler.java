@@ -1,4 +1,4 @@
-package attachmentHandler;
+package attachmenthandler;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;

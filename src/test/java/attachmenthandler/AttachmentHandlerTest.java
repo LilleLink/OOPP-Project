@@ -1,9 +1,7 @@
-package attachmentHandler;
+package attachmenthandler;
 
 import org.junit.After;
 import org.junit.Test;
-import static org.junit.Assert.*;
-
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
@@ -12,23 +10,22 @@ import java.nio.file.Paths;
 import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 public class AttachmentHandlerTest {
     private static final IAttachmentHandler fileHandler = AttachmentHandlerFactory.getService();
 
     private static final UUID id = UUID.randomUUID();
     private static final UUID id2 = UUID.randomUUID();
-    private static final Path testFileDirectory = Paths.get("src/test/java/attachmentHandler/testFiles/");
-
-    //TODO javadoc for tests, maybe write some more rigorous tests
+    private static final Path testFileDirectory = Paths.get("src/test/java/attachmenthandler/testFiles/");
 
     @After
-    public void removeTestIdDirectory(){
+    public void removeTestIdDirectory() {
         try {
             fileHandler.removeAllFiles(id);
             fileHandler.removeAllFiles(id2);
-        } catch (NoSuchFileException ignored) {}
-        catch (IOException e) {
+        } catch (NoSuchFileException ignored) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -55,7 +52,7 @@ public class AttachmentHandlerTest {
         fileHandler.addAttachment(id, testFileDirectory.resolve("test1.txt"), "textfiles");
         fileHandler.addAttachment(id, testFileDirectory.resolve("test2.txt"), "textfiles");
         fileHandler.addAttachment(id, testFileDirectory.resolve("testImage.png"), "images");
-        fileHandler.removeAttachmentCategory(id,"textfiles");
+        fileHandler.removeAttachmentCategory(id, "textfiles");
         assertEquals(1, fileHandler.getAttachments(id).size());
     }
 
@@ -85,7 +82,7 @@ public class AttachmentHandlerTest {
     }
 
     @Test
-    public void getEmptyMainImageTest(){
+    public void getEmptyMainImageTest() {
         assertThrows(NoSuchFileException.class, () -> fileHandler.getMainImage(id));
     }
 
