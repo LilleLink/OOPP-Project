@@ -4,16 +4,17 @@ import model.exceptions.NameNotAllowedException;
 import model.exceptions.NameNotAvailableException;
 import model.exceptions.TagNotFoundException;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.*;
 
 public class TagHandler implements ICacheVisitable {
 
-    private HashMap<String, Tag> stringTagHashMap = new HashMap<>();
+    private final Map<String, Tag> stringTagHashMap;
 
+    /**
+     * Creates a new TagHandler
+     */
     public TagHandler() {
+        stringTagHashMap = new HashMap<>();
     }
 
     /**
@@ -56,20 +57,21 @@ public class TagHandler implements ICacheVisitable {
      * @return the tag with the wanted name
      * @throws TagNotFoundException if no tag with the name {@code name} exists
      */
-    ITag getTag(String name) throws TagNotFoundException {
+    public ITag getTag(String name) throws TagNotFoundException {
         ITag tag = stringTagHashMap.get(name);
-        if (tag == null) throw new TagNotFoundException(name);
+        if (tag == null) {
+            throw new TagNotFoundException(name);
+        }
         return tag;
     }
 
     /**
      * Get all tags created by the handler
      *
-     * @return an ArrayList of ITags
+     * @return a List of ITags
      */
-    public ArrayList<ITag> getAllTags() {
-        ArrayList<ITag> tags = new ArrayList<>();
-        stringTagHashMap.forEach((k, v) -> tags.add(v));
+    public List<ITag> getAllTags() {
+        List<ITag> tags = new ArrayList<>(stringTagHashMap.values());
         tags.sort(Comparator.comparing(ITag::getName));
         return tags;
     }
@@ -89,11 +91,14 @@ public class TagHandler implements ICacheVisitable {
      *
      * @param newName the new name
      */
-    void rename(ITag iTag, String newName) throws NameNotAvailableException {
-        if (stringTagHashMap.get(newName) != null)
+    void rename(ITag iTag, String newName) throws NameNotAvailableException, TagNotFoundException {
+        if (stringTagHashMap.get(newName) != null) {
             throw new NameNotAvailableException(newName);
+        }
         Tag tag = stringTagHashMap.get(iTag.getName());
-        if (tag == null) throw new RuntimeException(iTag.getName());
+        if (tag == null) {
+            throw new TagNotFoundException(iTag.getName());
+        }
         stringTagHashMap.remove(tag.getName());
         tag.setName(newName);
         stringTagHashMap.put(newName, tag);
@@ -107,9 +112,11 @@ public class TagHandler implements ICacheVisitable {
      * @param color The new color as HEX-code
      * @return If the change succeeded
      */
-    boolean setColor(ITag iTag, String color) {
+    boolean setColor(ITag iTag, String color) throws TagNotFoundException {
         Tag tag = stringTagHashMap.get(iTag.getName());
-        if (tag == null) throw new RuntimeException(iTag.getName());
+        if (tag == null) {
+            throw new TagNotFoundException(iTag.getName());
+        }
         if (isValidColor(color)) {
             tag.setColor(color);
             return true;
@@ -145,7 +152,7 @@ public class TagHandler implements ICacheVisitable {
     }
 
     public static class TagHandlerCache {
-        public HashMap<String, Tag> stringTagHashMap;
+        public Map<String, Tag> stringTagHashMap;
     }
 
     private TagHandlerCache getCache() {

@@ -1,5 +1,6 @@
 package controller.javafx;
 
+import controller.javafx.components.EventNotificationsPage;
 import controller.javafx.components.PageFactory;
 import controller.javafx.components.ViewComponent;
 import javafx.fxml.FXML;
@@ -19,11 +20,11 @@ public class RootWindow implements IPageNavigator, Initializable {
     @FXML
     private AnchorPane pageAnchorPane;
 
-    private ViewComponent mainPage;
-    private ViewComponent secondaryPage;
+    private ViewComponent statisticsPage;
     private ViewComponent testTopBar;
     private ViewComponent contactPage;
     private ViewComponent calendarPage;
+    private ViewComponent notificationsPage;
 
     /***
      * The controller class for the root-window of the javafx view.
@@ -42,27 +43,21 @@ public class RootWindow implements IPageNavigator, Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initiatePages();
         topBarAnchorPane.getChildren().add(testTopBar.getPane());
-        openMainPage();
+        openContactPage();
     }
 
     private void initiatePages() {
-        testTopBar = PageFactory.CreateTestTopBar(this);
-        mainPage = PageFactory.CreateMainPage();
-        secondaryPage = PageFactory.CreateSecondaryPage();
-        calendarPage = PageFactory.CreateCalendarPage(user.getEvents(), user.getContacts(), user.getTagHandler());
-        contactPage = PageFactory.CreateContactPage(user.getContacts(), user.getTagHandler(), user.getEvents());
+        testTopBar = PageFactory.createTopBar(this);
+        statisticsPage = PageFactory.createStatisticsPage(user.getEvents(), user.getTagHandler());
+        calendarPage = PageFactory.createCalendarPage(user.getEvents(), user.getContacts(), user.getTagHandler());
+        contactPage = PageFactory.createContactPage(user.getContacts(), user.getTagHandler(), user.getEvents());
+        notificationsPage = PageFactory.createNotificationsPage(user.getEvents());
     }
 
     @Override
-    public void openMainPage() {
+    public void openStatisticsPage() {
         clearRootPage();
-        pageAnchorPane.getChildren().add(mainPage.getPane());
-    }
-
-    @Override
-    public void openSecondaryPage() {
-        clearRootPage();
-        pageAnchorPane.getChildren().add(secondaryPage.getPane());
+        pageAnchorPane.getChildren().add(statisticsPage.getPane());
     }
 
     @Override
@@ -75,6 +70,12 @@ public class RootWindow implements IPageNavigator, Initializable {
     public void openCalendarPage() {
         clearRootPage();
         pageAnchorPane.getChildren().add(calendarPage.getPane());
+    }
+
+    @Override
+    public void openNotificationPage() {
+        clearRootPage();
+        pageAnchorPane.getChildren().add(notificationsPage.getPane());
     }
 
     @Override

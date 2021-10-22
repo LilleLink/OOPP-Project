@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -37,8 +36,8 @@ class CreateTagDialog extends ViewComponent {
         this.tagHandler = tagHandler;
         errorMessageText.setVisible(false);
         errorMessageText.setFill(Color.RED);
-        addTagButton.setOnAction(ActionEvent -> btnAddTagClicked());
-        cancelButton.setOnAction(ActionEvent -> closeStage());
+        addTagButton.setOnAction(actionEvent -> addTag());
+        cancelButton.setOnAction(actionEvent -> closeStage());
         tagName.textProperty().addListener(this::textFieldChanged);
         displayAndWait();
     }
@@ -48,7 +47,7 @@ class CreateTagDialog extends ViewComponent {
     }
 
     @FXML
-    private void btnAddTagClicked() {
+    private void addTag() {
         try {
             tagHandler.createTag(tagName.getText(), Integer.toHexString(colorPicker.getValue().hashCode()));
             closeStage();
@@ -62,16 +61,25 @@ class CreateTagDialog extends ViewComponent {
         stage.close();
     }
 
+    private void keyPressed(KeyEvent key) {
+        switch (key.getCode()) {
+            case ESCAPE:
+                closeStage();
+                break;
+            case ENTER:
+                addTag();
+                break;
+            default:
+                break;
+        }
+    }
+
     private void displayAndWait() {
         stage.initModality(Modality.APPLICATION_MODAL);
 
         Scene scene = new Scene(this.getPane(), 300, 150);
 
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-                btnAddTagClicked();
-            }
-        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, this::keyPressed);
 
         stage.setTitle("Create new Tag");
         stage.setScene(scene);

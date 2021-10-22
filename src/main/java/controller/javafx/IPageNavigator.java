@@ -5,14 +5,9 @@ package controller.javafx;
  */
 public interface IPageNavigator {
     /***
-     * Opens the MainPage
+     * Opens the StatisticsPage
      */
-    void openMainPage();
-
-    /***
-     * Opens the SecondaryPage
-     */
-    void openSecondaryPage();
+    void openStatisticsPage();
 
     /**
      * Opens the ContactPage
@@ -23,6 +18,11 @@ public interface IPageNavigator {
      * Opens the CalendarPage
      */
     void openCalendarPage();
+
+    /**
+     * Opens the notifications page.
+     */
+    void openNotificationPage();
 
     /***
      * Clears the root-element so that a new page can be loaded.

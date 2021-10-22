@@ -1,6 +1,6 @@
 package controller.javafx.components;
 
-import attachmentHandler.AttachmentHandlerFactory;
+import attachmenthandler.AttachmentHandlerFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -29,7 +29,7 @@ class SmallContactCard extends ViewComponent {
         try {
             avatarImageView.setImage(new Image(AttachmentHandlerFactory.getService().getMainImage(contact.getDirectoryId()).toUri().toString()));
         } catch (NoSuchFileException e) {
-            avatarImageView.setImage(new Image("Images/defaultIcon.png"));
+            avatarImageView.setImage(new Image("images/defaultContactIcon.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

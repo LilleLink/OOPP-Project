@@ -23,6 +23,7 @@ class CalendarEventCard extends ViewComponent implements IObserver {
 
     CalendarEventCard(Event event) {
         this.event = event;
+        event.subscribe(this);
         setLabels();
         setBorder();
     }

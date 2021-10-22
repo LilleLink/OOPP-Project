@@ -1,7 +1,7 @@
 package controller.javafx.components;
 
-import attachmentHandler.AttachmentHandlerFactory;
-import attachmentHandler.IAttachmentHandler;
+import attachmenthandler.AttachmentHandlerFactory;
+import attachmenthandler.IAttachmentHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import model.Contact;
 import model.IObserver;
 import model.ITag;
+import model.exceptions.TagNotFoundException;
 
 import java.io.IOException;
 import java.nio.file.NoSuchFileException;
@@ -40,8 +41,20 @@ class ContactCard extends ViewComponent implements IObserver {
     public void onEvent() {
         nameLabel.setText(contact.getName());
         updateImage();
-        for (ITag tag : contact.getTags()) {
-            tagHBox.getChildren().add(new TagCard(tag).getPane());
+        tagHBox.getChildren().clear();
+        contact.getTags().forEach(tag -> {
+            TagCard card = new TagCard(tag);
+            card.setOnDelete(actionEvent -> deleteTag(tag));
+            tagHBox.getChildren().add(card.getPane());
+        });
+    }
+
+    private void deleteTag(ITag tag) {
+        try {
+            contact.removeTag(tag);
+            onEvent();
+        } catch (TagNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -50,7 +63,7 @@ class ContactCard extends ViewComponent implements IObserver {
         try {
             contactImage.setImage(new Image(attachmentHandler.getMainImage(contact.getDirectoryId()).toUri().toString()));
         } catch (NoSuchFileException e) {
-            contactImage.setImage(new Image("Images/defaultIcon.png"));
+            contactImage.setImage(new Image("images/defaultContactIcon.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

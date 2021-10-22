@@ -3,8 +3,11 @@ package database.json;
 import com.google.gson.Gson;
 import database.IDatabaseLoader;
 import model.*;
+import model.notes.Note;
+import model.notes.NoteBook;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -19,7 +22,8 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
      */
     @Override
     public User load(Path databaseFile) throws IOException {
-        JSONRecords.PRMRecord record = new Gson().fromJson(String.join("\n", Files.readAllLines(databaseFile)), JSONRecords.PRMRecord.class);
+        List<String> lines = Files.readAllLines(databaseFile, StandardCharsets.ISO_8859_1);
+        JSONRecords.UserRecord record = new Gson().fromJson(String.join("\n", lines), JSONRecords.UserRecord.class);
         RecordVisitorState env = new RecordVisitorState();
         return (User) record.accept(new RecordVisitor(), env).orElseThrow(IllegalStateException::new);
     }
@@ -27,7 +31,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
     // The environment of the record visitor.
     static private class RecordVisitorState {
         List<Contact> contacts = new ArrayList<>();
-        HashMap<String, Tag> tags = new HashMap<>();
+        Map<String, Tag> tags = new HashMap<>();
     }
 
     // The record visitor visists all the JSON records and returns the reinstated prm model.
@@ -36,9 +40,11 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
         public Optional<ICacheVisitable> visit(JSONRecords.UserRecord user, RecordVisitorState env) {
             User.UserCache cache = new User.UserCache();
             cache.tagHandler = (TagHandler) user.tags.accept(this, env).orElseThrow(IllegalStateException::new);
+            user.contactObjects.forEach(c -> env.contacts.add((Contact) c.accept(this, env).orElseThrow(IllegalStateException::new)));
             cache.name = user.name;
             cache.contacts = user.contacts.stream().map(i -> env.contacts.get(i)).collect(Collectors.toList());
             cache.events = user.events.stream().map(e -> (Event) e.accept(this, env).orElseThrow(IllegalStateException::new)).collect(Collectors.toList());
+            cache.uuid = UUID.fromString(user.uuid);
             return Optional.of(new User(cache));
         }
 
@@ -49,7 +55,10 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             cache.phoneNumber = contact.phoneNumber;
             cache.address = contact.address;
             cache.tags = new ArrayList<>();
-            cache.notes = (Notes) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
+            cache.noteBook = (NoteBook) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
+            env.tags.forEach((t, v) -> System.out.println(t + "->" + v.getName()));
+            cache.tags = contact.tags.stream().map(t -> env.tags.get(t)).collect(Collectors.toList());
+            cache.noteBook = (NoteBook) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
             cache.directoryId = UUID.fromString(contact.directoryId);
             return Optional.of(new Contact(cache));
         }
@@ -68,12 +77,6 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
         }
 
         @Override
-        public Optional<ICacheVisitable> visit(JSONRecords.PRMRecord prm, RecordVisitorState env) {
-            prm.contacts.forEach(c -> env.contacts.add((Contact) this.visit(c, env).orElseThrow(IllegalStateException::new)));
-            return prm.user.accept(this, env);
-        }
-
-        @Override
         public Optional<ICacheVisitable> visit(JSONRecords.NoteRecord note, RecordVisitorState env) {
             Note.NoteCache cache = new Note.NoteCache();
             cache.pointOfCreation = LocalDateTime.parse(note.pointOfCreation);
@@ -83,9 +86,9 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
 
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.NotesRecord notes, RecordVisitorState env) {
-            Notes.NotesCache cache = new Notes.NotesCache();
+            NoteBook.NotesCache cache = new NoteBook.NotesCache();
             cache.elements = notes.elements.stream().map(n -> (Note) n.accept(this, env).orElseThrow(IllegalStateException::new)).collect(Collectors.toList());
-            return Optional.of(new Notes(cache));
+            return Optional.of(new NoteBook(cache));
         }
 
         @Override

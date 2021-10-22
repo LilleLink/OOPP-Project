@@ -62,7 +62,7 @@ public class SearchBar<T extends ISearchable<String>> extends ViewComponent impl
      */
     @FXML
     void search(Event event) {
-        if (textField.getText().equals("")) {
+        if ("".equals(textField.getText())) {
             results = searchEngine.getSearchBase();
         } else {
             results = searchEngine.search(textField.getText(), tolerance);

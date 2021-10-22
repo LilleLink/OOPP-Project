@@ -15,9 +15,10 @@ public class ContactList implements IObservable {
     private List<IObserver> observers = new ArrayList<>();
 
     /***
-     * Creates a new contactlist wrapper object
+     * Creates a new contact list wrapper object.
      */
     ContactList() {
+        // Constructor here to explicitly declare that it is package-private
     }
 
     /***
@@ -33,7 +34,9 @@ public class ContactList implements IObservable {
      * @param name the name of the contact
      */
     public void addContact(String name) throws NameNotAllowedException {
-        if (name.length() == 0) throw new NameNotAllowedException("Contacts must have a name");
+        if (name.isEmpty()) {
+            throw new NameNotAllowedException("Contacts must have a name");
+        }
         contactList.add(new Contact(name));
         notifyObservers();
     }
@@ -48,10 +51,14 @@ public class ContactList implements IObservable {
     }
 
     public void addContact(Contact.ContactCache cache) throws NameNotAllowedException {
-        if (cache.name.length() < 1) throw new NameNotAllowedException("Contacts must have a name");
-        if (cache.notes == null) cache.notes = new Notes();
-        if (cache.directoryId == null) cache.directoryId = UUID.randomUUID();
+        if (cache.name.isEmpty()) {
+            throw new NameNotAllowedException("Contacts must have a name");
+        }
+        if (cache.directoryId == null) {
+            cache.directoryId = UUID.randomUUID();
+        }
         contactList.add(new Contact(cache));
+        notifyObservers();
     }
 
     /***
@@ -68,7 +75,7 @@ public class ContactList implements IObservable {
      * @return the contact list
      */
     public List<Contact> getList() {
-        return this.contactList;
+        return new ArrayList<>(this.contactList);
     }
 
     @Override
@@ -88,4 +95,10 @@ public class ContactList implements IObservable {
         }
     }
 
+    @Override
+    public String toString() {
+        return "ContactList{" +
+                "contactList=" + contactList +
+                '}';
+    }
 }

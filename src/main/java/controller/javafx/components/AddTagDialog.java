@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
@@ -36,7 +35,7 @@ public class AddTagDialog extends ViewComponent {
 
     private final TagHandler tagHandler;
 
-    private final ArrayList<ITag> selectedTags = new ArrayList<>();
+    private final List<ITag> selectedTags = new ArrayList<>();
 
     AddTagDialog(Contact contact, TagHandler tagHandler) {
         super();
@@ -69,6 +68,7 @@ public class AddTagDialog extends ViewComponent {
             if (selectedTags.contains(tag)) {
                 checkBox.setSelected(true);
             }
+            checkBox.setStyle("-fx-background-color: " + tag.getColor() + ";");
             tagContainer.getChildren().add(checkBox);
         }
     }
@@ -82,6 +82,19 @@ public class AddTagDialog extends ViewComponent {
         stage.close();
     }
 
+    private void keyPressed(KeyEvent key) {
+        switch (key.getCode()) {
+            case ESCAPE:
+                close();
+                break;
+            case ENTER:
+                save();
+                break;
+            default:
+                break;
+        }
+    }
+
     private void displayAndWait() {
         stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -89,11 +102,7 @@ public class AddTagDialog extends ViewComponent {
 
         stage.setTitle("Add tag to contact");
         stage.setScene(scene);
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, keyEvent -> {
-            if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-                save();
-            }
-        });
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, this::keyPressed);
         stage.showAndWait();
     }
 

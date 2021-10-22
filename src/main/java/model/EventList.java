@@ -7,6 +7,7 @@ import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class EventList implements IObservable {
 
@@ -17,6 +18,7 @@ public class EventList implements IObservable {
      * Creates a new eventlist wrapper object
      */
     EventList() {
+        //Constructor here to explicitly declare that it is package private.
     }
 
     /***
@@ -28,12 +30,13 @@ public class EventList implements IObservable {
     }
 
     /***
-     * Adds an event to the eventList.
-     * @param name the name of the event
+     * Adds an event to the eventList and returns it to the client.
      */
-    public void addEvent(String name, LocalDateTime dateTime) {
-        eventList.add(new Event(name, dateTime));
+    public Event addEvent() {
+        Event event = new Event();
+        eventList.add(event);
         notifyObservers();
+        return event;
     }
 
     /***
@@ -79,15 +82,34 @@ public class EventList implements IObservable {
         List<Event> res = new ArrayList<>();
 
         for (Event event : eventList) {
-            if (event.getContacts().contains(contact))
+            if (event.getContacts().contains(contact)) {
                 res.add(event);
+            }
         }
 
         return res;
     }
 
     /***
-     * Adds a event to the eventList
+     * Gets the number of event tagged with the given tag.
+     * @param tag the tag to look for
+     * @return the number of events tagged with the given tag, 0 if none are found.
+     */
+    public List<Event> getEventsOfTag(ITag tag) {
+        List<Event> res = new ArrayList<>();
+        for (Event e : eventList) {
+            if (!Objects.isNull(e.getTag())) {
+                if (e.getTag().equals(tag)) {
+                    res.add(e);
+                }
+            }
+        }
+
+        return res;
+    }
+
+    /***
+     * Adds an event to the eventList
      * @param event the event object
      */
     public void addEvent(Event event) {
@@ -105,11 +127,11 @@ public class EventList implements IObservable {
     }
 
     /***
-     * Returns the eventList
-     * @return the event list
+     * Returns a copy of the eventlist
+     * @return the copy of the eventlist.
      */
     public List<Event> getList() {
-        return this.eventList;
+        return new ArrayList<>(this.eventList);
     }
 
     @Override

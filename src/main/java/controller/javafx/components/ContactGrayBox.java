@@ -1,7 +1,8 @@
 package controller.javafx.components;
 
-import attachmentHandler.AttachmentHandlerFactory;
-import attachmentHandler.IAttachmentHandler;
+import application.HostServicesProvider;
+import attachmenthandler.AttachmentHandlerFactory;
+import attachmenthandler.IAttachmentHandler;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -18,17 +19,14 @@ import javafx.stage.FileChooser;
 import model.*;
 import model.exceptions.TagNotFoundException;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 
 class ContactGrayBox extends ViewComponent implements IObserver {
 
-    private final TagHandler tagHandler;
     private Contact contact;
 
     @FXML
@@ -76,10 +74,6 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     @FXML
     private AnchorPane eventsAnchorPane;
 
-    private NotesComponent notesComponent;
-
-    private EventOverview eventOverview;
-
     private EventHandler<Event> closeWindowHandler;
 
     private EventHandler<Event> deleteContactHandler;
@@ -90,14 +84,13 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     ContactGrayBox(TagHandler tagHandler, EventList eventList) {
         super();
-        this.tagHandler = tagHandler;
         this.eventList = eventList;
         baseAnchorPane.setOnMouseClicked(this::close);
         closeButton.setOnAction(this::close);
         deleteButton.setOnAction(this::delete);
         doneButton.setOnAction(this::close);
         contactName.textProperty().addListener((observableValue, s, t1) -> contact.setName(t1));
-        addressText.textProperty().addListener(((observableValue, s, t1) -> contact.setAddress(t1)));
+        addressText.textProperty().addListener((observableValue, s, t1) -> contact.setAddress(t1));
         openMapButton.setOnAction(this::openMap);
         cardAnchorPane.setOnMouseClicked(MouseEvent::consume);
         addAttachmentButton.setOnAction(this::addAttachment);
@@ -109,16 +102,14 @@ class ContactGrayBox extends ViewComponent implements IObserver {
 
     void setContact(Contact contact) {
         this.contact = contact;
+        NotesComponent notesComponent = new NotesComponent(contact);
         contactName.setText(contact.getName());
         addressText.setText(contact.getAddress());
-        this.notesComponent = new NotesComponent(contact.getNotes());
-        this.eventOverview = new EventOverview(eventList.getContactsEvents(contact));
+        EventOverview eventOverview = new EventOverview(eventList.getContactsEvents(contact));
         eventsAnchorPane.getChildren().add(eventOverview.getPane());
         notesAnchorPane.getChildren().add(notesComponent.getPane());
         contactImage.setOnMouseClicked(this::setNewContactImage);
-        updateContactImage();
-        drawAttachments();
-        updateTagBox();
+        onEvent();
     }
 
     Contact getContact() {
@@ -170,19 +161,9 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         close(event);
     }
 
-    private boolean openMap(ActionEvent event) {
-        //TODO use return value of openMap to display fail/success
-        Desktop desktop = Desktop.getDesktop();
-        if (desktop.isSupported(Desktop.Action.BROWSE)) {
-            try {
-                desktop.browse(new URI("https://maps.google.com/maps?q=" +
-                        addressText.getText().replace(' ', '+')));
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
+    private void openMap(ActionEvent event) {
+        HostServicesProvider.getHostServices().showDocument("https://maps.google.com/maps?q=" +
+                addressText.getText().replace(' ', '+'));
     }
 
     private void setNewContactImage(MouseEvent event) {
@@ -237,15 +218,11 @@ class ContactGrayBox extends ViewComponent implements IObserver {
         }
     }
 
-    private boolean isValidName(String name) {
-        return name.length() >= 1;
-    }
-
     private void updateContactImage() {
         try {
             contactImage.setImage(new Image(attachmentHandler.getMainImage(contact.getDirectoryId()).toUri().toString()));
         } catch (NoSuchFileException e) {
-            contactImage.setImage(new Image("Images/defaultIcon.png"));
+            contactImage.setImage(new Image("images/defaultContactIcon.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -255,5 +232,6 @@ class ContactGrayBox extends ViewComponent implements IObserver {
     public void onEvent() {
         updateContactImage();
         drawAttachments();
+        updateTagBox();
     }
 }

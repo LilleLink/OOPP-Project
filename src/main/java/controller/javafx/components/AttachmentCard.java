@@ -1,7 +1,6 @@
 package controller.javafx.components;
 
-import attachmentHandler.AttachmentHandlerFactory;
-import attachmentHandler.IAttachmentHandler;
+import application.HostServicesProvider;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,8 +9,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 
-import java.awt.*;
-import java.io.IOException;
 import java.nio.file.Path;
 
 class AttachmentCard extends ViewComponent {
@@ -22,7 +19,6 @@ class AttachmentCard extends ViewComponent {
     @FXML
     private Button removeButton;
     private final Path attachment;
-    private final IAttachmentHandler attachmentHandler = AttachmentHandlerFactory.getService();
     private EventHandler<Event> deleteHandler;
 
     AttachmentCard(Path attachment) {
@@ -33,11 +29,7 @@ class AttachmentCard extends ViewComponent {
     }
 
     private void openAttachment(MouseEvent event) {
-        try {
-            Desktop.getDesktop().open(attachment.toFile());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        HostServicesProvider.getHostServices().showDocument(attachment.toString());
     }
 
     private void deleteAttachment(Event event) {

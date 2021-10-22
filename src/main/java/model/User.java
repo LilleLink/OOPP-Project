@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 /***
  * The user object holding user specific data.
@@ -12,6 +13,7 @@ public class User implements ICacheVisitable {
     private EventList eventList = new EventList();
     private ContactList contactList = new ContactList();
     private TagHandler tagHandler = new TagHandler();
+    private UUID uuid = UUID.randomUUID();
 
     /***
      * Instantiates a user object with the specified name.
@@ -46,20 +48,6 @@ public class User implements ICacheVisitable {
     }
 
     /***
-     * Returns a list of events that the given contact is tagged in
-     * @param contact the subject contact
-     * @return an arraylist of the events the contact is a part of
-     */
-    public List<Event> getContactEvents(Contact contact) {
-        List<Event> contactEvents = new ArrayList<>();
-        for (Event e : eventList.getList()) {
-            if (e.getContacts().contains(contact))
-                contactEvents.add(e);
-        }
-        return contactEvents;
-    }
-
-    /***
      * Returns the wrapper object for the contact list
      * @return ContactList wrapper object
      */
@@ -76,6 +64,10 @@ public class User implements ICacheVisitable {
         return tagHandler;
     }
 
+    public UUID getId() {
+        return uuid;
+    }
+
     /***
      * The user cache class contains fields which should be saved/loaded to persistent storage.
      */
@@ -84,9 +76,7 @@ public class User implements ICacheVisitable {
         public List<Event> events;
         public List<Contact> contacts;
         public TagHandler tagHandler;
-
-        public UserCache() {
-        }
+        public UUID uuid;
     }
 
     private UserCache getCache() {
@@ -95,6 +85,7 @@ public class User implements ICacheVisitable {
         cache.events = new ArrayList<>(this.eventList.getList());
         cache.contacts = new ArrayList<>(this.contactList.getList());
         cache.tagHandler = this.tagHandler;
+        cache.uuid = this.uuid;
         return cache;
     }
 
@@ -103,6 +94,7 @@ public class User implements ICacheVisitable {
         this.contactList = new ContactList(cache.contacts);
         this.tagHandler = cache.tagHandler;
         this.name = cache.name;
+        this.uuid = cache.uuid;
     }
 
     /***

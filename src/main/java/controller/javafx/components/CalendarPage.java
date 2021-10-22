@@ -14,9 +14,7 @@ import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
 import java.time.temporal.TemporalField;
 import java.time.temporal.WeekFields;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 class CalendarPage extends ViewComponent implements IObserver {
 
@@ -66,9 +64,9 @@ class CalendarPage extends ViewComponent implements IObserver {
     private AnchorPane calendarPageAnchorPane;
 
     private LocalDate weekToDisplay;
+    private Map<Integer, List<Event>> weekEvents = new HashMap<>();
 
-    private EventCreationCard eventCreationCard;
-    private EditEventCard editEventCard;
+    private EventCard eventCard;
     private List<CalendarEventCard> calendarEventCards = new ArrayList<>();
 
     private EventList eventList;
@@ -80,8 +78,6 @@ class CalendarPage extends ViewComponent implements IObserver {
         this.tagHandler = tagHandler;
         eventList.subscribe(this);
 
-        eventCreationCard = new EventCreationCard(eventList, contactList, tagHandler);
-        calendarPageStackPane.getChildren().add(eventCreationCard.getPane());
         calendarPageAnchorPane.toFront();
 
         newEventButton.setOnAction(this::newEvent);
@@ -90,6 +86,11 @@ class CalendarPage extends ViewComponent implements IObserver {
 
         weekToDisplay = LocalDate.now();
         setLabels(weekToDisplay);
+
+        for (int i = 1; i <= 7; i++) {
+            weekEvents.put(i, new ArrayList<>());
+        }
+
         onEvent();
     }
 
@@ -128,8 +129,21 @@ class CalendarPage extends ViewComponent implements IObserver {
     }
 
     private void newEvent(ActionEvent actionEvent) {
-        eventCreationCard.clearFields();
-        eventCreationCard.getPane().toFront();
+        Event newEvent = eventList.addEvent();
+        eventCard = new EventCard(tagHandler, contactList, newEvent);
+        initEventCard(newEvent);
+    }
+
+    private void editEvent(Event event) {
+        eventCard = new EventCard(tagHandler, contactList, event);
+        initEventCard(event);
+    }
+
+    private void initEventCard(Event event) {
+        eventCard.setOnDelete(actionEvent -> eventList.removeEvent(event));
+        eventCard.setOnClose(this::closeEventPane);
+        calendarPageStackPane.getChildren().add(eventCard.getPane());
+        eventCard.getPane().toFront();
     }
 
     @Override
@@ -139,20 +153,23 @@ class CalendarPage extends ViewComponent implements IObserver {
         List<Event> eventsThisWeek = eventList.getEventsOfWeek(weekToDisplay);
 
         for (Event event : eventsThisWeek) {
-            CalendarEventCard calendarEventCard = new CalendarEventCard(event);
-            calendarEventCard.getPane().setOnMouseClicked(mouseEvent -> editEvent(event));
-            calendarEventCards.add(calendarEventCard);
-            event.subscribe(calendarEventCard);
-            determineFlowPane(event, calendarEventCard);
+            weekEvents.get(event.getDateTime().getDayOfWeek().getValue()).add(event);
         }
 
+        for (Map.Entry<Integer, List<Event>> entry : weekEvents.entrySet()) {
+            entry.getValue().sort(Comparator.comparing(Event::getDateTime));
+            for (Event event : entry.getValue()) {
+                CalendarEventCard calendarEventCard = new CalendarEventCard(event);
+                calendarEventCard.getPane().setOnMouseClicked(mouseEvent -> editEvent(event));
+                calendarEventCards.add(calendarEventCard);
+                determineFlowPane(event, calendarEventCard);
+            }
+        }
     }
 
-    private void editEvent(Event event) {
-        editEventCard = new EditEventCard(event, contactList, tagHandler);
-        editEventCard.setOnDelete(actionEvent -> eventList.removeEvent(event));
-        calendarPageStackPane.getChildren().add(editEventCard.getPane());
-        editEventCard.getPane().toFront();
+    private void closeEventPane(javafx.event.Event event) {
+        calendarPageStackPane.getChildren().remove(eventCard.getPane());
+        eventList.notifyObservers();
     }
 
     private void clearCalendar() {
@@ -160,6 +177,17 @@ class CalendarPage extends ViewComponent implements IObserver {
             calendarEventCard.unsubscribe();
         }
 
+        clearFlowPanes();
+        clearDays();
+    }
+
+    private void clearDays() {
+        for (Map.Entry<Integer, List<Event>> entry : weekEvents.entrySet()) {
+            entry.getValue().clear();
+        }
+    }
+
+    private void clearFlowPanes() {
         mondayFlowPane.getChildren().clear();
         tuesdayFlowPane.getChildren().clear();
         wednesdayFlowPane.getChildren().clear();

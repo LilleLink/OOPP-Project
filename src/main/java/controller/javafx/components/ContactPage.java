@@ -2,6 +2,8 @@ package controller.javafx.components;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
@@ -13,6 +15,7 @@ import java.util.List;
 
 
 class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
+    private final TagHandler tagHandler;
     @FXML
     private AnchorPane baseAnchorPane;
     @FXML
@@ -23,14 +26,13 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
     private AnchorPane searchBarAnchorPane;
     private final ContactGrayBox contactGrayBox;
     private final SearchBar<Contact> searchBar;
-    private final int searchTolerance;
-
     private final ContactList contacts;
     private final List<ContactCard> contactCards = new ArrayList<>();
 
     ContactPage(ContactList contacts, TagHandler tagHandler, EventList eventList) {
         super();
         this.contacts = contacts;
+        this.tagHandler = tagHandler;
         contacts.subscribe(this);
         this.newContactButton.setOnMouseClicked(this::newContact);
         contactGrayBox = new ContactGrayBox(tagHandler, eventList);
@@ -38,11 +40,12 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
         AnchorPane contactGrayBoxPane = contactGrayBox.getPane();
         baseAnchorPane.getChildren().add(contactGrayBoxPane);
         contactGrayBoxPane.setVisible(false);
-        searchTolerance = 4;
+        int searchTolerance = 4;
         searchBar = new SearchBar<>(contacts.getList(), searchTolerance);
         searchBar.subscribe(this);
         searchBarAnchorPane.getChildren().add(searchBar.getPane());
         searchBar.getPane().layout();
+        this.getPane().addEventFilter(KeyEvent.KEY_PRESSED, this::keyPressed);
         onEvent();
     }
 
@@ -60,10 +63,17 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
     public void closeGrayPane() {
         contactGrayBox.getPane().setVisible(false);
         contactGrayBox.getContact().unSubscribe(contactGrayBox);
+        onEvent();
+    }
+
+    private void keyPressed(KeyEvent key) {
+        if (key.getCode() == KeyCode.ESCAPE) {
+            closeGrayPane();
+        }
     }
 
     private void newContact(MouseEvent mouseEvent) {
-        new CreateContactDialog(contacts).displayAndWait();
+        new CreateContactDialog(contacts, tagHandler).displayAndWait();
         onEvent();
         searchBar.updateSearchBase(contacts.getList());
     }
@@ -87,14 +97,14 @@ class ContactPage extends ViewComponent implements IObserver, ISearchObserver {
      * @param contacts the contacts to be represented as cards
      */
     private void createCards(List<Contact> contacts) {
-        for (Contact contact : contacts) {
+        contacts.forEach(contact -> {
             ContactCard card = new ContactCard(contact);
             contact.subscribe(card);
             contactCards.add(card);
             AnchorPane pane = card.getPane();
             cardFlowPane.getChildren().add(pane);
             pane.setOnMouseClicked((MouseEvent event) -> openGrayPane(contact));
-        }
+        });
     }
 
     /**

@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.FlowPane;
 import model.Event;
 
-import java.util.ArrayList;
 import java.util.List;
 
 class EventOverview extends ViewComponent {
@@ -12,7 +11,7 @@ class EventOverview extends ViewComponent {
     @FXML
     private FlowPane eventsFlowPane;
 
-    private List<Event> eventList = new ArrayList<>();
+    private List<Event> eventList;
 
     EventOverview(List<Event> eventList) {
         this.eventList = eventList;
@@ -20,7 +19,8 @@ class EventOverview extends ViewComponent {
     }
 
     private void initialize() {
-        for (Event e : eventList)
+        for (Event e : eventList) {
             eventsFlowPane.getChildren().add(new CalendarEventCard(e).getPane());
+        }
     }
 }

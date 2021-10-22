@@ -1,9 +1,6 @@
 package database.json;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class JSONRecords {
 
@@ -61,7 +58,7 @@ public class JSONRecords {
     }
 
     static class TagHandlerRecord implements JSONRecords.IRecordVisitable {
-        HashMap<String, TagRecord> tags;
+        Map<String, TagRecord> tags;
 
         @Override
         public <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env) {
@@ -109,7 +106,7 @@ public class JSONRecords {
         String address = "";
         String dateTime;
         String description;
-        ArrayList<Integer> contacts = new ArrayList<>();
+        List<Integer> contacts = new ArrayList<>();
         String tag;
         String directoryId;
 
@@ -124,8 +121,10 @@ public class JSONRecords {
     static class UserRecord implements JSONRecords.IRecordVisitable {
         String name;
         List<Integer> contacts = new ArrayList<>();
+        List<ContactRecord> contactObjects = new ArrayList<>();
         List<EventRecord> events = new ArrayList<>();
         TagHandlerRecord tags;
+        String uuid;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
@@ -143,6 +142,10 @@ public class JSONRecords {
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
             return visitor.visit(this, env);
         }
+    }
+
+    static class TrackerRecord {
+        Map<UUID, String> users = new HashMap<>();
     }
 
 }

@@ -9,8 +9,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
-import model.Note;
-import model.Notes;
+import model.notes.IDocumentable;
+import model.notes.Note;
 
 import java.util.Objects;
 
@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 class NotesComponent extends ViewComponent {
 
-    private final Notes notes;
+    private final IDocumentable noteBook;
 
     @FXML
     private TextArea inputTextArea;
@@ -42,11 +42,11 @@ class NotesComponent extends ViewComponent {
     /**
      * Instantiates a component representing the given Notes object.
      *
-     * @param notes the notes to represent
+     * @param noteBook the notes to represent
      */
-    NotesComponent(Notes notes) {
+    NotesComponent(IDocumentable noteBook) {
         super();
-        this.notes = notes;
+        this.noteBook = noteBook;
         initializeNotes();
         addButton.setOnAction(this::addNote);
         removeButton.setOnAction(this::removeNote);
@@ -64,8 +64,8 @@ class NotesComponent extends ViewComponent {
      * to the VBox.
      */
     private void initializeNotes() {
-        for (Note note : notes.getSortedElem()) {
-            addToVBox(createCard(note));
+        for (int i = 0; i < noteBook.sizeOfNotes(); i++) {
+            addToVBox(createCard(noteBook.getNote(i)));
         }
     }
 
@@ -107,8 +107,9 @@ class NotesComponent extends ViewComponent {
      * @param mouseEvent the currently given mouse input.
      */
     private void updateSelected(MouseEvent mouseEvent) {
-        if (isValidSelected((Node) mouseEvent.getSource()))
+        if (isValidSelected((Node) mouseEvent.getSource())) {
             selected = (Node) mouseEvent.getSource();
+        }
     }
 
     /**
@@ -117,7 +118,7 @@ class NotesComponent extends ViewComponent {
      * @return true if the selected node is valid
      */
     private boolean isValidSelected(Node node) {
-        return (!Objects.isNull(node) && noteVBox.getChildren().contains(node));
+        return !Objects.isNull(node) && noteVBox.getChildren().contains(node);
     }
 
 
@@ -129,7 +130,7 @@ class NotesComponent extends ViewComponent {
      */
     private void removeNote(ActionEvent actionEvent) {
         int noteIndex = noteVBox.getChildren().indexOf(selected);
-        notes.removeNote(noteIndex);
+        noteBook.removeNote(noteIndex);
         noteVBox.getChildren().remove(selected);
         this.selected = null;
     }
@@ -141,8 +142,8 @@ class NotesComponent extends ViewComponent {
      * @param event the user input
      */
     private void addNote(Event event) {
-        notes.addNote(inputTextArea.getText());
-        addToVBox(createCard(notes.getLastAdded()));
+        noteBook.addNote(inputTextArea.getText());
+        addToVBox(createCard(noteBook.getLastAddedNote()));
     }
 
     /**
@@ -153,8 +154,8 @@ class NotesComponent extends ViewComponent {
      */
     private void editNote(ActionEvent actionEvent) {
         int noteIndex = noteVBox.getChildren().indexOf(selected);
-        notes.editNoteAt(noteIndex, inputTextArea.getText());
-        setVBoxElement(noteIndex, createCard(notes.getLastAdded()));
+        noteBook.editNote(noteIndex, inputTextArea.getText());
+        setVBoxElement(noteIndex, createCard(noteBook.getLastAddedNote()));
         selected = null;
     }
 

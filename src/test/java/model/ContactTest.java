@@ -1,7 +1,7 @@
 package model;
 
-import model.exceptions.NameNotAvailableException;
 import model.exceptions.TagNotFoundException;
+import model.notes.Note;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -65,11 +65,9 @@ public class ContactTest {
     @Test
     public void andAndRemoveNote() {
         c1.addNote("Pizza");
-        List<Note> notes = c1.getListOfNotes();
-        assert(notes.size() == 1);
+        assert(c1.sizeOfNotes() == 1);
         c1.removeNote(0);
-        List<Note> newNotes = c1.getListOfNotes();
-        assert(newNotes.size() == 0);
+        assert(c1.sizeOfNotes() == 0);
     }
 
     @Test
@@ -77,6 +75,6 @@ public class ContactTest {
         String text = "Pizza is good";
         c1.addNote();
         c1.editNote(0,text);
-        assert(c1.viewNoteAt(0).equals(text));
+        assert(c1.viewNote(0).equals(text));
     }
 }

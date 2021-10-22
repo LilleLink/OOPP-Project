@@ -2,25 +2,29 @@ package database;
 
 import database.json.JSONDatabaseLoader;
 import database.json.JSONDatabaseSaver;
+import database.json.JSONDatabaseTracker;
 
 import java.io.IOException;
 
 /***
  * The DatabaseFactory contains a static method for creating an abstract PRM database.
  */
-public class DatabaseFactory {
+public final class DatabaseFactory {
 
     static private Database database = null;
+
+    private DatabaseFactory() {
+    }
 
     /***
      * Create a new abstract PRM database.
      * @throws IOException If the factory failed to initialize the database disk storage.
      * @return The new PRM database.
      */
-    static public Database getService() {
+    static synchronized public Database getService() {
         if (database == null) {
             /// TODO Don't use a temporary file dummy!
-            database = new Database(new JSONDatabaseLoader(), new JSONDatabaseSaver());
+            database = new Database(new JSONDatabaseTracker(), new JSONDatabaseLoader(), new JSONDatabaseSaver());
         }
         return database;
     }

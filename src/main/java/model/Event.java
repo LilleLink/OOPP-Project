@@ -1,20 +1,20 @@
 package model;
 
+import model.notifications.IChronological;
 import model.search.ISearchable;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.time.chrono.ChronoLocalDateTime;
+import java.util.*;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
  */
-public class Event implements ICacheVisitable, ISearchable<String>, IObservable {
+public class Event implements ICacheVisitable, ISearchable<String>, IObservable, IChronological {
 
     private String name;
-    private String address = "";
+    private String address;
     private LocalDateTime dateTime;
     private String description;
 
@@ -54,6 +54,16 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
     }
 
     /***
+     * Creates an empty event with standard parameters.
+     */
+    Event() {
+        this.name = "Unnamed event";
+        this.dateTime = CalendarDateUtils.getCalendarizedDate();
+        this.address = "No address";
+        this.directoryId = UUID.randomUUID();
+    }
+
+    /***
      * Returns whether the event is in the future or past.
      * @return true if in the future, false if in the past.
      */
@@ -63,12 +73,9 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     /***
      * Returns the name of the event
-     * @return name of the event or "Unnamed event" if the event has no name.
+     * @return name of the event
      */
     public String getName() {
-        if (this.name.isEmpty()) {
-            return "Unnamed event";
-        }
         return name;
     }
 
@@ -83,12 +90,10 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     /***
      * Returns the address of the event
-     * @return address of the event or "No address" if the event has no address.
+     * @return address of the event
      */
     public String getAddress() {
-        if (this.address.isEmpty()) {
-            return "No address";
-        }
+
         return address;
     }
 
@@ -103,7 +108,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     /***
      * Returns the date/time object of the event
-     * @return the date/time object of the event
+     * @return the date/time object of the event.
      */
     public LocalDateTime getDateTime() {
         return dateTime;
@@ -183,19 +188,17 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
      * @param inputContactList the list of new participating contacts.
      */
     public void setContacts(List<Contact> inputContactList) {
-        this.contacts = inputContactList;
+        this.contacts = new ArrayList<>(inputContactList);
         notifyObservers();
     }
 
     /***
      * Removes a contact from the event
      * @param contact the contact to be removed
-     * @return true if operation successful, false if not.
      */
-    public boolean removeContact(Contact contact) {
-        boolean success = contacts.remove(contact);
+    public void removeContact(Contact contact) {
+        contacts.remove(contact);
         notifyObservers();
-        return success;
     }
 
     /***
@@ -208,7 +211,12 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     @Override
     public String getSearchIdentity() {
-        return name.toLowerCase();
+        return name.toLowerCase(Locale.getDefault());
+    }
+
+    @Override
+    public int compareTime(ChronoLocalDateTime<LocalDate> dateTime) {
+        return this.dateTime.compareTo(dateTime);
     }
 
     /***
@@ -222,9 +230,6 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
         public ITag tag;
         public List<Contact> contacts;
         public UUID directoryId;
-
-        public EventCache() {
-        }
     }
 
     private EventCache getCache() {
