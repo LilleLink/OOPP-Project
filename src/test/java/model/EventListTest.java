@@ -25,14 +25,14 @@ public class EventListTest {
     }
 
     @Test
-    public void addContactTest() {
+    public void addEventTest() {
         assertEquals(0, eventList.getList().size());
-        eventList.addEvent("test", LocalDateTime.now());
+        eventList.addEvent(new Event("test", LocalDateTime.now()));
         assertEquals(1, eventList.getList().size());
     }
 
     @Test
-    public void removeContact() {
+    public void removeEvent() {
         Event event = new Event("test", LocalDateTime.now());
         assertEquals(0, eventList.getList().size());
         eventList.addEvent(event);
