@@ -1,6 +1,7 @@
 package model;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /***
  * A factory that creates specific data packages depending on what method is called.
@@ -17,7 +18,7 @@ public final class StatisticsFactory {
      * @param tagHandler the taghandler containing the tags the statistics should be based on
      * @return the hashmap containing the data.
      */
-    public static HashMap<ITag, Integer> getEventDelegation(EventList eventList, TagHandler tagHandler) {
+    public static Map<ITag, Integer> getEventDelegation(EventList eventList, TagHandler tagHandler) {
         HashMap<ITag, Integer> res = new HashMap<>();
         for (ITag tag : tagHandler.getAllTags()) {
             res.put(tag, eventList.getEventsOfTag(tag).size());
