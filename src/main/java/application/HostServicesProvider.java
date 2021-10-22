@@ -5,10 +5,9 @@ import javafx.application.HostServices;
 /**
  *
  */
-public class HostServicesProvider {
+public final class HostServicesProvider {
 
     private HostServicesProvider() {
-
     }
 
     private static HostServices hostServices;

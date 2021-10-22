@@ -33,7 +33,7 @@ public class Application extends javafx.application.Application {
         wizard.addListener(u -> {
             try {
                 this.user = u;
-                JavaFXViewInitializer javaFXViewInitializer = new JavaFXViewInitializer(stage, u);
+                JavaFXViewInitializer.initializeJavaFXView(stage, u);
             } catch (IOException e) {
                 e.printStackTrace();
             }
