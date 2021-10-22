@@ -11,7 +11,7 @@ import java.util.List;
  * @param <T> a chronological implementation
  * @author Simon Johnsson
  */
-public class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroadcaster<T>, Runnable {
+class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroadcaster<T>, Runnable {
 
     private final List<T> content;
     private final List<IObjectBroadcastListener<T>> listeners;
