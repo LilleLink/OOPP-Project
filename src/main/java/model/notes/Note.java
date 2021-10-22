@@ -33,10 +33,11 @@ public class Note implements Comparable<Note>, ICacheVisitable {
 
     /**
      * Copies the given note to a new note.
+     *
      * @param oldNote the note to copy
      */
     public Note(Note oldNote) {
-        this(oldNote.text,oldNote.pointOfCreation);
+        this(oldNote.text, oldNote.pointOfCreation);
     }
 
     /**
@@ -169,8 +170,12 @@ public class Note implements Comparable<Note>, ICacheVisitable {
      */
     @Override
     public boolean equals(Object other) {
-        if (this == other) return true;
-        if (other == null || this.getClass() != other.getClass()) return false;
+        if (this == other) {
+            return true;
+        }
+        if (other == null || this.getClass() != other.getClass()) {
+            return false;
+        }
         Note otherNote = (Note) other;
         return otherNote.viewNote().equals(text);
     }

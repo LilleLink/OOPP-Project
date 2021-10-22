@@ -7,10 +7,7 @@ import model.notes.Note;
 import model.notes.NoteBook;
 import model.search.ISearchable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class Contact implements ICacheVisitable, ISearchable<String>, IObservable, IDocumentable {
 
@@ -214,7 +211,7 @@ public class Contact implements ICacheVisitable, ISearchable<String>, IObservabl
 
     @Override
     public String getSearchIdentity() {
-        return name.toLowerCase();
+        return name.toLowerCase(Locale.getDefault());
     }
 
     /***

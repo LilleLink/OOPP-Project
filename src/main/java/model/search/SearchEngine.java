@@ -2,10 +2,11 @@ package model.search;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * A tool for searching a given list of a searchable type using string inputs.
- * Relevancy is determined using the {@link Levenshtein} distance method.
+ * Relevancy is determined using the {@link LevenshteinUtils} distance method.
  * <p>
  * <b>NOTE:</b> Accuracy is dependant on the difference in length between the intended queries
  * and the search identities of the given searchable objects.
@@ -33,11 +34,11 @@ public class SearchEngine<T extends ISearchable<String>> {
     /**
      * Iterates through the search base and returns a list containing every object considered relevant to the query.
      * <p>
-     * Relevancy is measured by comparing the {@link Levenshtein} distance to the {@code tol} integer,
+     * Relevancy is measured by comparing the {@link LevenshteinUtils} distance to the {@code tol} integer,
      * where the integer is the maximum tolerated distance between the query and the target search base.
      * </p>
      * The comparison is case-insensitive and will perform calculations based on lower case versions of the inputs.
-     *
+     * <p>
      * Results are sorted based on relevance using the {@link LevenshteinComparator}.
      *
      * @param query the string to compare the search base to
@@ -48,7 +49,8 @@ public class SearchEngine<T extends ISearchable<String>> {
     public List<T> search(String query, int tol) {
         List<T> results = new ArrayList<>();
         for (T elem : searchBase) {
-            if (tol >= Levenshtein.distance(query.toLowerCase(), elem.getSearchIdentity().toLowerCase())) {
+            if (tol >= LevenshteinUtils.distance(query.toLowerCase(Locale.getDefault()), elem.getSearchIdentity()
+                    .toLowerCase(Locale.getDefault()))) {
                 results.add(elem);
             }
         }

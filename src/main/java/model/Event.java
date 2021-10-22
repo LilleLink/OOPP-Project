@@ -3,10 +3,7 @@ package model;
 import model.search.ISearchable;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 /***
  * Represents an event occurring at a point in time, past or future, with a name/description and list of contacts/categories it is included in.
@@ -211,7 +208,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable 
 
     @Override
     public String getSearchIdentity() {
-        return name.toLowerCase();
+        return name.toLowerCase(Locale.getDefault());
     }
 
     /***

@@ -40,16 +40,6 @@ public class UserTest {
     }
 
     @Test
-    public void testContactEvents() {
-        Event e = new Event("Hej", LocalDateTime.now());
-        Contact contact = new Contact("Test");
-        user.getEvents().addEvent(e);
-        e.addContact(contact);
-
-        assertTrue(user.getContactEvents(contact).contains(e));
-    }
-
-    @Test
     public void getEventsOfTagTest() {
         ITag tag = null;
         try {

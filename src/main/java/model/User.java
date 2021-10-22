@@ -48,20 +48,6 @@ public class User implements ICacheVisitable {
     }
 
     /***
-     * Returns a list of events that the given contact is tagged in
-     * @param contact the subject contact
-     * @return an arraylist of the events the contact is a part of
-     */
-    public List<Event> getContactEvents(Contact contact) {
-        List<Event> contactEvents = new ArrayList<>();
-        for (Event e : eventList.getList()) {
-            if (e.getContacts().contains(contact))
-                contactEvents.add(e);
-        }
-        return contactEvents;
-    }
-
-    /***
      * Returns the wrapper object for the contact list
      * @return ContactList wrapper object
      */
@@ -91,9 +77,6 @@ public class User implements ICacheVisitable {
         public List<Contact> contacts;
         public TagHandler tagHandler;
         public UUID uuid;
-
-        public UserCache() {
-        }
     }
 
     private UserCache getCache() {

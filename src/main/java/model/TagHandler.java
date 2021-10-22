@@ -96,7 +96,9 @@ public class TagHandler implements ICacheVisitable {
             throw new NameNotAvailableException(newName);
         }
         Tag tag = stringTagHashMap.get(iTag.getName());
-        if (tag == null) throw new RuntimeException(iTag.getName());
+        if (tag == null) {
+            throw new RuntimeException(iTag.getName());
+        }
         stringTagHashMap.remove(tag.getName());
         tag.setName(newName);
         stringTagHashMap.put(newName, tag);
@@ -112,7 +114,9 @@ public class TagHandler implements ICacheVisitable {
      */
     boolean setColor(ITag iTag, String color) {
         Tag tag = stringTagHashMap.get(iTag.getName());
-        if (tag == null) throw new RuntimeException(iTag.getName());
+        if (tag == null) {
+            throw new RuntimeException(iTag.getName());
+        }
         if (isValidColor(color)) {
             tag.setColor(color);
             return true;

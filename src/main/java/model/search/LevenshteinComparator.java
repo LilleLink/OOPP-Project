@@ -5,7 +5,7 @@ import java.util.Comparator;
 
 /**
  * A comparator comparing the search identities of two objects with searchable type string
- * to the given source query. The search identity with a lower {@link Levenshtein} distance is
+ * to the given source query. The search identity with a lower {@link LevenshteinUtils} distance is
  * sorted first.
  *
  * @param <T>
@@ -26,6 +26,6 @@ class LevenshteinComparator<T extends ISearchable<String>> implements Comparator
 
     @Override
     public int compare(T t1, T t2) {
-        return Levenshtein.distance(source,t1.getSearchIdentity()) - Levenshtein.distance(source,t2.getSearchIdentity());
+        return LevenshteinUtils.distance(source, t1.getSearchIdentity()) - LevenshteinUtils.distance(source, t2.getSearchIdentity());
     }
 }
