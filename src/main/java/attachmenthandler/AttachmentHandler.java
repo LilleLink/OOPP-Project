@@ -19,7 +19,7 @@ class AttachmentHandler implements IAttachmentHandler {
     }
 
     public void addAttachment(UUID id, Path sourceFile) throws IOException {
-        Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
+        Path attachmentDirectory = baseDirectory.resolve(id + "/attachments");
         Files.createDirectories(attachmentDirectory);
         Files.copy(sourceFile, attachmentDirectory
                 .resolve(sourceFile.getFileName()), REPLACE_EXISTING);
@@ -27,11 +27,11 @@ class AttachmentHandler implements IAttachmentHandler {
     }
 
     public void addAttachment(UUID id, Path sourceFile, String category) throws IOException, IllegalArgumentException {
-        category = category.toLowerCase();
+        category = category.toLowerCase(Locale.getDefault());
         if (!category.chars().allMatch(Character::isLetter)) {
             throw new IllegalArgumentException("A category should only contain letters");
         }
-        Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
+        Path attachmentDirectory = baseDirectory.resolve(id + "/attachments");
         Files.createDirectories(attachmentDirectory.resolve(category));
         Files.copy(sourceFile, attachmentDirectory
                 .resolve(category)
@@ -39,7 +39,7 @@ class AttachmentHandler implements IAttachmentHandler {
     }
 
     public List<Path> getAttachments(UUID id) throws IOException {
-        Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
+        Path attachmentDirectory = baseDirectory.resolve(id + "/attachments");
         List<Path> files = new ArrayList<>();
         if (!Files.exists(attachmentDirectory)) {
             return files;
@@ -50,8 +50,8 @@ class AttachmentHandler implements IAttachmentHandler {
     }
 
     public List<Path> getAttachments(UUID id, String category) throws IOException, IllegalArgumentException {
-        Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
-        category = category.toLowerCase();
+        Path attachmentDirectory = baseDirectory.resolve(id + "/attachments");
+        category = category.toLowerCase(Locale.getDefault());
         if (!category.chars().allMatch(Character::isLetter)) {
             throw new IllegalArgumentException("A category should only contain letters");
         }
@@ -65,7 +65,7 @@ class AttachmentHandler implements IAttachmentHandler {
 
     public List<String> getAttachmentCategories(UUID id) throws IOException {
         List<String> attachmentCategories = new ArrayList<>();
-        Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
+        Path attachmentDirectory = baseDirectory.resolve(id + "/attachments");
         Files.walk(attachmentDirectory, 1)
                 .filter(Files::isDirectory)
                 .forEach((directory) -> {
@@ -87,7 +87,7 @@ class AttachmentHandler implements IAttachmentHandler {
 
 
     public void removeAttachmentCategory(UUID id, String category) throws IOException {
-        Path attachmentDirectory = baseDirectory.resolve(id.toString() + "/attachments");
+        Path attachmentDirectory = baseDirectory.resolve(id + "/attachments");
         if (Files.exists(attachmentDirectory.resolve(category))) {
             deleteDirectoryRecursively(attachmentDirectory.resolve(category));
         }
@@ -95,7 +95,7 @@ class AttachmentHandler implements IAttachmentHandler {
 
 
     public void removeAllAttachments(UUID id) throws IOException {
-        if (Files.exists(baseDirectory.resolve(id.toString() + "/attachments"))) {
+        if (Files.exists(baseDirectory.resolve(id + "/attachments"))) {
             deleteDirectoryRecursively(baseDirectory.resolve(id + "/attachments"));
         }
     }
@@ -111,7 +111,7 @@ class AttachmentHandler implements IAttachmentHandler {
     public void saveMainImage(UUID id, Path picture) throws IllegalArgumentException, IOException {
         List<String> imageFileExtensions = Arrays.asList("bmp", "gif", "jpeg", "jpg", "png");
         Path mainImageDirectory = baseDirectory.resolve(id.toString()).resolve("mainImage/");
-        if (!imageFileExtensions.contains(getFileExtension(picture).toLowerCase())) {
+        if (!imageFileExtensions.contains(getFileExtension(picture).toLowerCase(Locale.getDefault()))) {
             throw new IllegalArgumentException("The specified file needs to be a image.");
         }
         removeMainImage(id);
