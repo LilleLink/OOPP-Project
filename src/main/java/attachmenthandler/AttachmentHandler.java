@@ -4,16 +4,18 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 class AttachmentHandler implements IAttachmentHandler {
-    private final Path baseDirectory = Paths.get(System.getProperty("user.home") + "/.prm/");
+    private final Path baseDirectory;
 
-    AttachmentHandler() {
-
+    /**
+     * @param baseDirectory Base directory to store files in
+     */
+    AttachmentHandler(Path baseDirectory) {
+        this.baseDirectory = baseDirectory;
     }
 
     public void addAttachment(UUID id, Path sourceFile) throws IOException {
