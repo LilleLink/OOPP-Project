@@ -19,9 +19,6 @@ import java.util.List;
  *
  * Composed of a {@link Notifier<Event>} and an {@link EventList} feeding content to it.
  *
- * Implements the {@link Runnable} and delegates the {@code run} method to
- * its {@link Notifier<Event>} object.
- *
  * @author Simon Johnsson
  */
 public class EventNotificationsPage extends ViewComponent implements IObserver {
@@ -53,6 +50,10 @@ public class EventNotificationsPage extends ViewComponent implements IObserver {
         populateVBox();
     }
 
+    /**
+     * Updates the VBox with the newly received notifications.
+     * Updates the notifier to use an edited event list.
+     */
     @Override
     public void onEvent() {
        List<Event> newEventList = new ArrayList<>(eventList.getList());
