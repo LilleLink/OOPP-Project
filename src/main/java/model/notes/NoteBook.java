@@ -15,7 +15,7 @@ import java.util.Optional;
  * @author Simon Johnsson
  * @see java.time.LocalDateTime
  */
-public class NoteBook implements ICacheVisitable {
+public class NoteBook implements ICacheVisitable, IDocumentable {
 
     // Elements represented as a list of note objects
     private final List<Note> elements;
@@ -52,7 +52,7 @@ public class NoteBook implements ICacheVisitable {
      * Instantiates an empty note with default constructor and appends it to the list of elements.
      * New note objects will always be newer than the object last added to the list.
      */
-    public void add() {
+    public void addNote() {
         elements.add(new Note());
     }
 
@@ -62,7 +62,7 @@ public class NoteBook implements ICacheVisitable {
      *
      * @param text the String of text to be contained in the note.
      */
-    public void add(String text) {
+    public void addNote(String text) {
         elements.add(new Note(text));
     }
 
@@ -71,7 +71,7 @@ public class NoteBook implements ICacheVisitable {
      *
      * @param index the index of the note to be removed.
      */
-    public void removeAt(int index) {
+    public void removeNote(int index) {
         elements.remove(index);
     }
 
@@ -80,7 +80,7 @@ public class NoteBook implements ICacheVisitable {
      *
      * @return the number of elements
      */
-    public int size() {
+    public int sizeOfNotes() {
         return elements.size();
     }
 
@@ -90,7 +90,7 @@ public class NoteBook implements ICacheVisitable {
      * @param index the index of the note to view
      * @return the text of the viewed note
      */
-    public String viewAt(int index) {
+    public String viewNote(int index) {
         return elements.get(index).viewNote();
     }
 
@@ -100,7 +100,7 @@ public class NoteBook implements ICacheVisitable {
      * @param index the index of the note to receive
      * @return a note
      */
-    public Note getAt(int index) {
+    public Note getNote(int index) {
         return new Note(elements.get(index));
     }
 
@@ -109,7 +109,7 @@ public class NoteBook implements ICacheVisitable {
      *
      * @return the last added note
      */
-    public Note getLastAdded() {
+    public Note getLastAddedNote() {
         return new Note(elements.get(elements.size() - 1));
     }
 
@@ -120,7 +120,7 @@ public class NoteBook implements ICacheVisitable {
      * @param index the index of the note being edited
      * @param text  the new text
      */
-    public void editAt(int index, String text) {
+    public void editNote(int index, String text) {
         Note note = elements.get(index).withText(text);
         elements.set(index, note);
     }
