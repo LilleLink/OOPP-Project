@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,17 +26,18 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
     public void save(User user, Path databaseFile) throws IOException {
         CacheVisitorState state = new CacheVisitorState();
 
-        JSONRecords.UserRecord userRecord = (JSONRecords.UserRecord) user.accept(new CacheVisitor(), state).orElseThrow(IllegalStateException::new);
+        user.accept(new CacheVisitor(), state).orElseThrow(IllegalStateException::new);
         Files.createDirectories(databaseFile.getParent());
-        if(!Files.exists(databaseFile))
+        if (!Files.exists(databaseFile)) {
             Files.createFile(databaseFile);
+        }
         Files.write(databaseFile, new Gson().toJson(state.user).getBytes(), StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE);
     }
 
     // The environment of the cache visitor.
     static private class CacheVisitorState {
         // The indices of contact records in the prm model.
-        HashMap<Contact, Integer> contactIndices = new HashMap<>();
+        Map<Contact, Integer> contactIndices = new HashMap<>();
         // The final prm record to serialize.
         JSONRecords.UserRecord user = new JSONRecords.UserRecord();
     }

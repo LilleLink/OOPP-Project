@@ -2,7 +2,6 @@ package database.json;
 
 import com.google.gson.Gson;
 import database.IDatabaseTracker;
-import model.User;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,7 +15,7 @@ public class JSONDatabaseTracker implements IDatabaseTracker {
     private JSONRecords.TrackerRecord record = new JSONRecords.TrackerRecord();
 
     private void save(Path databaseTrackerFile) throws IOException {
-        if(!Files.exists(databaseTrackerFile)) {
+        if (!Files.exists(databaseTrackerFile)) {
             Files.createDirectories(databaseTrackerFile.getParent());
             Files.createFile(databaseTrackerFile);
         }
@@ -25,9 +24,9 @@ public class JSONDatabaseTracker implements IDatabaseTracker {
     }
 
     private void load(Path databaseTrackerFile) throws IOException {
-        if(Files.exists(databaseTrackerFile)) {
+        if (Files.exists(databaseTrackerFile)) {
             record = new Gson().fromJson(String.join("\n", Files.readAllLines(databaseTrackerFile)), JSONRecords.TrackerRecord.class);
-        }else {
+        } else {
             record = new JSONRecords.TrackerRecord();
         }
     }
@@ -41,7 +40,7 @@ public class JSONDatabaseTracker implements IDatabaseTracker {
 
     @Override
     public boolean removeUser(UUID id, Path databaseTrackerFile) throws IOException {
-        if(record.users.containsKey(id)) {
+        if (record.users.containsKey(id)) {
             record.users.remove(id);
 
             save(databaseTrackerFile);

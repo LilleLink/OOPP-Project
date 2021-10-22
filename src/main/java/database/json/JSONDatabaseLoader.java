@@ -7,6 +7,7 @@ import model.notes.Note;
 import model.notes.NoteBook;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDateTime;
@@ -21,7 +22,8 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
      */
     @Override
     public User load(Path databaseFile) throws IOException {
-        JSONRecords.UserRecord record = new Gson().fromJson(String.join("\n", Files.readAllLines(databaseFile)), JSONRecords.UserRecord.class);
+        List<String> lines = Files.readAllLines(databaseFile, StandardCharsets.ISO_8859_1);
+        JSONRecords.UserRecord record = new Gson().fromJson(String.join("\n", lines), JSONRecords.UserRecord.class);
         RecordVisitorState env = new RecordVisitorState();
         return (User) record.accept(new RecordVisitor(), env).orElseThrow(IllegalStateException::new);
     }
@@ -29,7 +31,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
     // The environment of the record visitor.
     static private class RecordVisitorState {
         List<Contact> contacts = new ArrayList<>();
-        HashMap<String, Tag> tags = new HashMap<>();
+        Map<String, Tag> tags = new HashMap<>();
     }
 
     // The record visitor visists all the JSON records and returns the reinstated prm model.
@@ -54,7 +56,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             cache.address = contact.address;
             cache.tags = new ArrayList<>();
             cache.noteBook = (NoteBook) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
-            env.tags.forEach((t,v) -> System.out.println(t + "->" + v.getName()));
+            env.tags.forEach((t, v) -> System.out.println(t + "->" + v.getName()));
             cache.tags = contact.tags.stream().map(t -> env.tags.get(t)).collect(Collectors.toList());
             cache.noteBook = (NoteBook) contact.notes.accept(this, env).orElseThrow(IllegalStateException::new);
             cache.directoryId = UUID.fromString(contact.directoryId);
