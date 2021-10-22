@@ -91,13 +91,13 @@ public class TagHandler implements ICacheVisitable {
      *
      * @param newName the new name
      */
-    void rename(ITag iTag, String newName) throws NameNotAvailableException {
+    void rename(ITag iTag, String newName) throws NameNotAvailableException, TagNotFoundException {
         if (stringTagHashMap.get(newName) != null) {
             throw new NameNotAvailableException(newName);
         }
         Tag tag = stringTagHashMap.get(iTag.getName());
         if (tag == null) {
-            throw new RuntimeException(iTag.getName());
+            throw new TagNotFoundException(iTag.getName());
         }
         stringTagHashMap.remove(tag.getName());
         tag.setName(newName);
