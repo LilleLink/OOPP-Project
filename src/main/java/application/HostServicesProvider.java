@@ -3,7 +3,7 @@ package application;
 import javafx.application.HostServices;
 
 /**
- *
+ * Provides the HostServices for the running javaFX application so that components can run system services.
  */
 public final class HostServicesProvider {
 

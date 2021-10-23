@@ -7,8 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * The facade for the entire AttachmentHandler service that can save attachments and the main picture to specific IDs under
- * user.home/.prm/{id}.
+ * The facade for the entire AttachmentHandler service that can save attachments and the main picture to specific IDs.
  * Contains all functionality needed to save attachments, optionally under different categories, as well as retrieve and
  * delete those attachments. Also contains the functionality for a main picture.
  */

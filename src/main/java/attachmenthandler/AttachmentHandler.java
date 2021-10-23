@@ -8,6 +8,9 @@ import java.util.*;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
+/**
+ * This class implements the functionality specified by the IAttachmentHandler interface.
+ */
 class AttachmentHandler implements IAttachmentHandler {
     private final Path baseDirectory;
 
