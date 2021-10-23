@@ -17,7 +17,7 @@ public class NoteBookTest {
         NoteBook notes = new NoteBook();
         int oSize = notes.sizeOfNotes();
         notes.addNote();
-        assert (oSize == notes.sizeOfNotes() - 1);
+        assert oSize == notes.sizeOfNotes() - 1;
     }
 
     @Test
@@ -26,7 +26,7 @@ public class NoteBookTest {
         notes.addNote();
         int oSize = notes.sizeOfNotes();
         notes.removeNote(0);
-        assert (oSize == notes.sizeOfNotes() + 1);
+        assert oSize == notes.sizeOfNotes() + 1;
     }
 
     @Test
@@ -65,7 +65,7 @@ public class NoteBookTest {
             Note note = list.get(i);
             Note other = list.get(i + 1);
             sorted = note.compareAge(other) < 0;
-            assert (sorted);
+            assert sorted;
         }
     }
 
@@ -83,7 +83,7 @@ public class NoteBookTest {
         NoteBook notes = new NoteBook();
         notes.addNote("Bamse");
         NoteBook copiedNotes = new NoteBook(notes.getSortedList());
-        assert (notes.equals(copiedNotes));
+        assert notes.equals(copiedNotes);
     }
 
     @Test
@@ -92,7 +92,7 @@ public class NoteBookTest {
         notes.addNote("Bamse");
         NoteBook copiedNotes = new NoteBook(notes);
         copiedNotes.addNote("Lille-Skutt");
-        assert (!notes.equals(copiedNotes));
+        assert !notes.equals(copiedNotes);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class NoteBookTest {
         NoteBook notes = new NoteBook();
         notes.addNote("First");
         notes.addNote("Second");
-        assert (notes.getLastAddedNote().viewNote().equals("Second"));
+        assert "Second".equals(notes.getLastAddedNote().viewNote());
     }
 
 }

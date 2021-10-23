@@ -30,7 +30,7 @@ public class SearchEngineTest {
         SearchEngine<MockStringSearchable> searchEngine = new SearchEngine<>(base);
         assertEquals(searchEngine.getSearchBase(), base);
         List<MockStringSearchable> results = searchEngine.search("Pelle", 0);
-        assert (results.contains(s1) && results.size() == 1);
+        assert results.contains(s1) && results.size() == 1;
     }
 
     @Test
@@ -43,7 +43,7 @@ public class SearchEngineTest {
         base.add(s3);
         SearchEngine<MockStringSearchable> searchEngine = new SearchEngine<>(base);
         List<MockStringSearchable> results = searchEngine.search("Pelle", 1);
-        assert (results.contains(s1) && results.contains(s2) && results.contains(s3) && results.size() == 3);
+        assert results.contains(s1) && results.contains(s2) && results.contains(s3) && results.size() == 3;
     }
 
     @Test
@@ -58,8 +58,8 @@ public class SearchEngineTest {
         base.add(s4);
         SearchEngine<MockStringSearchable> searchEngine = new SearchEngine<>(base);
         List<MockStringSearchable> results = searchEngine.search("pelle", 3);
-        assert (results.contains(s1) && results.contains(s2) &&
-                results.contains(s3) && !results.contains(s4));
+        assert results.contains(s1) && results.contains(s2) &&
+                results.contains(s3) && !results.contains(s4);
     }
 
 }
