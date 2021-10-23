@@ -1,5 +1,8 @@
 package vcf;
 
+/***
+ * Defines enum "FIELD" with a number of fields such as address, categories etc. to help parse VCF-files.
+ */
 enum FIELD {
     NAME("N"),
     FORMATTED_NAME("FN"),

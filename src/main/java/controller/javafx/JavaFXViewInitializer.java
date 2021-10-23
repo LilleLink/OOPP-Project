@@ -8,6 +8,9 @@ import model.User;
 
 import java.io.IOException;
 
+/***
+ * A utility class containing functionality to initialize the JavaFX controller and view.
+ */
 public class JavaFXViewInitializer {
 
     /***
@@ -28,6 +31,12 @@ public class JavaFXViewInitializer {
         stage.show();
     }
 
+    /***
+     * Creates a new UserWizard given a JavaFX stage.
+     * @param stage the stage to display the wizard on.
+     * @return a reference to the UserWizard object.
+     * @throws IOException if the FXML file of the UserWizard cannot be loaded.
+     */
     public static UserWizard createUserWizard(Stage stage) throws IOException {
         UserWizard wizard = new UserWizard();
         FXMLLoader loader = new FXMLLoader(JavaFXViewInitializer.class.getResource("/view/javafx/UserWizard.fxml"));

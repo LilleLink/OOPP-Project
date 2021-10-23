@@ -3,6 +3,9 @@ package vcf;
 import model.ContactList;
 import model.TagHandler;
 
+/***
+ * Returns an instance of the VCF parser service.
+ */
 public final class VCFParserFactory {
 
     static private IVCFParser instance = null;

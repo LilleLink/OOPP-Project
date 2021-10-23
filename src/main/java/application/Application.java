@@ -8,6 +8,9 @@ import model.User;
 
 import java.io.IOException;
 
+/***
+ * The main class of the application containing the entry point and instantiation
+ */
 public class Application extends javafx.application.Application {
 
     private User user = null;

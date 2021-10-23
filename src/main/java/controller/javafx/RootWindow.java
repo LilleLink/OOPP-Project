@@ -1,6 +1,5 @@
 package controller.javafx;
 
-import controller.javafx.components.EventNotificationsPage;
 import controller.javafx.components.PageFactory;
 import controller.javafx.components.ViewComponent;
 import javafx.fxml.FXML;
@@ -11,6 +10,11 @@ import model.User;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/***
+ * The root-window of the JavaFX view environment.
+ * Is used to navigate within the view through the implementation of the IPageNavigator class and the TopBar component.
+ * The parent of all "Page" components created through the ViewComponentFactory.
+ */
 public class RootWindow implements IPageNavigator, Initializable {
 
     private User user;

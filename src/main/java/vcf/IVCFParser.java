@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Scanner;
 
+/**
+ * Defines functionality of a concrete implementation of a VCF-file parser
+ */
 public interface IVCFParser {
 
     /**

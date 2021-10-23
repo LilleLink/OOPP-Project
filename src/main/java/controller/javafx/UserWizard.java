@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
+/***
+ * A User-wizard used to create and choose user to load the application with.
+ */
 public class UserWizard implements Initializable {
 
     @FXML
