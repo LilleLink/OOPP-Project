@@ -28,13 +28,13 @@ public class NotifierTest {
         Thread thread = new Thread(notifier);
         thread.start();
         int t = 0;
-        while(t < 100 && notifier.getActive().isEmpty()) {
+        while (t < 100 && notifier.getActive().isEmpty()) {
             Thread.sleep(10);
             t++;
         }
         thread.interrupt();
         List<MockChronological> notifications = notifier.getActive();
-        assert (notifications.size() == 1 && notifier.size() == 1);
+        assert notifications.size() == 1 && notifier.size() == 1;
     }
 
     @Test
@@ -45,7 +45,7 @@ public class NotifierTest {
         Thread.sleep(100);
         List<MockChronological> notifications = notifier.getActive();
         thread.interrupt();
-        assert (notifications.isEmpty());
+        assert notifications.isEmpty();
     }
 
     @Test
@@ -58,7 +58,7 @@ public class NotifierTest {
         Thread.sleep(100);
         List<MockChronological> notifications = notifier.getActive();
         thread.interrupt();
-        assert (notifications.size() == 1);
+        assert notifications.size() == 1;
     }
 
     @Test
@@ -66,14 +66,14 @@ public class NotifierTest {
         Thread thread = new Thread(notifier);
         thread.start();
         int t = 0;
-        while(t < 100 && notifier.getActive().isEmpty()) {
+        while (t < 100 && notifier.getActive().isEmpty()) {
             Thread.sleep(10);
             t++;
         }
         notifier.clear();
         List<MockChronological> notifications = notifier.getActive();
         thread.interrupt();
-        assert (notifications.isEmpty());
+        assert notifications.isEmpty();
     }
 
     @Test
@@ -86,11 +86,11 @@ public class NotifierTest {
         notifier.setInterval(1440);
         thread.start();
         int t = 0;
-        while(t < 100 && notifier.getActive().isEmpty()) {
+        while (t < 100 && notifier.getActive().isEmpty()) {
             Thread.sleep(10);
             t++;
         }
         List<MockChronological> notifications = notifier.getActive();
-        assert (notifications.contains(object));
+        assert notifications.contains(object);
     }
 }

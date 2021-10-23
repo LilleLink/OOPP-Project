@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 
 import static org.junit.Assert.*;
 
@@ -82,8 +83,8 @@ public class EventTest {
     public void addEventTest() {
         int oldSize = eventList.getList().size();
         Event e = eventList.addEvent();
-        assert (eventList.getList().contains(e));
-        assert (eventList.getList().size() > oldSize);
+        assert eventList.getList().contains(e);
+        assert eventList.getList().size() > oldSize;
     }
 
     @Test
@@ -97,7 +98,7 @@ public class EventTest {
         eventsWithContact.forEach(event -> event.addContact(c1));
         Collection<Event> collectedEvents = eventList.getContactsEvents(c1);
         assertEquals(collectedEvents, eventsWithContact);
-        assert (collectedEvents.size() < 6);
+        assert collectedEvents.size() < 6;
     }
 
     @Test
@@ -120,7 +121,7 @@ public class EventTest {
     public void searchIdentityTest() {
         Event e = eventList.addEvent();
         String name = e.getName();
-        assertEquals(e.getSearchIdentity(), name.toLowerCase());
+        assertEquals(e.getSearchIdentity(), name.toLowerCase(Locale.getDefault()));
     }
 
     @Test
@@ -148,19 +149,19 @@ public class EventTest {
         IObserver observer = () -> w.isObserved = true;
         eventList.subscribe(observer);
         eventList.notifyObservers();
-        assert (w.isObserved);
+        assert w.isObserved;
         w.isObserved = false;
         eventList.unSubscribe(observer);
         eventList.notifyObservers();
-        assert (!w.isObserved);
+        assert !w.isObserved;
 
         event.subscribe(observer);
         event.notifyObservers();
-        assert (w.isObserved);
+        assert w.isObserved;
         w.isObserved = false;
         event.unSubscribe(observer);
         event.notifyObservers();
-        assert (!w.isObserved);
+        assert !w.isObserved;
     }
 
 }

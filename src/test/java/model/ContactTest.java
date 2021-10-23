@@ -4,7 +4,6 @@ import mocks.MockObserver;
 import model.exceptions.NameNotAllowedException;
 import model.exceptions.TagNotFoundException;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -15,11 +14,6 @@ public class ContactTest {
     private Contact c1;
     String testName = "Test Name";
     private final TagHandler tagHandler = new TagHandler();
-
-    @BeforeClass
-    public static void initVariables() {
-
-    }
 
     @Before
     public void setup() {
@@ -64,9 +58,9 @@ public class ContactTest {
     @Test
     public void andAndRemoveNote() {
         c1.addNote("Pizza");
-        assert (c1.sizeOfNotes() == 1);
+        assert c1.sizeOfNotes() == 1;
         c1.removeNote(0);
-        assert (c1.sizeOfNotes() == 0);
+        assert c1.sizeOfNotes() == 0;
     }
 
     @Test
@@ -74,7 +68,7 @@ public class ContactTest {
         String text = "Pizza is good";
         c1.addNote();
         c1.editNote(0, text);
-        assert (c1.viewNote(0).equals(text));
+        assert c1.viewNote(0).equals(text);
     }
 
     @Test

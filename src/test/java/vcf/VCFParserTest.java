@@ -37,26 +37,41 @@ public class VCFParserTest {
         }
         List<Contact> contacts = contactList.getList();
         Contact c1 = contacts.get(0);
-        assert (testContact1(c1));
+        assert testContact1(c1);
         Contact c2 = contacts.get(1);
-        assert (testContact2(c2));
+        assert testContact2(c2);
     }
 
     private boolean testContact1(Contact c1) {
-        if (!c1.getName().equals("PreFIX NAME MIDDLE_NAME SURNAME Suffix")) return false;
-        if (!c1.getPhoneNumber().equals("1234567890")) return false;
-        if (!c1.getTags().get(0).getName().equals("Tag1")) return false;
-        if (!c1.getNote(0).toString().equals("Contact note")) return false;
-        return c1.getAddress().equals("Teknologstigen 3, Chalmers");
+        if (!"PreFIX NAME MIDDLE_NAME SURNAME Suffix".equals(c1.getName())) {
+            return false;
+        }
+        if (!"1234567890".equals(c1.getPhoneNumber())) {
+            return false;
+        }
+        if (!"Tag1".equals(c1.getTags().get(0).getName())) {
+            return false;
+        }
+        if (!"Contact note".equals(c1.getNote(0).toString())) {
+            return false;
+        }
+        return "Teknologstigen 3, Chalmers".equals(c1.getAddress());
     }
 
     private boolean testContact2(Contact c2) {
-        if (!c2.getName().equals("This is Full Name")) return false;
-        if (!c2.getPhoneNumber().equals("0734111337")) return false;
-        if (!c2.getTags().get(0).getName().equals("Tag1") || !c2.getTags().get(1).getName().equals("Tag2"))
+        if (!"This is Full Name".equals(c2.getName())) {
             return false;
-        if (!c2.getNote(0).toString().equals("Contact 2 note")) return false;
-        return c2.getAddress().equals("");
+        }
+        if (!"0734111337".equals(c2.getPhoneNumber())) {
+            return false;
+        }
+        if (!"Tag1".equals(c2.getTags().get(0).getName()) || !"Tag2".equals(c2.getTags().get(1).getName())) {
+            return false;
+        }
+        if (!"Contact 2 note".equals(c2.getNote(0).toString())) {
+            return false;
+        }
+        return "".equals(c2.getAddress());
     }
 
     @Test
@@ -66,7 +81,7 @@ public class VCFParserTest {
     }
 
     @Test
-    public void IllegalFileTypeTest() {
+    public void illegalFileTypeTest() {
         Path path = Paths.get(testFileDirectory + "/illegalFile.txt");
         assertThrows(IOException.class, () -> parser.addContact(path));
     }
