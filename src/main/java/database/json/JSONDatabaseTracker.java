@@ -10,6 +10,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.Set;
 import java.util.UUID;
 
+/***
+ * A concrete implementation of the IDatabaseTracker interface operating with the JSON file format.
+ */
 public class JSONDatabaseTracker implements IDatabaseTracker {
 
     private JSONRecords.TrackerRecord record = new JSONRecords.TrackerRecord();

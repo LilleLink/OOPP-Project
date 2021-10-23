@@ -14,6 +14,9 @@ import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/***
+ * A concrete implementation of an IDatabaseLoader operating with the JSON file format.
+ */
 public class JSONDatabaseLoader implements IDatabaseLoader {
 
     /***

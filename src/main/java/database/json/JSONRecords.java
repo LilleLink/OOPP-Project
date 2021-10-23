@@ -2,6 +2,9 @@ package database.json;
 
 import java.util.*;
 
+/***
+ * Class containing records of all the serializable classes, helps the json database-services to serialize and unserialize.
+ */
 public class JSONRecords {
 
     // The record visitor interface.

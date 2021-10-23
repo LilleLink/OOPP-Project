@@ -5,6 +5,9 @@ import model.User;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/***
+ * Defines functionality of concrete database-savers.
+ */
 public interface IDatabaseSaver {
 
     /***

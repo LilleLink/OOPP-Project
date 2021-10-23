@@ -15,6 +15,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/***
+ * A concrete implementation of a DatabaseSaver operating with the JSON file formats.
+ */
 public class JSONDatabaseSaver implements IDatabaseSaver {
 
     /***
