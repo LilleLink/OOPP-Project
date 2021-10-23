@@ -41,7 +41,7 @@ public class Application extends javafx.application.Application {
     }
 
     @Override
-    public void stop() throws Exception {
+    public void stop() throws IOException {
         if (user != null) {
             DatabaseFactory.getService().save(user);
         }
