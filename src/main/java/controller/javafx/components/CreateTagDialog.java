@@ -49,7 +49,12 @@ class CreateTagDialog extends ViewComponent {
     @FXML
     private void addTag() {
         try {
-            tagHandler.createTag(tagName.getText(), Integer.toHexString(colorPicker.getValue().hashCode()));
+            Color color = colorPicker.getValue();
+            String formattedColor = String.format("#%02X%02X%02X",
+                    (int) (color.getRed() * 255),
+                    (int) (color.getGreen() * 255),
+                    (int) (color.getBlue() * 255));
+            tagHandler.createTag(tagName.getText(), formattedColor);
             closeStage();
         } catch (NameNotAllowedException e) {
             errorMessageText.setText(e.getMessage());
