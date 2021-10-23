@@ -8,11 +8,11 @@ import java.util.List;
 
 /**
  * A class responsible for collecting objects sent by a {@link ChronologicalBroadcaster}.
- *
+ * <p>
  * Notifications can be retrieved, cleared and muted.
- *
+ * <p>
  * The time interval before the point in time corresponding to the chronological object.
- *
+ * <p>
  * In order for the {@code Notifications} to run in the background, it needs to be given to a separate {@link Thread}.
  *
  * @param <T> the type of chronological objects to collect
@@ -66,13 +66,13 @@ public class Notifier<T extends IChronological> implements IObjectBroadcastListe
      *
      * @param millis the length of sleep in milliseconds
      */
-    public synchronized void mute(long millis){
+    public synchronized void mute(long millis) {
         isMuted = true;
         muteTime = millis;
     }
 
     /**
-     * Unmutes notifications to receive notifications.
+     * Un-mutes notifications to receive notifications.
      */
     public synchronized void unmute() {
         isMuted = false;
@@ -86,7 +86,7 @@ public class Notifier<T extends IChronological> implements IObjectBroadcastListe
      */
     private void muteSleep(long millis) {
         long t = millis;
-        while(isMuted && t != 0) {
+        while (isMuted && t != 0) {
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -126,8 +126,7 @@ public class Notifier<T extends IChronological> implements IObjectBroadcastListe
         while (!Thread.interrupted()) {
             if (!isMuted) {
                 broadcaster.run();
-            }
-            else {
+            } else {
                 muteSleep(muteTime);
                 unmute();
             }
@@ -146,8 +145,8 @@ public class Notifier<T extends IChronological> implements IObjectBroadcastListe
 
     @Override
     public void notifyObservers() {
-        for(IObserver observer : observers) {
-                observer.onEvent();
+        for (IObserver observer : observers) {
+            observer.onEvent();
         }
     }
 }
