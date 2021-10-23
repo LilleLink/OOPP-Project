@@ -1,5 +1,10 @@
+# TODO
+FIX A HOW TO RUN
+
 # OOPP-Project
-Project assignment in the Object Oriented Programming Project course at Chalmers University of Technology
+Project assignment in the Object Oriented Programming Project course at Chalmers University of Technology.
+
+Trello board: https://trello.com/b/bZEnrQoP/oopsie
 
 # Guidelines
 - All documentation must be done in english, this includes commit-messages.
