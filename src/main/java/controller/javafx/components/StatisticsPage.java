@@ -25,7 +25,7 @@ class StatisticsPage extends ViewComponent implements IObserver {
     }
 
     private void createStatistics() {
-        Map<ITag, Integer> stats = StatisticsFactory.getEventDelegation(eventList, tagHandler);
+        Map<ITag, Integer> stats = StatisticsUtils.getEventDelegation(eventList, tagHandler);
         ObservableList<PieChart.Data> pieChartData = convertStatistics(stats);
         eventDelegationPieChart.setData(pieChartData);
 

@@ -8,7 +8,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-public class StatisticsFactoryTest {
+public class StatisticsUtilsTest {
 
     EventList eventList;
     TagHandler tagHandler;
@@ -49,7 +49,7 @@ public class StatisticsFactoryTest {
 
     @Test
     public void testStats() {
-        Map<ITag, Integer> res = StatisticsFactory.getEventDelegation(eventList, tagHandler);
+        Map<ITag, Integer> res = StatisticsUtils.getEventDelegation(eventList, tagHandler);
         assertEquals(res.get(testtag1), Integer.valueOf(2));
         assertEquals(res.get(testtag2), Integer.valueOf(1));
         assertEquals(res.get(testtag3), Integer.valueOf(1));

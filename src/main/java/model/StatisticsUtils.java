@@ -6,9 +6,9 @@ import java.util.Map;
 /***
  * A factory that creates specific data packages depending on what method is called.
  */
-public final class StatisticsFactory {
+public final class StatisticsUtils {
 
-    private StatisticsFactory() {
+    private StatisticsUtils() {
     }
 
     /***
