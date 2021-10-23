@@ -65,6 +65,10 @@ class EventCard extends ViewComponent {
         initializeComponent();
     }
 
+    void triggerSave() {
+        saveButton.fire();
+    }
+
     private void saveEvent(ActionEvent actionEvent) {
         event.setName(nameTextField.getText());
         event.setAddress(addressTextField.getText());
