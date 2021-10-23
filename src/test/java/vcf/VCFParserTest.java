@@ -36,9 +36,10 @@ public class VCFParserTest {
             fail();
         }
         List<Contact> contacts = contactList.getList();
-        Contact c1 = contacts.get(0);
+        int indexOfC1 = contacts.get(0).getTags().size() == 1 ? 0 : 1;
+        Contact c1 = contacts.get(indexOfC1);
         assert testContact1(c1);
-        Contact c2 = contacts.get(1);
+        Contact c2 = contacts.get(contacts.size() - 1 - indexOfC1);
         assert testContact2(c2);
     }
 
