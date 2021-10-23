@@ -36,6 +36,8 @@ public class JSONDatabaseTracker implements IDatabaseTracker {
 
     @Override
     public void addUser(UUID id, String name, Path databaseTrackerFile) throws IOException {
+        load(databaseTrackerFile);
+
         record.users.put(id, name);
 
         save(databaseTrackerFile);
@@ -43,6 +45,8 @@ public class JSONDatabaseTracker implements IDatabaseTracker {
 
     @Override
     public boolean removeUser(UUID id, Path databaseTrackerFile) throws IOException {
+        load(databaseTrackerFile);
+
         if (record.users.containsKey(id)) {
             record.users.remove(id);
 

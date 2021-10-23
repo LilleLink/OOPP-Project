@@ -20,11 +20,7 @@ public class JSONRecords {
         default Optional<T> visit(EventRecord event, E env) {
             return Optional.empty();
         }
-
-        default Optional<T> visit(PRMRecord prm, E env) {
-            return Optional.empty();
-        }
-
+        
         default Optional<T> visit(NoteRecord note, E env) {
             return Optional.empty();
         }
@@ -128,18 +124,6 @@ public class JSONRecords {
         List<EventRecord> events = new ArrayList<>();
         TagHandlerRecord tags;
         String uuid;
-
-        @Override
-        public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
-            return visitor.visit(this, env);
-        }
-    }
-
-    // PRM JSON record.
-    @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
-    static class PRMRecord implements JSONRecords.IRecordVisitable {
-        List<ContactRecord> contacts = new ArrayList<>();
-        UserRecord user;
 
         @Override
         public <E, T> Optional<T> accept(JSONRecords.IRecordVisitor<E, T> visitor, E env) {
