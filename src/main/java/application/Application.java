@@ -43,6 +43,10 @@ public class Application extends javafx.application.Application {
         });
     }
 
+    /***
+     * Stops the application and saves the loaded user to its file.
+     * @throws IOException if saving of the user is unsuccessful.
+     */
     @Override
     public void stop() throws IOException {
         if (user != null) {
