@@ -50,6 +50,11 @@ public class ContactList implements IObservable {
         notifyObservers();
     }
 
+    /***
+     * Creates and adds a contact to the ContactList given a specified Contact-Cache
+     * @param cache The ContactCache to create the contact from
+     * @throws NameNotAllowedException if the name of the contact is blank.
+     */
     public void addContact(Contact.ContactCache cache) throws NameNotAllowedException {
         if (cache.name.isEmpty()) {
             throw new NameNotAllowedException("Contacts must have a name");

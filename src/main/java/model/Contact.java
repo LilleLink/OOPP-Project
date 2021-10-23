@@ -9,6 +9,9 @@ import model.search.ISearchable;
 
 import java.util.*;
 
+/***
+ * Class representing a contact with a number of attributes like name, address etc.
+ */
 public class Contact implements ICacheVisitable, ISearchable<String>, IObservable, IDocumentable {
 
     private String name;

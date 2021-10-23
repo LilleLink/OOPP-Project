@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+/***
+ * Wrapper for a list of events
+ */
 public class EventList implements IObservable {
 
     private List<Event> eventList = new ArrayList<>();

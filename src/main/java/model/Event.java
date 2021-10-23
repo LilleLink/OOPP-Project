@@ -115,7 +115,7 @@ public class Event implements ICacheVisitable, ISearchable<String>, IObservable,
     }
 
     /**
-     * @return The event's directoryId.
+     * @return The events directoryId.
      */
     public UUID getDirectoryId() {
         return directoryId;

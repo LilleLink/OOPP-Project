@@ -19,18 +19,34 @@ public class Tag implements ITag, ICacheVisitable {
         this.color = color;
     }
 
+    /***
+     * Returns the name of the tag
+     * @return a String object containing the name of the tag
+     */
     public String getName() {
         return name;
     }
 
+    /***
+     * Returns the color of the tag
+     * @return a String containing the color represented in hexadecimals for RGB. Ex: #000000
+     */
     public String getColor() {
         return color;
     }
 
+    /***
+     * Sets the name of the tag to the given string.
+     * @param name the new name of the tag
+     */
     void setName(String name) {
         this.name = name;
     }
 
+    /***
+     * Sets the color of the tag to the given string
+     * @param color the new color of the tag
+     */
     void setColor(String color) {
         this.color = color;
     }

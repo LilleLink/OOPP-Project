@@ -6,6 +6,10 @@ import model.exceptions.TagNotFoundException;
 
 import java.util.*;
 
+/***
+ * Handler class for a collection of tags.
+ * Wraps logic for creating, editing and removing tags.
+ */
 public class TagHandler implements ICacheVisitable {
 
     private final Map<String, Tag> stringTagHashMap;
@@ -27,6 +31,13 @@ public class TagHandler implements ICacheVisitable {
         return createTag(name, "CDCDCD");
     }
 
+    /***
+     * Creates a new tag given the parameters
+     * @param name the name of the tag
+     * @param color the color of the tag
+     * @return the created tag.
+     * @throws NameNotAllowedException if the tag name is already taken.
+     */
     public ITag createTag(String name, String color) throws NameNotAllowedException {
         Tag tag;
         checkNameLegality(name);
