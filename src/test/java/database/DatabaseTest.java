@@ -5,7 +5,6 @@ import model.ITag;
 import model.User;
 import model.exceptions.NameNotAllowedException;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -18,11 +17,6 @@ public class DatabaseTest {
     private final Database db = DatabaseFactory.getService();
     private final User user = new User("Pelle");
     private final User user2 = new User("Dawg");
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
 
     @After
     public void tearDown() throws IOException {
