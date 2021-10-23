@@ -11,7 +11,11 @@ import java.io.IOException;
 /***
  * A utility class containing functionality to initialize the JavaFX controller and view.
  */
-public class JavaFXViewInitializer {
+public final class JavaFXViewInitializer {
+
+    private JavaFXViewInitializer() {
+
+    }
 
     /***
      * Initiates the JavaFX environment using the given stage from the launch method, and the user from the instantiated model.
