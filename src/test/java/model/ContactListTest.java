@@ -7,8 +7,7 @@ import org.junit.Test;
 
 import java.util.Objects;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.*;
 
 public class ContactListTest {
     private ContactList contactList;
@@ -59,5 +58,32 @@ public class ContactListTest {
         assertEquals(1, mockObserver.getEventCount());
         contactList.removeContact(contact);
         assertEquals(2, mockObserver.getEventCount());
+        contactList.unSubscribe(mockObserver);
+        contactList.addContact(contact);
+        assertEquals(2, mockObserver.getEventCount());
+    }
+
+    @Test
+    public void toStringTest() {
+        try {
+            contactList.addContact("name");
+        } catch (NameNotAllowedException e) {
+            fail();
+        }
+        assertEquals("ContactList{contactList=[Contact{name='name', phoneNumber='', address='', tags=[], notes=Notes{elements=[]}}]}", contactList.toString());
+    }
+
+    @Test
+    public void emptyNameCacheTest() {
+        Contact.ContactCache cache = new Contact.ContactCache();
+        cache.name = "name";
+        try {
+            contactList.addContact(cache);
+            Contact c = contactList.getList().get(0);
+            assertNotNull(c.getDirectoryId());
+            assertNotNull(c.getTags());
+        } catch (Exception e) {
+            fail();
+        }
     }
 }
