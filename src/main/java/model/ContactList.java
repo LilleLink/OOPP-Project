@@ -12,7 +12,7 @@ import java.util.UUID;
 public class ContactList implements IObservable {
 
     private List<Contact> contactList = new ArrayList<>();
-    private List<IObserver> observers = new ArrayList<>();
+    private final List<IObserver> observers = new ArrayList<>();
 
     /***
      * Creates a new contact list wrapper object.
@@ -61,6 +61,9 @@ public class ContactList implements IObservable {
         }
         if (cache.directoryId == null) {
             cache.directoryId = UUID.randomUUID();
+        }
+        if (cache.tags == null) {
+            cache.tags = new ArrayList<>();
         }
         contactList.add(new Contact(cache));
         notifyObservers();

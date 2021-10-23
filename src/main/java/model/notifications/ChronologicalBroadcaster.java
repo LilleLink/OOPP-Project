@@ -6,7 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * An immutable object responsible for broadcasting {@link IChronological} objects with a given interval of mintues.
+ * An immutable object responsible for broadcasting {@link IChronological} objects with a given interval of minutes.
  *
  * @param <T> a chronological implementation
  * @author Simon Johnsson
@@ -19,14 +19,14 @@ class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroad
 
     /**
      * Constructs a {@code ChronologicalBroadcaster} with the given content and interval in minutes.
-     *
+     * <p>
      * Given {@code content} list is copied and can therefore not be accessed within the object after construction.
-     *
+     * <p>
      * The {@code minuteInterval} determines how many minutes before the chronological object's point in time a broadcast is performed.
-     *
+     * <p>
      * Chronological objects whose point in time has passed are removed from the content list.
      *
-     * @param content the content to broadcast
+     * @param content        the content to broadcast
      * @param minuteInterval how many minutes from the content's point in time to broadcast
      */
     ChronologicalBroadcaster(List<T> content, long minuteInterval) {
@@ -43,17 +43,18 @@ class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroad
      * @param content the content to broadcast
      */
     ChronologicalBroadcaster(List<T> content) {
-        this(content,1);
+        this(content, 1);
     }
 
     /**
      * Private constructor for keeping adding listeners.
-     * @param content the content to broadcast
+     *
+     * @param content        the content to broadcast
      * @param minuteInterval how many minutes from the content's point in time to broadcast
-     * @param listeners the broadcaster's listeners
+     * @param listeners      the broadcaster's listeners
      */
     private ChronologicalBroadcaster(List<T> content, long minuteInterval, List<IObjectBroadcastListener<T>> listeners) {
-        this(content,minuteInterval);
+        this(content, minuteInterval);
         this.listeners.addAll(listeners);
     }
 
@@ -64,7 +65,7 @@ class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroad
      * @return an adjusted copy with the given interval
      */
     ChronologicalBroadcaster<T> withInterval(long minuteInterval) {
-        return new ChronologicalBroadcaster<>(this.content,minuteInterval,this.listeners);
+        return new ChronologicalBroadcaster<>(this.content, minuteInterval, this.listeners);
     }
 
     /**
@@ -74,7 +75,7 @@ class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroad
      * @return an adjusted copy with the given content
      */
     ChronologicalBroadcaster<T> withContent(List<T> content) {
-        return new ChronologicalBroadcaster<>(content,this.minuteInterval,this.listeners);
+        return new ChronologicalBroadcaster<>(content, this.minuteInterval, this.listeners);
     }
 
     /**
@@ -109,9 +110,9 @@ class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroad
      * Removes it from the content list after it has been broadcast.
      */
     private void broadcastContent() {
-        for(Iterator<T> iterator = content.iterator(); iterator.hasNext();) {
+        for (Iterator<T> iterator = content.iterator(); iterator.hasNext(); ) {
             T chronological = iterator.next();
-            if(isWithinInterval(chronological)) {
+            if (isWithinInterval(chronological)) {
                 broadcast(chronological);
                 iterator.remove();
             }
@@ -120,7 +121,7 @@ class ChronologicalBroadcaster<T extends IChronological> implements IObjectBroad
 
     @Override
     public void broadcast(T object) {
-        for (IObjectBroadcastListener<T> bl: listeners) {
+        for (IObjectBroadcastListener<T> bl : listeners) {
             bl.onBroadcast(object);
         }
     }

@@ -5,7 +5,6 @@ import model.ITag;
 import model.User;
 import model.exceptions.NameNotAllowedException;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -19,11 +18,6 @@ public class DatabaseTest {
     private final User user = new User("Pelle");
     private final User user2 = new User("Dawg");
 
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
     @After
     public void tearDown() throws IOException {
         db.remove(user);
@@ -36,14 +30,14 @@ public class DatabaseTest {
         ITag biznizTag = user.getTagHandler().createTag("bizniz");
 
         user.getContacts().addContact("McLovin");
-        Contact contact = user.getContacts().getList().stream().filter(c -> c.getName().equals("McLovin"))
+        Contact contact = user.getContacts().getList().stream().filter(c -> "McLovin".equals(c.getName()))
                 .findFirst().orElseThrow(IllegalStateException::new);
         contact.setAddress("Kungsportsavenyen 32");
         contact.addNote("Hahah this guy amirite");
         contact.addNote("K he's aight I guess");
 
         user.getContacts().addContact("Bruh");
-        Contact contact2 = user.getContacts().getList().stream().filter(c -> c.getName().equals("Bruh"))
+        user.getContacts().getList().stream().filter(c -> "Bruh".equals(c.getName()))
                 .findFirst().orElseThrow(IllegalStateException::new);
         contact.setAddress("Kungsportsavenyen 32");
         contact.addNote("Wow same address wtf lame");

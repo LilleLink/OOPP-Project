@@ -4,6 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -91,7 +93,21 @@ class CalendarPage extends ViewComponent implements IObserver {
             weekEvents.put(i, new ArrayList<>());
         }
 
+        this.getPane().addEventFilter(KeyEvent.KEY_PRESSED, this::keyPressed);
+
         onEvent();
+    }
+
+    private void keyPressed(KeyEvent key) {
+        if (eventCard == null) {
+            return;
+        }
+        KeyCode code = key.getCode();
+        if (KeyCode.ESCAPE.equals(code)) {
+            closeEventPane();
+        } else if (KeyCode.ENTER.equals(code)) {
+            eventCard.triggerSave();
+        }
     }
 
     private void incrementWeek(ActionEvent actionEvent) {
@@ -168,6 +184,10 @@ class CalendarPage extends ViewComponent implements IObserver {
     }
 
     private void closeEventPane(javafx.event.Event event) {
+        closeEventPane();
+    }
+
+    private void closeEventPane() {
         calendarPageStackPane.getChildren().remove(eventCard.getPane());
         eventList.notifyObservers();
     }
