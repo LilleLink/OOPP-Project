@@ -9,33 +9,19 @@ public class JSONRecords {
 
     // The record visitor interface.
     interface IRecordVisitor<E, T> {
-        default Optional<T> visit(UserRecord user, E env) {
-            return Optional.empty();
-        }
+        Optional<T> visit(UserRecord user, E env);
 
-        default Optional<T> visit(ContactRecord contact, E env) {
-            return Optional.empty();
-        }
+        Optional<T> visit(ContactRecord contact, E env);
 
-        default Optional<T> visit(EventRecord event, E env) {
-            return Optional.empty();
-        }
-        
-        default Optional<T> visit(NoteRecord note, E env) {
-            return Optional.empty();
-        }
+        Optional<T> visit(EventRecord event, E env);
 
-        default Optional<T> visit(NotesRecord notes, E env) {
-            return Optional.empty();
-        }
+        Optional<T> visit(NoteRecord note, E env);
 
-        default Optional<T> visit(TagHandlerRecord tagHandler, E env) {
-            return Optional.empty();
-        }
+        Optional<T> visit(NotesRecord notes, E env);
 
-        default Optional<T> visit(TagRecord tag, E env) {
-            return Optional.empty();
-        }
+        Optional<T> visit(TagHandlerRecord tagHandler, E env);
+
+        Optional<T> visit(TagRecord tag, E env);
     }
 
     // The visitable record interface.
