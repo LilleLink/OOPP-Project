@@ -1,5 +1,8 @@
-# TODO
-FIX A HOW TO RUN
+# Installation
+Download the project and either use mvn javafx:run or mvn package and then run the packaged jar file in OOPP-Project/target/. 
+
+# Troubleshooting
+All data is saved under .PRM in the home directory so try to remove this if something it is broken.
 
 # OOPP-Project
 Project assignment in the Object Oriented Programming Project course at Chalmers University of Technology.
