@@ -51,7 +51,7 @@ public class JSONRecords {
 
     // TagHandler JSON record.
     static class TagHandlerRecord implements JSONRecords.IRecordVisitable {
-        HashMap<String, TagRecord> tags;
+        Map<String, TagRecord> tags;
 
         @Override
         public <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env) {
@@ -102,7 +102,7 @@ public class JSONRecords {
         String address = "";
         String dateTime;
         String description;
-        ArrayList<Integer> contacts = new ArrayList<>();
+        List<Integer> contacts = new ArrayList<>();
         String tag;
         String directoryId;
 
@@ -129,7 +129,7 @@ public class JSONRecords {
     }
 
     static class TrackerRecord {
-        HashMap<UUID, String> users = new HashMap<>();
+        Map<UUID, String> users = new HashMap<>();
     }
 
 }
