@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 public class JSONDatabaseLoader implements IDatabaseLoader {
 
     /***
-     * Load the model from the database file.
+     * Load a user from the database file.
      * @return The loaded user.
      */
     @Override
@@ -37,8 +37,9 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
         Map<String, Tag> tags = new HashMap<>();
     }
 
-    // The record visitor visists all the JSON records and returns the reinstated prm model.
+    // The record visitor visits all the JSON records and returns the reinstated user model.
     static private class RecordVisitor implements JSONRecords.IRecordVisitor<RecordVisitorState, ICacheVisitable> {
+        // Visit a user record from the json file.
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.UserRecord user, RecordVisitorState env) {
             User.UserCache cache = new User.UserCache();
@@ -51,6 +52,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             return Optional.of(new User(cache));
         }
 
+        // Visit a contact record from the json file.
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.ContactRecord contact, RecordVisitorState env) {
             Contact.ContactCache cache = new Contact.ContactCache();
@@ -65,6 +67,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             return Optional.of(new Contact(cache));
         }
 
+        // Visit an event record from the json file.
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.EventRecord event, RecordVisitorState env) {
             Event.EventCache cache = new Event.EventCache();
@@ -78,6 +81,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             return Optional.of(new Event(cache));
         }
 
+        // Visit a note record from the json file.
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.NoteRecord note, RecordVisitorState env) {
             Note.NoteCache cache = new Note.NoteCache();
@@ -86,6 +90,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             return Optional.of(new Note(cache));
         }
 
+        // Visit a notes record from the json file.
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.NotesRecord notes, RecordVisitorState env) {
             NoteBook.NotesCache cache = new NoteBook.NotesCache();
@@ -93,6 +98,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             return Optional.of(new NoteBook(cache));
         }
 
+        // Visit a taghandler record from the json file.
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.TagHandlerRecord tagHandler, RecordVisitorState env) {
             tagHandler.tags.forEach((t, v) -> env.tags.put(t, (Tag) v.accept(this, env).orElseThrow(IllegalStateException::new)));
@@ -101,6 +107,7 @@ public class JSONDatabaseLoader implements IDatabaseLoader {
             return Optional.of(new TagHandler(cache));
         }
 
+        // Visit a tag record from the json file.
         @Override
         public Optional<ICacheVisitable> visit(JSONRecords.TagRecord tag, RecordVisitorState env) {
             Tag.TagCache cache = new Tag.TagCache();

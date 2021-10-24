@@ -5,15 +5,16 @@ import model.User;
 import java.io.IOException;
 import java.nio.file.Path;
 
-/***
- * Defines functionality of concrete database-loaders.
+/**
+ * The loading logic of a database.
  */
 public interface IDatabaseLoader {
 
     /***
-     * Load a user from the PRM model database.
-     * @param databasePath The path to the users file.
-     * @return The loaded user.
+     * Load a user from the database.
+     * @param databasePath The database file to load a user from.
+     * @return The user loaded from the database file.
+     * @throws IOException If an IO error occurs while loading the user.
      */
     User load(Path databasePath) throws IOException;
 

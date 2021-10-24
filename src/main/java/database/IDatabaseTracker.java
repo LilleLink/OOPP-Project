@@ -1,47 +1,49 @@
 package database;
 
+import model.User;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.Set;
 import java.util.UUID;
 
-/***
- * Defines functionality of concrete database-trackers.
+/**
+ * The tracker logic of the database. Tracks which users exist in the database and their name.
  */
 public interface IDatabaseTracker {
 
-    /***
-     * Adds a user to the database given the parameters id, name and the path to the file.
-     * @param id the UUID of the user
-     * @param name the name of the user
-     * @param databaseTrackerFile the path to the file where the user is to be saved
-     * @throws IOException if the file cannot be accessed.
+    /**
+     * Add a user to the database tracker file.
+     * @param id The uid of the user.
+     * @param name The name of the user.
+     * @param databaseTrackerFile The tracker file to add the user to.
+     * @throws IOException If an IO error occurs while writing to the file.
      */
     void addUser(UUID id, String name, Path databaseTrackerFile) throws IOException;
 
-    /***
-     * Removes a user given the parameters id and the path to its file.
-     * @param id the UUID of the user.
-     * @param databaseTrackerFile the path to the user's file
-     * @return boolean representing the result of the operation.
-     * @throws IOException if the file cannot be accessed
+    /**
+     * Remove a user from the database tracker file.
+     * @param id The uid of the user.
+     * @param databaseTrackerFile The tracker file to remove the user from.
+     * @return True if the user existed, false otherwise.
+     * @throws IOException If an IO error occurs while writing to the file.
      */
     boolean removeUser(UUID id, Path databaseTrackerFile) throws IOException;
 
-    /***
-     * Returns a set of users UUIDs
-     * @param databaseTrackerFile the path to the file to read from
-     * @return a Set of users UUIDs
-     * @throws IOException if the file cannot be accessed
+    /**
+     * Get all the user ids from the database tracker file.
+     * @param databaseTrackerFile The database tracker file to read users from.
+     * @return A set of all UIDs in the tracker file.
+     * @throws IOException If an IO error occurs while reading from the file.
      */
     Set<UUID> getUsers(Path databaseTrackerFile) throws IOException;
 
-    /***
-     * Gets a username given the users UUID and path to its file.
-     * @param uuid the UUID of the user
-     * @param databaseTrackerFile the file of the user
-     * @return a String containing the username.
-     * @throws IOException if the file cannot be accessed.
+    /**
+     * Get the username of a user in the database.
+     * @param uuid The UID of the user to query a name from.
+     * @param databaseTrackerFile The database tracker file to read the username from.
+     * @return The username.
+     * @throws IOException If an IO error occurs while reading from the file.
      */
     String getUsername(UUID uuid, Path databaseTrackerFile) throws IOException;
 

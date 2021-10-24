@@ -2,25 +2,32 @@ package database.json;
 
 import java.util.*;
 
-/***
- * Class containing records of all the serializable classes, helps the json database-services to serialize and unserialize.
+/**
+ * Convenience class for JSON records which are then serialized using GSON.
  */
 public class JSONRecords {
 
     // The record visitor interface.
     interface IRecordVisitor<E, T> {
+        // Visit a user record.
         Optional<T> visit(UserRecord user, E env);
 
+        // Visit a contact record.
         Optional<T> visit(ContactRecord contact, E env);
 
+        // Visit an event record.
         Optional<T> visit(EventRecord event, E env);
 
+        // Visit a note record.
         Optional<T> visit(NoteRecord note, E env);
 
+        // Visit a notes record.
         Optional<T> visit(NotesRecord notes, E env);
 
+        // Visit a taghandler record.
         Optional<T> visit(TagHandlerRecord tagHandler, E env);
 
+        // Visit a tag record.
         Optional<T> visit(TagRecord tag, E env);
     }
 
@@ -42,8 +49,9 @@ public class JSONRecords {
         }
     }
 
+    // TagHandler JSON record.
     static class TagHandlerRecord implements JSONRecords.IRecordVisitable {
-        Map<String, TagRecord> tags;
+        HashMap<String, TagRecord> tags;
 
         @Override
         public <E, T> Optional<T> accept(IRecordVisitor<E, T> visitor, E env) {
@@ -51,6 +59,7 @@ public class JSONRecords {
         }
     }
 
+    // Contact JSON record.
     static class ContactRecord implements JSONRecords.IRecordVisitable {
         String name;
         String phoneNumber;
@@ -65,6 +74,7 @@ public class JSONRecords {
         }
     }
 
+    // Notes JSON record.
     static class NotesRecord implements JSONRecords.IRecordVisitable {
         List<NoteRecord> elements;
 
@@ -74,6 +84,7 @@ public class JSONRecords {
         }
     }
 
+    // Note JSON record.
     static class NoteRecord implements JSONRecords.IRecordVisitable {
         String text;
         String pointOfCreation;
@@ -91,7 +102,7 @@ public class JSONRecords {
         String address = "";
         String dateTime;
         String description;
-        List<Integer> contacts = new ArrayList<>();
+        ArrayList<Integer> contacts = new ArrayList<>();
         String tag;
         String directoryId;
 
@@ -118,7 +129,7 @@ public class JSONRecords {
     }
 
     static class TrackerRecord {
-        Map<UUID, String> users = new HashMap<>();
+        HashMap<UUID, String> users = new HashMap<>();
     }
 
 }
