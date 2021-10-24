@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class JSONDatabaseSaver implements IDatabaseSaver {
 
     /***
-     * Save the model to a database file.
+     * Save a user to a database file.
      * @param user The user to save.
      * @throws IOException If there was a problem writing to the database file.
      */
@@ -100,6 +100,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             return Optional.of(record);
         }
 
+        // Visit notes cache and return a JSON record of it.
         @Override
         public Optional<JSONRecords.IRecordVisitable> visit(Notes.NotesCache cache, CacheVisitorState env) {
             JSONRecords.NotesRecord record = new JSONRecords.NotesRecord();
@@ -109,6 +110,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             return Optional.of(record);
         }
 
+        // Visit note cache and return a JSON record of it.
         @Override
         public Optional<JSONRecords.IRecordVisitable> visit(Note.NoteCache cache, CacheVisitorState env) {
             JSONRecords.NoteRecord record = new JSONRecords.NoteRecord();
@@ -117,6 +119,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             return Optional.of(record);
         }
 
+        // Visit taghandler cache and return a JSON record of it.
         @Override
         public Optional<JSONRecords.IRecordVisitable> visit(TagHandler.TagHandlerCache tagHandlerCache, CacheVisitorState env) {
             tagHandlerCache.stringTagHashMap.values().forEach(t -> t.accept(this, env));
@@ -129,6 +132,7 @@ public class JSONDatabaseSaver implements IDatabaseSaver {
             return Optional.of(record);
         }
 
+        // Visit tag cache and return a JSON record of it.
         @Override
         public Optional<JSONRecords.IRecordVisitable> visit(Tag.TagCache tagCache, CacheVisitorState env) {
             JSONRecords.TagRecord record = new JSONRecords.TagRecord();

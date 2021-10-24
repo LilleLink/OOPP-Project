@@ -7,10 +7,11 @@ import database.json.JSONDatabaseTracker;
 import java.io.IOException;
 
 /***
- * The DatabaseFactory contains a static method for creating an abstract PRM database.
+ * The DatabaseFactory allows getting of a Database with abstract logic.
  */
 public class DatabaseFactory {
 
+    // The database instance.
     static private Database database = null;
 
     /***

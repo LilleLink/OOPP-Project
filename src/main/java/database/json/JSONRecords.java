@@ -2,38 +2,49 @@ package database.json;
 
 import java.util.*;
 
+/**
+ * Convenience class for JSON records which are then serialized using GSON.
+ */
 public class JSONRecords {
 
     // The record visitor interface.
     interface IRecordVisitor<E, T> {
+        // Visit a user record.
         default Optional<T> visit(UserRecord user, E env) {
             return Optional.empty();
         }
 
+        // Visit a contact record.
         default Optional<T> visit(ContactRecord contact, E env) {
             return Optional.empty();
         }
 
+        // Visit an event record.
         default Optional<T> visit(EventRecord event, E env) {
             return Optional.empty();
         }
 
+        // Visit a PRM record.
         default Optional<T> visit(PRMRecord prm, E env) {
             return Optional.empty();
         }
 
+        // Visit a note record.
         default Optional<T> visit(NoteRecord note, E env) {
             return Optional.empty();
         }
 
+        // Visit a notes record.
         default Optional<T> visit(NotesRecord notes, E env) {
             return Optional.empty();
         }
 
+        // Visit a taghandler record.
         default Optional<T> visit(TagHandlerRecord tagHandler, E env) {
             return Optional.empty();
         }
 
+        // Visit a tag record.
         default Optional<T> visit(TagRecord tag, E env) {
             return Optional.empty();
         }
@@ -57,6 +68,7 @@ public class JSONRecords {
         }
     }
 
+    // TagHandler JSON record.
     static class TagHandlerRecord implements JSONRecords.IRecordVisitable {
         HashMap<String, TagRecord> tags;
 
@@ -66,6 +78,7 @@ public class JSONRecords {
         }
     }
 
+    // Contact JSON record.
     static class ContactRecord implements JSONRecords.IRecordVisitable {
         String name;
         String phoneNumber;
@@ -80,6 +93,7 @@ public class JSONRecords {
         }
     }
 
+    // Notes JSON record.
     static class NotesRecord implements JSONRecords.IRecordVisitable {
         List<NoteRecord> elements;
 
@@ -89,6 +103,7 @@ public class JSONRecords {
         }
     }
 
+    // Note JSON record.
     static class NoteRecord implements JSONRecords.IRecordVisitable {
         String text;
         String pointOfCreation;
@@ -144,6 +159,7 @@ public class JSONRecords {
         }
     }
 
+    // Tracker JSON record.
     static class TrackerRecord {
         HashMap<UUID, String> users = new HashMap<>();
     }
